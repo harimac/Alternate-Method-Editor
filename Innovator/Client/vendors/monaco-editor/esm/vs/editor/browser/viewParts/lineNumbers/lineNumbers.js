@@ -2,106 +2,92 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 import './lineNumbers.css';
 import * as platform from '../../../../base/common/platform.js';
 import { DynamicViewOverlay } from '../../view/dynamicViewOverlay.js';
 import { Position } from '../../../common/core/position.js';
-import { editorActiveLineNumber, editorLineNumbers } from '../../../common/view/editorColorRegistry.js';
 import { registerThemingParticipant } from '../../../../platform/theme/common/themeService.js';
-var LineNumbersOverlay = /** @class */ (function (_super) {
-    __extends(LineNumbersOverlay, _super);
-    function LineNumbersOverlay(context) {
-        var _this = _super.call(this) || this;
-        _this._context = context;
-        _this._readConfig();
-        _this._lastCursorModelPosition = new Position(1, 1);
-        _this._renderResult = null;
-        _this._context.addEventHandler(_this);
-        return _this;
+import { editorDimmedLineNumber, editorLineNumbers } from '../../../common/core/editorColorRegistry.js';
+class LineNumbersOverlay extends DynamicViewOverlay {
+    constructor(context) {
+        super();
+        this._context = context;
+        this._readConfig();
+        this._lastCursorModelPosition = new Position(1, 1);
+        this._renderResult = null;
+        this._activeLineNumber = 1;
+        this._context.addEventHandler(this);
     }
-    LineNumbersOverlay.prototype._readConfig = function () {
-        var config = this._context.configuration.editor;
-        this._lineHeight = config.lineHeight;
-        this._renderLineNumbers = config.viewInfo.renderLineNumbers;
-        this._renderCustomLineNumbers = config.viewInfo.renderCustomLineNumbers;
-        this._renderFinalNewline = config.viewInfo.renderFinalNewline;
-        this._lineNumbersLeft = config.layoutInfo.lineNumbersLeft;
-        this._lineNumbersWidth = config.layoutInfo.lineNumbersWidth;
-    };
-    LineNumbersOverlay.prototype.dispose = function () {
+    _readConfig() {
+        const options = this._context.configuration.options;
+        this._lineHeight = options.get(64 /* EditorOption.lineHeight */);
+        const lineNumbers = options.get(65 /* EditorOption.lineNumbers */);
+        this._renderLineNumbers = lineNumbers.renderType;
+        this._renderCustomLineNumbers = lineNumbers.renderFn;
+        this._renderFinalNewline = options.get(90 /* EditorOption.renderFinalNewline */);
+        const layoutInfo = options.get(139 /* EditorOption.layoutInfo */);
+        this._lineNumbersLeft = layoutInfo.lineNumbersLeft;
+        this._lineNumbersWidth = layoutInfo.lineNumbersWidth;
+    }
+    dispose() {
         this._context.removeEventHandler(this);
         this._renderResult = null;
-        _super.prototype.dispose.call(this);
-    };
+        super.dispose();
+    }
     // --- begin event handlers
-    LineNumbersOverlay.prototype.onConfigurationChanged = function (e) {
+    onConfigurationChanged(e) {
         this._readConfig();
         return true;
-    };
-    LineNumbersOverlay.prototype.onCursorStateChanged = function (e) {
-        var primaryViewPosition = e.selections[0].getPosition();
-        this._lastCursorModelPosition = this._context.model.coordinatesConverter.convertViewPositionToModelPosition(primaryViewPosition);
-        if (this._renderLineNumbers === 2 /* Relative */ || this._renderLineNumbers === 3 /* Interval */) {
-            return true;
+    }
+    onCursorStateChanged(e) {
+        const primaryViewPosition = e.selections[0].getPosition();
+        this._lastCursorModelPosition = this._context.viewModel.coordinatesConverter.convertViewPositionToModelPosition(primaryViewPosition);
+        let shouldRender = false;
+        if (this._activeLineNumber !== primaryViewPosition.lineNumber) {
+            this._activeLineNumber = primaryViewPosition.lineNumber;
+            shouldRender = true;
         }
-        return false;
-    };
-    LineNumbersOverlay.prototype.onFlushed = function (e) {
+        if (this._renderLineNumbers === 2 /* RenderLineNumbersType.Relative */ || this._renderLineNumbers === 3 /* RenderLineNumbersType.Interval */) {
+            shouldRender = true;
+        }
+        return shouldRender;
+    }
+    onFlushed(e) {
         return true;
-    };
-    LineNumbersOverlay.prototype.onLinesChanged = function (e) {
+    }
+    onLinesChanged(e) {
         return true;
-    };
-    LineNumbersOverlay.prototype.onLinesDeleted = function (e) {
+    }
+    onLinesDeleted(e) {
         return true;
-    };
-    LineNumbersOverlay.prototype.onLinesInserted = function (e) {
+    }
+    onLinesInserted(e) {
         return true;
-    };
-    LineNumbersOverlay.prototype.onScrollChanged = function (e) {
+    }
+    onScrollChanged(e) {
         return e.scrollTopChanged;
-    };
-    LineNumbersOverlay.prototype.onZonesChanged = function (e) {
+    }
+    onZonesChanged(e) {
         return true;
-    };
+    }
     // --- end event handlers
-    LineNumbersOverlay.prototype._getLineRenderLineNumber = function (viewLineNumber) {
-        var modelPosition = this._context.model.coordinatesConverter.convertViewPositionToModelPosition(new Position(viewLineNumber, 1));
+    _getLineRenderLineNumber(viewLineNumber) {
+        const modelPosition = this._context.viewModel.coordinatesConverter.convertViewPositionToModelPosition(new Position(viewLineNumber, 1));
         if (modelPosition.column !== 1) {
             return '';
         }
-        var modelLineNumber = modelPosition.lineNumber;
-        if (!this._renderFinalNewline) {
-            var lineCount = this._context.model.getLineCount();
-            var lineContent = this._context.model.getLineContent(modelLineNumber);
-            if (modelLineNumber === lineCount && lineContent === '') {
-                return '';
-            }
-        }
+        const modelLineNumber = modelPosition.lineNumber;
         if (this._renderCustomLineNumbers) {
             return this._renderCustomLineNumbers(modelLineNumber);
         }
-        if (this._renderLineNumbers === 2 /* Relative */) {
-            var diff = Math.abs(this._lastCursorModelPosition.lineNumber - modelLineNumber);
+        if (this._renderLineNumbers === 2 /* RenderLineNumbersType.Relative */) {
+            const diff = Math.abs(this._lastCursorModelPosition.lineNumber - modelLineNumber);
             if (diff === 0) {
                 return '<span class="relative-current-line-number">' + modelLineNumber + '</span>';
             }
             return String(diff);
         }
-        if (this._renderLineNumbers === 3 /* Interval */) {
+        if (this._renderLineNumbers === 3 /* RenderLineNumbersType.Interval */) {
             if (this._lastCursorModelPosition.lineNumber === modelLineNumber) {
                 return String(modelLineNumber);
             }
@@ -111,53 +97,62 @@ var LineNumbersOverlay = /** @class */ (function (_super) {
             return '';
         }
         return String(modelLineNumber);
-    };
-    LineNumbersOverlay.prototype.prepareRender = function (ctx) {
-        if (this._renderLineNumbers === 0 /* Off */) {
+    }
+    prepareRender(ctx) {
+        if (this._renderLineNumbers === 0 /* RenderLineNumbersType.Off */) {
             this._renderResult = null;
             return;
         }
-        var lineHeightClassName = (platform.isLinux ? (this._lineHeight % 2 === 0 ? ' lh-even' : ' lh-odd') : '');
-        var visibleStartLineNumber = ctx.visibleRange.startLineNumber;
-        var visibleEndLineNumber = ctx.visibleRange.endLineNumber;
-        var common = '<div class="' + LineNumbersOverlay.CLASS_NAME + lineHeightClassName + '" style="left:' + this._lineNumbersLeft.toString() + 'px;width:' + this._lineNumbersWidth.toString() + 'px;">';
-        var output = [];
-        for (var lineNumber = visibleStartLineNumber; lineNumber <= visibleEndLineNumber; lineNumber++) {
-            var lineIndex = lineNumber - visibleStartLineNumber;
-            var renderLineNumber = this._getLineRenderLineNumber(lineNumber);
-            if (renderLineNumber) {
-                output[lineIndex] = (common
-                    + renderLineNumber
-                    + '</div>');
-            }
-            else {
+        const lineHeightClassName = (platform.isLinux ? (this._lineHeight % 2 === 0 ? ' lh-even' : ' lh-odd') : '');
+        const visibleStartLineNumber = ctx.visibleRange.startLineNumber;
+        const visibleEndLineNumber = ctx.visibleRange.endLineNumber;
+        const lineCount = this._context.viewModel.getLineCount();
+        const output = [];
+        for (let lineNumber = visibleStartLineNumber; lineNumber <= visibleEndLineNumber; lineNumber++) {
+            const lineIndex = lineNumber - visibleStartLineNumber;
+            const renderLineNumber = this._getLineRenderLineNumber(lineNumber);
+            if (!renderLineNumber) {
                 output[lineIndex] = '';
+                continue;
             }
+            let extraClassName = '';
+            if (lineNumber === lineCount && this._context.viewModel.getLineLength(lineNumber) === 0) {
+                // this is the last line
+                if (this._renderFinalNewline === 'off') {
+                    output[lineIndex] = '';
+                    continue;
+                }
+                if (this._renderFinalNewline === 'dimmed') {
+                    extraClassName = ' dimmed-line-number';
+                }
+            }
+            if (lineNumber === this._activeLineNumber) {
+                extraClassName = ' active-line-number';
+            }
+            output[lineIndex] = (`<div class="${LineNumbersOverlay.CLASS_NAME}${lineHeightClassName}${extraClassName}" style="left:${this._lineNumbersLeft}px;width:${this._lineNumbersWidth}px;">${renderLineNumber}</div>`);
         }
         this._renderResult = output;
-    };
-    LineNumbersOverlay.prototype.render = function (startLineNumber, lineNumber) {
+    }
+    render(startLineNumber, lineNumber) {
         if (!this._renderResult) {
             return '';
         }
-        var lineIndex = lineNumber - startLineNumber;
+        const lineIndex = lineNumber - startLineNumber;
         if (lineIndex < 0 || lineIndex >= this._renderResult.length) {
             return '';
         }
         return this._renderResult[lineIndex];
-    };
-    LineNumbersOverlay.CLASS_NAME = 'line-numbers';
-    return LineNumbersOverlay;
-}(DynamicViewOverlay));
-export { LineNumbersOverlay };
-// theming
-registerThemingParticipant(function (theme, collector) {
-    var lineNumbers = theme.getColor(editorLineNumbers);
-    if (lineNumbers) {
-        collector.addRule(".monaco-editor .line-numbers { color: " + lineNumbers + "; }");
     }
-    var activeLineNumber = theme.getColor(editorActiveLineNumber);
-    if (activeLineNumber) {
-        collector.addRule(".monaco-editor .current-line ~ .line-numbers { color: " + activeLineNumber + "; }");
+}
+LineNumbersOverlay.CLASS_NAME = 'line-numbers';
+export { LineNumbersOverlay };
+registerThemingParticipant((theme, collector) => {
+    const editorLineNumbersColor = theme.getColor(editorLineNumbers);
+    const editorDimmedLineNumberColor = theme.getColor(editorDimmedLineNumber);
+    if (editorDimmedLineNumberColor) {
+        collector.addRule(`.monaco-editor .line-numbers.dimmed-line-number { color: ${editorDimmedLineNumberColor}; }`);
+    }
+    else if (editorLineNumbersColor) {
+        collector.addRule(`.monaco-editor .line-numbers.dimmed-line-number { color: ${editorLineNumbersColor.transparent(0.4)}; }`);
     }
 });

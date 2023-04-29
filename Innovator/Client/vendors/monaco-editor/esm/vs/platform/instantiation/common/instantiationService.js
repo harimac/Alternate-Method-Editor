@@ -2,103 +2,90 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+import { IdleValue } from '../../../base/common/async.js';
 import { illegalState } from '../../../base/common/errors.js';
-import { create } from '../../../base/common/types.js';
-import { Graph } from './graph.js';
+import { toDisposable } from '../../../base/common/lifecycle.js';
 import { SyncDescriptor } from './descriptors.js';
-import { IInstantiationService, _util, optional } from './instantiation.js';
+import { Graph } from './graph.js';
+import { IInstantiationService, _util } from './instantiation.js';
 import { ServiceCollection } from './serviceCollection.js';
+import { LinkedList } from '../../../base/common/linkedList.js';
 // TRACING
-var _enableTracing = false;
-var InstantiationService = /** @class */ (function () {
-    function InstantiationService(services, strict, parent) {
-        if (services === void 0) { services = new ServiceCollection(); }
-        if (strict === void 0) { strict = false; }
-        this._services = services;
-        this._strict = strict;
-        this._parent = parent;
-        this._services.set(IInstantiationService, this);
+const _enableAllTracing = false;
+class CyclicDependencyError extends Error {
+    constructor(graph) {
+        var _a;
+        super('cyclic dependency between services');
+        this.message = (_a = graph.findCycleSlow()) !== null && _a !== void 0 ? _a : `UNABLE to detect cycle, dumping graph: \n${graph.toString()}`;
     }
-    InstantiationService.prototype.createChild = function (services) {
-        return new InstantiationService(services, this._strict, this);
-    };
-    InstantiationService.prototype.invokeFunction = function (fn) {
-        var _this = this;
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        var _trace = Trace.traceInvocation(fn);
-        var _done = false;
+}
+export class InstantiationService {
+    constructor(_services = new ServiceCollection(), _strict = false, _parent, _enableTracing = _enableAllTracing) {
+        var _a;
+        this._services = _services;
+        this._strict = _strict;
+        this._parent = _parent;
+        this._enableTracing = _enableTracing;
+        this._activeInstantiations = new Set();
+        this._services.set(IInstantiationService, this);
+        this._globalGraph = _enableTracing ? (_a = _parent === null || _parent === void 0 ? void 0 : _parent._globalGraph) !== null && _a !== void 0 ? _a : new Graph(e => e) : undefined;
+    }
+    createChild(services) {
+        return new InstantiationService(services, this._strict, this, this._enableTracing);
+    }
+    invokeFunction(fn, ...args) {
+        const _trace = Trace.traceInvocation(this._enableTracing, fn);
+        let _done = false;
         try {
-            var accessor = {
-                get: function (id, isOptional) {
+            const accessor = {
+                get: (id) => {
                     if (_done) {
                         throw illegalState('service accessor is only valid during the invocation of its target method');
                     }
-                    var result = _this._getOrCreateServiceInstance(id, _trace);
-                    if (!result && isOptional !== optional) {
-                        throw new Error("[invokeFunction] unknown service '" + id + "'");
+                    const result = this._getOrCreateServiceInstance(id, _trace);
+                    if (!result) {
+                        throw new Error(`[invokeFunction] unknown service '${id}'`);
                     }
                     return result;
                 }
             };
-            return fn.apply(undefined, [accessor].concat(args));
+            return fn(accessor, ...args);
         }
         finally {
             _done = true;
             _trace.stop();
         }
-    };
-    InstantiationService.prototype.createInstance = function (ctorOrDescriptor) {
-        var rest = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            rest[_i - 1] = arguments[_i];
-        }
-        var _trace;
-        var result;
+    }
+    createInstance(ctorOrDescriptor, ...rest) {
+        let _trace;
+        let result;
         if (ctorOrDescriptor instanceof SyncDescriptor) {
-            _trace = Trace.traceCreation(ctorOrDescriptor.ctor);
+            _trace = Trace.traceCreation(this._enableTracing, ctorOrDescriptor.ctor);
             result = this._createInstance(ctorOrDescriptor.ctor, ctorOrDescriptor.staticArguments.concat(rest), _trace);
         }
         else {
-            _trace = Trace.traceCreation(ctorOrDescriptor);
+            _trace = Trace.traceCreation(this._enableTracing, ctorOrDescriptor);
             result = this._createInstance(ctorOrDescriptor, rest, _trace);
         }
         _trace.stop();
         return result;
-    };
-    InstantiationService.prototype._createInstance = function (ctor, args, _trace) {
-        if (args === void 0) { args = []; }
+    }
+    _createInstance(ctor, args = [], _trace) {
         // arguments defined by service decorators
-        var serviceDependencies = _util.getServiceDependencies(ctor).sort(function (a, b) { return a.index - b.index; });
-        var serviceArgs = [];
-        for (var _i = 0, serviceDependencies_1 = serviceDependencies; _i < serviceDependencies_1.length; _i++) {
-            var dependency = serviceDependencies_1[_i];
-            var service = this._getOrCreateServiceInstance(dependency.id, _trace);
-            if (!service && this._strict && !dependency.optional) {
-                throw new Error("[createInstance] " + ctor.name + " depends on UNKNOWN service " + dependency.id + ".");
+        const serviceDependencies = _util.getServiceDependencies(ctor).sort((a, b) => a.index - b.index);
+        const serviceArgs = [];
+        for (const dependency of serviceDependencies) {
+            const service = this._getOrCreateServiceInstance(dependency.id, _trace);
+            if (!service) {
+                this._throwIfStrict(`[createInstance] ${ctor.name} depends on UNKNOWN service ${dependency.id}.`, false);
             }
             serviceArgs.push(service);
         }
-        var firstServiceArgPos = serviceDependencies.length > 0 ? serviceDependencies[0].index : args.length;
+        const firstServiceArgPos = serviceDependencies.length > 0 ? serviceDependencies[0].index : args.length;
         // check for argument mismatches, adjust static args if needed
         if (args.length !== firstServiceArgPos) {
-            console.warn("[createInstance] First service dependency of " + ctor.name + " at position " + (firstServiceArgPos + 1) + " conflicts with " + args.length + " static arguments");
-            var delta = firstServiceArgPos - args.length;
+            console.trace(`[createInstance] First service dependency of ${ctor.name} at position ${firstServiceArgPos + 1} conflicts with ${args.length} static arguments`);
+            const delta = firstServiceArgPos - args.length;
             if (delta > 0) {
                 args = args.concat(new Array(delta));
             }
@@ -107,9 +94,9 @@ var InstantiationService = /** @class */ (function () {
             }
         }
         // now create the instance
-        return create.apply(null, [ctor].concat(args, serviceArgs));
-    };
-    InstantiationService.prototype._setServiceInstance = function (id, instance) {
+        return Reflect.construct(ctor, args.concat(serviceArgs));
+    }
+    _setServiceInstance(id, instance) {
         if (this._services.get(id) instanceof SyncDescriptor) {
             this._services.set(id, instance);
         }
@@ -119,157 +106,238 @@ var InstantiationService = /** @class */ (function () {
         else {
             throw new Error('illegalState - setting UNKNOWN service instance');
         }
-    };
-    InstantiationService.prototype._getServiceInstanceOrDescriptor = function (id) {
-        var instanceOrDesc = this._services.get(id);
+    }
+    _getServiceInstanceOrDescriptor(id) {
+        const instanceOrDesc = this._services.get(id);
         if (!instanceOrDesc && this._parent) {
             return this._parent._getServiceInstanceOrDescriptor(id);
         }
         else {
             return instanceOrDesc;
         }
-    };
-    InstantiationService.prototype._getOrCreateServiceInstance = function (id, _trace) {
-        var thing = this._getServiceInstanceOrDescriptor(id);
+    }
+    _getOrCreateServiceInstance(id, _trace) {
+        if (this._globalGraph && this._globalGraphImplicitDependency) {
+            this._globalGraph.insertEdge(this._globalGraphImplicitDependency, String(id));
+        }
+        const thing = this._getServiceInstanceOrDescriptor(id);
         if (thing instanceof SyncDescriptor) {
-            return this._createAndCacheServiceInstance(id, thing, _trace.branch(id, true));
+            return this._safeCreateAndCacheServiceInstance(id, thing, _trace.branch(id, true));
         }
         else {
             _trace.branch(id, false);
             return thing;
         }
-    };
-    InstantiationService.prototype._createAndCacheServiceInstance = function (id, desc, _trace) {
-        var graph = new Graph(function (data) { return data.id.toString(); });
-        function throwCycleError() {
-            var err = new Error('[createInstance] cyclic dependency between services');
-            err.message = graph.toString();
-            throw err;
+    }
+    _safeCreateAndCacheServiceInstance(id, desc, _trace) {
+        if (this._activeInstantiations.has(id)) {
+            throw new Error(`illegal state - RECURSIVELY instantiating service '${id}'`);
         }
-        var count = 0;
-        var stack = [{ id: id, desc: desc, _trace: _trace }];
+        this._activeInstantiations.add(id);
+        try {
+            return this._createAndCacheServiceInstance(id, desc, _trace);
+        }
+        finally {
+            this._activeInstantiations.delete(id);
+        }
+    }
+    _createAndCacheServiceInstance(id, desc, _trace) {
+        var _a;
+        const graph = new Graph(data => data.id.toString());
+        let cycleCount = 0;
+        const stack = [{ id, desc, _trace }];
         while (stack.length) {
-            var item = stack.pop();
+            const item = stack.pop();
             graph.lookupOrInsertNode(item);
-            // TODO@joh use the graph to find a cycle
-            // a weak heuristic for cycle checks
-            if (count++ > 100) {
-                throwCycleError();
+            // a weak but working heuristic for cycle checks
+            if (cycleCount++ > 1000) {
+                throw new CyclicDependencyError(graph);
             }
             // check all dependencies for existence and if they need to be created first
-            var dependencies = _util.getServiceDependencies(item.desc.ctor);
-            for (var _i = 0, dependencies_1 = dependencies; _i < dependencies_1.length; _i++) {
-                var dependency = dependencies_1[_i];
-                var instanceOrDesc = this._getServiceInstanceOrDescriptor(dependency.id);
-                if (!instanceOrDesc && !dependency.optional) {
-                    console.warn("[createInstance] " + id + " depends on " + dependency.id + " which is NOT registered.");
+            for (const dependency of _util.getServiceDependencies(item.desc.ctor)) {
+                const instanceOrDesc = this._getServiceInstanceOrDescriptor(dependency.id);
+                if (!instanceOrDesc) {
+                    this._throwIfStrict(`[createInstance] ${id} depends on ${dependency.id} which is NOT registered.`, true);
                 }
+                // take note of all service dependencies
+                (_a = this._globalGraph) === null || _a === void 0 ? void 0 : _a.insertEdge(String(item.id), String(dependency.id));
                 if (instanceOrDesc instanceof SyncDescriptor) {
-                    var d = { id: dependency.id, desc: instanceOrDesc, _trace: item._trace.branch(dependency.id, true) };
+                    const d = { id: dependency.id, desc: instanceOrDesc, _trace: item._trace.branch(dependency.id, true) };
                     graph.insertEdge(item, d);
                     stack.push(d);
                 }
             }
         }
         while (true) {
-            var roots = graph.roots();
+            const roots = graph.roots();
             // if there is no more roots but still
             // nodes in the graph we have a cycle
             if (roots.length === 0) {
                 if (!graph.isEmpty()) {
-                    throwCycleError();
+                    throw new CyclicDependencyError(graph);
                 }
                 break;
             }
-            for (var _a = 0, roots_1 = roots; _a < roots_1.length; _a++) {
-                var data = roots_1[_a].data;
-                // create instance and overwrite the service collections
-                var instance = this._createServiceInstanceWithOwner(data.id, data.desc.ctor, data.desc.staticArguments, data.desc.supportsDelayedInstantiation, data._trace);
-                this._setServiceInstance(data.id, instance);
+            for (const { data } of roots) {
+                // Repeat the check for this still being a service sync descriptor. That's because
+                // instantiating a dependency might have side-effect and recursively trigger instantiation
+                // so that some dependencies are now fullfilled already.
+                const instanceOrDesc = this._getServiceInstanceOrDescriptor(data.id);
+                if (instanceOrDesc instanceof SyncDescriptor) {
+                    // create instance and overwrite the service collections
+                    const instance = this._createServiceInstanceWithOwner(data.id, data.desc.ctor, data.desc.staticArguments, data.desc.supportsDelayedInstantiation, data._trace);
+                    this._setServiceInstance(data.id, instance);
+                }
                 graph.removeNode(data);
             }
         }
         return this._getServiceInstanceOrDescriptor(id);
-    };
-    InstantiationService.prototype._createServiceInstanceWithOwner = function (id, ctor, args, supportsDelayedInstantiation, _trace) {
-        if (args === void 0) { args = []; }
+    }
+    _createServiceInstanceWithOwner(id, ctor, args = [], supportsDelayedInstantiation, _trace) {
         if (this._services.get(id) instanceof SyncDescriptor) {
-            return this._createServiceInstance(ctor, args, supportsDelayedInstantiation, _trace);
+            return this._createServiceInstance(id, ctor, args, supportsDelayedInstantiation, _trace);
         }
         else if (this._parent) {
             return this._parent._createServiceInstanceWithOwner(id, ctor, args, supportsDelayedInstantiation, _trace);
         }
         else {
-            throw new Error('illegalState - creating UNKNOWN service instance');
+            throw new Error(`illegalState - creating UNKNOWN service instance ${ctor.name}`);
         }
-    };
-    InstantiationService.prototype._createServiceInstance = function (ctor, args, _supportsDelayedInstantiation, _trace) {
-        if (args === void 0) { args = []; }
-        return this._createInstance(ctor, args, _trace);
-    };
-    return InstantiationService;
-}());
-export { InstantiationService };
-var Trace = /** @class */ (function () {
-    function Trace(type, name) {
+    }
+    _createServiceInstance(id, ctor, args = [], supportsDelayedInstantiation, _trace) {
+        if (!supportsDelayedInstantiation) {
+            // eager instantiation
+            return this._createInstance(ctor, args, _trace);
+        }
+        else {
+            const child = new InstantiationService(undefined, this._strict, this, this._enableTracing);
+            child._globalGraphImplicitDependency = String(id);
+            // Return a proxy object that's backed by an idle value. That
+            // strategy is to instantiate services in our idle time or when actually
+            // needed but not when injected into a consumer
+            // return "empty events" when the service isn't instantiated yet
+            const earlyListeners = new Map();
+            const idle = new IdleValue(() => {
+                const result = child._createInstance(ctor, args, _trace);
+                // early listeners that we kept are now being subscribed to
+                // the real service
+                for (const [key, values] of earlyListeners) {
+                    const candidate = result[key];
+                    if (typeof candidate === 'function') {
+                        for (const listener of values) {
+                            candidate.apply(result, listener);
+                        }
+                    }
+                }
+                earlyListeners.clear();
+                return result;
+            });
+            return new Proxy(Object.create(null), {
+                get(target, key) {
+                    if (!idle.isInitialized) {
+                        // looks like an event
+                        if (typeof key === 'string' && (key.startsWith('onDid') || key.startsWith('onWill'))) {
+                            let list = earlyListeners.get(key);
+                            if (!list) {
+                                list = new LinkedList();
+                                earlyListeners.set(key, list);
+                            }
+                            const event = (callback, thisArg, disposables) => {
+                                const rm = list.push([callback, thisArg, disposables]);
+                                return toDisposable(rm);
+                            };
+                            return event;
+                        }
+                    }
+                    // value already exists
+                    if (key in target) {
+                        return target[key];
+                    }
+                    // create value
+                    const obj = idle.value;
+                    let prop = obj[key];
+                    if (typeof prop !== 'function') {
+                        return prop;
+                    }
+                    prop = prop.bind(obj);
+                    target[key] = prop;
+                    return prop;
+                },
+                set(_target, p, value) {
+                    idle.value[p] = value;
+                    return true;
+                },
+                getPrototypeOf(_target) {
+                    return ctor.prototype;
+                }
+            });
+        }
+    }
+    _throwIfStrict(msg, printWarning) {
+        if (printWarning) {
+            console.warn(msg);
+        }
+        if (this._strict) {
+            throw new Error(msg);
+        }
+    }
+}
+class Trace {
+    static traceInvocation(_enableTracing, ctor) {
+        return !_enableTracing ? Trace._None : new Trace(2 /* TraceType.Invocation */, ctor.name || new Error().stack.split('\n').slice(3, 4).join('\n'));
+    }
+    static traceCreation(_enableTracing, ctor) {
+        return !_enableTracing ? Trace._None : new Trace(1 /* TraceType.Creation */, ctor.name);
+    }
+    constructor(type, name) {
         this.type = type;
         this.name = name;
         this._start = Date.now();
         this._dep = [];
     }
-    Trace.traceInvocation = function (ctor) {
-        return !_enableTracing ? Trace._None : new Trace(1 /* Invocation */, ctor.name || ctor.toString().substring(0, 42).replace(/\n/g, ''));
-    };
-    Trace.traceCreation = function (ctor) {
-        return !_enableTracing ? Trace._None : new Trace(0 /* Creation */, ctor.name);
-    };
-    Trace.prototype.branch = function (id, first) {
-        var child = new Trace(2 /* Branch */, id.toString());
+    branch(id, first) {
+        const child = new Trace(3 /* TraceType.Branch */, id.toString());
         this._dep.push([id, first, child]);
         return child;
-    };
-    Trace.prototype.stop = function () {
-        var dur = Date.now() - this._start;
+    }
+    stop() {
+        const dur = Date.now() - this._start;
         Trace._totals += dur;
-        var causedCreation = false;
+        let causedCreation = false;
         function printChild(n, trace) {
-            var res = [];
-            var prefix = new Array(n + 1).join('\t');
-            for (var _i = 0, _a = trace._dep; _i < _a.length; _i++) {
-                var _b = _a[_i], id = _b[0], first = _b[1], child = _b[2];
+            const res = [];
+            const prefix = new Array(n + 1).join('\t');
+            for (const [id, first, child] of trace._dep) {
                 if (first && child) {
                     causedCreation = true;
-                    res.push(prefix + "CREATES -> " + id);
-                    var nested = printChild(n + 1, child);
+                    res.push(`${prefix}CREATES -> ${id}`);
+                    const nested = printChild(n + 1, child);
                     if (nested) {
                         res.push(nested);
                     }
                 }
                 else {
-                    res.push(prefix + "uses -> " + id);
+                    res.push(`${prefix}uses -> ${id}`);
                 }
             }
             return res.join('\n');
         }
-        var lines = [
-            (this.type === 0 /* Creation */ ? 'CREATE' : 'CALL') + " " + this.name,
-            "" + printChild(1, this),
-            "DONE, took " + dur.toFixed(2) + "ms (grand total " + Trace._totals.toFixed(2) + "ms)"
+        const lines = [
+            `${this.type === 1 /* TraceType.Creation */ ? 'CREATE' : 'CALL'} ${this.name}`,
+            `${printChild(1, this)}`,
+            `DONE, took ${dur.toFixed(2)}ms (grand total ${Trace._totals.toFixed(2)}ms)`
         ];
         if (dur > 2 || causedCreation) {
-            console.log(lines.join('\n'));
+            Trace.all.add(lines.join('\n'));
         }
-    };
-    Trace._None = new /** @class */ (function (_super) {
-        __extends(class_1, _super);
-        function class_1() {
-            return _super.call(this, -1, null) || this;
-        }
-        class_1.prototype.stop = function () { };
-        class_1.prototype.branch = function () { return this; };
-        return class_1;
-    }(Trace));
-    Trace._totals = 0;
-    return Trace;
-}());
+    }
+}
+Trace.all = new Set();
+Trace._None = new class extends Trace {
+    constructor() { super(0 /* TraceType.None */, null); }
+    stop() { }
+    branch() { return this; }
+};
+Trace._totals = 0;
+export { Trace };
 //#endregion

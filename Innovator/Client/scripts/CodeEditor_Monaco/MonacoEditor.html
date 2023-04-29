@@ -31,7 +31,7 @@
         function initEditor() {
             require.config({ paths: { 'vs': '../../vendors/monaco-editor/min/vs' }});
             require(['vs/editor/editor.main'], function() {
-            	// [XAM]-S Restore theme
+                // [XAM]-S Restore theme
                 var editorTheme = 'vs'; // set the default method theme
                 // Get the Editor theme from the user preference if possible
                 var userPrefAml = '<Item type="Core_GlobalLayout" action="get" select="monaco_editor_theme">' +
@@ -55,7 +55,7 @@
                 }
                 var globalPref = res.getResult().selectSingleNode('./Item');
                 var editorTheme = aras.getItemProperty(globalPref, 'monaco_editor_theme') || editorTheme;
-            	// [XAM]-E Restore theme
+                // [XAM]-E Restore theme
 
                 var code = aras.getItemProperty(parent.parent.document.item, "method_code") || "";
                 var editor = monaco.editor.create(document.getElementById('editormain'), {

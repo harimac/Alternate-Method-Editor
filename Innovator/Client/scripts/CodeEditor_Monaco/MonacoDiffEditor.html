@@ -31,6 +31,32 @@
         function initDiffEditor() {
             require.config({ paths: { 'vs': '../../vendors/monaco-editor/min/vs' }});
             require(['vs/editor/editor.main'], function() {
+                // [XAM]-S Restore theme
+                var editorTheme = 'vs'; // set the default method theme
+                // Get the Editor theme from the user preference if possible
+                var userPrefAml = '<Item type="Core_GlobalLayout" action="get" select="monaco_editor_theme">' +
+                                    '<source_id>' +
+                                        '<Item type="Preference" action="get" select="id">' +
+                                            '<identity_id>' +
+                                                '<Item type="Identity" action="get" select="id">' +
+                                                    '<is_alias>1</is_alias>' +
+                                                    '<id>' + aras.getIdentityList() + '</id>' +
+                                                '</Item>' +
+                                            '</identity_id>' +
+                                        '</Item>' +
+                                    '</source_id>' +
+                                  '</Item>';
+
+                var res = aras.soapSend('ApplyItem', userPrefAml);
+                if (res.getFaultCode() != 0) 
+                {
+                    aras.AlertError(res);
+                    return;
+                }
+                var globalPref = res.getResult().selectSingleNode('./Item');
+                var editorTheme = aras.getItemProperty(globalPref, 'monaco_editor_theme') || editorTheme;
+                // [XAM]-E Restore theme
+
                 var oldMethodCode = parent.methodEditorHelper.getComparisonMethodCode();
                 var currentMethodCode = aras.getItemProperty(parent.parent.document.item, "method_code") || "";
                 
@@ -43,10 +69,11 @@
                     modified: currentModel
                 })
                 
-                parent.editor = diffEditor.modifiedEditor;
+                parent.editor = diffEditor._modifiedEditor; // [XAM] Update to latest monaco
                 parent.monacoEditor = monaco.editor;
                 var codeLang = aras.getItemProperty(parent.parent.document.item, "method_type");
                 parent.methodEditorHelper.setLanguage(codeLang);
+                parent.methodEditorHelper.setTheme(editorTheme); // [XAM] Restore theme
                 parent.methodEditorHelper.setEditorChangeEvent();
                 parent.methodEditorHelper.addEditorContextActions();
             });

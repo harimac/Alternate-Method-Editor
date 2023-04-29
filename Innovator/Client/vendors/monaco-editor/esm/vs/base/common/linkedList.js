@@ -2,118 +2,123 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { FIN } from './iterator.js';
-var Node = /** @class */ (function () {
-    function Node(element) {
+class Node {
+    constructor(element) {
         this.element = element;
+        this.next = Node.Undefined;
+        this.prev = Node.Undefined;
     }
-    return Node;
-}());
-var LinkedList = /** @class */ (function () {
-    function LinkedList() {
+}
+Node.Undefined = new Node(undefined);
+export class LinkedList {
+    constructor() {
+        this._first = Node.Undefined;
+        this._last = Node.Undefined;
         this._size = 0;
     }
-    Object.defineProperty(LinkedList.prototype, "size", {
-        get: function () {
-            return this._size;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    LinkedList.prototype.isEmpty = function () {
-        return !this._first;
-    };
-    LinkedList.prototype.unshift = function (element) {
+    get size() {
+        return this._size;
+    }
+    isEmpty() {
+        return this._first === Node.Undefined;
+    }
+    clear() {
+        let node = this._first;
+        while (node !== Node.Undefined) {
+            const next = node.next;
+            node.prev = Node.Undefined;
+            node.next = Node.Undefined;
+            node = next;
+        }
+        this._first = Node.Undefined;
+        this._last = Node.Undefined;
+        this._size = 0;
+    }
+    unshift(element) {
         return this._insert(element, false);
-    };
-    LinkedList.prototype.push = function (element) {
+    }
+    push(element) {
         return this._insert(element, true);
-    };
-    LinkedList.prototype._insert = function (element, atTheEnd) {
-        var newNode = new Node(element);
-        if (!this._first) {
+    }
+    _insert(element, atTheEnd) {
+        const newNode = new Node(element);
+        if (this._first === Node.Undefined) {
             this._first = newNode;
             this._last = newNode;
         }
         else if (atTheEnd) {
             // push
-            var oldLast = this._last;
+            const oldLast = this._last;
             this._last = newNode;
             newNode.prev = oldLast;
             oldLast.next = newNode;
         }
         else {
             // unshift
-            var oldFirst = this._first;
+            const oldFirst = this._first;
             this._first = newNode;
             newNode.next = oldFirst;
             oldFirst.prev = newNode;
         }
         this._size += 1;
-        return this._remove.bind(this, newNode);
-    };
-    LinkedList.prototype.shift = function () {
-        if (!this._first) {
+        let didRemove = false;
+        return () => {
+            if (!didRemove) {
+                didRemove = true;
+                this._remove(newNode);
+            }
+        };
+    }
+    shift() {
+        if (this._first === Node.Undefined) {
             return undefined;
         }
         else {
-            var res = this._first.element;
+            const res = this._first.element;
             this._remove(this._first);
             return res;
         }
-    };
-    LinkedList.prototype._remove = function (node) {
-        var candidate = this._first;
-        while (candidate instanceof Node) {
-            if (candidate !== node) {
-                candidate = candidate.next;
-                continue;
-            }
-            if (candidate.prev && candidate.next) {
-                // middle
-                var anchor = candidate.prev;
-                anchor.next = candidate.next;
-                candidate.next.prev = anchor;
-            }
-            else if (!candidate.prev && !candidate.next) {
-                // only node
-                this._first = undefined;
-                this._last = undefined;
-            }
-            else if (!candidate.next) {
-                // last
-                this._last = this._last.prev;
-                this._last.next = undefined;
-            }
-            else if (!candidate.prev) {
-                // first
-                this._first = this._first.next;
-                this._first.prev = undefined;
-            }
-            // done
-            this._size -= 1;
-            break;
+    }
+    pop() {
+        if (this._last === Node.Undefined) {
+            return undefined;
         }
-    };
-    LinkedList.prototype.iterator = function () {
-        var element;
-        var node = this._first;
-        return {
-            next: function () {
-                if (!node) {
-                    return FIN;
-                }
-                if (!element) {
-                    element = { done: false, value: node.element };
-                }
-                else {
-                    element.value = node.element;
-                }
-                node = node.next;
-                return element;
-            }
-        };
-    };
-    return LinkedList;
-}());
-export { LinkedList };
+        else {
+            const res = this._last.element;
+            this._remove(this._last);
+            return res;
+        }
+    }
+    _remove(node) {
+        if (node.prev !== Node.Undefined && node.next !== Node.Undefined) {
+            // middle
+            const anchor = node.prev;
+            anchor.next = node.next;
+            node.next.prev = anchor;
+        }
+        else if (node.prev === Node.Undefined && node.next === Node.Undefined) {
+            // only node
+            this._first = Node.Undefined;
+            this._last = Node.Undefined;
+        }
+        else if (node.next === Node.Undefined) {
+            // last
+            this._last = this._last.prev;
+            this._last.next = Node.Undefined;
+        }
+        else if (node.prev === Node.Undefined) {
+            // first
+            this._first = this._first.next;
+            this._first.prev = Node.Undefined;
+        }
+        // done
+        this._size -= 1;
+    }
+    *[Symbol.iterator]() {
+        let node = this._first;
+        while (node !== Node.Undefined) {
+            yield node.element;
+            node = node.next;
+        }
+    }
+}

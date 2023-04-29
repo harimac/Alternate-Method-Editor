@@ -2,217 +2,49 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 import * as browser from './browser.js';
-import { domEvent } from './event.js';
+import { BrowserFeatures } from './canIUse.js';
 import { StandardKeyboardEvent } from './keyboardEvent.js';
 import { StandardMouseEvent } from './mouseEvent.js';
-import { TimeoutTimer } from '../common/async.js';
 import { onUnexpectedError } from '../common/errors.js';
-import { Emitter } from '../common/event.js';
-import { Disposable, dispose, toDisposable } from '../common/lifecycle.js';
+import * as event from '../common/event.js';
+import * as dompurify from './dompurify/dompurify.js';
+import { Disposable, DisposableStore, toDisposable } from '../common/lifecycle.js';
+import { FileAccess, RemoteAuthorities } from '../common/network.js';
 import * as platform from '../common/platform.js';
-import { coalesce } from '../common/arrays.js';
 export function clearNode(node) {
     while (node.firstChild) {
-        node.removeChild(node.firstChild);
+        node.firstChild.remove();
     }
 }
-export function removeNode(node) {
-    if (node.parentNode) {
-        node.parentNode.removeChild(node);
-    }
-}
+/**
+ * @deprecated Use node.isConnected directly
+ */
 export function isInDOM(node) {
-    while (node) {
-        if (node === document.body) {
-            return true;
-        }
-        node = node.parentNode;
-    }
-    return false;
+    var _a;
+    return (_a = node === null || node === void 0 ? void 0 : node.isConnected) !== null && _a !== void 0 ? _a : false;
 }
-var _manualClassList = new /** @class */ (function () {
-    function class_1() {
-    }
-    class_1.prototype._findClassName = function (node, className) {
-        var classes = node.className;
-        if (!classes) {
-            this._lastStart = -1;
-            return;
-        }
-        className = className.trim();
-        var classesLen = classes.length, classLen = className.length;
-        if (classLen === 0) {
-            this._lastStart = -1;
-            return;
-        }
-        if (classesLen < classLen) {
-            this._lastStart = -1;
-            return;
-        }
-        if (classes === className) {
-            this._lastStart = 0;
-            this._lastEnd = classesLen;
-            return;
-        }
-        var idx = -1, idxEnd;
-        while ((idx = classes.indexOf(className, idx + 1)) >= 0) {
-            idxEnd = idx + classLen;
-            // a class that is followed by another class
-            if ((idx === 0 || classes.charCodeAt(idx - 1) === 32 /* Space */) && classes.charCodeAt(idxEnd) === 32 /* Space */) {
-                this._lastStart = idx;
-                this._lastEnd = idxEnd + 1;
-                return;
-            }
-            // last class
-            if (idx > 0 && classes.charCodeAt(idx - 1) === 32 /* Space */ && idxEnd === classesLen) {
-                this._lastStart = idx - 1;
-                this._lastEnd = idxEnd;
-                return;
-            }
-            // equal - duplicate of cmp above
-            if (idx === 0 && idxEnd === classesLen) {
-                this._lastStart = 0;
-                this._lastEnd = idxEnd;
-                return;
-            }
-        }
-        this._lastStart = -1;
-    };
-    class_1.prototype.hasClass = function (node, className) {
-        this._findClassName(node, className);
-        return this._lastStart !== -1;
-    };
-    class_1.prototype.addClasses = function (node) {
-        var _this = this;
-        var classNames = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            classNames[_i - 1] = arguments[_i];
-        }
-        classNames.forEach(function (nameValue) { return nameValue.split(' ').forEach(function (name) { return _this.addClass(node, name); }); });
-    };
-    class_1.prototype.addClass = function (node, className) {
-        if (!node.className) { // doesn't have it for sure
-            node.className = className;
-        }
-        else {
-            this._findClassName(node, className); // see if it's already there
-            if (this._lastStart === -1) {
-                node.className = node.className + ' ' + className;
-            }
-        }
-    };
-    class_1.prototype.removeClass = function (node, className) {
-        this._findClassName(node, className);
-        if (this._lastStart === -1) {
-            return; // Prevent styles invalidation if not necessary
-        }
-        else {
-            node.className = node.className.substring(0, this._lastStart) + node.className.substring(this._lastEnd);
-        }
-    };
-    class_1.prototype.removeClasses = function (node) {
-        var _this = this;
-        var classNames = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            classNames[_i - 1] = arguments[_i];
-        }
-        classNames.forEach(function (nameValue) { return nameValue.split(' ').forEach(function (name) { return _this.removeClass(node, name); }); });
-    };
-    class_1.prototype.toggleClass = function (node, className, shouldHaveIt) {
-        this._findClassName(node, className);
-        if (this._lastStart !== -1 && (shouldHaveIt === undefined || !shouldHaveIt)) {
-            this.removeClass(node, className);
-        }
-        if (this._lastStart === -1 && (shouldHaveIt === undefined || shouldHaveIt)) {
-            this.addClass(node, className);
-        }
-    };
-    return class_1;
-}());
-var _nativeClassList = new /** @class */ (function () {
-    function class_2() {
-    }
-    class_2.prototype.hasClass = function (node, className) {
-        return Boolean(className) && node.classList && node.classList.contains(className);
-    };
-    class_2.prototype.addClasses = function (node) {
-        var _this = this;
-        var classNames = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            classNames[_i - 1] = arguments[_i];
-        }
-        classNames.forEach(function (nameValue) { return nameValue.split(' ').forEach(function (name) { return _this.addClass(node, name); }); });
-    };
-    class_2.prototype.addClass = function (node, className) {
-        if (className && node.classList) {
-            node.classList.add(className);
-        }
-    };
-    class_2.prototype.removeClass = function (node, className) {
-        if (className && node.classList) {
-            node.classList.remove(className);
-        }
-    };
-    class_2.prototype.removeClasses = function (node) {
-        var _this = this;
-        var classNames = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            classNames[_i - 1] = arguments[_i];
-        }
-        classNames.forEach(function (nameValue) { return nameValue.split(' ').forEach(function (name) { return _this.removeClass(node, name); }); });
-    };
-    class_2.prototype.toggleClass = function (node, className, shouldHaveIt) {
-        if (node.classList) {
-            node.classList.toggle(className, shouldHaveIt);
-        }
-    };
-    return class_2;
-}());
-// In IE11 there is only partial support for `classList` which makes us keep our
-// custom implementation. Otherwise use the native implementation, see: http://caniuse.com/#search=classlist
-var _classList = browser.isIE ? _manualClassList : _nativeClassList;
-export var hasClass = _classList.hasClass.bind(_classList);
-export var addClass = _classList.addClass.bind(_classList);
-export var addClasses = _classList.addClasses.bind(_classList);
-export var removeClass = _classList.removeClass.bind(_classList);
-export var removeClasses = _classList.removeClasses.bind(_classList);
-export var toggleClass = _classList.toggleClass.bind(_classList);
-var DomListener = /** @class */ (function () {
-    function DomListener(node, type, handler, useCapture) {
+class DomListener {
+    constructor(node, type, handler, options) {
         this._node = node;
         this._type = type;
         this._handler = handler;
-        this._useCapture = (useCapture || false);
-        this._node.addEventListener(this._type, this._handler, this._useCapture);
+        this._options = (options || false);
+        this._node.addEventListener(this._type, this._handler, this._options);
     }
-    DomListener.prototype.dispose = function () {
+    dispose() {
         if (!this._handler) {
             // Already disposed
             return;
         }
-        this._node.removeEventListener(this._type, this._handler, this._useCapture);
+        this._node.removeEventListener(this._type, this._handler, this._options);
         // Prevent leakers from holding on to the dom or handler func
         this._node = null;
         this._handler = null;
-    };
-    return DomListener;
-}());
-export function addDisposableListener(node, type, handler, useCapture) {
-    return new DomListener(node, type, handler, useCapture);
+    }
+}
+export function addDisposableListener(node, type, handler, useCaptureOrOptions) {
+    return new DomListener(node, type, handler, useCaptureOrOptions);
 }
 function _wrapAsStandardMouseEvent(handler) {
     return function (e) {
@@ -224,8 +56,8 @@ function _wrapAsStandardKeyboardEvent(handler) {
         return handler(new StandardKeyboardEvent(e));
     };
 }
-export var addStandardDisposableListener = function addStandardDisposableListener(node, type, handler, useCapture) {
-    var wrapHandler = handler;
+export const addStandardDisposableListener = function addStandardDisposableListener(node, type, handler, useCapture) {
+    let wrapHandler = handler;
     if (type === 'click' || type === 'mousedown') {
         wrapHandler = _wrapAsStandardMouseEvent(handler);
     }
@@ -234,33 +66,19 @@ export var addStandardDisposableListener = function addStandardDisposableListene
     }
     return addDisposableListener(node, type, wrapHandler, useCapture);
 };
-export function addDisposableNonBubblingMouseOutListener(node, handler) {
-    return addDisposableListener(node, 'mouseout', function (e) {
-        // Mouse out bubbles, so this is an attempt to ignore faux mouse outs coming from children elements
-        var toElement = (e.relatedTarget || e.target);
-        while (toElement && toElement !== node) {
-            toElement = toElement.parentNode;
-        }
-        if (toElement === node) {
-            return;
-        }
-        handler(e);
-    });
+export const addStandardDisposableGenericMouseDownListener = function addStandardDisposableListener(node, handler, useCapture) {
+    const wrapHandler = _wrapAsStandardMouseEvent(handler);
+    return addDisposableGenericMouseDownListener(node, wrapHandler, useCapture);
+};
+export const addStandardDisposableGenericMouseUpListener = function addStandardDisposableListener(node, handler, useCapture) {
+    const wrapHandler = _wrapAsStandardMouseEvent(handler);
+    return addDisposableGenericMouseUpListener(node, wrapHandler, useCapture);
+};
+export function addDisposableGenericMouseDownListener(node, handler, useCapture) {
+    return addDisposableListener(node, platform.isIOS && BrowserFeatures.pointerEvents ? EventType.POINTER_DOWN : EventType.MOUSE_DOWN, handler, useCapture);
 }
-var _animationFrame = null;
-function doRequestAnimationFrame(callback) {
-    if (!_animationFrame) {
-        var emulatedRequestAnimationFrame = function (callback) {
-            return setTimeout(function () { return callback(new Date().getTime()); }, 0);
-        };
-        _animationFrame = (self.requestAnimationFrame
-            || self.msRequestAnimationFrame
-            || self.webkitRequestAnimationFrame
-            || self.mozRequestAnimationFrame
-            || self.oRequestAnimationFrame
-            || emulatedRequestAnimationFrame);
-    }
-    return _animationFrame.call(self, callback);
+export function addDisposableGenericMouseUpListener(node, handler, useCapture) {
+    return addDisposableListener(node, platform.isIOS && BrowserFeatures.pointerEvents ? EventType.POINTER_UP : EventType.MOUSE_UP, handler, useCapture);
 }
 /**
  * Schedule a callback to be run at the next animation frame.
@@ -268,25 +86,24 @@ function doRequestAnimationFrame(callback) {
  * If currently in an animation frame, `runner` will be executed immediately.
  * @return token that can be used to cancel the scheduled runner (only if `runner` was not executed immediately).
  */
-export var runAtThisOrScheduleAtNextAnimationFrame;
+export let runAtThisOrScheduleAtNextAnimationFrame;
 /**
  * Schedule a callback to be run at the next animation frame.
  * This allows multiple parties to register callbacks that should run at the next animation frame.
  * If currently in an animation frame, `runner` will be executed at the next animation frame.
  * @return token that can be used to cancel the scheduled runner.
  */
-export var scheduleAtNextAnimationFrame;
-var AnimationFrameQueueItem = /** @class */ (function () {
-    function AnimationFrameQueueItem(runner, priority) {
-        if (priority === void 0) { priority = 0; }
+export let scheduleAtNextAnimationFrame;
+class AnimationFrameQueueItem {
+    constructor(runner, priority = 0) {
         this._runner = runner;
         this.priority = priority;
         this._canceled = false;
     }
-    AnimationFrameQueueItem.prototype.dispose = function () {
+    dispose() {
         this._canceled = true;
-    };
-    AnimationFrameQueueItem.prototype.execute = function () {
+    }
+    execute() {
         if (this._canceled) {
             return;
         }
@@ -296,55 +113,53 @@ var AnimationFrameQueueItem = /** @class */ (function () {
         catch (e) {
             onUnexpectedError(e);
         }
-    };
+    }
     // Sort by priority (largest to lowest)
-    AnimationFrameQueueItem.sort = function (a, b) {
+    static sort(a, b) {
         return b.priority - a.priority;
-    };
-    return AnimationFrameQueueItem;
-}());
+    }
+}
 (function () {
     /**
      * The runners scheduled at the next animation frame
      */
-    var NEXT_QUEUE = [];
+    let NEXT_QUEUE = [];
     /**
      * The runners scheduled at the current animation frame
      */
-    var CURRENT_QUEUE = null;
+    let CURRENT_QUEUE = null;
     /**
      * A flag to keep track if the native requestAnimationFrame was already called
      */
-    var animFrameRequested = false;
+    let animFrameRequested = false;
     /**
      * A flag to indicate if currently handling a native requestAnimationFrame callback
      */
-    var inAnimationFrameRunner = false;
-    var animationFrameRunner = function () {
+    let inAnimationFrameRunner = false;
+    const animationFrameRunner = () => {
         animFrameRequested = false;
         CURRENT_QUEUE = NEXT_QUEUE;
         NEXT_QUEUE = [];
         inAnimationFrameRunner = true;
         while (CURRENT_QUEUE.length > 0) {
             CURRENT_QUEUE.sort(AnimationFrameQueueItem.sort);
-            var top_1 = CURRENT_QUEUE.shift();
-            top_1.execute();
+            const top = CURRENT_QUEUE.shift();
+            top.execute();
         }
         inAnimationFrameRunner = false;
     };
-    scheduleAtNextAnimationFrame = function (runner, priority) {
-        if (priority === void 0) { priority = 0; }
-        var item = new AnimationFrameQueueItem(runner, priority);
+    scheduleAtNextAnimationFrame = (runner, priority = 0) => {
+        const item = new AnimationFrameQueueItem(runner, priority);
         NEXT_QUEUE.push(item);
         if (!animFrameRequested) {
             animFrameRequested = true;
-            doRequestAnimationFrame(animationFrameRunner);
+            requestAnimationFrame(animationFrameRunner);
         }
         return item;
     };
-    runAtThisOrScheduleAtNextAnimationFrame = function (runner, priority) {
+    runAtThisOrScheduleAtNextAnimationFrame = (runner, priority) => {
         if (inAnimationFrameRunner) {
-            var item = new AnimationFrameQueueItem(runner, priority);
+            const item = new AnimationFrameQueueItem(runner, priority);
             CURRENT_QUEUE.push(item);
             return item;
         }
@@ -353,128 +168,133 @@ var AnimationFrameQueueItem = /** @class */ (function () {
         }
     };
 })();
-var MINIMUM_TIME_MS = 16;
-var DEFAULT_EVENT_MERGER = function (lastEvent, currentEvent) {
-    return currentEvent;
-};
-var TimeoutThrottledDomListener = /** @class */ (function (_super) {
-    __extends(TimeoutThrottledDomListener, _super);
-    function TimeoutThrottledDomListener(node, type, handler, eventMerger, minimumTimeMs) {
-        if (eventMerger === void 0) { eventMerger = DEFAULT_EVENT_MERGER; }
-        if (minimumTimeMs === void 0) { minimumTimeMs = MINIMUM_TIME_MS; }
-        var _this = _super.call(this) || this;
-        var lastEvent = null;
-        var lastHandlerTime = 0;
-        var timeout = _this._register(new TimeoutTimer());
-        var invokeHandler = function () {
-            lastHandlerTime = (new Date()).getTime();
-            handler(lastEvent);
-            lastEvent = null;
-        };
-        _this._register(addDisposableListener(node, type, function (e) {
-            lastEvent = eventMerger(lastEvent, e);
-            var elapsedTime = (new Date()).getTime() - lastHandlerTime;
-            if (elapsedTime >= minimumTimeMs) {
-                timeout.cancel();
-                invokeHandler();
-            }
-            else {
-                timeout.setIfNotSet(invokeHandler, minimumTimeMs - elapsedTime);
-            }
-        }));
-        return _this;
-    }
-    return TimeoutThrottledDomListener;
-}(Disposable));
-export function addDisposableThrottledListener(node, type, handler, eventMerger, minimumTimeMs) {
-    return new TimeoutThrottledDomListener(node, type, handler, eventMerger, minimumTimeMs);
-}
 export function getComputedStyle(el) {
     return document.defaultView.getComputedStyle(el, null);
 }
-// Adapted from WinJS
-// Converts a CSS positioning string for the specified element to pixels.
-var convertToPixels = (function () {
-    return function (element, value) {
-        return parseFloat(value) || 0;
-    };
-})();
-function getDimension(element, cssPropertyName, jsPropertyName) {
-    var computedStyle = getComputedStyle(element);
-    var value = '0';
-    if (computedStyle) {
-        if (computedStyle.getPropertyValue) {
-            value = computedStyle.getPropertyValue(cssPropertyName);
-        }
-        else {
-            // IE8
-            value = computedStyle.getAttribute(jsPropertyName);
-        }
+export function getClientArea(element) {
+    // Try with DOM clientWidth / clientHeight
+    if (element !== document.body) {
+        return new Dimension(element.clientWidth, element.clientHeight);
     }
-    return convertToPixels(element, value);
+    // If visual view port exits and it's on mobile, it should be used instead of window innerWidth / innerHeight, or document.body.clientWidth / document.body.clientHeight
+    if (platform.isIOS && window.visualViewport) {
+        return new Dimension(window.visualViewport.width, window.visualViewport.height);
+    }
+    // Try innerWidth / innerHeight
+    if (window.innerWidth && window.innerHeight) {
+        return new Dimension(window.innerWidth, window.innerHeight);
+    }
+    // Try with document.body.clientWidth / document.body.clientHeight
+    if (document.body && document.body.clientWidth && document.body.clientHeight) {
+        return new Dimension(document.body.clientWidth, document.body.clientHeight);
+    }
+    // Try with document.documentElement.clientWidth / document.documentElement.clientHeight
+    if (document.documentElement && document.documentElement.clientWidth && document.documentElement.clientHeight) {
+        return new Dimension(document.documentElement.clientWidth, document.documentElement.clientHeight);
+    }
+    throw new Error('Unable to figure out browser width and height');
 }
-var sizeUtils = {
-    getBorderLeftWidth: function (element) {
-        return getDimension(element, 'border-left-width', 'borderLeftWidth');
-    },
-    getBorderRightWidth: function (element) {
-        return getDimension(element, 'border-right-width', 'borderRightWidth');
-    },
-    getBorderTopWidth: function (element) {
-        return getDimension(element, 'border-top-width', 'borderTopWidth');
-    },
-    getBorderBottomWidth: function (element) {
-        return getDimension(element, 'border-bottom-width', 'borderBottomWidth');
-    },
-    getPaddingLeft: function (element) {
-        return getDimension(element, 'padding-left', 'paddingLeft');
-    },
-    getPaddingRight: function (element) {
-        return getDimension(element, 'padding-right', 'paddingRight');
-    },
-    getPaddingTop: function (element) {
-        return getDimension(element, 'padding-top', 'paddingTop');
-    },
-    getPaddingBottom: function (element) {
-        return getDimension(element, 'padding-bottom', 'paddingBottom');
-    },
-    getMarginLeft: function (element) {
-        return getDimension(element, 'margin-left', 'marginLeft');
-    },
-    getMarginTop: function (element) {
-        return getDimension(element, 'margin-top', 'marginTop');
-    },
-    getMarginRight: function (element) {
-        return getDimension(element, 'margin-right', 'marginRight');
-    },
-    getMarginBottom: function (element) {
-        return getDimension(element, 'margin-bottom', 'marginBottom');
-    },
-    __commaSentinel: false
-};
-// ----------------------------------------------------------------------------------------
-// Position & Dimension
-var Dimension = /** @class */ (function () {
-    function Dimension(width, height) {
+class SizeUtils {
+    // Adapted from WinJS
+    // Converts a CSS positioning string for the specified element to pixels.
+    static convertToPixels(element, value) {
+        return parseFloat(value) || 0;
+    }
+    static getDimension(element, cssPropertyName, jsPropertyName) {
+        const computedStyle = getComputedStyle(element);
+        const value = computedStyle ? computedStyle.getPropertyValue(cssPropertyName) : '0';
+        return SizeUtils.convertToPixels(element, value);
+    }
+    static getBorderLeftWidth(element) {
+        return SizeUtils.getDimension(element, 'border-left-width', 'borderLeftWidth');
+    }
+    static getBorderRightWidth(element) {
+        return SizeUtils.getDimension(element, 'border-right-width', 'borderRightWidth');
+    }
+    static getBorderTopWidth(element) {
+        return SizeUtils.getDimension(element, 'border-top-width', 'borderTopWidth');
+    }
+    static getBorderBottomWidth(element) {
+        return SizeUtils.getDimension(element, 'border-bottom-width', 'borderBottomWidth');
+    }
+    static getPaddingLeft(element) {
+        return SizeUtils.getDimension(element, 'padding-left', 'paddingLeft');
+    }
+    static getPaddingRight(element) {
+        return SizeUtils.getDimension(element, 'padding-right', 'paddingRight');
+    }
+    static getPaddingTop(element) {
+        return SizeUtils.getDimension(element, 'padding-top', 'paddingTop');
+    }
+    static getPaddingBottom(element) {
+        return SizeUtils.getDimension(element, 'padding-bottom', 'paddingBottom');
+    }
+    static getMarginLeft(element) {
+        return SizeUtils.getDimension(element, 'margin-left', 'marginLeft');
+    }
+    static getMarginTop(element) {
+        return SizeUtils.getDimension(element, 'margin-top', 'marginTop');
+    }
+    static getMarginRight(element) {
+        return SizeUtils.getDimension(element, 'margin-right', 'marginRight');
+    }
+    static getMarginBottom(element) {
+        return SizeUtils.getDimension(element, 'margin-bottom', 'marginBottom');
+    }
+}
+class Dimension {
+    constructor(width, height) {
         this.width = width;
         this.height = height;
     }
-    return Dimension;
-}());
+    with(width = this.width, height = this.height) {
+        if (width !== this.width || height !== this.height) {
+            return new Dimension(width, height);
+        }
+        else {
+            return this;
+        }
+    }
+    static is(obj) {
+        return typeof obj === 'object' && typeof obj.height === 'number' && typeof obj.width === 'number';
+    }
+    static lift(obj) {
+        if (obj instanceof Dimension) {
+            return obj;
+        }
+        else {
+            return new Dimension(obj.width, obj.height);
+        }
+    }
+    static equals(a, b) {
+        if (a === b) {
+            return true;
+        }
+        if (!a || !b) {
+            return false;
+        }
+        return a.width === b.width && a.height === b.height;
+    }
+}
+Dimension.None = new Dimension(0, 0);
 export { Dimension };
 export function getTopLeftOffset(element) {
     // Adapted from WinJS.Utilities.getPosition
     // and added borders to the mix
-    var offsetParent = element.offsetParent, top = element.offsetTop, left = element.offsetLeft;
-    while ((element = element.parentNode) !== null && element !== document.body && element !== document.documentElement) {
+    let offsetParent = element.offsetParent;
+    let top = element.offsetTop;
+    let left = element.offsetLeft;
+    while ((element = element.parentNode) !== null
+        && element !== document.body
+        && element !== document.documentElement) {
         top -= element.scrollTop;
-        var c = getComputedStyle(element);
+        const c = isShadowRoot(element) ? null : getComputedStyle(element);
         if (c) {
             left -= c.direction !== 'rtl' ? element.scrollLeft : -element.scrollLeft;
         }
         if (element === offsetParent) {
-            left += sizeUtils.getBorderLeftWidth(element);
-            top += sizeUtils.getBorderTopWidth(element);
+            left += SizeUtils.getBorderLeftWidth(element);
+            top += SizeUtils.getBorderTopWidth(element);
             top += element.offsetTop;
             left += element.offsetLeft;
             offsetParent = element.offsetParent;
@@ -485,71 +305,63 @@ export function getTopLeftOffset(element) {
         top: top
     };
 }
+export function size(element, width, height) {
+    if (typeof width === 'number') {
+        element.style.width = `${width}px`;
+    }
+    if (typeof height === 'number') {
+        element.style.height = `${height}px`;
+    }
+}
 /**
  * Returns the position of a dom node relative to the entire page.
  */
 export function getDomNodePagePosition(domNode) {
-    var bb = domNode.getBoundingClientRect();
+    const bb = domNode.getBoundingClientRect();
     return {
-        left: bb.left + StandardWindow.scrollX,
-        top: bb.top + StandardWindow.scrollY,
+        left: bb.left + window.scrollX,
+        top: bb.top + window.scrollY,
         width: bb.width,
         height: bb.height
     };
 }
-export var StandardWindow = new /** @class */ (function () {
-    function class_3() {
-    }
-    Object.defineProperty(class_3.prototype, "scrollX", {
-        get: function () {
-            if (typeof window.scrollX === 'number') {
-                // modern browsers
-                return window.scrollX;
-            }
-            else {
-                return document.body.scrollLeft + document.documentElement.scrollLeft;
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(class_3.prototype, "scrollY", {
-        get: function () {
-            if (typeof window.scrollY === 'number') {
-                // modern browsers
-                return window.scrollY;
-            }
-            else {
-                return document.body.scrollTop + document.documentElement.scrollTop;
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return class_3;
-}());
+/**
+ * Returns the effective zoom on a given element before window zoom level is applied
+ */
+export function getDomNodeZoomLevel(domNode) {
+    let testElement = domNode;
+    let zoom = 1.0;
+    do {
+        const elementZoomLevel = getComputedStyle(testElement).zoom;
+        if (elementZoomLevel !== null && elementZoomLevel !== undefined && elementZoomLevel !== '1') {
+            zoom *= elementZoomLevel;
+        }
+        testElement = testElement.parentElement;
+    } while (testElement !== null && testElement !== document.documentElement);
+    return zoom;
+}
 // Adapted from WinJS
 // Gets the width of the element, including margins.
 export function getTotalWidth(element) {
-    var margin = sizeUtils.getMarginLeft(element) + sizeUtils.getMarginRight(element);
+    const margin = SizeUtils.getMarginLeft(element) + SizeUtils.getMarginRight(element);
     return element.offsetWidth + margin;
 }
 export function getContentWidth(element) {
-    var border = sizeUtils.getBorderLeftWidth(element) + sizeUtils.getBorderRightWidth(element);
-    var padding = sizeUtils.getPaddingLeft(element) + sizeUtils.getPaddingRight(element);
+    const border = SizeUtils.getBorderLeftWidth(element) + SizeUtils.getBorderRightWidth(element);
+    const padding = SizeUtils.getPaddingLeft(element) + SizeUtils.getPaddingRight(element);
     return element.offsetWidth - border - padding;
 }
 // Adapted from WinJS
 // Gets the height of the content of the specified element. The content height does not include borders or padding.
 export function getContentHeight(element) {
-    var border = sizeUtils.getBorderTopWidth(element) + sizeUtils.getBorderBottomWidth(element);
-    var padding = sizeUtils.getPaddingTop(element) + sizeUtils.getPaddingBottom(element);
+    const border = SizeUtils.getBorderTopWidth(element) + SizeUtils.getBorderBottomWidth(element);
+    const padding = SizeUtils.getPaddingTop(element) + SizeUtils.getPaddingBottom(element);
     return element.offsetHeight - border - padding;
 }
 // Adapted from WinJS
 // Gets the height of the element, including its margins.
 export function getTotalHeight(element) {
-    var margin = sizeUtils.getMarginTop(element) + sizeUtils.getMarginBottom(element);
+    const margin = SizeUtils.getMarginTop(element) + SizeUtils.getMarginBottom(element);
     return element.offsetHeight + margin;
 }
 // ----------------------------------------------------------------------------------------
@@ -563,13 +375,13 @@ export function isAncestor(testChild, testAncestor) {
     return false;
 }
 export function findParentWithClass(node, clazz, stopAtClazzOrNode) {
-    while (node) {
-        if (hasClass(node, clazz)) {
+    while (node && node.nodeType === node.ELEMENT_NODE) {
+        if (node.classList.contains(clazz)) {
             return node;
         }
         if (stopAtClazzOrNode) {
             if (typeof stopAtClazzOrNode === 'string') {
-                if (hasClass(node, stopAtClazzOrNode)) {
+                if (node.classList.contains(stopAtClazzOrNode)) {
                     return null;
                 }
             }
@@ -583,15 +395,41 @@ export function findParentWithClass(node, clazz, stopAtClazzOrNode) {
     }
     return null;
 }
-export function createStyleSheet(container) {
-    if (container === void 0) { container = document.getElementsByTagName('head')[0]; }
-    var style = document.createElement('style');
+export function hasParentWithClass(node, clazz, stopAtClazzOrNode) {
+    return !!findParentWithClass(node, clazz, stopAtClazzOrNode);
+}
+export function isShadowRoot(node) {
+    return (node && !!node.host && !!node.mode);
+}
+export function isInShadowDOM(domNode) {
+    return !!getShadowRoot(domNode);
+}
+export function getShadowRoot(domNode) {
+    while (domNode.parentNode) {
+        if (domNode === document.body) {
+            // reached the body
+            return null;
+        }
+        domNode = domNode.parentNode;
+    }
+    return isShadowRoot(domNode) ? domNode : null;
+}
+export function getActiveElement() {
+    let result = document.activeElement;
+    while (result === null || result === void 0 ? void 0 : result.shadowRoot) {
+        result = result.shadowRoot.activeElement;
+    }
+    return result;
+}
+export function createStyleSheet(container = document.getElementsByTagName('head')[0], beforeAppend) {
+    const style = document.createElement('style');
     style.type = 'text/css';
     style.media = 'screen';
+    beforeAppend === null || beforeAppend === void 0 ? void 0 : beforeAppend(style);
     container.appendChild(style);
     return style;
 }
-var _sharedStyleSheet = null;
+let _sharedStyleSheet = null;
 function getSharedStyleSheet() {
     if (!_sharedStyleSheet) {
         _sharedStyleSheet = createStyleSheet();
@@ -599,37 +437,36 @@ function getSharedStyleSheet() {
     return _sharedStyleSheet;
 }
 function getDynamicStyleSheetRules(style) {
-    if (style && style.sheet && style.sheet.rules) {
+    var _a, _b;
+    if ((_a = style === null || style === void 0 ? void 0 : style.sheet) === null || _a === void 0 ? void 0 : _a.rules) {
         // Chrome, IE
         return style.sheet.rules;
     }
-    if (style && style.sheet && style.sheet.cssRules) {
+    if ((_b = style === null || style === void 0 ? void 0 : style.sheet) === null || _b === void 0 ? void 0 : _b.cssRules) {
         // FF
         return style.sheet.cssRules;
     }
     return [];
 }
-export function createCSSRule(selector, cssText, style) {
-    if (style === void 0) { style = getSharedStyleSheet(); }
+export function createCSSRule(selector, cssText, style = getSharedStyleSheet()) {
     if (!style || !cssText) {
         return;
     }
     style.sheet.insertRule(selector + '{' + cssText + '}', 0);
 }
-export function removeCSSRulesContainingSelector(ruleName, style) {
-    if (style === void 0) { style = getSharedStyleSheet(); }
+export function removeCSSRulesContainingSelector(ruleName, style = getSharedStyleSheet()) {
     if (!style) {
         return;
     }
-    var rules = getDynamicStyleSheetRules(style);
-    var toDelete = [];
-    for (var i = 0; i < rules.length; i++) {
-        var rule = rules[i];
+    const rules = getDynamicStyleSheetRules(style);
+    const toDelete = [];
+    for (let i = 0; i < rules.length; i++) {
+        const rule = rules[i];
         if (rule.selectorText.indexOf(ruleName) !== -1) {
             toDelete.push(i);
         }
     }
-    for (var i = toDelete.length - 1; i >= 0; i--) {
+    for (let i = toDelete.length - 1; i >= 0; i--) {
         style.sheet.deleteRule(toDelete[i]);
     }
 }
@@ -639,9 +476,10 @@ export function isHTMLElement(o) {
     }
     return o && typeof o === 'object' && o.nodeType === 1 && typeof o.nodeName === 'string';
 }
-export var EventType = {
+export const EventType = {
     // Mouse
     CLICK: 'click',
+    AUXCLICK: 'auxclick',
     DBLCLICK: 'dblclick',
     MOUSE_UP: 'mouseup',
     MOUSE_DOWN: 'mousedown',
@@ -650,6 +488,11 @@ export var EventType = {
     MOUSE_OUT: 'mouseout',
     MOUSE_ENTER: 'mouseenter',
     MOUSE_LEAVE: 'mouseleave',
+    MOUSE_WHEEL: 'wheel',
+    POINTER_UP: 'pointerup',
+    POINTER_DOWN: 'pointerdown',
+    POINTER_MOVE: 'pointermove',
+    POINTER_LEAVE: 'pointerleave',
     CONTEXT_MENU: 'contextmenu',
     WHEEL: 'wheel',
     // Keyboard
@@ -658,11 +501,16 @@ export var EventType = {
     KEY_UP: 'keyup',
     // HTML Document
     LOAD: 'load',
+    BEFORE_UNLOAD: 'beforeunload',
     UNLOAD: 'unload',
+    PAGE_SHOW: 'pageshow',
+    PAGE_HIDE: 'pagehide',
     ABORT: 'abort',
     ERROR: 'error',
     RESIZE: 'resize',
     SCROLL: 'scroll',
+    FULLSCREEN_CHANGE: 'fullscreenchange',
+    WK_FULLSCREEN_CHANGE: 'webkitfullscreenchange',
     // Form
     SELECT: 'select',
     CHANGE: 'change',
@@ -688,184 +536,176 @@ export var EventType = {
     ANIMATION_END: browser.isWebKit ? 'webkitAnimationEnd' : 'animationend',
     ANIMATION_ITERATION: browser.isWebKit ? 'webkitAnimationIteration' : 'animationiteration'
 };
-export var EventHelper = {
-    stop: function (e, cancelBubble) {
-        if (e.preventDefault) {
-            e.preventDefault();
-        }
-        else {
-            // IE8
-            e.returnValue = false;
-        }
+export function isEventLike(obj) {
+    const candidate = obj;
+    return !!(candidate && typeof candidate.preventDefault === 'function' && typeof candidate.stopPropagation === 'function');
+}
+export const EventHelper = {
+    stop: (e, cancelBubble) => {
+        e.preventDefault();
         if (cancelBubble) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            else {
-                // IE8
-                e.cancelBubble = true;
-            }
+            e.stopPropagation();
         }
+        return e;
     }
 };
 export function saveParentsScrollTop(node) {
-    var r = [];
-    for (var i = 0; node && node.nodeType === node.ELEMENT_NODE; i++) {
+    const r = [];
+    for (let i = 0; node && node.nodeType === node.ELEMENT_NODE; i++) {
         r[i] = node.scrollTop;
         node = node.parentNode;
     }
     return r;
 }
 export function restoreParentsScrollTop(node, state) {
-    for (var i = 0; node && node.nodeType === node.ELEMENT_NODE; i++) {
+    for (let i = 0; node && node.nodeType === node.ELEMENT_NODE; i++) {
         if (node.scrollTop !== state[i]) {
             node.scrollTop = state[i];
         }
         node = node.parentNode;
     }
 }
-var FocusTracker = /** @class */ (function () {
-    function FocusTracker(element) {
-        var _this = this;
-        this._onDidFocus = new Emitter();
+class FocusTracker extends Disposable {
+    static hasFocusWithin(element) {
+        const shadowRoot = getShadowRoot(element);
+        const activeElement = (shadowRoot ? shadowRoot.activeElement : document.activeElement);
+        return isAncestor(activeElement, element);
+    }
+    constructor(element) {
+        super();
+        this._onDidFocus = this._register(new event.Emitter());
         this.onDidFocus = this._onDidFocus.event;
-        this._onDidBlur = new Emitter();
+        this._onDidBlur = this._register(new event.Emitter());
         this.onDidBlur = this._onDidBlur.event;
-        this.disposables = [];
-        var hasFocus = isAncestor(document.activeElement, element);
-        var loosingFocus = false;
-        var onFocus = function () {
+        let hasFocus = FocusTracker.hasFocusWithin(element);
+        let loosingFocus = false;
+        const onFocus = () => {
             loosingFocus = false;
             if (!hasFocus) {
                 hasFocus = true;
-                _this._onDidFocus.fire();
+                this._onDidFocus.fire();
             }
         };
-        var onBlur = function () {
+        const onBlur = () => {
             if (hasFocus) {
                 loosingFocus = true;
-                window.setTimeout(function () {
+                window.setTimeout(() => {
                     if (loosingFocus) {
                         loosingFocus = false;
                         hasFocus = false;
-                        _this._onDidBlur.fire();
+                        this._onDidBlur.fire();
                     }
                 }, 0);
             }
         };
-        domEvent(element, EventType.FOCUS, true)(onFocus, null, this.disposables);
-        domEvent(element, EventType.BLUR, true)(onBlur, null, this.disposables);
+        this._refreshStateHandler = () => {
+            const currentNodeHasFocus = FocusTracker.hasFocusWithin(element);
+            if (currentNodeHasFocus !== hasFocus) {
+                if (hasFocus) {
+                    onBlur();
+                }
+                else {
+                    onFocus();
+                }
+            }
+        };
+        this._register(addDisposableListener(element, EventType.FOCUS, onFocus, true));
+        this._register(addDisposableListener(element, EventType.BLUR, onBlur, true));
+        this._register(addDisposableListener(element, EventType.FOCUS_IN, () => this._refreshStateHandler()));
+        this._register(addDisposableListener(element, EventType.FOCUS_OUT, () => this._refreshStateHandler()));
     }
-    FocusTracker.prototype.dispose = function () {
-        this.disposables = dispose(this.disposables);
-        this._onDidFocus.dispose();
-        this._onDidBlur.dispose();
-    };
-    return FocusTracker;
-}());
+}
 export function trackFocus(element) {
     return new FocusTracker(element);
 }
-export function append(parent) {
-    var children = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        children[_i - 1] = arguments[_i];
+export function append(parent, ...children) {
+    parent.append(...children);
+    if (children.length === 1 && typeof children[0] !== 'string') {
+        return children[0];
     }
-    children.forEach(function (child) { return parent.appendChild(child); });
-    return children[children.length - 1];
 }
-var SELECTOR_REGEX = /([\w\-]+)?(#([\w\-]+))?((.([\w\-]+))*)/;
-export function $(description, attrs) {
-    var children = [];
-    for (var _i = 2; _i < arguments.length; _i++) {
-        children[_i - 2] = arguments[_i];
-    }
-    var match = SELECTOR_REGEX.exec(description);
+export function prepend(parent, child) {
+    parent.insertBefore(child, parent.firstChild);
+    return child;
+}
+/**
+ * Removes all children from `parent` and appends `children`
+ */
+export function reset(parent, ...children) {
+    parent.innerText = '';
+    append(parent, ...children);
+}
+const SELECTOR_REGEX = /([\w\-]+)?(#([\w\-]+))?((\.([\w\-]+))*)/;
+export var Namespace;
+(function (Namespace) {
+    Namespace["HTML"] = "http://www.w3.org/1999/xhtml";
+    Namespace["SVG"] = "http://www.w3.org/2000/svg";
+})(Namespace || (Namespace = {}));
+function _$(namespace, description, attrs, ...children) {
+    const match = SELECTOR_REGEX.exec(description);
     if (!match) {
         throw new Error('Bad use of emmet');
     }
-    var result = document.createElement(match[1] || 'div');
+    const tagName = match[1] || 'div';
+    let result;
+    if (namespace !== Namespace.HTML) {
+        result = document.createElementNS(namespace, tagName);
+    }
+    else {
+        result = document.createElement(tagName);
+    }
     if (match[3]) {
         result.id = match[3];
     }
     if (match[4]) {
         result.className = match[4].replace(/\./g, ' ').trim();
     }
-    attrs = attrs || {};
-    Object.keys(attrs).forEach(function (name) {
-        var value = attrs[name];
-        if (/^on\w+$/.test(name)) {
-            result[name] = value;
-        }
-        else if (name === 'selected') {
-            if (value) {
-                result.setAttribute(name, 'true');
+    if (attrs) {
+        Object.entries(attrs).forEach(([name, value]) => {
+            if (typeof value === 'undefined') {
+                return;
             }
-        }
-        else {
-            result.setAttribute(name, value);
-        }
-    });
-    coalesce(children)
-        .forEach(function (child) {
-        if (child instanceof Node) {
-            result.appendChild(child);
-        }
-        else {
-            result.appendChild(document.createTextNode(child));
-        }
-    });
+            if (/^on\w+$/.test(name)) {
+                result[name] = value;
+            }
+            else if (name === 'selected') {
+                if (value) {
+                    result.setAttribute(name, 'true');
+                }
+            }
+            else {
+                result.setAttribute(name, value);
+            }
+        });
+    }
+    result.append(...children);
     return result;
 }
-export function show() {
-    var elements = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        elements[_i] = arguments[_i];
+export function $(description, attrs, ...children) {
+    return _$(Namespace.HTML, description, attrs, ...children);
+}
+$.SVG = function (description, attrs, ...children) {
+    return _$(Namespace.SVG, description, attrs, ...children);
+};
+export function setVisibility(visible, ...elements) {
+    if (visible) {
+        show(...elements);
     }
-    for (var _a = 0, elements_1 = elements; _a < elements_1.length; _a++) {
-        var element = elements_1[_a];
+    else {
+        hide(...elements);
+    }
+}
+export function show(...elements) {
+    for (const element of elements) {
         element.style.display = '';
         element.removeAttribute('aria-hidden');
     }
 }
-export function hide() {
-    var elements = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        elements[_i] = arguments[_i];
-    }
-    for (var _a = 0, elements_2 = elements; _a < elements_2.length; _a++) {
-        var element = elements_2[_a];
+export function hide(...elements) {
+    for (const element of elements) {
         element.style.display = 'none';
         element.setAttribute('aria-hidden', 'true');
     }
-}
-function findParentWithAttribute(node, attribute) {
-    while (node) {
-        if (node instanceof HTMLElement && node.hasAttribute(attribute)) {
-            return node;
-        }
-        node = node.parentNode;
-    }
-    return null;
-}
-export function removeTabIndexAndUpdateFocus(node) {
-    if (!node || !node.hasAttribute('tabIndex')) {
-        return;
-    }
-    // If we are the currently focused element and tabIndex is removed,
-    // standard DOM behavior is to move focus to the <body> element. We
-    // typically never want that, rather put focus to the closest element
-    // in the hierarchy of the parent DOM nodes.
-    if (document.activeElement === node) {
-        var parentFocusable = findParentWithAttribute(node.parentElement, 'tabIndex');
-        if (parentFocusable) {
-            parentFocusable.focus();
-        }
-    }
-    node.removeAttribute('tabindex');
-}
-export function getElementsByTagName(tag) {
-    return Array.prototype.slice.call(document.getElementsByTagName(tag), 0);
 }
 /**
  * Find a value usable for a dom node size such that the likelihood that it would be
@@ -876,35 +716,416 @@ export function getElementsByTagName(tag) {
  * with the screen pixels, it will sometimes be rendered with 2 screen pixels, and sometimes with 3 screen pixels.
  */
 export function computeScreenAwareSize(cssPx) {
-    var screenPx = window.devicePixelRatio * cssPx;
+    const screenPx = window.devicePixelRatio * cssPx;
     return Math.max(1, Math.floor(screenPx)) / window.devicePixelRatio;
 }
 /**
- * See https://github.com/Microsoft/monaco-editor/issues/601
+ * Open safely a new window. This is the best way to do so, but you cannot tell
+ * if the window was opened or if it was blocked by the browser's popup blocker.
+ * If you want to tell if the browser blocked the new window, use {@link windowOpenWithSuccess}.
+ *
+ * See https://github.com/microsoft/monaco-editor/issues/601
  * To protect against malicious code in the linked site, particularly phishing attempts,
  * the window.opener should be set to null to prevent the linked site from having access
  * to change the location of the current page.
  * See https://mathiasbynens.github.io/rel-noopener/
  */
 export function windowOpenNoOpener(url) {
-    if (platform.isNative || browser.isEdgeWebView) {
-        // In VSCode, window.open() always returns null...
-        // The same is true for a WebView (see https://github.com/Microsoft/monaco-editor/issues/628)
-        window.open(url);
-    }
-    else {
-        var newTab = window.open();
-        if (newTab) {
-            newTab.opener = null;
-            newTab.location.href = url;
-        }
-    }
+    // By using 'noopener' in the `windowFeatures` argument, the newly created window will
+    // not be able to use `window.opener` to reach back to the current page.
+    // See https://stackoverflow.com/a/46958731
+    // See https://developer.mozilla.org/en-US/docs/Web/API/Window/open#noopener
+    // However, this also doesn't allow us to realize if the browser blocked
+    // the creation of the window.
+    window.open(url, '_blank', 'noopener');
 }
 export function animate(fn) {
-    var step = function () {
+    const step = () => {
         fn();
         stepDisposable = scheduleAtNextAnimationFrame(step);
     };
-    var stepDisposable = scheduleAtNextAnimationFrame(step);
-    return toDisposable(function () { return stepDisposable.dispose(); });
+    let stepDisposable = scheduleAtNextAnimationFrame(step);
+    return toDisposable(() => stepDisposable.dispose());
+}
+RemoteAuthorities.setPreferredWebSchema(/^https:/.test(window.location.href) ? 'https' : 'http');
+/**
+ * returns url('...')
+ */
+export function asCSSUrl(uri) {
+    if (!uri) {
+        return `url('')`;
+    }
+    return `url('${FileAccess.uriToBrowserUri(uri).toString(true).replace(/'/g, '%27')}')`;
+}
+export function asCSSPropertyValue(value) {
+    return `'${value.replace(/'/g, '%27')}'`;
+}
+export function asCssValueWithDefault(cssPropertyValue, dflt) {
+    if (cssPropertyValue !== undefined) {
+        const variableMatch = cssPropertyValue.match(/^\s*var\((.+)\)$/);
+        if (variableMatch) {
+            const varArguments = variableMatch[1].split(',', 2);
+            if (varArguments.length === 2) {
+                dflt = asCssValueWithDefault(varArguments[1].trim(), dflt);
+            }
+            return `var(${varArguments[0]}, ${dflt})`;
+        }
+        return cssPropertyValue;
+    }
+    return dflt;
+}
+// -- sanitize and trusted html
+/**
+ * Hooks dompurify using `afterSanitizeAttributes` to check that all `href` and `src`
+ * attributes are valid.
+ */
+export function hookDomPurifyHrefAndSrcSanitizer(allowedProtocols, allowDataImages = false) {
+    // https://github.com/cure53/DOMPurify/blob/main/demos/hooks-scheme-allowlist.html
+    // build an anchor to map URLs to
+    const anchor = document.createElement('a');
+    dompurify.addHook('afterSanitizeAttributes', (node) => {
+        // check all href/src attributes for validity
+        for (const attr of ['href', 'src']) {
+            if (node.hasAttribute(attr)) {
+                const attrValue = node.getAttribute(attr);
+                if (attr === 'href' && attrValue.startsWith('#')) {
+                    // Allow fragment links
+                    continue;
+                }
+                anchor.href = attrValue;
+                if (!allowedProtocols.includes(anchor.protocol.replace(/:$/, ''))) {
+                    if (allowDataImages && attr === 'src' && anchor.href.startsWith('data:')) {
+                        continue;
+                    }
+                    node.removeAttribute(attr);
+                }
+            }
+        }
+    });
+    return toDisposable(() => {
+        dompurify.removeHook('afterSanitizeAttributes');
+    });
+}
+/**
+ * List of safe, non-input html tags.
+ */
+export const basicMarkupHtmlTags = Object.freeze([
+    'a',
+    'abbr',
+    'b',
+    'bdo',
+    'blockquote',
+    'br',
+    'caption',
+    'cite',
+    'code',
+    'col',
+    'colgroup',
+    'dd',
+    'del',
+    'details',
+    'dfn',
+    'div',
+    'dl',
+    'dt',
+    'em',
+    'figcaption',
+    'figure',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'hr',
+    'i',
+    'img',
+    'ins',
+    'kbd',
+    'label',
+    'li',
+    'mark',
+    'ol',
+    'p',
+    'pre',
+    'q',
+    'rp',
+    'rt',
+    'ruby',
+    'samp',
+    'small',
+    'small',
+    'source',
+    'span',
+    'strike',
+    'strong',
+    'sub',
+    'summary',
+    'sup',
+    'table',
+    'tbody',
+    'td',
+    'tfoot',
+    'th',
+    'thead',
+    'time',
+    'tr',
+    'tt',
+    'u',
+    'ul',
+    'var',
+    'video',
+    'wbr',
+]);
+const defaultDomPurifyConfig = Object.freeze({
+    ALLOWED_TAGS: ['a', 'button', 'blockquote', 'code', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'input', 'label', 'li', 'p', 'pre', 'select', 'small', 'span', 'strong', 'textarea', 'ul', 'ol'],
+    ALLOWED_ATTR: ['href', 'data-href', 'data-command', 'target', 'title', 'name', 'src', 'alt', 'class', 'id', 'role', 'tabindex', 'style', 'data-code', 'width', 'height', 'align', 'x-dispatch', 'required', 'checked', 'placeholder', 'type', 'start'],
+    RETURN_DOM: false,
+    RETURN_DOM_FRAGMENT: false,
+    RETURN_TRUSTED_TYPE: true
+});
+export class ModifierKeyEmitter extends event.Emitter {
+    constructor() {
+        super();
+        this._subscriptions = new DisposableStore();
+        this._keyStatus = {
+            altKey: false,
+            shiftKey: false,
+            ctrlKey: false,
+            metaKey: false
+        };
+        this._subscriptions.add(addDisposableListener(window, 'keydown', e => {
+            if (e.defaultPrevented) {
+                return;
+            }
+            const event = new StandardKeyboardEvent(e);
+            // If Alt-key keydown event is repeated, ignore it #112347
+            // Only known to be necessary for Alt-Key at the moment #115810
+            if (event.keyCode === 6 /* KeyCode.Alt */ && e.repeat) {
+                return;
+            }
+            if (e.altKey && !this._keyStatus.altKey) {
+                this._keyStatus.lastKeyPressed = 'alt';
+            }
+            else if (e.ctrlKey && !this._keyStatus.ctrlKey) {
+                this._keyStatus.lastKeyPressed = 'ctrl';
+            }
+            else if (e.metaKey && !this._keyStatus.metaKey) {
+                this._keyStatus.lastKeyPressed = 'meta';
+            }
+            else if (e.shiftKey && !this._keyStatus.shiftKey) {
+                this._keyStatus.lastKeyPressed = 'shift';
+            }
+            else if (event.keyCode !== 6 /* KeyCode.Alt */) {
+                this._keyStatus.lastKeyPressed = undefined;
+            }
+            else {
+                return;
+            }
+            this._keyStatus.altKey = e.altKey;
+            this._keyStatus.ctrlKey = e.ctrlKey;
+            this._keyStatus.metaKey = e.metaKey;
+            this._keyStatus.shiftKey = e.shiftKey;
+            if (this._keyStatus.lastKeyPressed) {
+                this._keyStatus.event = e;
+                this.fire(this._keyStatus);
+            }
+        }, true));
+        this._subscriptions.add(addDisposableListener(window, 'keyup', e => {
+            if (e.defaultPrevented) {
+                return;
+            }
+            if (!e.altKey && this._keyStatus.altKey) {
+                this._keyStatus.lastKeyReleased = 'alt';
+            }
+            else if (!e.ctrlKey && this._keyStatus.ctrlKey) {
+                this._keyStatus.lastKeyReleased = 'ctrl';
+            }
+            else if (!e.metaKey && this._keyStatus.metaKey) {
+                this._keyStatus.lastKeyReleased = 'meta';
+            }
+            else if (!e.shiftKey && this._keyStatus.shiftKey) {
+                this._keyStatus.lastKeyReleased = 'shift';
+            }
+            else {
+                this._keyStatus.lastKeyReleased = undefined;
+            }
+            if (this._keyStatus.lastKeyPressed !== this._keyStatus.lastKeyReleased) {
+                this._keyStatus.lastKeyPressed = undefined;
+            }
+            this._keyStatus.altKey = e.altKey;
+            this._keyStatus.ctrlKey = e.ctrlKey;
+            this._keyStatus.metaKey = e.metaKey;
+            this._keyStatus.shiftKey = e.shiftKey;
+            if (this._keyStatus.lastKeyReleased) {
+                this._keyStatus.event = e;
+                this.fire(this._keyStatus);
+            }
+        }, true));
+        this._subscriptions.add(addDisposableListener(document.body, 'mousedown', () => {
+            this._keyStatus.lastKeyPressed = undefined;
+        }, true));
+        this._subscriptions.add(addDisposableListener(document.body, 'mouseup', () => {
+            this._keyStatus.lastKeyPressed = undefined;
+        }, true));
+        this._subscriptions.add(addDisposableListener(document.body, 'mousemove', e => {
+            if (e.buttons) {
+                this._keyStatus.lastKeyPressed = undefined;
+            }
+        }, true));
+        this._subscriptions.add(addDisposableListener(window, 'blur', () => {
+            this.resetKeyStatus();
+        }));
+    }
+    get keyStatus() {
+        return this._keyStatus;
+    }
+    /**
+     * Allows to explicitly reset the key status based on more knowledge (#109062)
+     */
+    resetKeyStatus() {
+        this.doResetKeyStatus();
+        this.fire(this._keyStatus);
+    }
+    doResetKeyStatus() {
+        this._keyStatus = {
+            altKey: false,
+            shiftKey: false,
+            ctrlKey: false,
+            metaKey: false
+        };
+    }
+    static getInstance() {
+        if (!ModifierKeyEmitter.instance) {
+            ModifierKeyEmitter.instance = new ModifierKeyEmitter();
+        }
+        return ModifierKeyEmitter.instance;
+    }
+    dispose() {
+        super.dispose();
+        this._subscriptions.dispose();
+    }
+}
+export class DragAndDropObserver extends Disposable {
+    constructor(element, callbacks) {
+        super();
+        this.element = element;
+        this.callbacks = callbacks;
+        // A helper to fix issues with repeated DRAG_ENTER / DRAG_LEAVE
+        // calls see https://github.com/microsoft/vscode/issues/14470
+        // when the element has child elements where the events are fired
+        // repeadedly.
+        this.counter = 0;
+        // Allows to measure the duration of the drag operation.
+        this.dragStartTime = 0;
+        this.registerListeners();
+    }
+    registerListeners() {
+        this._register(addDisposableListener(this.element, EventType.DRAG_ENTER, (e) => {
+            this.counter++;
+            this.dragStartTime = e.timeStamp;
+            this.callbacks.onDragEnter(e);
+        }));
+        this._register(addDisposableListener(this.element, EventType.DRAG_OVER, (e) => {
+            var _a, _b;
+            e.preventDefault(); // needed so that the drop event fires (https://stackoverflow.com/questions/21339924/drop-event-not-firing-in-chrome)
+            (_b = (_a = this.callbacks).onDragOver) === null || _b === void 0 ? void 0 : _b.call(_a, e, e.timeStamp - this.dragStartTime);
+        }));
+        this._register(addDisposableListener(this.element, EventType.DRAG_LEAVE, (e) => {
+            this.counter--;
+            if (this.counter === 0) {
+                this.dragStartTime = 0;
+                this.callbacks.onDragLeave(e);
+            }
+        }));
+        this._register(addDisposableListener(this.element, EventType.DRAG_END, (e) => {
+            this.counter = 0;
+            this.dragStartTime = 0;
+            this.callbacks.onDragEnd(e);
+        }));
+        this._register(addDisposableListener(this.element, EventType.DROP, (e) => {
+            this.counter = 0;
+            this.dragStartTime = 0;
+            this.callbacks.onDrop(e);
+        }));
+    }
+}
+const H_REGEX = /(?<tag>[\w\-]+)?(?:#(?<id>[\w\-]+))?(?<class>(?:\.(?:[\w\-]+))*)(?:@(?<name>(?:[\w\_])+))?/;
+export function h(tag, ...args) {
+    let attributes;
+    let children;
+    if (Array.isArray(args[0])) {
+        attributes = {};
+        children = args[0];
+    }
+    else {
+        attributes = args[0] || {};
+        children = args[1];
+    }
+    const match = H_REGEX.exec(tag);
+    if (!match || !match.groups) {
+        throw new Error('Bad use of h');
+    }
+    const tagName = match.groups['tag'] || 'div';
+    const el = document.createElement(tagName);
+    if (match.groups['id']) {
+        el.id = match.groups['id'];
+    }
+    const classNames = [];
+    if (match.groups['class']) {
+        for (const className of match.groups['class'].split('.')) {
+            if (className !== '') {
+                classNames.push(className);
+            }
+        }
+    }
+    if (attributes.className !== undefined) {
+        for (const className of attributes.className.split('.')) {
+            if (className !== '') {
+                classNames.push(className);
+            }
+        }
+    }
+    if (classNames.length > 0) {
+        el.className = classNames.join(' ');
+    }
+    const result = {};
+    if (match.groups['name']) {
+        result[match.groups['name']] = el;
+    }
+    if (children) {
+        for (const c of children) {
+            if (c instanceof HTMLElement) {
+                el.appendChild(c);
+            }
+            else if (typeof c === 'string') {
+                el.append(c);
+            }
+            else {
+                Object.assign(result, c);
+                el.appendChild(c.root);
+            }
+        }
+    }
+    for (const [key, value] of Object.entries(attributes)) {
+        if (key === 'className') {
+            continue;
+        }
+        else if (key === 'style') {
+            for (const [cssKey, cssValue] of Object.entries(value)) {
+                el.style.setProperty(camelCaseToHyphenCase(cssKey), typeof cssValue === 'number' ? cssValue + 'px' : '' + cssValue);
+            }
+        }
+        else if (key === 'tabIndex') {
+            el.tabIndex = value;
+        }
+        else {
+            el.setAttribute(camelCaseToHyphenCase(key), value.toString());
+        }
+    }
+    result['root'] = el;
+    return result;
+}
+function camelCaseToHyphenCase(str) {
+    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }

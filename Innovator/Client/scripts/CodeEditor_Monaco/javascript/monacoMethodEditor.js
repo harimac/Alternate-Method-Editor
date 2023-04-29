@@ -35,6 +35,7 @@ function MethodEditor(mainWnd) {
     // [XAM]-S Restore Theme
     this.setTheme = function (themeName) {
         this.currentTheme = themeName;
+        window.monacoEditor.setTheme(themeName);
     };
     // [XAM]-E Restore Theme
 
