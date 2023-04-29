@@ -70,6 +70,8 @@ function MonacoEditorToolbar(mainWnd, methodEditorHelper) {
 			});
 
 			setMethodSide(toolbar.getItem('side').getSelectedItem());
+			showHideToc(toolbar.getItem('ftoc').getState());
+			showHideHelp(toolbar.getItem('fhelp').getState());
 			if (parent.document.isEditMode) {
 				toolbar.enable();
 			} else {
@@ -188,7 +190,7 @@ function MonacoEditorToolbar(mainWnd, methodEditorHelper) {
 	function showHideToc(doVisible) {
 		document.getElementById('helpPane').style.display = doVisible ? '' : 'none';
 		document.getElementById('workAreaWrapper').style.width = doVisible ? '70%' : '100%';
-		dijit.byId('workarea').resize();
+		dijit?.byId('workarea')?.resize();
 	}
 
 	function checkSyntax() {
@@ -266,10 +268,13 @@ function MonacoEditorToolbar(mainWnd, methodEditorHelper) {
 	function showHideHelp(doVisible) {
 		var helpDebugSlot = document.getElementById('helpDebugSlot');
 		var helpDebugSlotSplitter = document.getElementById('helpDebugSlot_splitter');
-		helpDebugSlot.style.display = helpDebugSlotSplitter.style.display = doVisible ? '' : 'none';
-		refreshDebugHelpSlot(doVisible);
-		dijit.byId('helpDebugSlot').layout();
-		dijit.byId('BorderContainer').layout();
+		helpDebugSlot.style.display = doVisible ? '' : 'none';
+		if (helpDebugSlotSplitter) {
+			helpDebugSlotSplitter.style.display = doVisible ? '' : 'none';
+			refreshDebugHelpSlot(doVisible);
+		}
+		dijit?.byId('helpDebugSlot')?.layout();
+		dijit?.byId('BorderContainer')?.layout();
 		methodEditor.resizeEditor();
 	}
 

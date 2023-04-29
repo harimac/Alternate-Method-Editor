@@ -64,6 +64,7 @@
                     theme: editorTheme, // Default theme. Can be changed in the editor [XAM] Restore them
                     readOnly: !parent.parent.document.isEditMode
                 });
+                editor.getModel().updateOptions({ tabSize: 2, insertSpaces:false });
                 parent.editor = editor;
                 parent.monacoEditor = monaco.editor;
                 parent.monaco = monaco;

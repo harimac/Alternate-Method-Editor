@@ -39,11 +39,11 @@
 		<choice id="theme" width="auto" tooltip="エディタのテーマ">
 		</choice>
 		<separator/>
-		<button image="../images/Tree.svg" id="ftoc" state="1" tooltip="コードガイドを表示"/>
+		<button image="../images/Tree.svg" id="ftoc" state="0" tooltip="コードガイドを表示"/>
 		<button image="../images/HideTOC.svg" id="toc_pos" state="0" tooltip="コードガイドの位置 左／右"/>
 		<separator/>
 		<button image="../images/HelpLookup.svg" id="help" tooltip="このメソッドのヘルプ"/>
-		<button image="../images/Help.svg" id="fhelp" state="1" tooltip="メソッドヘルプ表示"/>
+		<button image="../images/Help.svg" id="fhelp" state="0" tooltip="メソッドヘルプ表示"/>
 		<separator/>
 		<button image="../images/FitAll.svg" id="fullscreen" tooltip="このエディタを全画面表示" />
 	</toolbar>

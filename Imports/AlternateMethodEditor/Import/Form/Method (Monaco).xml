@@ -90,7 +90,7 @@
       <font_family>tahoma, arial, helvetica, sans-serif</font_family>
       <font_size>8pt</font_size>
       <font_weight>bold</font_weight>
-      <html_code><![CDATA[<iframe id="CodeEditor_iframe" src="CodeEditor_Monaco/CodeEditor.html" style="border: none; width:100vw; height:100vh; visibility:visible;" allowtransparency="true"></iframe>
+      <html_code><![CDATA[<iframe id="CodeEditor_iframe" src="CodeEditor_Monaco/CodeEditor.html" style="border: none; width:100vw; height:100%; visibility:visible;" allowtransparency="true"></iframe>
 <script type="text/javascript">
 function resizeMethodCode() {
 		var fld = getFieldByName("method_code");
@@ -104,9 +104,11 @@ function resizeMethodCode() {
 onresize = resizeMethodCode;
 onload = function onload_handler() {
 	document.body.scroll = "no";
-	resizeMethodCode();
+	//resizeMethodCode();
 	document.getElementById("CodeEditor_iframe").style.visibility = "visible";
 	const topWindow = aras.getMostTopWindowWithAras();
+	topWindow.document.querySelector('aras-scroller').style.overflow= 'hidden';
+	topWindow.document.querySelector('aras-scroller').style.paddingRight = '0px';
 	topWindow.document.querySelector('aras-form').style.height = '100%';
 }
 </script>

@@ -38,11 +38,11 @@
 		<choice id="theme" width="auto" tooltip="Editor Theme">
 		</choice>
 		<separator/>
-		<button image="../images/Tree.svg" id="ftoc" state="1" tooltip="Show Code Guide"/>
+		<button image="../images/Tree.svg" id="ftoc" state="0" tooltip="Show Code Guide"/>
 		<button image="../images/HideTOC.svg" id="toc_pos" state="0" tooltip="Code Guide Left/Right"/>
 		<separator/>
 		<button image="../images/HelpLookup.svg" id="help" tooltip="Help on this method"/>
-		<button image="../images/Help.svg" id="fhelp" state="1" tooltip="Show Method Help"/>
+		<button image="../images/Help.svg" id="fhelp" state="0" tooltip="Show Method Help"/>
 		<separator/>
 		<button image="../images/FitAll.svg" id="fullscreen" tooltip="Make the editor full screen" />
 	</toolbar>

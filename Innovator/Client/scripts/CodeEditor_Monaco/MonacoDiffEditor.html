@@ -68,7 +68,8 @@
                     original: originalModel,
                     modified: currentModel
                 })
-                
+                diffEditor._modifiedEditor.getModel().updateOptions({ tabSize: 2, insertSpaces:false });
+                diffEditor._originalEditor.getModel().updateOptions({ tabSize: 2, insertSpaces:false });
                 parent.editor = diffEditor._modifiedEditor; // [XAM] Update to latest monaco
                 parent.monacoEditor = monaco.editor;
                 var codeLang = aras.getItemProperty(parent.parent.document.item, "method_type");
