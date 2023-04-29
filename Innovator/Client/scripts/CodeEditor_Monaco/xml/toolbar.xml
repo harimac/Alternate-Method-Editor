@@ -28,11 +28,11 @@
 		<choice id="generations" width="auto" tooltip="Generation to Compare">
 		</choice>
 		<separator/>
-		<choice id="side" width="auto">
+		<choice id="side" width="auto" tooltip="Method Location"> <!-- [XAM] add tooltip -->
 			<choiceitem id="server">Server-side</choiceitem>
 			<choiceitem id="client">Client-side</choiceitem>
 		</choice>
-		<choice id="method_lang" width="auto">
+		<choice id="method_lang" width="auto" tooltip="Method Language"> <!-- [XAM] add tooltip -->
 			<choiceitem/>
 		</choice>
 		<choice id="theme" width="auto" tooltip="Editor Theme">

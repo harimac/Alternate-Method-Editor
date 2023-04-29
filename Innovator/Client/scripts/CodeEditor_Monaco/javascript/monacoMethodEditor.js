@@ -5,12 +5,13 @@ function MethodEditor(mainWnd) {
     var topWnd = mainWnd;
 	var methodLanguages = []; // list of languages
     this.currentLanguage = "JavaScript";
+    this.currentTheme = "vs-dark"; // [XAM] Restore Theme
     var tabPane;
     var preservedMenuFrame = null;
     var textChanged = false;
     this.selectionHasMethodName = false; // Used to determine if we can open a method based on the selected text
     this.comparisonGeneration = 1;
-	this.subscribedEvents = {};
+    this.subscribedEvents = {};
 
     this.setLanguage = function (langName) {
         if (!window.editor) {
@@ -19,18 +20,23 @@ function MethodEditor(mainWnd) {
         var editorLang = "";
         switch(langName) {
             case "VB":
-				        editorLang = "vbscript";
+                editorLang = "vbscript";
                 break;
             case "C#":
                 editorLang = "csharp";
                 break;
             case "JavaScript":
                 editorLang = "javascript";
-				        break;
-		}
+                break;
+        }
         window.monacoEditor.setModelLanguage(window.editor.getModel(), editorLang);
         this.currentLanguage = langName;
     };
+    // [XAM]-S Restore Theme
+    this.setTheme = function (themeName) {
+        this.currentTheme = themeName;
+    };
+    // [XAM]-E Restore Theme
 
     this.switchLanguage = function (newLanguage) {
 		this.setLanguage(newLanguage);
@@ -43,6 +49,40 @@ function MethodEditor(mainWnd) {
 	
 	this.switchTheme = function (theme) {
 		window.monacoEditor.setTheme(theme);
+        // [XAM]-S Restore Theme
+        var userPrefAml = '<Item type="Core_GlobalLayout" action="get" select="monaco_editor_theme">' +
+                              '<source_id>' +
+                                  '<Item type="Preference" action="get" select="id">' +
+                                      '<identity_id>' +
+                                          '<Item type="Identity" action="get" select="id">' +
+                                              '<is_alias>1</is_alias>' +
+                                              '<id>' + aras.getIdentityList() + '</id>' +
+                                          '</Item>' +
+                                      '</identity_id>' +
+                                  '</Item>' +
+                              '</source_id>' +
+                          '</Item>';
+
+        var res = aras.soapSend('ApplyItem', userPrefAml);
+        if (res.getFaultCode() != 0) 
+        {
+            aras.AlertError(res);
+            return;
+        }
+        var globalPref = res.getResult().selectSingleNode('./Item');
+        var curValue = aras.getItemProperty(globalPref, 'monaco_editor_theme', '');
+        if (curValue !== theme) {
+            aras.setItemProperty(globalPref, 'monaco_editor_theme', theme);
+            aras.setItemPropertyAttribute(globalPref, 'monaco_editor_theme', 'isNull', null);
+            globalPref.setAttribute('action', 'edit');
+            res = aras.soapSend('ApplyItem', globalPref.outerHTML);
+            if (res.getFaultCode() != 0) 
+            {
+                aras.AlertError(res);
+                return;
+            }
+        }
+        // [XAM]-E Restore Theme
 	}
 
     this.fillListOfMethodLanguages = function() {
@@ -88,10 +128,14 @@ function MethodEditor(mainWnd) {
 		topWnd.setTimeout(f, 1);
 
 		function f() {
-			menuFrame.setControlEnabled("print", false);
-			if (menuFrame["Preserved setControlEnabled"]) {
-				return;
+			// [XAM]-S Suppress error
+			if (menuFrame.setControlEnabled) {
+				menuFrame.setControlEnabled("print", false);
+				if (menuFrame["Preserved setControlEnabled"]) {
+					return;
+				}
 			}
+			// [XAM]-E Suppress error
 			/* jshint ignore:start */
 			menuFrame["Preserved setControlEnabled"] = menuFrame.setControlEnabled;
 			menuFrame.setControlEnabled = new Function("cntrlNm", "b", "if (cntrlNm == 'print') b = false;this['Preserved setControlEnabled'](cntrlNm, b);");

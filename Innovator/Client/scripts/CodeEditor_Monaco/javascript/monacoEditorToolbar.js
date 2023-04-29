@@ -53,6 +53,9 @@ function MonacoEditorToolbar(mainWnd, methodEditorHelper) {
 				toolbar.getItem('theme').Add(topWnd.aras.getItemProperty(themeValue, 'value'),
 					topWnd.aras.getItemProperty(themeValue, 'label'));
 			}
+			// [XAM]-S restore theme
+			toolbar.getItem('theme').setSelected(methodEditor.currentTheme);
+			// [XAM]-E restore theme
 
 			toolbar.getItem('compareRevisions').enable();
 			// Assumes that you're viewing the most current generation

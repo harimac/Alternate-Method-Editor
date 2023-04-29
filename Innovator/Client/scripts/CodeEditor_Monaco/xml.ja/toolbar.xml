@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- [XAM]-S Add Japanese resource for tooltip -->
+<toolbarapplet
+	on_load = "onToolbarLoad"
+	on_click = "onToolbarClick"
+	on_change = "onToolbarClick"
+	buttonsize = "26,25"
+	top_border = "1">
+	<toolbar id="normal">
+		<button image="../images/Print.svg" id="print" tooltip="印刷"/>
+		<separator/>
+		<button image="../images/Undo.svg" id="undo" tooltip="元に戻す"/>
+		<button image="../images/Redo.svg" id="redo" tooltip="やり直し"/>
+		<separator/>
+		<button image="../images/ExecuteSearch.svg" id="find" tooltip="検索"/>
+		<button image="../images/ViewRevisions.svg" id="replace" tooltip="置換"/>
+		<separator/>
+		<button image="../images/Unindent.svg" id="unindent" tooltip="字上げ"/>
+		<button image="../images/Indent.svg" id="indent" tooltip="字下げ"/>
+		<separator/>
+		<button image="../images/Formatting.svg" id="formatting" tooltip="フォーマット"/>
+		<button image="../images/Comment.svg" id="comment" tooltip="コメント化"/>
+		<button image="../images/Uncomment.svg" id="uncomment" tooltip="コメント解除"/>
+		<separator/>
+		<button image="../images/Compile.svg" id="chksyn" tooltip="文法チェック"/>
+		<button image="../images/Blocked.svg" id="add_debugger" tooltip="デバッグ宣言の追加"/>
+		<separator/>
+		<button image="../images/Compare.svg" id="compareRevisions" state="0" tooltip="古い世代と比較"/>
+		<choice id="generations" width="auto" tooltip="比較する世代">
+		</choice>
+		<separator/>
+		<choice id="side" width="auto" tooltip="メソッドロケーション">
+			<choiceitem id="server">サーバーサイド</choiceitem>
+			<choiceitem id="client">クライアントサイド</choiceitem>
+		</choice>
+		<choice id="method_lang" width="auto" tooltip="メソッドの言語">
+			<choiceitem/>
+		</choice>
+		<choice id="theme" width="auto" tooltip="エディタのテーマ">
+		</choice>
+		<separator/>
+		<button image="../images/Tree.svg" id="ftoc" state="1" tooltip="コードガイドを表示"/>
+		<button image="../images/HideTOC.svg" id="toc_pos" state="0" tooltip="コードガイドの位置 左／右"/>
+		<separator/>
+		<button image="../images/HelpLookup.svg" id="help" tooltip="このメソッドのヘルプ"/>
+		<button image="../images/Help.svg" id="fhelp" state="1" tooltip="メソッドヘルプ表示"/>
+		<separator/>
+		<button image="../images/FitAll.svg" id="fullscreen" tooltip="このエディタを全画面表示" />
+	</toolbar>
+</toolbarapplet>
+<!-- [XAM]-E Add Japanese resource for tooltip -->
