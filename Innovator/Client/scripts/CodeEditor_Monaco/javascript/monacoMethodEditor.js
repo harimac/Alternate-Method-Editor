@@ -20,7 +20,7 @@ function MethodEditor(mainWnd) {
         var editorLang = "";
         switch(langName) {
             case "VB":
-                editorLang = "vbscript";
+                editorLang = "vb";
                 break;
             case "C#":
                 editorLang = "csharp";
