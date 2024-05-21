@@ -2,8 +2,9 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-var _a;
 import { createFastDomNode } from '../../../base/browser/fastDomNode.js';
+import { createTrustedTypesPolicy } from '../../../base/browser/trustedTypes.js';
+import { BugIndicatingError } from '../../../base/common/errors.js';
 import { StringBuilder } from '../../common/core/stringBuilder.js';
 export class RenderedLinesCollection {
     constructor(createLine) {
@@ -41,7 +42,7 @@ export class RenderedLinesCollection {
     getLine(lineNumber) {
         const lineIndex = lineNumber - this._rendLineNumberStart;
         if (lineIndex < 0 || lineIndex >= this._lines.length) {
-            throw new Error('Illegal value for lineNumber');
+            throw new BugIndicatingError('Illegal value for lineNumber');
         }
         return this._lines[lineIndex];
     }
@@ -191,7 +192,7 @@ export class VisibleLinesCollection {
     }
     // ---- begin view event handlers
     onConfigurationChanged(e) {
-        if (e.hasChanged(139 /* EditorOption.layoutInfo */)) {
+        if (e.hasChanged(145 /* EditorOption.layoutInfo */)) {
             return true;
         }
         return false;
@@ -332,7 +333,7 @@ class ViewLayerRenderer {
         const lines = ctx.lines;
         for (let i = startIndex; i <= endIndex; i++) {
             const lineNumber = rendLineNumberStart + i;
-            lines[i].layoutLine(lineNumber, deltaTop[lineNumber - deltaLN]);
+            lines[i].layoutLine(lineNumber, deltaTop[lineNumber - deltaLN], this.viewportData.lineHeight);
         }
     }
     _insertLinesBefore(ctx, fromLineNumber, toLineNumber, deltaTop, deltaLN) {
@@ -423,7 +424,7 @@ class ViewLayerRenderer {
                     // line is not new
                     continue;
                 }
-                const renderResult = line.renderLine(i + rendLineNumberStart, deltaTop[i], this.viewportData, sb);
+                const renderResult = line.renderLine(i + rendLineNumberStart, deltaTop[i], this.viewportData.lineHeight, this.viewportData, sb);
                 if (!renderResult) {
                     // line does not need rendering
                     continue;
@@ -446,7 +447,7 @@ class ViewLayerRenderer {
                     // line was new
                     continue;
                 }
-                const renderResult = line.renderLine(i + rendLineNumberStart, deltaTop[i], this.viewportData, sb);
+                const renderResult = line.renderLine(i + rendLineNumberStart, deltaTop[i], this.viewportData.lineHeight, this.viewportData, sb);
                 if (!renderResult) {
                     // line does not need rendering
                     continue;
@@ -460,5 +461,5 @@ class ViewLayerRenderer {
         }
     }
 }
-ViewLayerRenderer._ttPolicy = (_a = window.trustedTypes) === null || _a === void 0 ? void 0 : _a.createPolicy('editorViewLayer', { createHTML: value => value });
+ViewLayerRenderer._ttPolicy = createTrustedTypesPolicy('editorViewLayer', { createHTML: value => value });
 ViewLayerRenderer._sb = new StringBuilder(100000);

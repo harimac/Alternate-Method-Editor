@@ -58,9 +58,23 @@
                 // [XAM]-E Restore theme
 
                 var code = aras.getItemProperty(parent.parent.document.item, "method_code") || "";
+                var codeLang = aras.getItemProperty(parent.parent.document.item, "method_type");
+                var editorLang = "javascript";
+                switch(codeLang) {
+                    case "VB":
+                        editorLang = "vbscript";
+                        break;
+                    case "C#":
+                        editorLang = "csharp";
+                        break;
+                    case "JavaScript":
+                        editorLang = "javascript";
+                        break;
+                }
+
                 var editor = monaco.editor.create(document.getElementById('editormain'), {
                     value: code,
-                    language: "javascript",
+                    language: editorLang,
                     theme: editorTheme, // Default theme. Can be changed in the editor [XAM] Restore them
                     readOnly: !parent.parent.document.isEditMode
                 });
@@ -68,7 +82,6 @@
                 parent.editor = editor;
                 parent.monacoEditor = monaco.editor;
                 parent.monaco = monaco;
-                var codeLang = aras.getItemProperty(parent.parent.document.item, "method_type");
                 parent.methodEditorHelper.setLanguage(codeLang);
                 parent.methodEditorHelper.setTheme(editorTheme); // [XAM] Restore them
                 parent.methodEditorHelper.setEditorChangeEvent();

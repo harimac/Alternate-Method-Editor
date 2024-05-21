@@ -7,6 +7,12 @@ for writing methods inside of Aras Innovator.
 
 ![screenshot](Screenshots/Embedded-Monaco-Editor.png)
 
+## Main added features of mine
+
+- **Supports Aras Innovator R2023.**
+- **Updated to latest monaco editor(0.48.0)**
+- **Save the selected theme to user settings.**
+
 ## Project Details
 
 #### Built Using:

@@ -26,7 +26,7 @@ class JumpToBracketAction extends EditorAction {
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
-                primary: 2048 /* KeyMod.CtrlCmd */ | 1024 /* KeyMod.Shift */ | 88 /* KeyCode.Backslash */,
+                primary: 2048 /* KeyMod.CtrlCmd */ | 1024 /* KeyMod.Shift */ | 93 /* KeyCode.Backslash */,
                 weight: 100 /* KeybindingWeight.EditorContrib */
             }
         });
@@ -43,8 +43,8 @@ class SelectToBracketAction extends EditorAction {
             label: nls.localize('smartSelect.selectToBracket', "Select to Bracket"),
             alias: 'Select to Bracket',
             precondition: undefined,
-            description: {
-                description: `Select to Bracket`,
+            metadata: {
+                description: nls.localize2('smartSelect.selectToBracketDescription', "Select the text inside and including the brackets or curly braces"),
                 args: [{
                         name: 'args',
                         schema: {
@@ -95,7 +95,7 @@ class BracketsData {
         this.options = options;
     }
 }
-class BracketMatchingController extends Disposable {
+export class BracketMatchingController extends Disposable {
     static get(editor) {
         return editor.getContribution(BracketMatchingController.ID);
     }
@@ -106,7 +106,7 @@ class BracketMatchingController extends Disposable {
         this._lastVersionId = 0;
         this._decorations = this._editor.createDecorationsCollection();
         this._updateBracketsSoon = this._register(new RunOnceScheduler(() => this._updateBrackets(), 50));
-        this._matchBrackets = this._editor.getOption(69 /* EditorOption.matchBrackets */);
+        this._matchBrackets = this._editor.getOption(72 /* EditorOption.matchBrackets */);
         this._updateBracketsSoon.schedule();
         this._register(editor.onDidChangeCursorPosition((e) => {
             if (this._matchBrackets === 'never') {
@@ -128,8 +128,8 @@ class BracketMatchingController extends Disposable {
             this._updateBracketsSoon.schedule();
         }));
         this._register(editor.onDidChangeConfiguration((e) => {
-            if (e.hasChanged(69 /* EditorOption.matchBrackets */)) {
-                this._matchBrackets = this._editor.getOption(69 /* EditorOption.matchBrackets */);
+            if (e.hasChanged(72 /* EditorOption.matchBrackets */)) {
+                this._matchBrackets = this._editor.getOption(72 /* EditorOption.matchBrackets */);
                 this._decorations.clear();
                 this._lastBracketsData = [];
                 this._lastVersionId = 0;
@@ -336,7 +336,6 @@ BracketMatchingController._DECORATION_OPTIONS_WITHOUT_OVERVIEW_RULER = ModelDeco
     stickiness: 1 /* TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges */,
     className: 'bracket-match'
 });
-export { BracketMatchingController };
 registerEditorContribution(BracketMatchingController.ID, BracketMatchingController, 1 /* EditorContributionInstantiation.AfterFirstRender */);
 registerEditorAction(SelectToBracketAction);
 registerEditorAction(JumpToBracketAction);

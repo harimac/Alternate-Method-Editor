@@ -1,11 +1,11 @@
-"use strict";
 /*!-----------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Version: 0.37.1(20a8d5a651d057aaed7875ad1c1f2ecf13c4e773)
+ * Version: 0.48.0(0037b13fb5d186fdf1e7df51a9416a2de2b8c670)
  * Released under the MIT license
  * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
  *-----------------------------------------------------------------------------*/
 define("vs/basic-languages/qsharp/qsharp", ["require"],(require)=>{
+"use strict";
 var moduleExports = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -54,6 +54,7 @@ var moduleExports = (() => {
     ]
   };
   var language = {
+    // Set defaultToken to invalid to see what you do not tokenize yet
     keywords: [
       "namespace",
       "open",
@@ -260,8 +261,10 @@ var moduleExports = (() => {
     namespaceFollows: ["namespace", "open"],
     symbols: /[=><!~?:&|+\-*\/\^%@._]+/,
     escapes: /\\[\s\S]/,
+    // The main tokenizer for our languages
     tokenizer: {
       root: [
+        // identifiers and keywords
         [
           /[a-zA-Z_$][\w$]*/,
           {
@@ -279,12 +282,18 @@ var moduleExports = (() => {
             }
           }
         ],
+        // whitespace
         { include: "@whitespace" },
+        // delimiters and operators
         [/[{}()\[\]]/, "@brackets"],
         [/@symbols/, { cases: { "@operators": "operator", "@default": "" } }],
+        // numbers
         [/\d*\.\d+([eE][\-+]?\d+)?/, "number.float"],
         [/\d+/, "number"],
+        // delimiter: after number because of .\d floats
         [/[;,.]/, "delimiter"],
+        // strings
+        //[/"([^"\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
         [/"/, { token: "string.quote", bracket: "@open", next: "@string" }]
       ],
       string: [

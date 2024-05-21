@@ -1,12 +1,12 @@
 /*!-----------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Version: 0.37.1(20a8d5a651d057aaed7875ad1c1f2ecf13c4e773)
+ * Version: 0.48.0(0037b13fb5d186fdf1e7df51a9416a2de2b8c670)
  * Released under the MIT license
  * https://github.com/microsoft/vscode/blob/main/LICENSE.txt
  *-----------------------------------------------------------*/
 
 (function() {
-var __m = ["require","exports","vs/editor/common/core/range","vs/editor/common/core/position","vs/base/common/errors","vs/base/common/strings","vs/editor/common/core/offsetRange","vs/editor/common/diff/algorithms/diffAlgorithm","vs/base/common/platform","vs/base/common/event","vs/base/common/assert","vs/base/common/lifecycle","vs/base/common/objects","vs/base/common/uri","vs/base/common/functional","vs/base/common/iterator","vs/base/common/linkedList","vs/base/common/diff/diff","vs/base/common/types","vs/base/common/uint","vs/editor/common/core/characterClassifier","vs/editor/common/core/lineRange","vs/editor/common/core/wordHelper","vs/editor/common/diff/linesDiffComputer","vs/base/common/stopwatch","vs/nls","vs/base/common/arrays","vs/base/common/cache","vs/base/common/diff/diffChange","vs/base/common/keyCodes","vs/base/common/lazy","vs/base/common/hash","vs/base/common/codicons","vs/editor/common/core/selection","vs/editor/common/core/wordCharacterClassifier","vs/editor/common/diff/algorithms/joinSequenceDiffs","vs/editor/common/diff/algorithms/myersDiffAlgorithm","vs/editor/common/diff/algorithms/utils","vs/editor/common/diff/algorithms/dynamicProgrammingDiffing","vs/editor/common/diff/smartLinesDiffComputer","vs/editor/common/diff/standardLinesDiffComputer","vs/editor/common/diff/linesDiffComputers","vs/editor/common/languages/linkComputer","vs/editor/common/languages/supports/inplaceReplaceSupport","vs/editor/common/model","vs/editor/common/model/prefixSumComputer","vs/editor/common/model/mirrorTextModel","vs/editor/common/model/textModelSearch","vs/editor/common/services/unicodeTextModelHighlighter","vs/editor/common/standalone/standaloneEnums","vs/nls!vs/base/common/platform","vs/base/common/process","vs/base/common/path","vs/base/common/cancellation","vs/editor/common/tokenizationRegistry","vs/editor/common/languages","vs/editor/common/services/editorBaseApi","vs/nls!vs/base/common/worker/simpleWorker","vs/base/common/worker/simpleWorker","vs/editor/common/services/editorSimpleWorker"];
+var __m = ["require","exports","vs/editor/common/core/range","vs/editor/common/core/offsetRange","vs/editor/common/core/position","vs/base/common/errors","vs/base/common/strings","vs/base/common/arrays","vs/editor/common/diff/defaultLinesDiffComputer/algorithms/diffAlgorithm","vs/base/common/event","vs/editor/common/core/lineRange","vs/base/common/arraysFind","vs/base/common/assert","vs/base/common/lifecycle","vs/base/common/objects","vs/editor/common/diff/defaultLinesDiffComputer/utils","vs/editor/common/diff/rangeMapping","vs/base/common/platform","vs/base/common/uri","vs/nls","vs/base/common/functional","vs/base/common/iterator","vs/base/common/linkedList","vs/base/common/map","vs/base/common/stopwatch","vs/base/common/diff/diff","vs/base/common/types","vs/base/common/codiconsUtil","vs/base/common/uint","vs/editor/common/core/characterClassifier","vs/editor/common/core/wordHelper","vs/editor/common/diff/defaultLinesDiffComputer/algorithms/myersDiffAlgorithm","vs/editor/common/diff/defaultLinesDiffComputer/linesSliceCharSequence","vs/editor/common/diff/linesDiffComputer","vs/base/common/cache","vs/base/common/color","vs/base/common/diff/diffChange","vs/base/common/keyCodes","vs/base/common/lazy","vs/base/common/cancellation","vs/base/common/hash","vs/base/common/codiconsLibrary","vs/base/common/codicons","vs/editor/common/core/selection","vs/editor/common/core/wordCharacterClassifier","vs/editor/common/diff/defaultLinesDiffComputer/heuristicSequenceOptimizations","vs/editor/common/diff/defaultLinesDiffComputer/lineSequence","vs/editor/common/diff/defaultLinesDiffComputer/algorithms/dynamicProgrammingDiffing","vs/editor/common/diff/defaultLinesDiffComputer/computeMovedLines","vs/editor/common/diff/defaultLinesDiffComputer/defaultLinesDiffComputer","vs/editor/common/diff/legacyLinesDiffComputer","vs/editor/common/diff/linesDiffComputers","vs/editor/common/languages/defaultDocumentColorsComputer","vs/editor/common/languages/linkComputer","vs/editor/common/languages/supports/inplaceReplaceSupport","vs/editor/common/model","vs/editor/common/model/prefixSumComputer","vs/editor/common/model/mirrorTextModel","vs/editor/common/model/textModelSearch","vs/editor/common/services/findSectionHeaders","vs/editor/common/services/unicodeTextModelHighlighter","vs/editor/common/standalone/standaloneEnums","vs/editor/common/tokenizationRegistry","vs/nls!vs/base/common/platform","vs/nls!vs/base/common/worker/simpleWorker","vs/base/common/process","vs/base/common/path","vs/nls!vs/editor/common/languages","vs/editor/common/languages","vs/editor/common/services/editorBaseApi","vs/base/common/worker/simpleWorker","vs/editor/common/services/editorSimpleWorker"];
 var __M = function(deps) {
   var result = [];
   for (var i = 0, len = deps.length; i < len; i++) {
@@ -38,60 +38,60 @@ const _amdLoaderGlobal = this;
 const _commonjsGlobal = typeof global === 'object' ? global : {};
 var AMDLoader;
 (function (AMDLoader) {
-    AMDLoader.global = _amdLoaderGlobal;
-    class Environment {
-        get isWindows() {
-            this._detect();
-            return this._isWindows;
-        }
-        get isNode() {
-            this._detect();
-            return this._isNode;
-        }
-        get isElectronRenderer() {
-            this._detect();
-            return this._isElectronRenderer;
-        }
-        get isWebWorker() {
-            this._detect();
-            return this._isWebWorker;
-        }
-        get isElectronNodeIntegrationWebWorker() {
-            this._detect();
-            return this._isElectronNodeIntegrationWebWorker;
-        }
-        constructor() {
-            this._detected = false;
-            this._isWindows = false;
-            this._isNode = false;
-            this._isElectronRenderer = false;
-            this._isWebWorker = false;
-            this._isElectronNodeIntegrationWebWorker = false;
-        }
-        _detect() {
-            if (this._detected) {
-                return;
-            }
-            this._detected = true;
-            this._isWindows = Environment._isWindows();
-            this._isNode = (typeof module !== 'undefined' && !!module.exports);
-            this._isElectronRenderer = (typeof process !== 'undefined' && typeof process.versions !== 'undefined' && typeof process.versions.electron !== 'undefined' && process.type === 'renderer');
-            this._isWebWorker = (typeof AMDLoader.global.importScripts === 'function');
-            this._isElectronNodeIntegrationWebWorker = this._isWebWorker && (typeof process !== 'undefined' && typeof process.versions !== 'undefined' && typeof process.versions.electron !== 'undefined' && process.type === 'worker');
-        }
-        static _isWindows() {
-            if (typeof navigator !== 'undefined') {
-                if (navigator.userAgent && navigator.userAgent.indexOf('Windows') >= 0) {
-                    return true;
-                }
-            }
-            if (typeof process !== 'undefined') {
-                return (process.platform === 'win32');
-            }
-            return false;
-        }
-    }
-    AMDLoader.Environment = Environment;
+	AMDLoader.global = _amdLoaderGlobal;
+	class Environment {
+		get isWindows() {
+			this._detect();
+			return this._isWindows;
+		}
+		get isNode() {
+			this._detect();
+			return this._isNode;
+		}
+		get isElectronRenderer() {
+			this._detect();
+			return this._isElectronRenderer;
+		}
+		get isWebWorker() {
+			this._detect();
+			return this._isWebWorker;
+		}
+		get isElectronNodeIntegrationWebWorker() {
+			this._detect();
+			return this._isElectronNodeIntegrationWebWorker;
+		}
+		constructor() {
+			this._detected = false;
+			this._isWindows = false;
+			this._isNode = false;
+			this._isElectronRenderer = false;
+			this._isWebWorker = false;
+			this._isElectronNodeIntegrationWebWorker = false;
+		}
+		_detect() {
+			if (this._detected) {
+				return;
+			}
+			this._detected = true;
+			this._isWindows = Environment._isWindows();
+			this._isNode = (typeof module !== 'undefined' && !!module.exports);
+			this._isElectronRenderer = (typeof process !== 'undefined' && typeof process.versions !== 'undefined' && typeof process.versions.electron !== 'undefined' && process.type === 'renderer');
+			this._isWebWorker = (typeof AMDLoader.global.importScripts === 'function');
+			this._isElectronNodeIntegrationWebWorker = this._isWebWorker && (typeof process !== 'undefined' && typeof process.versions !== 'undefined' && typeof process.versions.electron !== 'undefined' && process.type === 'worker');
+		}
+		static _isWindows() {
+			if (typeof navigator !== 'undefined') {
+				if (navigator.userAgent && navigator.userAgent.indexOf('Windows') >= 0) {
+					return true;
+				}
+			}
+			if (typeof process !== 'undefined') {
+				return (process.platform === 'win32');
+			}
+			return false;
+		}
+	}
+	AMDLoader.Environment = Environment;
 })(AMDLoader || (AMDLoader = {}));
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -99,36 +99,36 @@ var AMDLoader;
  *--------------------------------------------------------------------------------------------*/
 var AMDLoader;
 (function (AMDLoader) {
-    class LoaderEvent {
-        constructor(type, detail, timestamp) {
-            this.type = type;
-            this.detail = detail;
-            this.timestamp = timestamp;
-        }
-    }
-    AMDLoader.LoaderEvent = LoaderEvent;
-    class LoaderEventRecorder {
-        constructor(loaderAvailableTimestamp) {
-            this._events = [new LoaderEvent(1 /* LoaderEventType.LoaderAvailable */, '', loaderAvailableTimestamp)];
-        }
-        record(type, detail) {
-            this._events.push(new LoaderEvent(type, detail, AMDLoader.Utilities.getHighPerformanceTimestamp()));
-        }
-        getEvents() {
-            return this._events;
-        }
-    }
-    AMDLoader.LoaderEventRecorder = LoaderEventRecorder;
-    class NullLoaderEventRecorder {
-        record(type, detail) {
-            // Nothing to do
-        }
-        getEvents() {
-            return [];
-        }
-    }
-    NullLoaderEventRecorder.INSTANCE = new NullLoaderEventRecorder();
-    AMDLoader.NullLoaderEventRecorder = NullLoaderEventRecorder;
+	class LoaderEvent {
+		constructor(type, detail, timestamp) {
+			this.type = type;
+			this.detail = detail;
+			this.timestamp = timestamp;
+		}
+	}
+	AMDLoader.LoaderEvent = LoaderEvent;
+	class LoaderEventRecorder {
+		constructor(loaderAvailableTimestamp) {
+			this._events = [new LoaderEvent(1 /* LoaderEventType.LoaderAvailable */, '', loaderAvailableTimestamp)];
+		}
+		record(type, detail) {
+			this._events.push(new LoaderEvent(type, detail, AMDLoader.Utilities.getHighPerformanceTimestamp()));
+		}
+		getEvents() {
+			return this._events;
+		}
+	}
+	AMDLoader.LoaderEventRecorder = LoaderEventRecorder;
+	class NullLoaderEventRecorder {
+		record(type, detail) {
+			// Nothing to do
+		}
+		getEvents() {
+			return [];
+		}
+	}
+	NullLoaderEventRecorder.INSTANCE = new NullLoaderEventRecorder();
+	AMDLoader.NullLoaderEventRecorder = NullLoaderEventRecorder;
 })(AMDLoader || (AMDLoader = {}));
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -136,99 +136,99 @@ var AMDLoader;
  *--------------------------------------------------------------------------------------------*/
 var AMDLoader;
 (function (AMDLoader) {
-    class Utilities {
-        /**
-         * This method does not take care of / vs \
-         */
-        static fileUriToFilePath(isWindows, uri) {
-            uri = decodeURI(uri).replace(/%23/g, '#');
-            if (isWindows) {
-                if (/^file:\/\/\//.test(uri)) {
-                    // This is a URI without a hostname => return only the path segment
-                    return uri.substr(8);
-                }
-                if (/^file:\/\//.test(uri)) {
-                    return uri.substr(5);
-                }
-            }
-            else {
-                if (/^file:\/\//.test(uri)) {
-                    return uri.substr(7);
-                }
-            }
-            // Not sure...
-            return uri;
-        }
-        static startsWith(haystack, needle) {
-            return haystack.length >= needle.length && haystack.substr(0, needle.length) === needle;
-        }
-        static endsWith(haystack, needle) {
-            return haystack.length >= needle.length && haystack.substr(haystack.length - needle.length) === needle;
-        }
-        // only check for "?" before "#" to ensure that there is a real Query-String
-        static containsQueryString(url) {
-            return /^[^\#]*\?/gi.test(url);
-        }
-        /**
-         * Does `url` start with http:// or https:// or file:// or / ?
-         */
-        static isAbsolutePath(url) {
-            return /^((http:\/\/)|(https:\/\/)|(file:\/\/)|(\/))/.test(url);
-        }
-        static forEachProperty(obj, callback) {
-            if (obj) {
-                let key;
-                for (key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        callback(key, obj[key]);
-                    }
-                }
-            }
-        }
-        static isEmpty(obj) {
-            let isEmpty = true;
-            Utilities.forEachProperty(obj, () => {
-                isEmpty = false;
-            });
-            return isEmpty;
-        }
-        static recursiveClone(obj) {
-            if (!obj || typeof obj !== 'object' || obj instanceof RegExp) {
-                return obj;
-            }
-            if (!Array.isArray(obj) && Object.getPrototypeOf(obj) !== Object.prototype) {
-                // only clone "simple" objects
-                return obj;
-            }
-            let result = Array.isArray(obj) ? [] : {};
-            Utilities.forEachProperty(obj, (key, value) => {
-                if (value && typeof value === 'object') {
-                    result[key] = Utilities.recursiveClone(value);
-                }
-                else {
-                    result[key] = value;
-                }
-            });
-            return result;
-        }
-        static generateAnonymousModule() {
-            return '===anonymous' + (Utilities.NEXT_ANONYMOUS_ID++) + '===';
-        }
-        static isAnonymousModule(id) {
-            return Utilities.startsWith(id, '===anonymous');
-        }
-        static getHighPerformanceTimestamp() {
-            if (!this.PERFORMANCE_NOW_PROBED) {
-                this.PERFORMANCE_NOW_PROBED = true;
-                this.HAS_PERFORMANCE_NOW = (AMDLoader.global.performance && typeof AMDLoader.global.performance.now === 'function');
-            }
-            return (this.HAS_PERFORMANCE_NOW ? AMDLoader.global.performance.now() : Date.now());
-        }
-    }
-    Utilities.NEXT_ANONYMOUS_ID = 1;
-    Utilities.PERFORMANCE_NOW_PROBED = false;
-    Utilities.HAS_PERFORMANCE_NOW = false;
-    AMDLoader.Utilities = Utilities;
+	class Utilities {
+		/**
+		 * This method does not take care of / vs \
+		 */
+		static fileUriToFilePath(isWindows, uri) {
+			uri = decodeURI(uri).replace(/%23/g, '#');
+			if (isWindows) {
+				if (/^file:\/\/\//.test(uri)) {
+					// This is a URI without a hostname => return only the path segment
+					return uri.substr(8);
+				}
+				if (/^file:\/\//.test(uri)) {
+					return uri.substr(5);
+				}
+			}
+			else {
+				if (/^file:\/\//.test(uri)) {
+					return uri.substr(7);
+				}
+			}
+			// Not sure...
+			return uri;
+		}
+		static startsWith(haystack, needle) {
+			return haystack.length >= needle.length && haystack.substr(0, needle.length) === needle;
+		}
+		static endsWith(haystack, needle) {
+			return haystack.length >= needle.length && haystack.substr(haystack.length - needle.length) === needle;
+		}
+		// only check for "?" before "#" to ensure that there is a real Query-String
+		static containsQueryString(url) {
+			return /^[^\#]*\?/gi.test(url);
+		}
+		/**
+		 * Does `url` start with http:// or https:// or file:// or / ?
+		 */
+		static isAbsolutePath(url) {
+			return /^((http:\/\/)|(https:\/\/)|(file:\/\/)|(\/))/.test(url);
+		}
+		static forEachProperty(obj, callback) {
+			if (obj) {
+				let key;
+				for (key in obj) {
+					if (obj.hasOwnProperty(key)) {
+						callback(key, obj[key]);
+					}
+				}
+			}
+		}
+		static isEmpty(obj) {
+			let isEmpty = true;
+			Utilities.forEachProperty(obj, () => {
+				isEmpty = false;
+			});
+			return isEmpty;
+		}
+		static recursiveClone(obj) {
+			if (!obj || typeof obj !== 'object' || obj instanceof RegExp) {
+				return obj;
+			}
+			if (!Array.isArray(obj) && Object.getPrototypeOf(obj) !== Object.prototype) {
+				// only clone "simple" objects
+				return obj;
+			}
+			let result = Array.isArray(obj) ? [] : {};
+			Utilities.forEachProperty(obj, (key, value) => {
+				if (value && typeof value === 'object') {
+					result[key] = Utilities.recursiveClone(value);
+				}
+				else {
+					result[key] = value;
+				}
+			});
+			return result;
+		}
+		static generateAnonymousModule() {
+			return '===anonymous' + (Utilities.NEXT_ANONYMOUS_ID++) + '===';
+		}
+		static isAnonymousModule(id) {
+			return Utilities.startsWith(id, '===anonymous');
+		}
+		static getHighPerformanceTimestamp() {
+			if (!this.PERFORMANCE_NOW_PROBED) {
+				this.PERFORMANCE_NOW_PROBED = true;
+				this.HAS_PERFORMANCE_NOW = (AMDLoader.global.performance && typeof AMDLoader.global.performance.now === 'function');
+			}
+			return (this.HAS_PERFORMANCE_NOW ? AMDLoader.global.performance.now() : Date.now());
+		}
+	}
+	Utilities.NEXT_ANONYMOUS_ID = 1;
+	Utilities.PERFORMANCE_NOW_PROBED = false;
+	Utilities.HAS_PERFORMANCE_NOW = false;
+	AMDLoader.Utilities = Utilities;
 })(AMDLoader || (AMDLoader = {}));
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -236,318 +236,318 @@ var AMDLoader;
  *--------------------------------------------------------------------------------------------*/
 var AMDLoader;
 (function (AMDLoader) {
-    function ensureError(err) {
-        if (err instanceof Error) {
-            return err;
-        }
-        const result = new Error(err.message || String(err) || 'Unknown Error');
-        if (err.stack) {
-            result.stack = err.stack;
-        }
-        return result;
-    }
-    AMDLoader.ensureError = ensureError;
-    ;
-    class ConfigurationOptionsUtil {
-        /**
-         * Ensure configuration options make sense
-         */
-        static validateConfigurationOptions(options) {
-            function defaultOnError(err) {
-                if (err.phase === 'loading') {
-                    console.error('Loading "' + err.moduleId + '" failed');
-                    console.error(err);
-                    console.error('Here are the modules that depend on it:');
-                    console.error(err.neededBy);
-                    return;
-                }
-                if (err.phase === 'factory') {
-                    console.error('The factory function of "' + err.moduleId + '" has thrown an exception');
-                    console.error(err);
-                    console.error('Here are the modules that depend on it:');
-                    console.error(err.neededBy);
-                    return;
-                }
-            }
-            options = options || {};
-            if (typeof options.baseUrl !== 'string') {
-                options.baseUrl = '';
-            }
-            if (typeof options.isBuild !== 'boolean') {
-                options.isBuild = false;
-            }
-            if (typeof options.paths !== 'object') {
-                options.paths = {};
-            }
-            if (typeof options.config !== 'object') {
-                options.config = {};
-            }
-            if (typeof options.catchError === 'undefined') {
-                options.catchError = false;
-            }
-            if (typeof options.recordStats === 'undefined') {
-                options.recordStats = false;
-            }
-            if (typeof options.urlArgs !== 'string') {
-                options.urlArgs = '';
-            }
-            if (typeof options.onError !== 'function') {
-                options.onError = defaultOnError;
-            }
-            if (!Array.isArray(options.ignoreDuplicateModules)) {
-                options.ignoreDuplicateModules = [];
-            }
-            if (options.baseUrl.length > 0) {
-                if (!AMDLoader.Utilities.endsWith(options.baseUrl, '/')) {
-                    options.baseUrl += '/';
-                }
-            }
-            if (typeof options.cspNonce !== 'string') {
-                options.cspNonce = '';
-            }
-            if (typeof options.preferScriptTags === 'undefined') {
-                options.preferScriptTags = false;
-            }
-            if (options.nodeCachedData && typeof options.nodeCachedData === 'object') {
-                if (typeof options.nodeCachedData.seed !== 'string') {
-                    options.nodeCachedData.seed = 'seed';
-                }
-                if (typeof options.nodeCachedData.writeDelay !== 'number' || options.nodeCachedData.writeDelay < 0) {
-                    options.nodeCachedData.writeDelay = 1000 * 7;
-                }
-                if (!options.nodeCachedData.path || typeof options.nodeCachedData.path !== 'string') {
-                    const err = ensureError(new Error('INVALID cached data configuration, \'path\' MUST be set'));
-                    err.phase = 'configuration';
-                    options.onError(err);
-                    options.nodeCachedData = undefined;
-                }
-            }
-            return options;
-        }
-        static mergeConfigurationOptions(overwrite = null, base = null) {
-            let result = AMDLoader.Utilities.recursiveClone(base || {});
-            // Merge known properties and overwrite the unknown ones
-            AMDLoader.Utilities.forEachProperty(overwrite, (key, value) => {
-                if (key === 'ignoreDuplicateModules' && typeof result.ignoreDuplicateModules !== 'undefined') {
-                    result.ignoreDuplicateModules = result.ignoreDuplicateModules.concat(value);
-                }
-                else if (key === 'paths' && typeof result.paths !== 'undefined') {
-                    AMDLoader.Utilities.forEachProperty(value, (key2, value2) => result.paths[key2] = value2);
-                }
-                else if (key === 'config' && typeof result.config !== 'undefined') {
-                    AMDLoader.Utilities.forEachProperty(value, (key2, value2) => result.config[key2] = value2);
-                }
-                else {
-                    result[key] = AMDLoader.Utilities.recursiveClone(value);
-                }
-            });
-            return ConfigurationOptionsUtil.validateConfigurationOptions(result);
-        }
-    }
-    AMDLoader.ConfigurationOptionsUtil = ConfigurationOptionsUtil;
-    class Configuration {
-        constructor(env, options) {
-            this._env = env;
-            this.options = ConfigurationOptionsUtil.mergeConfigurationOptions(options);
-            this._createIgnoreDuplicateModulesMap();
-            this._createSortedPathsRules();
-            if (this.options.baseUrl === '') {
-                if (this.options.nodeRequire && this.options.nodeRequire.main && this.options.nodeRequire.main.filename && this._env.isNode) {
-                    let nodeMain = this.options.nodeRequire.main.filename;
-                    let dirnameIndex = Math.max(nodeMain.lastIndexOf('/'), nodeMain.lastIndexOf('\\'));
-                    this.options.baseUrl = nodeMain.substring(0, dirnameIndex + 1);
-                }
-            }
-        }
-        _createIgnoreDuplicateModulesMap() {
-            // Build a map out of the ignoreDuplicateModules array
-            this.ignoreDuplicateModulesMap = {};
-            for (let i = 0; i < this.options.ignoreDuplicateModules.length; i++) {
-                this.ignoreDuplicateModulesMap[this.options.ignoreDuplicateModules[i]] = true;
-            }
-        }
-        _createSortedPathsRules() {
-            // Create an array our of the paths rules, sorted descending by length to
-            // result in a more specific -> less specific order
-            this.sortedPathsRules = [];
-            AMDLoader.Utilities.forEachProperty(this.options.paths, (from, to) => {
-                if (!Array.isArray(to)) {
-                    this.sortedPathsRules.push({
-                        from: from,
-                        to: [to]
-                    });
-                }
-                else {
-                    this.sortedPathsRules.push({
-                        from: from,
-                        to: to
-                    });
-                }
-            });
-            this.sortedPathsRules.sort((a, b) => {
-                return b.from.length - a.from.length;
-            });
-        }
-        /**
-         * Clone current configuration and overwrite options selectively.
-         * @param options The selective options to overwrite with.
-         * @result A new configuration
-         */
-        cloneAndMerge(options) {
-            return new Configuration(this._env, ConfigurationOptionsUtil.mergeConfigurationOptions(options, this.options));
-        }
-        /**
-         * Get current options bag. Useful for passing it forward to plugins.
-         */
-        getOptionsLiteral() {
-            return this.options;
-        }
-        _applyPaths(moduleId) {
-            let pathRule;
-            for (let i = 0, len = this.sortedPathsRules.length; i < len; i++) {
-                pathRule = this.sortedPathsRules[i];
-                if (AMDLoader.Utilities.startsWith(moduleId, pathRule.from)) {
-                    let result = [];
-                    for (let j = 0, lenJ = pathRule.to.length; j < lenJ; j++) {
-                        result.push(pathRule.to[j] + moduleId.substr(pathRule.from.length));
-                    }
-                    return result;
-                }
-            }
-            return [moduleId];
-        }
-        _addUrlArgsToUrl(url) {
-            if (AMDLoader.Utilities.containsQueryString(url)) {
-                return url + '&' + this.options.urlArgs;
-            }
-            else {
-                return url + '?' + this.options.urlArgs;
-            }
-        }
-        _addUrlArgsIfNecessaryToUrl(url) {
-            if (this.options.urlArgs) {
-                return this._addUrlArgsToUrl(url);
-            }
-            return url;
-        }
-        _addUrlArgsIfNecessaryToUrls(urls) {
-            if (this.options.urlArgs) {
-                for (let i = 0, len = urls.length; i < len; i++) {
-                    urls[i] = this._addUrlArgsToUrl(urls[i]);
-                }
-            }
-            return urls;
-        }
-        /**
-         * Transform a module id to a location. Appends .js to module ids
-         */
-        moduleIdToPaths(moduleId) {
-            if (this._env.isNode) {
-                const isNodeModule = (this.options.amdModulesPattern instanceof RegExp
-                    && !this.options.amdModulesPattern.test(moduleId));
-                if (isNodeModule) {
-                    // This is a node module...
-                    if (this.isBuild()) {
-                        // ...and we are at build time, drop it
-                        return ['empty:'];
-                    }
-                    else {
-                        // ...and at runtime we create a `shortcut`-path
-                        return ['node|' + moduleId];
-                    }
-                }
-            }
-            let result = moduleId;
-            let results;
-            if (!AMDLoader.Utilities.endsWith(result, '.js') && !AMDLoader.Utilities.isAbsolutePath(result)) {
-                results = this._applyPaths(result);
-                for (let i = 0, len = results.length; i < len; i++) {
-                    if (this.isBuild() && results[i] === 'empty:') {
-                        continue;
-                    }
-                    if (!AMDLoader.Utilities.isAbsolutePath(results[i])) {
-                        results[i] = this.options.baseUrl + results[i];
-                    }
-                    if (!AMDLoader.Utilities.endsWith(results[i], '.js') && !AMDLoader.Utilities.containsQueryString(results[i])) {
-                        results[i] = results[i] + '.js';
-                    }
-                }
-            }
-            else {
-                if (!AMDLoader.Utilities.endsWith(result, '.js') && !AMDLoader.Utilities.containsQueryString(result)) {
-                    result = result + '.js';
-                }
-                results = [result];
-            }
-            return this._addUrlArgsIfNecessaryToUrls(results);
-        }
-        /**
-         * Transform a module id or url to a location.
-         */
-        requireToUrl(url) {
-            let result = url;
-            if (!AMDLoader.Utilities.isAbsolutePath(result)) {
-                result = this._applyPaths(result)[0];
-                if (!AMDLoader.Utilities.isAbsolutePath(result)) {
-                    result = this.options.baseUrl + result;
-                }
-            }
-            return this._addUrlArgsIfNecessaryToUrl(result);
-        }
-        /**
-         * Flag to indicate if current execution is as part of a build.
-         */
-        isBuild() {
-            return this.options.isBuild;
-        }
-        shouldInvokeFactory(strModuleId) {
-            if (!this.options.isBuild) {
-                // outside of a build, all factories should be invoked
-                return true;
-            }
-            // during a build, only explicitly marked or anonymous modules get their factories invoked
-            if (AMDLoader.Utilities.isAnonymousModule(strModuleId)) {
-                return true;
-            }
-            if (this.options.buildForceInvokeFactory && this.options.buildForceInvokeFactory[strModuleId]) {
-                return true;
-            }
-            return false;
-        }
-        /**
-         * Test if module `moduleId` is expected to be defined multiple times
-         */
-        isDuplicateMessageIgnoredFor(moduleId) {
-            return this.ignoreDuplicateModulesMap.hasOwnProperty(moduleId);
-        }
-        /**
-         * Get the configuration settings for the provided module id
-         */
-        getConfigForModule(moduleId) {
-            if (this.options.config) {
-                return this.options.config[moduleId];
-            }
-        }
-        /**
-         * Should errors be caught when executing module factories?
-         */
-        shouldCatchError() {
-            return this.options.catchError;
-        }
-        /**
-         * Should statistics be recorded?
-         */
-        shouldRecordStats() {
-            return this.options.recordStats;
-        }
-        /**
-         * Forward an error to the error handler.
-         */
-        onError(err) {
-            this.options.onError(err);
-        }
-    }
-    AMDLoader.Configuration = Configuration;
+	function ensureError(err) {
+		if (err instanceof Error) {
+			return err;
+		}
+		const result = new Error(err.message || String(err) || 'Unknown Error');
+		if (err.stack) {
+			result.stack = err.stack;
+		}
+		return result;
+	}
+	AMDLoader.ensureError = ensureError;
+	;
+	class ConfigurationOptionsUtil {
+		/**
+		 * Ensure configuration options make sense
+		 */
+		static validateConfigurationOptions(options) {
+			function defaultOnError(err) {
+				if (err.phase === 'loading') {
+					console.error('Loading "' + err.moduleId + '" failed');
+					console.error(err);
+					console.error('Here are the modules that depend on it:');
+					console.error(err.neededBy);
+					return;
+				}
+				if (err.phase === 'factory') {
+					console.error('The factory function of "' + err.moduleId + '" has thrown an exception');
+					console.error(err);
+					console.error('Here are the modules that depend on it:');
+					console.error(err.neededBy);
+					return;
+				}
+			}
+			options = options || {};
+			if (typeof options.baseUrl !== 'string') {
+				options.baseUrl = '';
+			}
+			if (typeof options.isBuild !== 'boolean') {
+				options.isBuild = false;
+			}
+			if (typeof options.paths !== 'object') {
+				options.paths = {};
+			}
+			if (typeof options.config !== 'object') {
+				options.config = {};
+			}
+			if (typeof options.catchError === 'undefined') {
+				options.catchError = false;
+			}
+			if (typeof options.recordStats === 'undefined') {
+				options.recordStats = false;
+			}
+			if (typeof options.urlArgs !== 'string') {
+				options.urlArgs = '';
+			}
+			if (typeof options.onError !== 'function') {
+				options.onError = defaultOnError;
+			}
+			if (!Array.isArray(options.ignoreDuplicateModules)) {
+				options.ignoreDuplicateModules = [];
+			}
+			if (options.baseUrl.length > 0) {
+				if (!AMDLoader.Utilities.endsWith(options.baseUrl, '/')) {
+					options.baseUrl += '/';
+				}
+			}
+			if (typeof options.cspNonce !== 'string') {
+				options.cspNonce = '';
+			}
+			if (typeof options.preferScriptTags === 'undefined') {
+				options.preferScriptTags = false;
+			}
+			if (options.nodeCachedData && typeof options.nodeCachedData === 'object') {
+				if (typeof options.nodeCachedData.seed !== 'string') {
+					options.nodeCachedData.seed = 'seed';
+				}
+				if (typeof options.nodeCachedData.writeDelay !== 'number' || options.nodeCachedData.writeDelay < 0) {
+					options.nodeCachedData.writeDelay = 1000 * 7;
+				}
+				if (!options.nodeCachedData.path || typeof options.nodeCachedData.path !== 'string') {
+					const err = ensureError(new Error('INVALID cached data configuration, \'path\' MUST be set'));
+					err.phase = 'configuration';
+					options.onError(err);
+					options.nodeCachedData = undefined;
+				}
+			}
+			return options;
+		}
+		static mergeConfigurationOptions(overwrite = null, base = null) {
+			let result = AMDLoader.Utilities.recursiveClone(base || {});
+			// Merge known properties and overwrite the unknown ones
+			AMDLoader.Utilities.forEachProperty(overwrite, (key, value) => {
+				if (key === 'ignoreDuplicateModules' && typeof result.ignoreDuplicateModules !== 'undefined') {
+					result.ignoreDuplicateModules = result.ignoreDuplicateModules.concat(value);
+				}
+				else if (key === 'paths' && typeof result.paths !== 'undefined') {
+					AMDLoader.Utilities.forEachProperty(value, (key2, value2) => result.paths[key2] = value2);
+				}
+				else if (key === 'config' && typeof result.config !== 'undefined') {
+					AMDLoader.Utilities.forEachProperty(value, (key2, value2) => result.config[key2] = value2);
+				}
+				else {
+					result[key] = AMDLoader.Utilities.recursiveClone(value);
+				}
+			});
+			return ConfigurationOptionsUtil.validateConfigurationOptions(result);
+		}
+	}
+	AMDLoader.ConfigurationOptionsUtil = ConfigurationOptionsUtil;
+	class Configuration {
+		constructor(env, options) {
+			this._env = env;
+			this.options = ConfigurationOptionsUtil.mergeConfigurationOptions(options);
+			this._createIgnoreDuplicateModulesMap();
+			this._createSortedPathsRules();
+			if (this.options.baseUrl === '') {
+				if (this.options.nodeRequire && this.options.nodeRequire.main && this.options.nodeRequire.main.filename && this._env.isNode) {
+					let nodeMain = this.options.nodeRequire.main.filename;
+					let dirnameIndex = Math.max(nodeMain.lastIndexOf('/'), nodeMain.lastIndexOf('\\'));
+					this.options.baseUrl = nodeMain.substring(0, dirnameIndex + 1);
+				}
+			}
+		}
+		_createIgnoreDuplicateModulesMap() {
+			// Build a map out of the ignoreDuplicateModules array
+			this.ignoreDuplicateModulesMap = {};
+			for (let i = 0; i < this.options.ignoreDuplicateModules.length; i++) {
+				this.ignoreDuplicateModulesMap[this.options.ignoreDuplicateModules[i]] = true;
+			}
+		}
+		_createSortedPathsRules() {
+			// Create an array our of the paths rules, sorted descending by length to
+			// result in a more specific -> less specific order
+			this.sortedPathsRules = [];
+			AMDLoader.Utilities.forEachProperty(this.options.paths, (from, to) => {
+				if (!Array.isArray(to)) {
+					this.sortedPathsRules.push({
+						from: from,
+						to: [to]
+					});
+				}
+				else {
+					this.sortedPathsRules.push({
+						from: from,
+						to: to
+					});
+				}
+			});
+			this.sortedPathsRules.sort((a, b) => {
+				return b.from.length - a.from.length;
+			});
+		}
+		/**
+		 * Clone current configuration and overwrite options selectively.
+		 * @param options The selective options to overwrite with.
+		 * @result A new configuration
+		 */
+		cloneAndMerge(options) {
+			return new Configuration(this._env, ConfigurationOptionsUtil.mergeConfigurationOptions(options, this.options));
+		}
+		/**
+		 * Get current options bag. Useful for passing it forward to plugins.
+		 */
+		getOptionsLiteral() {
+			return this.options;
+		}
+		_applyPaths(moduleId) {
+			let pathRule;
+			for (let i = 0, len = this.sortedPathsRules.length; i < len; i++) {
+				pathRule = this.sortedPathsRules[i];
+				if (AMDLoader.Utilities.startsWith(moduleId, pathRule.from)) {
+					let result = [];
+					for (let j = 0, lenJ = pathRule.to.length; j < lenJ; j++) {
+						result.push(pathRule.to[j] + moduleId.substr(pathRule.from.length));
+					}
+					return result;
+				}
+			}
+			return [moduleId];
+		}
+		_addUrlArgsToUrl(url) {
+			if (AMDLoader.Utilities.containsQueryString(url)) {
+				return url + '&' + this.options.urlArgs;
+			}
+			else {
+				return url + '?' + this.options.urlArgs;
+			}
+		}
+		_addUrlArgsIfNecessaryToUrl(url) {
+			if (this.options.urlArgs) {
+				return this._addUrlArgsToUrl(url);
+			}
+			return url;
+		}
+		_addUrlArgsIfNecessaryToUrls(urls) {
+			if (this.options.urlArgs) {
+				for (let i = 0, len = urls.length; i < len; i++) {
+					urls[i] = this._addUrlArgsToUrl(urls[i]);
+				}
+			}
+			return urls;
+		}
+		/**
+		 * Transform a module id to a location. Appends .js to module ids
+		 */
+		moduleIdToPaths(moduleId) {
+			if (this._env.isNode) {
+				const isNodeModule = (this.options.amdModulesPattern instanceof RegExp
+					&& !this.options.amdModulesPattern.test(moduleId));
+				if (isNodeModule) {
+					// This is a node module...
+					if (this.isBuild()) {
+						// ...and we are at build time, drop it
+						return ['empty:'];
+					}
+					else {
+						// ...and at runtime we create a `shortcut`-path
+						return ['node|' + moduleId];
+					}
+				}
+			}
+			let result = moduleId;
+			let results;
+			if (!AMDLoader.Utilities.endsWith(result, '.js') && !AMDLoader.Utilities.isAbsolutePath(result)) {
+				results = this._applyPaths(result);
+				for (let i = 0, len = results.length; i < len; i++) {
+					if (this.isBuild() && results[i] === 'empty:') {
+						continue;
+					}
+					if (!AMDLoader.Utilities.isAbsolutePath(results[i])) {
+						results[i] = this.options.baseUrl + results[i];
+					}
+					if (!AMDLoader.Utilities.endsWith(results[i], '.js') && !AMDLoader.Utilities.containsQueryString(results[i])) {
+						results[i] = results[i] + '.js';
+					}
+				}
+			}
+			else {
+				if (!AMDLoader.Utilities.endsWith(result, '.js') && !AMDLoader.Utilities.containsQueryString(result)) {
+					result = result + '.js';
+				}
+				results = [result];
+			}
+			return this._addUrlArgsIfNecessaryToUrls(results);
+		}
+		/**
+		 * Transform a module id or url to a location.
+		 */
+		requireToUrl(url) {
+			let result = url;
+			if (!AMDLoader.Utilities.isAbsolutePath(result)) {
+				result = this._applyPaths(result)[0];
+				if (!AMDLoader.Utilities.isAbsolutePath(result)) {
+					result = this.options.baseUrl + result;
+				}
+			}
+			return this._addUrlArgsIfNecessaryToUrl(result);
+		}
+		/**
+		 * Flag to indicate if current execution is as part of a build.
+		 */
+		isBuild() {
+			return this.options.isBuild;
+		}
+		shouldInvokeFactory(strModuleId) {
+			if (!this.options.isBuild) {
+				// outside of a build, all factories should be invoked
+				return true;
+			}
+			// during a build, only explicitly marked or anonymous modules get their factories invoked
+			if (AMDLoader.Utilities.isAnonymousModule(strModuleId)) {
+				return true;
+			}
+			if (this.options.buildForceInvokeFactory && this.options.buildForceInvokeFactory[strModuleId]) {
+				return true;
+			}
+			return false;
+		}
+		/**
+		 * Test if module `moduleId` is expected to be defined multiple times
+		 */
+		isDuplicateMessageIgnoredFor(moduleId) {
+			return this.ignoreDuplicateModulesMap.hasOwnProperty(moduleId);
+		}
+		/**
+		 * Get the configuration settings for the provided module id
+		 */
+		getConfigForModule(moduleId) {
+			if (this.options.config) {
+				return this.options.config[moduleId];
+			}
+		}
+		/**
+		 * Should errors be caught when executing module factories?
+		 */
+		shouldCatchError() {
+			return this.options.catchError;
+		}
+		/**
+		 * Should statistics be recorded?
+		 */
+		shouldRecordStats() {
+			return this.options.recordStats;
+		}
+		/**
+		 * Forward an error to the error handler.
+		 */
+		onError(err) {
+			this.options.onError(err);
+		}
+	}
+	AMDLoader.Configuration = Configuration;
 })(AMDLoader || (AMDLoader = {}));
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -555,501 +555,503 @@ var AMDLoader;
  *--------------------------------------------------------------------------------------------*/
 var AMDLoader;
 (function (AMDLoader) {
-    /**
-     * Load `scriptSrc` only once (avoid multiple <script> tags)
-     */
-    class OnlyOnceScriptLoader {
-        constructor(env) {
-            this._env = env;
-            this._scriptLoader = null;
-            this._callbackMap = {};
-        }
-        load(moduleManager, scriptSrc, callback, errorback) {
-            if (!this._scriptLoader) {
-                if (this._env.isWebWorker) {
-                    this._scriptLoader = new WorkerScriptLoader();
-                }
-                else if (this._env.isElectronRenderer) {
-                    const { preferScriptTags } = moduleManager.getConfig().getOptionsLiteral();
-                    if (preferScriptTags) {
-                        this._scriptLoader = new BrowserScriptLoader();
-                    }
-                    else {
-                        this._scriptLoader = new NodeScriptLoader(this._env);
-                    }
-                }
-                else if (this._env.isNode) {
-                    this._scriptLoader = new NodeScriptLoader(this._env);
-                }
-                else {
-                    this._scriptLoader = new BrowserScriptLoader();
-                }
-            }
-            let scriptCallbacks = {
-                callback: callback,
-                errorback: errorback
-            };
-            if (this._callbackMap.hasOwnProperty(scriptSrc)) {
-                this._callbackMap[scriptSrc].push(scriptCallbacks);
-                return;
-            }
-            this._callbackMap[scriptSrc] = [scriptCallbacks];
-            this._scriptLoader.load(moduleManager, scriptSrc, () => this.triggerCallback(scriptSrc), (err) => this.triggerErrorback(scriptSrc, err));
-        }
-        triggerCallback(scriptSrc) {
-            let scriptCallbacks = this._callbackMap[scriptSrc];
-            delete this._callbackMap[scriptSrc];
-            for (let i = 0; i < scriptCallbacks.length; i++) {
-                scriptCallbacks[i].callback();
-            }
-        }
-        triggerErrorback(scriptSrc, err) {
-            let scriptCallbacks = this._callbackMap[scriptSrc];
-            delete this._callbackMap[scriptSrc];
-            for (let i = 0; i < scriptCallbacks.length; i++) {
-                scriptCallbacks[i].errorback(err);
-            }
-        }
-    }
-    class BrowserScriptLoader {
-        /**
-         * Attach load / error listeners to a script element and remove them when either one has fired.
-         * Implemented for browsers supporting HTML5 standard 'load' and 'error' events.
-         */
-        attachListeners(script, callback, errorback) {
-            let unbind = () => {
-                script.removeEventListener('load', loadEventListener);
-                script.removeEventListener('error', errorEventListener);
-            };
-            let loadEventListener = (e) => {
-                unbind();
-                callback();
-            };
-            let errorEventListener = (e) => {
-                unbind();
-                errorback(e);
-            };
-            script.addEventListener('load', loadEventListener);
-            script.addEventListener('error', errorEventListener);
-        }
-        load(moduleManager, scriptSrc, callback, errorback) {
-            if (/^node\|/.test(scriptSrc)) {
-                let opts = moduleManager.getConfig().getOptionsLiteral();
-                let nodeRequire = ensureRecordedNodeRequire(moduleManager.getRecorder(), (opts.nodeRequire || AMDLoader.global.nodeRequire));
-                let pieces = scriptSrc.split('|');
-                let moduleExports = null;
-                try {
-                    moduleExports = nodeRequire(pieces[1]);
-                }
-                catch (err) {
-                    errorback(err);
-                    return;
-                }
-                moduleManager.enqueueDefineAnonymousModule([], () => moduleExports);
-                callback();
-            }
-            else {
-                let script = document.createElement('script');
-                script.setAttribute('async', 'async');
-                script.setAttribute('type', 'text/javascript');
-                this.attachListeners(script, callback, errorback);
-                const { trustedTypesPolicy } = moduleManager.getConfig().getOptionsLiteral();
-                if (trustedTypesPolicy) {
-                    scriptSrc = trustedTypesPolicy.createScriptURL(scriptSrc);
-                }
-                script.setAttribute('src', scriptSrc);
-                // Propagate CSP nonce to dynamically created script tag.
-                const { cspNonce } = moduleManager.getConfig().getOptionsLiteral();
-                if (cspNonce) {
-                    script.setAttribute('nonce', cspNonce);
-                }
-                document.getElementsByTagName('head')[0].appendChild(script);
-            }
-        }
-    }
-    function canUseEval(moduleManager) {
-        const { trustedTypesPolicy } = moduleManager.getConfig().getOptionsLiteral();
-        try {
-            const func = (trustedTypesPolicy
-                ? self.eval(trustedTypesPolicy.createScript('', 'true'))
-                : new Function('true'));
-            func.call(self);
-            return true;
-        }
-        catch (err) {
-            return false;
-        }
-    }
-    class WorkerScriptLoader {
-        constructor() {
-            this._cachedCanUseEval = null;
-        }
-        _canUseEval(moduleManager) {
-            if (this._cachedCanUseEval === null) {
-                this._cachedCanUseEval = canUseEval(moduleManager);
-            }
-            return this._cachedCanUseEval;
-        }
-        load(moduleManager, scriptSrc, callback, errorback) {
-            if (/^node\|/.test(scriptSrc)) {
-                const opts = moduleManager.getConfig().getOptionsLiteral();
-                const nodeRequire = ensureRecordedNodeRequire(moduleManager.getRecorder(), (opts.nodeRequire || AMDLoader.global.nodeRequire));
-                const pieces = scriptSrc.split('|');
-                let moduleExports = null;
-                try {
-                    moduleExports = nodeRequire(pieces[1]);
-                }
-                catch (err) {
-                    errorback(err);
-                    return;
-                }
-                moduleManager.enqueueDefineAnonymousModule([], function () { return moduleExports; });
-                callback();
-            }
-            else {
-                const { trustedTypesPolicy } = moduleManager.getConfig().getOptionsLiteral();
-                const isCrossOrigin = (/^((http:)|(https:)|(file:))/.test(scriptSrc) && scriptSrc.substring(0, self.origin.length) !== self.origin);
-                if (!isCrossOrigin && this._canUseEval(moduleManager)) {
-                    // use `fetch` if possible because `importScripts`
-                    // is synchronous and can lead to deadlocks on Safari
-                    fetch(scriptSrc).then((response) => {
-                        if (response.status !== 200) {
-                            throw new Error(response.statusText);
-                        }
-                        return response.text();
-                    }).then((text) => {
-                        text = `${text}\n//# sourceURL=${scriptSrc}`;
-                        const func = (trustedTypesPolicy
-                            ? self.eval(trustedTypesPolicy.createScript('', text))
-                            : new Function(text));
-                        func.call(self);
-                        callback();
-                    }).then(undefined, errorback);
-                    return;
-                }
-                try {
-                    if (trustedTypesPolicy) {
-                        scriptSrc = trustedTypesPolicy.createScriptURL(scriptSrc);
-                    }
-                    importScripts(scriptSrc);
-                    callback();
-                }
-                catch (e) {
-                    errorback(e);
-                }
-            }
-        }
-    }
-    class NodeScriptLoader {
-        constructor(env) {
-            this._env = env;
-            this._didInitialize = false;
-            this._didPatchNodeRequire = false;
-        }
-        _init(nodeRequire) {
-            if (this._didInitialize) {
-                return;
-            }
-            this._didInitialize = true;
-            // capture node modules
-            this._fs = nodeRequire('fs');
-            this._vm = nodeRequire('vm');
-            this._path = nodeRequire('path');
-            this._crypto = nodeRequire('crypto');
-        }
-        // patch require-function of nodejs such that we can manually create a script
-        // from cached data. this is done by overriding the `Module._compile` function
-        _initNodeRequire(nodeRequire, moduleManager) {
-            // It is important to check for `nodeCachedData` first and then set `_didPatchNodeRequire`.
-            // That's because `nodeCachedData` is set _after_ calling this for the first time...
-            const { nodeCachedData } = moduleManager.getConfig().getOptionsLiteral();
-            if (!nodeCachedData) {
-                return;
-            }
-            if (this._didPatchNodeRequire) {
-                return;
-            }
-            this._didPatchNodeRequire = true;
-            const that = this;
-            const Module = nodeRequire('module');
-            function makeRequireFunction(mod) {
-                const Module = mod.constructor;
-                let require = function require(path) {
-                    try {
-                        return mod.require(path);
-                    }
-                    finally {
-                        // nothing
-                    }
-                };
-                require.resolve = function resolve(request, options) {
-                    return Module._resolveFilename(request, mod, false, options);
-                };
-                require.resolve.paths = function paths(request) {
-                    return Module._resolveLookupPaths(request, mod);
-                };
-                require.main = process.mainModule;
-                require.extensions = Module._extensions;
-                require.cache = Module._cache;
-                return require;
-            }
-            Module.prototype._compile = function (content, filename) {
-                // remove shebang and create wrapper function
-                const scriptSource = Module.wrap(content.replace(/^#!.*/, ''));
-                // create script
-                const recorder = moduleManager.getRecorder();
-                const cachedDataPath = that._getCachedDataPath(nodeCachedData, filename);
-                const options = { filename };
-                let hashData;
-                try {
-                    const data = that._fs.readFileSync(cachedDataPath);
-                    hashData = data.slice(0, 16);
-                    options.cachedData = data.slice(16);
-                    recorder.record(60 /* LoaderEventType.CachedDataFound */, cachedDataPath);
-                }
-                catch (_e) {
-                    recorder.record(61 /* LoaderEventType.CachedDataMissed */, cachedDataPath);
-                }
-                const script = new that._vm.Script(scriptSource, options);
-                const compileWrapper = script.runInThisContext(options);
-                // run script
-                const dirname = that._path.dirname(filename);
-                const require = makeRequireFunction(this);
-                const args = [this.exports, require, this, filename, dirname, process, _commonjsGlobal, Buffer];
-                const result = compileWrapper.apply(this.exports, args);
-                // cached data aftermath
-                that._handleCachedData(script, scriptSource, cachedDataPath, !options.cachedData, moduleManager);
-                that._verifyCachedData(script, scriptSource, cachedDataPath, hashData, moduleManager);
-                return result;
-            };
-        }
-        load(moduleManager, scriptSrc, callback, errorback) {
-            const opts = moduleManager.getConfig().getOptionsLiteral();
-            const nodeRequire = ensureRecordedNodeRequire(moduleManager.getRecorder(), (opts.nodeRequire || AMDLoader.global.nodeRequire));
-            const nodeInstrumenter = (opts.nodeInstrumenter || function (c) { return c; });
-            this._init(nodeRequire);
-            this._initNodeRequire(nodeRequire, moduleManager);
-            let recorder = moduleManager.getRecorder();
-            if (/^node\|/.test(scriptSrc)) {
-                let pieces = scriptSrc.split('|');
-                let moduleExports = null;
-                try {
-                    moduleExports = nodeRequire(pieces[1]);
-                }
-                catch (err) {
-                    errorback(err);
-                    return;
-                }
-                moduleManager.enqueueDefineAnonymousModule([], () => moduleExports);
-                callback();
-            }
-            else {
-                scriptSrc = AMDLoader.Utilities.fileUriToFilePath(this._env.isWindows, scriptSrc);
-                const normalizedScriptSrc = this._path.normalize(scriptSrc);
-                const vmScriptPathOrUri = this._getElectronRendererScriptPathOrUri(normalizedScriptSrc);
-                const wantsCachedData = Boolean(opts.nodeCachedData);
-                const cachedDataPath = wantsCachedData ? this._getCachedDataPath(opts.nodeCachedData, scriptSrc) : undefined;
-                this._readSourceAndCachedData(normalizedScriptSrc, cachedDataPath, recorder, (err, data, cachedData, hashData) => {
-                    if (err) {
-                        errorback(err);
-                        return;
-                    }
-                    let scriptSource;
-                    if (data.charCodeAt(0) === NodeScriptLoader._BOM) {
-                        scriptSource = NodeScriptLoader._PREFIX + data.substring(1) + NodeScriptLoader._SUFFIX;
-                    }
-                    else {
-                        scriptSource = NodeScriptLoader._PREFIX + data + NodeScriptLoader._SUFFIX;
-                    }
-                    scriptSource = nodeInstrumenter(scriptSource, normalizedScriptSrc);
-                    const scriptOpts = { filename: vmScriptPathOrUri, cachedData };
-                    const script = this._createAndEvalScript(moduleManager, scriptSource, scriptOpts, callback, errorback);
-                    this._handleCachedData(script, scriptSource, cachedDataPath, wantsCachedData && !cachedData, moduleManager);
-                    this._verifyCachedData(script, scriptSource, cachedDataPath, hashData, moduleManager);
-                });
-            }
-        }
-        _createAndEvalScript(moduleManager, contents, options, callback, errorback) {
-            const recorder = moduleManager.getRecorder();
-            recorder.record(31 /* LoaderEventType.NodeBeginEvaluatingScript */, options.filename);
-            const script = new this._vm.Script(contents, options);
-            const ret = script.runInThisContext(options);
-            const globalDefineFunc = moduleManager.getGlobalAMDDefineFunc();
-            let receivedDefineCall = false;
-            const localDefineFunc = function () {
-                receivedDefineCall = true;
-                return globalDefineFunc.apply(null, arguments);
-            };
-            localDefineFunc.amd = globalDefineFunc.amd;
-            ret.call(AMDLoader.global, moduleManager.getGlobalAMDRequireFunc(), localDefineFunc, options.filename, this._path.dirname(options.filename));
-            recorder.record(32 /* LoaderEventType.NodeEndEvaluatingScript */, options.filename);
-            if (receivedDefineCall) {
-                callback();
-            }
-            else {
-                errorback(new Error(`Didn't receive define call in ${options.filename}!`));
-            }
-            return script;
-        }
-        _getElectronRendererScriptPathOrUri(path) {
-            if (!this._env.isElectronRenderer) {
-                return path;
-            }
-            let driveLetterMatch = path.match(/^([a-z])\:(.*)/i);
-            if (driveLetterMatch) {
-                // windows
-                return `file:///${(driveLetterMatch[1].toUpperCase() + ':' + driveLetterMatch[2]).replace(/\\/g, '/')}`;
-            }
-            else {
-                // nix
-                return `file://${path}`;
-            }
-        }
-        _getCachedDataPath(config, filename) {
-            const hash = this._crypto.createHash('md5').update(filename, 'utf8').update(config.seed, 'utf8').update(process.arch, '').digest('hex');
-            const basename = this._path.basename(filename).replace(/\.js$/, '');
-            return this._path.join(config.path, `${basename}-${hash}.code`);
-        }
-        _handleCachedData(script, scriptSource, cachedDataPath, createCachedData, moduleManager) {
-            if (script.cachedDataRejected) {
-                // cached data got rejected -> delete and re-create
-                this._fs.unlink(cachedDataPath, err => {
-                    moduleManager.getRecorder().record(62 /* LoaderEventType.CachedDataRejected */, cachedDataPath);
-                    this._createAndWriteCachedData(script, scriptSource, cachedDataPath, moduleManager);
-                    if (err) {
-                        moduleManager.getConfig().onError(err);
-                    }
-                });
-            }
-            else if (createCachedData) {
-                // no cached data, but wanted
-                this._createAndWriteCachedData(script, scriptSource, cachedDataPath, moduleManager);
-            }
-        }
-        // Cached data format: | SOURCE_HASH | V8_CACHED_DATA |
-        // -SOURCE_HASH is the md5 hash of the JS source (always 16 bytes)
-        // -V8_CACHED_DATA is what v8 produces
-        _createAndWriteCachedData(script, scriptSource, cachedDataPath, moduleManager) {
-            let timeout = Math.ceil(moduleManager.getConfig().getOptionsLiteral().nodeCachedData.writeDelay * (1 + Math.random()));
-            let lastSize = -1;
-            let iteration = 0;
-            let hashData = undefined;
-            const createLoop = () => {
-                setTimeout(() => {
-                    if (!hashData) {
-                        hashData = this._crypto.createHash('md5').update(scriptSource, 'utf8').digest();
-                    }
-                    const cachedData = script.createCachedData();
-                    if (cachedData.length === 0 || cachedData.length === lastSize || iteration >= 5) {
-                        // done
-                        return;
-                    }
-                    if (cachedData.length < lastSize) {
-                        // less data than before: skip, try again next round
-                        createLoop();
-                        return;
-                    }
-                    lastSize = cachedData.length;
-                    this._fs.writeFile(cachedDataPath, Buffer.concat([hashData, cachedData]), err => {
-                        if (err) {
-                            moduleManager.getConfig().onError(err);
-                        }
-                        moduleManager.getRecorder().record(63 /* LoaderEventType.CachedDataCreated */, cachedDataPath);
-                        createLoop();
-                    });
-                }, timeout * (Math.pow(4, iteration++)));
-            };
-            // with some delay (`timeout`) create cached data
-            // and repeat that (with backoff delay) until the
-            // data seems to be not changing anymore
-            createLoop();
-        }
-        _readSourceAndCachedData(sourcePath, cachedDataPath, recorder, callback) {
-            if (!cachedDataPath) {
-                // no cached data case
-                this._fs.readFile(sourcePath, { encoding: 'utf8' }, callback);
-            }
-            else {
-                // cached data case: read both files in parallel
-                let source = undefined;
-                let cachedData = undefined;
-                let hashData = undefined;
-                let steps = 2;
-                const step = (err) => {
-                    if (err) {
-                        callback(err);
-                    }
-                    else if (--steps === 0) {
-                        callback(undefined, source, cachedData, hashData);
-                    }
-                };
-                this._fs.readFile(sourcePath, { encoding: 'utf8' }, (err, data) => {
-                    source = data;
-                    step(err);
-                });
-                this._fs.readFile(cachedDataPath, (err, data) => {
-                    if (!err && data && data.length > 0) {
-                        hashData = data.slice(0, 16);
-                        cachedData = data.slice(16);
-                        recorder.record(60 /* LoaderEventType.CachedDataFound */, cachedDataPath);
-                    }
-                    else {
-                        recorder.record(61 /* LoaderEventType.CachedDataMissed */, cachedDataPath);
-                    }
-                    step(); // ignored: cached data is optional
-                });
-            }
-        }
-        _verifyCachedData(script, scriptSource, cachedDataPath, hashData, moduleManager) {
-            if (!hashData) {
-                // nothing to do
-                return;
-            }
-            if (script.cachedDataRejected) {
-                // invalid anyways
-                return;
-            }
-            setTimeout(() => {
-                // check source hash - the contract is that file paths change when file content
-                // change (e.g use the commit or version id as cache path). this check is
-                // for violations of this contract.
-                const hashDataNow = this._crypto.createHash('md5').update(scriptSource, 'utf8').digest();
-                if (!hashData.equals(hashDataNow)) {
-                    moduleManager.getConfig().onError(new Error(`FAILED TO VERIFY CACHED DATA, deleting stale '${cachedDataPath}' now, but a RESTART IS REQUIRED`));
-                    this._fs.unlink(cachedDataPath, err => {
-                        if (err) {
-                            moduleManager.getConfig().onError(err);
-                        }
-                    });
-                }
-            }, Math.ceil(5000 * (1 + Math.random())));
-        }
-    }
-    NodeScriptLoader._BOM = 0xFEFF;
-    NodeScriptLoader._PREFIX = '(function (require, define, __filename, __dirname) { ';
-    NodeScriptLoader._SUFFIX = '\n});';
-    function ensureRecordedNodeRequire(recorder, _nodeRequire) {
-        if (_nodeRequire.__$__isRecorded) {
-            // it is already recorded
-            return _nodeRequire;
-        }
-        const nodeRequire = function nodeRequire(what) {
-            recorder.record(33 /* LoaderEventType.NodeBeginNativeRequire */, what);
-            try {
-                return _nodeRequire(what);
-            }
-            finally {
-                recorder.record(34 /* LoaderEventType.NodeEndNativeRequire */, what);
-            }
-        };
-        nodeRequire.__$__isRecorded = true;
-        return nodeRequire;
-    }
-    AMDLoader.ensureRecordedNodeRequire = ensureRecordedNodeRequire;
-    function createScriptLoader(env) {
-        return new OnlyOnceScriptLoader(env);
-    }
-    AMDLoader.createScriptLoader = createScriptLoader;
+	/**
+	 * Load `scriptSrc` only once (avoid multiple <script> tags)
+	 */
+	class OnlyOnceScriptLoader {
+		constructor(env) {
+			this._env = env;
+			this._scriptLoader = null;
+			this._callbackMap = {};
+		}
+		load(moduleManager, scriptSrc, callback, errorback) {
+			if (!this._scriptLoader) {
+				if (this._env.isWebWorker) {
+					this._scriptLoader = new WorkerScriptLoader();
+				}
+				else if (this._env.isElectronRenderer) {
+					const { preferScriptTags } = moduleManager.getConfig().getOptionsLiteral();
+					if (preferScriptTags) {
+						this._scriptLoader = new BrowserScriptLoader();
+					}
+					else {
+						this._scriptLoader = new NodeScriptLoader(this._env);
+					}
+				}
+				else if (this._env.isNode) {
+					this._scriptLoader = new NodeScriptLoader(this._env);
+				}
+				else {
+					this._scriptLoader = new BrowserScriptLoader();
+				}
+			}
+			let scriptCallbacks = {
+				callback: callback,
+				errorback: errorback
+			};
+			if (this._callbackMap.hasOwnProperty(scriptSrc)) {
+				this._callbackMap[scriptSrc].push(scriptCallbacks);
+				return;
+			}
+			this._callbackMap[scriptSrc] = [scriptCallbacks];
+			this._scriptLoader.load(moduleManager, scriptSrc, () => this.triggerCallback(scriptSrc), (err) => this.triggerErrorback(scriptSrc, err));
+		}
+		triggerCallback(scriptSrc) {
+			let scriptCallbacks = this._callbackMap[scriptSrc];
+			delete this._callbackMap[scriptSrc];
+			for (let i = 0; i < scriptCallbacks.length; i++) {
+				scriptCallbacks[i].callback();
+			}
+		}
+		triggerErrorback(scriptSrc, err) {
+			let scriptCallbacks = this._callbackMap[scriptSrc];
+			delete this._callbackMap[scriptSrc];
+			for (let i = 0; i < scriptCallbacks.length; i++) {
+				scriptCallbacks[i].errorback(err);
+			}
+		}
+	}
+	class BrowserScriptLoader {
+		/**
+		 * Attach load / error listeners to a script element and remove them when either one has fired.
+		 * Implemented for browsers supporting HTML5 standard 'load' and 'error' events.
+		 */
+		attachListeners(script, callback, errorback) {
+			let unbind = () => {
+				script.removeEventListener('load', loadEventListener);
+				script.removeEventListener('error', errorEventListener);
+			};
+			let loadEventListener = (e) => {
+				unbind();
+				callback();
+			};
+			let errorEventListener = (e) => {
+				unbind();
+				errorback(e);
+			};
+			script.addEventListener('load', loadEventListener);
+			script.addEventListener('error', errorEventListener);
+		}
+		load(moduleManager, scriptSrc, callback, errorback) {
+			if (/^node\|/.test(scriptSrc)) {
+				let opts = moduleManager.getConfig().getOptionsLiteral();
+				let nodeRequire = ensureRecordedNodeRequire(moduleManager.getRecorder(), (opts.nodeRequire || AMDLoader.global.nodeRequire));
+				let pieces = scriptSrc.split('|');
+				let moduleExports = null;
+				try {
+					moduleExports = nodeRequire(pieces[1]);
+				}
+				catch (err) {
+					errorback(err);
+					return;
+				}
+				moduleManager.enqueueDefineAnonymousModule([], () => moduleExports);
+				callback();
+			}
+			else {
+				let script = document.createElement('script');
+				script.setAttribute('async', 'async');
+				script.setAttribute('type', 'text/javascript');
+				this.attachListeners(script, callback, errorback);
+				const { trustedTypesPolicy } = moduleManager.getConfig().getOptionsLiteral();
+				if (trustedTypesPolicy) {
+					scriptSrc = trustedTypesPolicy.createScriptURL(scriptSrc);
+				}
+				script.setAttribute('src', scriptSrc);
+				// Propagate CSP nonce to dynamically created script tag.
+				const { cspNonce } = moduleManager.getConfig().getOptionsLiteral();
+				if (cspNonce) {
+					script.setAttribute('nonce', cspNonce);
+				}
+				document.getElementsByTagName('head')[0].appendChild(script);
+			}
+		}
+	}
+	function canUseEval(moduleManager) {
+		const { trustedTypesPolicy } = moduleManager.getConfig().getOptionsLiteral();
+		try {
+			const func = (trustedTypesPolicy
+				? self.eval(trustedTypesPolicy.createScript('', 'true')) // CodeQL [SM01632] the loader is responsible with loading code, fetch + eval is used on the web worker instead of importScripts if possible because importScripts is synchronous and we observed deadlocks on Safari
+				: new Function('true') // CodeQL [SM01632] the loader is responsible with loading code, fetch + eval is used on the web worker instead of importScripts if possible because importScripts is synchronous and we observed deadlocks on Safari
+			);
+			func.call(self);
+			return true;
+		}
+		catch (err) {
+			return false;
+		}
+	}
+	class WorkerScriptLoader {
+		constructor() {
+			this._cachedCanUseEval = null;
+		}
+		_canUseEval(moduleManager) {
+			if (this._cachedCanUseEval === null) {
+				this._cachedCanUseEval = canUseEval(moduleManager);
+			}
+			return this._cachedCanUseEval;
+		}
+		load(moduleManager, scriptSrc, callback, errorback) {
+			if (/^node\|/.test(scriptSrc)) {
+				const opts = moduleManager.getConfig().getOptionsLiteral();
+				const nodeRequire = ensureRecordedNodeRequire(moduleManager.getRecorder(), (opts.nodeRequire || AMDLoader.global.nodeRequire));
+				const pieces = scriptSrc.split('|');
+				let moduleExports = null;
+				try {
+					moduleExports = nodeRequire(pieces[1]);
+				}
+				catch (err) {
+					errorback(err);
+					return;
+				}
+				moduleManager.enqueueDefineAnonymousModule([], function () { return moduleExports; });
+				callback();
+			}
+			else {
+				const { trustedTypesPolicy } = moduleManager.getConfig().getOptionsLiteral();
+				const isCrossOrigin = (/^((http:)|(https:)|(file:))/.test(scriptSrc) && scriptSrc.substring(0, self.origin.length) !== self.origin);
+				if (!isCrossOrigin && this._canUseEval(moduleManager)) {
+					// use `fetch` if possible because `importScripts`
+					// is synchronous and can lead to deadlocks on Safari
+					fetch(scriptSrc).then((response) => {
+						if (response.status !== 200) {
+							throw new Error(response.statusText);
+						}
+						return response.text();
+					}).then((text) => {
+						text = `${text}\n//# sourceURL=${scriptSrc}`;
+						const func = (trustedTypesPolicy
+							? self.eval(trustedTypesPolicy.createScript('', text)) // CodeQL [SM01632] the loader is responsible with loading code, fetch + eval is used on the web worker instead of importScripts if possible because importScripts is synchronous and we observed deadlocks on Safari
+							: new Function(text) // CodeQL [SM01632] the loader is responsible with loading code, fetch + eval is used on the web worker instead of importScripts if possible because importScripts is synchronous and we observed deadlocks on Safari
+						);
+						func.call(self);
+						callback();
+					}).then(undefined, errorback);
+					return;
+				}
+				try {
+					if (trustedTypesPolicy) {
+						scriptSrc = trustedTypesPolicy.createScriptURL(scriptSrc);
+					}
+					importScripts(scriptSrc);
+					callback();
+				}
+				catch (e) {
+					errorback(e);
+				}
+			}
+		}
+	}
+	class NodeScriptLoader {
+		constructor(env) {
+			this._env = env;
+			this._didInitialize = false;
+			this._didPatchNodeRequire = false;
+		}
+		_init(nodeRequire) {
+			if (this._didInitialize) {
+				return;
+			}
+			this._didInitialize = true;
+			// capture node modules
+			this._fs = nodeRequire('fs');
+			this._vm = nodeRequire('vm');
+			this._path = nodeRequire('path');
+			this._crypto = nodeRequire('crypto');
+		}
+		// patch require-function of nodejs such that we can manually create a script
+		// from cached data. this is done by overriding the `Module._compile` function
+		_initNodeRequire(nodeRequire, moduleManager) {
+			// It is important to check for `nodeCachedData` first and then set `_didPatchNodeRequire`.
+			// That's because `nodeCachedData` is set _after_ calling this for the first time...
+			const { nodeCachedData } = moduleManager.getConfig().getOptionsLiteral();
+			if (!nodeCachedData) {
+				return;
+			}
+			if (this._didPatchNodeRequire) {
+				return;
+			}
+			this._didPatchNodeRequire = true;
+			const that = this;
+			const Module = nodeRequire('module');
+			function makeRequireFunction(mod) {
+				const Module = mod.constructor;
+				let require = function require(path) {
+					try {
+						return mod.require(path);
+					}
+					finally {
+						// nothing
+					}
+				};
+				require.resolve = function resolve(request, options) {
+					return Module._resolveFilename(request, mod, false, options);
+				};
+				require.resolve.paths = function paths(request) {
+					return Module._resolveLookupPaths(request, mod);
+				};
+				require.main = process.mainModule;
+				require.extensions = Module._extensions;
+				require.cache = Module._cache;
+				return require;
+			}
+			Module.prototype._compile = function (content, filename) {
+				// remove shebang and create wrapper function
+				const scriptSource = Module.wrap(content.replace(/^#!.*/, ''));
+				// create script
+				const recorder = moduleManager.getRecorder();
+				const cachedDataPath = that._getCachedDataPath(nodeCachedData, filename);
+				const options = { filename };
+				let hashData;
+				try {
+					const data = that._fs.readFileSync(cachedDataPath);
+					hashData = data.slice(0, 16);
+					options.cachedData = data.slice(16);
+					recorder.record(60 /* LoaderEventType.CachedDataFound */, cachedDataPath);
+				}
+				catch (_e) {
+					recorder.record(61 /* LoaderEventType.CachedDataMissed */, cachedDataPath);
+				}
+				const script = new that._vm.Script(scriptSource, options);
+				const compileWrapper = script.runInThisContext(options);
+				// run script
+				const dirname = that._path.dirname(filename);
+				const require = makeRequireFunction(this);
+				const args = [this.exports, require, this, filename, dirname, process, _commonjsGlobal, Buffer];
+				const result = compileWrapper.apply(this.exports, args);
+				// cached data aftermath
+				that._handleCachedData(script, scriptSource, cachedDataPath, !options.cachedData, moduleManager);
+				that._verifyCachedData(script, scriptSource, cachedDataPath, hashData, moduleManager);
+				return result;
+			};
+		}
+		load(moduleManager, scriptSrc, callback, errorback) {
+			const opts = moduleManager.getConfig().getOptionsLiteral();
+			const nodeRequire = ensureRecordedNodeRequire(moduleManager.getRecorder(), (opts.nodeRequire || AMDLoader.global.nodeRequire));
+			const nodeInstrumenter = (opts.nodeInstrumenter || function (c) { return c; });
+			this._init(nodeRequire);
+			this._initNodeRequire(nodeRequire, moduleManager);
+			let recorder = moduleManager.getRecorder();
+			if (/^node\|/.test(scriptSrc)) {
+				let pieces = scriptSrc.split('|');
+				let moduleExports = null;
+				try {
+					moduleExports = nodeRequire(pieces[1]);
+				}
+				catch (err) {
+					errorback(err);
+					return;
+				}
+				moduleManager.enqueueDefineAnonymousModule([], () => moduleExports);
+				callback();
+			}
+			else {
+				scriptSrc = AMDLoader.Utilities.fileUriToFilePath(this._env.isWindows, scriptSrc);
+				const normalizedScriptSrc = this._path.normalize(scriptSrc);
+				const vmScriptPathOrUri = this._getElectronRendererScriptPathOrUri(normalizedScriptSrc);
+				const wantsCachedData = Boolean(opts.nodeCachedData);
+				const cachedDataPath = wantsCachedData ? this._getCachedDataPath(opts.nodeCachedData, scriptSrc) : undefined;
+				this._readSourceAndCachedData(normalizedScriptSrc, cachedDataPath, recorder, (err, data, cachedData, hashData) => {
+					if (err) {
+						errorback(err);
+						return;
+					}
+					let scriptSource;
+					if (data.charCodeAt(0) === NodeScriptLoader._BOM) {
+						scriptSource = NodeScriptLoader._PREFIX + data.substring(1) + NodeScriptLoader._SUFFIX;
+					}
+					else {
+						scriptSource = NodeScriptLoader._PREFIX + data + NodeScriptLoader._SUFFIX;
+					}
+					scriptSource = nodeInstrumenter(scriptSource, normalizedScriptSrc);
+					const scriptOpts = { filename: vmScriptPathOrUri, cachedData };
+					const script = this._createAndEvalScript(moduleManager, scriptSource, scriptOpts, callback, errorback);
+					this._handleCachedData(script, scriptSource, cachedDataPath, wantsCachedData && !cachedData, moduleManager);
+					this._verifyCachedData(script, scriptSource, cachedDataPath, hashData, moduleManager);
+				});
+			}
+		}
+		_createAndEvalScript(moduleManager, contents, options, callback, errorback) {
+			const recorder = moduleManager.getRecorder();
+			recorder.record(31 /* LoaderEventType.NodeBeginEvaluatingScript */, options.filename);
+			const script = new this._vm.Script(contents, options);
+			const ret = script.runInThisContext(options);
+			const globalDefineFunc = moduleManager.getGlobalAMDDefineFunc();
+			let receivedDefineCall = false;
+			const localDefineFunc = function () {
+				receivedDefineCall = true;
+				return globalDefineFunc.apply(null, arguments);
+			};
+			localDefineFunc.amd = globalDefineFunc.amd;
+			ret.call(AMDLoader.global, moduleManager.getGlobalAMDRequireFunc(), localDefineFunc, options.filename, this._path.dirname(options.filename));
+			recorder.record(32 /* LoaderEventType.NodeEndEvaluatingScript */, options.filename);
+			if (receivedDefineCall) {
+				callback();
+			}
+			else {
+				errorback(new Error(`Didn't receive define call in ${options.filename}!`));
+			}
+			return script;
+		}
+		_getElectronRendererScriptPathOrUri(path) {
+			if (!this._env.isElectronRenderer) {
+				return path;
+			}
+			let driveLetterMatch = path.match(/^([a-z])\:(.*)/i);
+			if (driveLetterMatch) {
+				// windows
+				return `file:///${(driveLetterMatch[1].toUpperCase() + ':' + driveLetterMatch[2]).replace(/\\/g, '/')}`;
+			}
+			else {
+				// nix
+				return `file://${path}`;
+			}
+		}
+		_getCachedDataPath(config, filename) {
+			const hash = this._crypto.createHash('md5').update(filename, 'utf8').update(config.seed, 'utf8').update(process.arch, '').digest('hex');
+			const basename = this._path.basename(filename).replace(/\.js$/, '');
+			return this._path.join(config.path, `${basename}-${hash}.code`);
+		}
+		_handleCachedData(script, scriptSource, cachedDataPath, createCachedData, moduleManager) {
+			if (script.cachedDataRejected) {
+				// cached data got rejected -> delete and re-create
+				this._fs.unlink(cachedDataPath, err => {
+					moduleManager.getRecorder().record(62 /* LoaderEventType.CachedDataRejected */, cachedDataPath);
+					this._createAndWriteCachedData(script, scriptSource, cachedDataPath, moduleManager);
+					if (err) {
+						moduleManager.getConfig().onError(err);
+					}
+				});
+			}
+			else if (createCachedData) {
+				// no cached data, but wanted
+				this._createAndWriteCachedData(script, scriptSource, cachedDataPath, moduleManager);
+			}
+		}
+		// Cached data format: | SOURCE_HASH | V8_CACHED_DATA |
+		// -SOURCE_HASH is the md5 hash of the JS source (always 16 bytes)
+		// -V8_CACHED_DATA is what v8 produces
+		_createAndWriteCachedData(script, scriptSource, cachedDataPath, moduleManager) {
+			let timeout = Math.ceil(moduleManager.getConfig().getOptionsLiteral().nodeCachedData.writeDelay * (1 + Math.random()));
+			let lastSize = -1;
+			let iteration = 0;
+			let hashData = undefined;
+			const createLoop = () => {
+				setTimeout(() => {
+					if (!hashData) {
+						hashData = this._crypto.createHash('md5').update(scriptSource, 'utf8').digest();
+					}
+					const cachedData = script.createCachedData();
+					if (cachedData.length === 0 || cachedData.length === lastSize || iteration >= 5) {
+						// done
+						return;
+					}
+					if (cachedData.length < lastSize) {
+						// less data than before: skip, try again next round
+						createLoop();
+						return;
+					}
+					lastSize = cachedData.length;
+					this._fs.writeFile(cachedDataPath, Buffer.concat([hashData, cachedData]), err => {
+						if (err) {
+							moduleManager.getConfig().onError(err);
+						}
+						moduleManager.getRecorder().record(63 /* LoaderEventType.CachedDataCreated */, cachedDataPath);
+						createLoop();
+					});
+				}, timeout * (Math.pow(4, iteration++)));
+			};
+			// with some delay (`timeout`) create cached data
+			// and repeat that (with backoff delay) until the
+			// data seems to be not changing anymore
+			createLoop();
+		}
+		_readSourceAndCachedData(sourcePath, cachedDataPath, recorder, callback) {
+			if (!cachedDataPath) {
+				// no cached data case
+				this._fs.readFile(sourcePath, { encoding: 'utf8' }, callback);
+			}
+			else {
+				// cached data case: read both files in parallel
+				let source = undefined;
+				let cachedData = undefined;
+				let hashData = undefined;
+				let steps = 2;
+				const step = (err) => {
+					if (err) {
+						callback(err);
+					}
+					else if (--steps === 0) {
+						callback(undefined, source, cachedData, hashData);
+					}
+				};
+				this._fs.readFile(sourcePath, { encoding: 'utf8' }, (err, data) => {
+					source = data;
+					step(err);
+				});
+				this._fs.readFile(cachedDataPath, (err, data) => {
+					if (!err && data && data.length > 0) {
+						hashData = data.slice(0, 16);
+						cachedData = data.slice(16);
+						recorder.record(60 /* LoaderEventType.CachedDataFound */, cachedDataPath);
+					}
+					else {
+						recorder.record(61 /* LoaderEventType.CachedDataMissed */, cachedDataPath);
+					}
+					step(); // ignored: cached data is optional
+				});
+			}
+		}
+		_verifyCachedData(script, scriptSource, cachedDataPath, hashData, moduleManager) {
+			if (!hashData) {
+				// nothing to do
+				return;
+			}
+			if (script.cachedDataRejected) {
+				// invalid anyways
+				return;
+			}
+			setTimeout(() => {
+				// check source hash - the contract is that file paths change when file content
+				// change (e.g use the commit or version id as cache path). this check is
+				// for violations of this contract.
+				const hashDataNow = this._crypto.createHash('md5').update(scriptSource, 'utf8').digest();
+				if (!hashData.equals(hashDataNow)) {
+					moduleManager.getConfig().onError(new Error(`FAILED TO VERIFY CACHED DATA, deleting stale '${cachedDataPath}' now, but a RESTART IS REQUIRED`));
+					this._fs.unlink(cachedDataPath, err => {
+						if (err) {
+							moduleManager.getConfig().onError(err);
+						}
+					});
+				}
+			}, Math.ceil(5000 * (1 + Math.random())));
+		}
+	}
+	NodeScriptLoader._BOM = 0xFEFF;
+	NodeScriptLoader._PREFIX = '(function (require, define, __filename, __dirname) { ';
+	NodeScriptLoader._SUFFIX = '\n});';
+	function ensureRecordedNodeRequire(recorder, _nodeRequire) {
+		if (_nodeRequire.__$__isRecorded) {
+			// it is already recorded
+			return _nodeRequire;
+		}
+		const nodeRequire = function nodeRequire(what) {
+			recorder.record(33 /* LoaderEventType.NodeBeginNativeRequire */, what);
+			try {
+				return _nodeRequire(what);
+			}
+			finally {
+				recorder.record(34 /* LoaderEventType.NodeEndNativeRequire */, what);
+			}
+		};
+		nodeRequire.__$__isRecorded = true;
+		return nodeRequire;
+	}
+	AMDLoader.ensureRecordedNodeRequire = ensureRecordedNodeRequire;
+	function createScriptLoader(env) {
+		return new OnlyOnceScriptLoader(env);
+	}
+	AMDLoader.createScriptLoader = createScriptLoader;
 })(AMDLoader || (AMDLoader = {}));
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1057,869 +1059,866 @@ var AMDLoader;
  *--------------------------------------------------------------------------------------------*/
 var AMDLoader;
 (function (AMDLoader) {
-    // ------------------------------------------------------------------------
-    // ModuleIdResolver
-    class ModuleIdResolver {
-        constructor(fromModuleId) {
-            let lastSlash = fromModuleId.lastIndexOf('/');
-            if (lastSlash !== -1) {
-                this.fromModulePath = fromModuleId.substr(0, lastSlash + 1);
-            }
-            else {
-                this.fromModulePath = '';
-            }
-        }
-        /**
-         * Normalize 'a/../name' to 'name', etc.
-         */
-        static _normalizeModuleId(moduleId) {
-            let r = moduleId, pattern;
-            // replace /./ => /
-            pattern = /\/\.\//;
-            while (pattern.test(r)) {
-                r = r.replace(pattern, '/');
-            }
-            // replace ^./ => nothing
-            r = r.replace(/^\.\//g, '');
-            // replace /aa/../ => / (BUT IGNORE /../../)
-            pattern = /\/(([^\/])|([^\/][^\/\.])|([^\/\.][^\/])|([^\/][^\/][^\/]+))\/\.\.\//;
-            while (pattern.test(r)) {
-                r = r.replace(pattern, '/');
-            }
-            // replace ^aa/../ => nothing (BUT IGNORE ../../)
-            r = r.replace(/^(([^\/])|([^\/][^\/\.])|([^\/\.][^\/])|([^\/][^\/][^\/]+))\/\.\.\//, '');
-            return r;
-        }
-        /**
-         * Resolve relative module ids
-         */
-        resolveModule(moduleId) {
-            let result = moduleId;
-            if (!AMDLoader.Utilities.isAbsolutePath(result)) {
-                if (AMDLoader.Utilities.startsWith(result, './') || AMDLoader.Utilities.startsWith(result, '../')) {
-                    result = ModuleIdResolver._normalizeModuleId(this.fromModulePath + result);
-                }
-            }
-            return result;
-        }
-    }
-    ModuleIdResolver.ROOT = new ModuleIdResolver('');
-    AMDLoader.ModuleIdResolver = ModuleIdResolver;
-    // ------------------------------------------------------------------------
-    // Module
-    class Module {
-        constructor(id, strId, dependencies, callback, errorback, moduleIdResolver) {
-            this.id = id;
-            this.strId = strId;
-            this.dependencies = dependencies;
-            this._callback = callback;
-            this._errorback = errorback;
-            this.moduleIdResolver = moduleIdResolver;
-            this.exports = {};
-            this.error = null;
-            this.exportsPassedIn = false;
-            this.unresolvedDependenciesCount = this.dependencies.length;
-            this._isComplete = false;
-        }
-        static _safeInvokeFunction(callback, args) {
-            try {
-                return {
-                    returnedValue: callback.apply(AMDLoader.global, args),
-                    producedError: null
-                };
-            }
-            catch (e) {
-                return {
-                    returnedValue: null,
-                    producedError: e
-                };
-            }
-        }
-        static _invokeFactory(config, strModuleId, callback, dependenciesValues) {
-            if (!config.shouldInvokeFactory(strModuleId)) {
-                return {
-                    returnedValue: null,
-                    producedError: null
-                };
-            }
-            if (config.shouldCatchError()) {
-                return this._safeInvokeFunction(callback, dependenciesValues);
-            }
-            return {
-                returnedValue: callback.apply(AMDLoader.global, dependenciesValues),
-                producedError: null
-            };
-        }
-        complete(recorder, config, dependenciesValues, inversedependenciesProvider) {
-            this._isComplete = true;
-            let producedError = null;
-            if (this._callback) {
-                if (typeof this._callback === 'function') {
-                    recorder.record(21 /* LoaderEventType.BeginInvokeFactory */, this.strId);
-                    let r = Module._invokeFactory(config, this.strId, this._callback, dependenciesValues);
-                    producedError = r.producedError;
-                    recorder.record(22 /* LoaderEventType.EndInvokeFactory */, this.strId);
-                    if (!producedError && typeof r.returnedValue !== 'undefined' && (!this.exportsPassedIn || AMDLoader.Utilities.isEmpty(this.exports))) {
-                        this.exports = r.returnedValue;
-                    }
-                }
-                else {
-                    this.exports = this._callback;
-                }
-            }
-            if (producedError) {
-                let err = AMDLoader.ensureError(producedError);
-                err.phase = 'factory';
-                err.moduleId = this.strId;
-                err.neededBy = inversedependenciesProvider(this.id);
-                this.error = err;
-                config.onError(err);
-            }
-            this.dependencies = null;
-            this._callback = null;
-            this._errorback = null;
-            this.moduleIdResolver = null;
-        }
-        /**
-         * One of the direct dependencies or a transitive dependency has failed to load.
-         */
-        onDependencyError(err) {
-            this._isComplete = true;
-            this.error = err;
-            if (this._errorback) {
-                this._errorback(err);
-                return true;
-            }
-            return false;
-        }
-        /**
-         * Is the current module complete?
-         */
-        isComplete() {
-            return this._isComplete;
-        }
-    }
-    AMDLoader.Module = Module;
-    class ModuleIdProvider {
-        constructor() {
-            this._nextId = 0;
-            this._strModuleIdToIntModuleId = new Map();
-            this._intModuleIdToStrModuleId = [];
-            // Ensure values 0, 1, 2 are assigned accordingly with ModuleId
-            this.getModuleId('exports');
-            this.getModuleId('module');
-            this.getModuleId('require');
-        }
-        getMaxModuleId() {
-            return this._nextId;
-        }
-        getModuleId(strModuleId) {
-            let id = this._strModuleIdToIntModuleId.get(strModuleId);
-            if (typeof id === 'undefined') {
-                id = this._nextId++;
-                this._strModuleIdToIntModuleId.set(strModuleId, id);
-                this._intModuleIdToStrModuleId[id] = strModuleId;
-            }
-            return id;
-        }
-        getStrModuleId(moduleId) {
-            return this._intModuleIdToStrModuleId[moduleId];
-        }
-    }
-    class RegularDependency {
-        constructor(id) {
-            this.id = id;
-        }
-    }
-    RegularDependency.EXPORTS = new RegularDependency(0 /* ModuleId.EXPORTS */);
-    RegularDependency.MODULE = new RegularDependency(1 /* ModuleId.MODULE */);
-    RegularDependency.REQUIRE = new RegularDependency(2 /* ModuleId.REQUIRE */);
-    AMDLoader.RegularDependency = RegularDependency;
-    class PluginDependency {
-        constructor(id, pluginId, pluginParam) {
-            this.id = id;
-            this.pluginId = pluginId;
-            this.pluginParam = pluginParam;
-        }
-    }
-    AMDLoader.PluginDependency = PluginDependency;
-    class ModuleManager {
-        constructor(env, scriptLoader, defineFunc, requireFunc, loaderAvailableTimestamp = 0) {
-            this._env = env;
-            this._scriptLoader = scriptLoader;
-            this._loaderAvailableTimestamp = loaderAvailableTimestamp;
-            this._defineFunc = defineFunc;
-            this._requireFunc = requireFunc;
-            this._moduleIdProvider = new ModuleIdProvider();
-            this._config = new AMDLoader.Configuration(this._env);
-            this._hasDependencyCycle = false;
-            this._modules2 = [];
-            this._knownModules2 = [];
-            this._inverseDependencies2 = [];
-            this._inversePluginDependencies2 = new Map();
-            this._currentAnonymousDefineCall = null;
-            this._recorder = null;
-            this._buildInfoPath = [];
-            this._buildInfoDefineStack = [];
-            this._buildInfoDependencies = [];
-        }
-        reset() {
-            return new ModuleManager(this._env, this._scriptLoader, this._defineFunc, this._requireFunc, this._loaderAvailableTimestamp);
-        }
-        getGlobalAMDDefineFunc() {
-            return this._defineFunc;
-        }
-        getGlobalAMDRequireFunc() {
-            return this._requireFunc;
-        }
-        static _findRelevantLocationInStack(needle, stack) {
-            let normalize = (str) => str.replace(/\\/g, '/');
-            let normalizedPath = normalize(needle);
-            let stackPieces = stack.split(/\n/);
-            for (let i = 0; i < stackPieces.length; i++) {
-                let m = stackPieces[i].match(/(.*):(\d+):(\d+)\)?$/);
-                if (m) {
-                    let stackPath = m[1];
-                    let stackLine = m[2];
-                    let stackColumn = m[3];
-                    let trimPathOffset = Math.max(stackPath.lastIndexOf(' ') + 1, stackPath.lastIndexOf('(') + 1);
-                    stackPath = stackPath.substr(trimPathOffset);
-                    stackPath = normalize(stackPath);
-                    if (stackPath === normalizedPath) {
-                        let r = {
-                            line: parseInt(stackLine, 10),
-                            col: parseInt(stackColumn, 10)
-                        };
-                        if (r.line === 1) {
-                            r.col -= '(function (require, define, __filename, __dirname) { '.length;
-                        }
-                        return r;
-                    }
-                }
-            }
-            throw new Error('Could not correlate define call site for needle ' + needle);
-        }
-        getBuildInfo() {
-            if (!this._config.isBuild()) {
-                return null;
-            }
-            let result = [], resultLen = 0;
-            for (let i = 0, len = this._modules2.length; i < len; i++) {
-                let m = this._modules2[i];
-                if (!m) {
-                    continue;
-                }
-                let location = this._buildInfoPath[m.id] || null;
-                let defineStack = this._buildInfoDefineStack[m.id] || null;
-                let dependencies = this._buildInfoDependencies[m.id];
-                result[resultLen++] = {
-                    id: m.strId,
-                    path: location,
-                    defineLocation: (location && defineStack ? ModuleManager._findRelevantLocationInStack(location, defineStack) : null),
-                    dependencies: dependencies,
-                    shim: null,
-                    exports: m.exports
-                };
-            }
-            return result;
-        }
-        getRecorder() {
-            if (!this._recorder) {
-                if (this._config.shouldRecordStats()) {
-                    this._recorder = new AMDLoader.LoaderEventRecorder(this._loaderAvailableTimestamp);
-                }
-                else {
-                    this._recorder = AMDLoader.NullLoaderEventRecorder.INSTANCE;
-                }
-            }
-            return this._recorder;
-        }
-        getLoaderEvents() {
-            return this.getRecorder().getEvents();
-        }
-        /**
-         * Defines an anonymous module (without an id). Its name will be resolved as we receive a callback from the scriptLoader.
-         * @param dependencies @see defineModule
-         * @param callback @see defineModule
-         */
-        enqueueDefineAnonymousModule(dependencies, callback) {
-            if (this._currentAnonymousDefineCall !== null) {
-                throw new Error('Can only have one anonymous define call per script file');
-            }
-            let stack = null;
-            if (this._config.isBuild()) {
-                stack = new Error('StackLocation').stack || null;
-            }
-            this._currentAnonymousDefineCall = {
-                stack: stack,
-                dependencies: dependencies,
-                callback: callback
-            };
-        }
-        /**
-         * Creates a module and stores it in _modules. The manager will immediately begin resolving its dependencies.
-         * @param strModuleId An unique and absolute id of the module. This must not collide with another module's id
-         * @param dependencies An array with the dependencies of the module. Special keys are: "require", "exports" and "module"
-         * @param callback if callback is a function, it will be called with the resolved dependencies. if callback is an object, it will be considered as the exports of the module.
-         */
-        defineModule(strModuleId, dependencies, callback, errorback, stack, moduleIdResolver = new ModuleIdResolver(strModuleId)) {
-            let moduleId = this._moduleIdProvider.getModuleId(strModuleId);
-            if (this._modules2[moduleId]) {
-                if (!this._config.isDuplicateMessageIgnoredFor(strModuleId)) {
-                    console.warn('Duplicate definition of module \'' + strModuleId + '\'');
-                }
-                // Super important! Completely ignore duplicate module definition
-                return;
-            }
-            let m = new Module(moduleId, strModuleId, this._normalizeDependencies(dependencies, moduleIdResolver), callback, errorback, moduleIdResolver);
-            this._modules2[moduleId] = m;
-            if (this._config.isBuild()) {
-                this._buildInfoDefineStack[moduleId] = stack;
-                this._buildInfoDependencies[moduleId] = (m.dependencies || []).map(dep => this._moduleIdProvider.getStrModuleId(dep.id));
-            }
-            // Resolving of dependencies is immediate (not in a timeout). If there's a need to support a packer that concatenates in an
-            // unordered manner, in order to finish processing the file, execute the following method in a timeout
-            this._resolve(m);
-        }
-        _normalizeDependency(dependency, moduleIdResolver) {
-            if (dependency === 'exports') {
-                return RegularDependency.EXPORTS;
-            }
-            if (dependency === 'module') {
-                return RegularDependency.MODULE;
-            }
-            if (dependency === 'require') {
-                return RegularDependency.REQUIRE;
-            }
-            // Normalize dependency and then request it from the manager
-            let bangIndex = dependency.indexOf('!');
-            if (bangIndex >= 0) {
-                let strPluginId = moduleIdResolver.resolveModule(dependency.substr(0, bangIndex));
-                let pluginParam = moduleIdResolver.resolveModule(dependency.substr(bangIndex + 1));
-                let dependencyId = this._moduleIdProvider.getModuleId(strPluginId + '!' + pluginParam);
-                let pluginId = this._moduleIdProvider.getModuleId(strPluginId);
-                return new PluginDependency(dependencyId, pluginId, pluginParam);
-            }
-            return new RegularDependency(this._moduleIdProvider.getModuleId(moduleIdResolver.resolveModule(dependency)));
-        }
-        _normalizeDependencies(dependencies, moduleIdResolver) {
-            let result = [], resultLen = 0;
-            for (let i = 0, len = dependencies.length; i < len; i++) {
-                result[resultLen++] = this._normalizeDependency(dependencies[i], moduleIdResolver);
-            }
-            return result;
-        }
-        _relativeRequire(moduleIdResolver, dependencies, callback, errorback) {
-            if (typeof dependencies === 'string') {
-                return this.synchronousRequire(dependencies, moduleIdResolver);
-            }
-            this.defineModule(AMDLoader.Utilities.generateAnonymousModule(), dependencies, callback, errorback, null, moduleIdResolver);
-        }
-        /**
-         * Require synchronously a module by its absolute id. If the module is not loaded, an exception will be thrown.
-         * @param id The unique and absolute id of the required module
-         * @return The exports of module 'id'
-         */
-        synchronousRequire(_strModuleId, moduleIdResolver = new ModuleIdResolver(_strModuleId)) {
-            let dependency = this._normalizeDependency(_strModuleId, moduleIdResolver);
-            let m = this._modules2[dependency.id];
-            if (!m) {
-                throw new Error('Check dependency list! Synchronous require cannot resolve module \'' + _strModuleId + '\'. This is the first mention of this module!');
-            }
-            if (!m.isComplete()) {
-                throw new Error('Check dependency list! Synchronous require cannot resolve module \'' + _strModuleId + '\'. This module has not been resolved completely yet.');
-            }
-            if (m.error) {
-                throw m.error;
-            }
-            return m.exports;
-        }
-        configure(params, shouldOverwrite) {
-            let oldShouldRecordStats = this._config.shouldRecordStats();
-            if (shouldOverwrite) {
-                this._config = new AMDLoader.Configuration(this._env, params);
-            }
-            else {
-                this._config = this._config.cloneAndMerge(params);
-            }
-            if (this._config.shouldRecordStats() && !oldShouldRecordStats) {
-                this._recorder = null;
-            }
-        }
-        getConfig() {
-            return this._config;
-        }
-        /**
-         * Callback from the scriptLoader when a module has been loaded.
-         * This means its code is available and has been executed.
-         */
-        _onLoad(moduleId) {
-            if (this._currentAnonymousDefineCall !== null) {
-                let defineCall = this._currentAnonymousDefineCall;
-                this._currentAnonymousDefineCall = null;
-                // Hit an anonymous define call
-                this.defineModule(this._moduleIdProvider.getStrModuleId(moduleId), defineCall.dependencies, defineCall.callback, null, defineCall.stack);
-            }
-        }
-        _createLoadError(moduleId, _err) {
-            let strModuleId = this._moduleIdProvider.getStrModuleId(moduleId);
-            let neededBy = (this._inverseDependencies2[moduleId] || []).map((intModuleId) => this._moduleIdProvider.getStrModuleId(intModuleId));
-            const err = AMDLoader.ensureError(_err);
-            err.phase = 'loading';
-            err.moduleId = strModuleId;
-            err.neededBy = neededBy;
-            return err;
-        }
-        /**
-         * Callback from the scriptLoader when a module hasn't been loaded.
-         * This means that the script was not found (e.g. 404) or there was an error in the script.
-         */
-        _onLoadError(moduleId, err) {
-            const error = this._createLoadError(moduleId, err);
-            if (!this._modules2[moduleId]) {
-                this._modules2[moduleId] = new Module(moduleId, this._moduleIdProvider.getStrModuleId(moduleId), [], () => { }, null, null);
-            }
-            // Find any 'local' error handlers, walk the entire chain of inverse dependencies if necessary.
-            let seenModuleId = [];
-            for (let i = 0, len = this._moduleIdProvider.getMaxModuleId(); i < len; i++) {
-                seenModuleId[i] = false;
-            }
-            let someoneNotified = false;
-            let queue = [];
-            queue.push(moduleId);
-            seenModuleId[moduleId] = true;
-            while (queue.length > 0) {
-                let queueElement = queue.shift();
-                let m = this._modules2[queueElement];
-                if (m) {
-                    someoneNotified = m.onDependencyError(error) || someoneNotified;
-                }
-                let inverseDeps = this._inverseDependencies2[queueElement];
-                if (inverseDeps) {
-                    for (let i = 0, len = inverseDeps.length; i < len; i++) {
-                        let inverseDep = inverseDeps[i];
-                        if (!seenModuleId[inverseDep]) {
-                            queue.push(inverseDep);
-                            seenModuleId[inverseDep] = true;
-                        }
-                    }
-                }
-            }
-            if (!someoneNotified) {
-                this._config.onError(error);
-            }
-        }
-        /**
-         * Walks (recursively) the dependencies of 'from' in search of 'to'.
-         * Returns true if there is such a path or false otherwise.
-         * @param from Module id to start at
-         * @param to Module id to look for
-         */
-        _hasDependencyPath(fromId, toId) {
-            let from = this._modules2[fromId];
-            if (!from) {
-                return false;
-            }
-            let inQueue = [];
-            for (let i = 0, len = this._moduleIdProvider.getMaxModuleId(); i < len; i++) {
-                inQueue[i] = false;
-            }
-            let queue = [];
-            // Insert 'from' in queue
-            queue.push(from);
-            inQueue[fromId] = true;
-            while (queue.length > 0) {
-                // Pop first inserted element of queue
-                let element = queue.shift();
-                let dependencies = element.dependencies;
-                if (dependencies) {
-                    // Walk the element's dependencies
-                    for (let i = 0, len = dependencies.length; i < len; i++) {
-                        let dependency = dependencies[i];
-                        if (dependency.id === toId) {
-                            // There is a path to 'to'
-                            return true;
-                        }
-                        let dependencyModule = this._modules2[dependency.id];
-                        if (dependencyModule && !inQueue[dependency.id]) {
-                            // Insert 'dependency' in queue
-                            inQueue[dependency.id] = true;
-                            queue.push(dependencyModule);
-                        }
-                    }
-                }
-            }
-            // There is no path to 'to'
-            return false;
-        }
-        /**
-         * Walks (recursively) the dependencies of 'from' in search of 'to'.
-         * Returns cycle as array.
-         * @param from Module id to start at
-         * @param to Module id to look for
-         */
-        _findCyclePath(fromId, toId, depth) {
-            if (fromId === toId || depth === 50) {
-                return [fromId];
-            }
-            let from = this._modules2[fromId];
-            if (!from) {
-                return null;
-            }
-            // Walk the element's dependencies
-            let dependencies = from.dependencies;
-            if (dependencies) {
-                for (let i = 0, len = dependencies.length; i < len; i++) {
-                    let path = this._findCyclePath(dependencies[i].id, toId, depth + 1);
-                    if (path !== null) {
-                        path.push(fromId);
-                        return path;
-                    }
-                }
-            }
-            return null;
-        }
-        /**
-         * Create the local 'require' that is passed into modules
-         */
-        _createRequire(moduleIdResolver) {
-            let result = ((dependencies, callback, errorback) => {
-                return this._relativeRequire(moduleIdResolver, dependencies, callback, errorback);
-            });
-            result.toUrl = (id) => {
-                return this._config.requireToUrl(moduleIdResolver.resolveModule(id));
-            };
-            result.getStats = () => {
-                return this.getLoaderEvents();
-            };
-            result.hasDependencyCycle = () => {
-                return this._hasDependencyCycle;
-            };
-            result.config = (params, shouldOverwrite = false) => {
-                this.configure(params, shouldOverwrite);
-            };
-            result.__$__nodeRequire = AMDLoader.global.nodeRequire;
-            return result;
-        }
-        _loadModule(moduleId) {
-            if (this._modules2[moduleId] || this._knownModules2[moduleId]) {
-                // known module
-                return;
-            }
-            this._knownModules2[moduleId] = true;
-            let strModuleId = this._moduleIdProvider.getStrModuleId(moduleId);
-            let paths = this._config.moduleIdToPaths(strModuleId);
-            let scopedPackageRegex = /^@[^\/]+\/[^\/]+$/; // matches @scope/package-name
-            if (this._env.isNode && (strModuleId.indexOf('/') === -1 || scopedPackageRegex.test(strModuleId))) {
-                paths.push('node|' + strModuleId);
-            }
-            let lastPathIndex = -1;
-            let loadNextPath = (err) => {
-                lastPathIndex++;
-                if (lastPathIndex >= paths.length) {
-                    // No more paths to try
-                    this._onLoadError(moduleId, err);
-                }
-                else {
-                    let currentPath = paths[lastPathIndex];
-                    let recorder = this.getRecorder();
-                    if (this._config.isBuild() && currentPath === 'empty:') {
-                        this._buildInfoPath[moduleId] = currentPath;
-                        this.defineModule(this._moduleIdProvider.getStrModuleId(moduleId), [], null, null, null);
-                        this._onLoad(moduleId);
-                        return;
-                    }
-                    recorder.record(10 /* LoaderEventType.BeginLoadingScript */, currentPath);
-                    this._scriptLoader.load(this, currentPath, () => {
-                        if (this._config.isBuild()) {
-                            this._buildInfoPath[moduleId] = currentPath;
-                        }
-                        recorder.record(11 /* LoaderEventType.EndLoadingScriptOK */, currentPath);
-                        this._onLoad(moduleId);
-                    }, (err) => {
-                        recorder.record(12 /* LoaderEventType.EndLoadingScriptError */, currentPath);
-                        loadNextPath(err);
-                    });
-                }
-            };
-            loadNextPath(null);
-        }
-        /**
-         * Resolve a plugin dependency with the plugin loaded & complete
-         * @param module The module that has this dependency
-         * @param pluginDependency The semi-normalized dependency that appears in the module. e.g. 'vs/css!./mycssfile'. Only the plugin part (before !) is normalized
-         * @param plugin The plugin (what the plugin exports)
-         */
-        _loadPluginDependency(plugin, pluginDependency) {
-            if (this._modules2[pluginDependency.id] || this._knownModules2[pluginDependency.id]) {
-                // known module
-                return;
-            }
-            this._knownModules2[pluginDependency.id] = true;
-            // Delegate the loading of the resource to the plugin
-            let load = ((value) => {
-                this.defineModule(this._moduleIdProvider.getStrModuleId(pluginDependency.id), [], value, null, null);
-            });
-            load.error = (err) => {
-                this._config.onError(this._createLoadError(pluginDependency.id, err));
-            };
-            plugin.load(pluginDependency.pluginParam, this._createRequire(ModuleIdResolver.ROOT), load, this._config.getOptionsLiteral());
-        }
-        /**
-         * Examine the dependencies of module 'module' and resolve them as needed.
-         */
-        _resolve(module) {
-            let dependencies = module.dependencies;
-            if (dependencies) {
-                for (let i = 0, len = dependencies.length; i < len; i++) {
-                    let dependency = dependencies[i];
-                    if (dependency === RegularDependency.EXPORTS) {
-                        module.exportsPassedIn = true;
-                        module.unresolvedDependenciesCount--;
-                        continue;
-                    }
-                    if (dependency === RegularDependency.MODULE) {
-                        module.unresolvedDependenciesCount--;
-                        continue;
-                    }
-                    if (dependency === RegularDependency.REQUIRE) {
-                        module.unresolvedDependenciesCount--;
-                        continue;
-                    }
-                    let dependencyModule = this._modules2[dependency.id];
-                    if (dependencyModule && dependencyModule.isComplete()) {
-                        if (dependencyModule.error) {
-                            module.onDependencyError(dependencyModule.error);
-                            return;
-                        }
-                        module.unresolvedDependenciesCount--;
-                        continue;
-                    }
-                    if (this._hasDependencyPath(dependency.id, module.id)) {
-                        this._hasDependencyCycle = true;
-                        console.warn('There is a dependency cycle between \'' + this._moduleIdProvider.getStrModuleId(dependency.id) + '\' and \'' + this._moduleIdProvider.getStrModuleId(module.id) + '\'. The cyclic path follows:');
-                        let cyclePath = this._findCyclePath(dependency.id, module.id, 0) || [];
-                        cyclePath.reverse();
-                        cyclePath.push(dependency.id);
-                        console.warn(cyclePath.map(id => this._moduleIdProvider.getStrModuleId(id)).join(' => \n'));
-                        // Break the cycle
-                        module.unresolvedDependenciesCount--;
-                        continue;
-                    }
-                    // record inverse dependency
-                    this._inverseDependencies2[dependency.id] = this._inverseDependencies2[dependency.id] || [];
-                    this._inverseDependencies2[dependency.id].push(module.id);
-                    if (dependency instanceof PluginDependency) {
-                        let plugin = this._modules2[dependency.pluginId];
-                        if (plugin && plugin.isComplete()) {
-                            this._loadPluginDependency(plugin.exports, dependency);
-                            continue;
-                        }
-                        // Record dependency for when the plugin gets loaded
-                        let inversePluginDeps = this._inversePluginDependencies2.get(dependency.pluginId);
-                        if (!inversePluginDeps) {
-                            inversePluginDeps = [];
-                            this._inversePluginDependencies2.set(dependency.pluginId, inversePluginDeps);
-                        }
-                        inversePluginDeps.push(dependency);
-                        this._loadModule(dependency.pluginId);
-                        continue;
-                    }
-                    this._loadModule(dependency.id);
-                }
-            }
-            if (module.unresolvedDependenciesCount === 0) {
-                this._onModuleComplete(module);
-            }
-        }
-        _onModuleComplete(module) {
-            let recorder = this.getRecorder();
-            if (module.isComplete()) {
-                // already done
-                return;
-            }
-            let dependencies = module.dependencies;
-            let dependenciesValues = [];
-            if (dependencies) {
-                for (let i = 0, len = dependencies.length; i < len; i++) {
-                    let dependency = dependencies[i];
-                    if (dependency === RegularDependency.EXPORTS) {
-                        dependenciesValues[i] = module.exports;
-                        continue;
-                    }
-                    if (dependency === RegularDependency.MODULE) {
-                        dependenciesValues[i] = {
-                            id: module.strId,
-                            config: () => {
-                                return this._config.getConfigForModule(module.strId);
-                            }
-                        };
-                        continue;
-                    }
-                    if (dependency === RegularDependency.REQUIRE) {
-                        dependenciesValues[i] = this._createRequire(module.moduleIdResolver);
-                        continue;
-                    }
-                    let dependencyModule = this._modules2[dependency.id];
-                    if (dependencyModule) {
-                        dependenciesValues[i] = dependencyModule.exports;
-                        continue;
-                    }
-                    dependenciesValues[i] = null;
-                }
-            }
-            const inversedependenciesProvider = (moduleId) => {
-                return (this._inverseDependencies2[moduleId] || []).map((intModuleId) => this._moduleIdProvider.getStrModuleId(intModuleId));
-            };
-            module.complete(recorder, this._config, dependenciesValues, inversedependenciesProvider);
-            // Fetch and clear inverse dependencies
-            let inverseDeps = this._inverseDependencies2[module.id];
-            this._inverseDependencies2[module.id] = null;
-            if (inverseDeps) {
-                // Resolve one inverse dependency at a time, always
-                // on the lookout for a completed module.
-                for (let i = 0, len = inverseDeps.length; i < len; i++) {
-                    let inverseDependencyId = inverseDeps[i];
-                    let inverseDependency = this._modules2[inverseDependencyId];
-                    inverseDependency.unresolvedDependenciesCount--;
-                    if (inverseDependency.unresolvedDependenciesCount === 0) {
-                        this._onModuleComplete(inverseDependency);
-                    }
-                }
-            }
-            let inversePluginDeps = this._inversePluginDependencies2.get(module.id);
-            if (inversePluginDeps) {
-                // This module is used as a plugin at least once
-                // Fetch and clear these inverse plugin dependencies
-                this._inversePluginDependencies2.delete(module.id);
-                // Resolve plugin dependencies one at a time
-                for (let i = 0, len = inversePluginDeps.length; i < len; i++) {
-                    this._loadPluginDependency(module.exports, inversePluginDeps[i]);
-                }
-            }
-        }
-    }
-    AMDLoader.ModuleManager = ModuleManager;
+	// ------------------------------------------------------------------------
+	// ModuleIdResolver
+	class ModuleIdResolver {
+		constructor(fromModuleId) {
+			let lastSlash = fromModuleId.lastIndexOf('/');
+			if (lastSlash !== -1) {
+				this.fromModulePath = fromModuleId.substr(0, lastSlash + 1);
+			}
+			else {
+				this.fromModulePath = '';
+			}
+		}
+		/**
+		 * Normalize 'a/../name' to 'name', etc.
+		 */
+		static _normalizeModuleId(moduleId) {
+			let r = moduleId, pattern;
+			// replace /./ => /
+			pattern = /\/\.\//;
+			while (pattern.test(r)) {
+				r = r.replace(pattern, '/');
+			}
+			// replace ^./ => nothing
+			r = r.replace(/^\.\//g, '');
+			// replace /aa/../ => / (BUT IGNORE /../../)
+			pattern = /\/(([^\/])|([^\/][^\/\.])|([^\/\.][^\/])|([^\/][^\/][^\/]+))\/\.\.\//;
+			while (pattern.test(r)) {
+				r = r.replace(pattern, '/');
+			}
+			// replace ^aa/../ => nothing (BUT IGNORE ../../)
+			r = r.replace(/^(([^\/])|([^\/][^\/\.])|([^\/\.][^\/])|([^\/][^\/][^\/]+))\/\.\.\//, '');
+			return r;
+		}
+		/**
+		 * Resolve relative module ids
+		 */
+		resolveModule(moduleId) {
+			let result = moduleId;
+			if (!AMDLoader.Utilities.isAbsolutePath(result)) {
+				if (AMDLoader.Utilities.startsWith(result, './') || AMDLoader.Utilities.startsWith(result, '../')) {
+					result = ModuleIdResolver._normalizeModuleId(this.fromModulePath + result);
+				}
+			}
+			return result;
+		}
+	}
+	ModuleIdResolver.ROOT = new ModuleIdResolver('');
+	AMDLoader.ModuleIdResolver = ModuleIdResolver;
+	// ------------------------------------------------------------------------
+	// Module
+	class Module {
+		constructor(id, strId, dependencies, callback, errorback, moduleIdResolver) {
+			this.id = id;
+			this.strId = strId;
+			this.dependencies = dependencies;
+			this._callback = callback;
+			this._errorback = errorback;
+			this.moduleIdResolver = moduleIdResolver;
+			this.exports = {};
+			this.error = null;
+			this.exportsPassedIn = false;
+			this.unresolvedDependenciesCount = this.dependencies.length;
+			this._isComplete = false;
+		}
+		static _safeInvokeFunction(callback, args) {
+			try {
+				return {
+					returnedValue: callback.apply(AMDLoader.global, args),
+					producedError: null
+				};
+			}
+			catch (e) {
+				return {
+					returnedValue: null,
+					producedError: e
+				};
+			}
+		}
+		static _invokeFactory(config, strModuleId, callback, dependenciesValues) {
+			if (!config.shouldInvokeFactory(strModuleId)) {
+				return {
+					returnedValue: null,
+					producedError: null
+				};
+			}
+			if (config.shouldCatchError()) {
+				return this._safeInvokeFunction(callback, dependenciesValues);
+			}
+			return {
+				returnedValue: callback.apply(AMDLoader.global, dependenciesValues),
+				producedError: null
+			};
+		}
+		complete(recorder, config, dependenciesValues, inversedependenciesProvider) {
+			this._isComplete = true;
+			let producedError = null;
+			if (this._callback) {
+				if (typeof this._callback === 'function') {
+					recorder.record(21 /* LoaderEventType.BeginInvokeFactory */, this.strId);
+					let r = Module._invokeFactory(config, this.strId, this._callback, dependenciesValues);
+					producedError = r.producedError;
+					recorder.record(22 /* LoaderEventType.EndInvokeFactory */, this.strId);
+					if (!producedError && typeof r.returnedValue !== 'undefined' && (!this.exportsPassedIn || AMDLoader.Utilities.isEmpty(this.exports))) {
+						this.exports = r.returnedValue;
+					}
+				}
+				else {
+					this.exports = this._callback;
+				}
+			}
+			if (producedError) {
+				let err = AMDLoader.ensureError(producedError);
+				err.phase = 'factory';
+				err.moduleId = this.strId;
+				err.neededBy = inversedependenciesProvider(this.id);
+				this.error = err;
+				config.onError(err);
+			}
+			this.dependencies = null;
+			this._callback = null;
+			this._errorback = null;
+			this.moduleIdResolver = null;
+		}
+		/**
+		 * One of the direct dependencies or a transitive dependency has failed to load.
+		 */
+		onDependencyError(err) {
+			this._isComplete = true;
+			this.error = err;
+			if (this._errorback) {
+				this._errorback(err);
+				return true;
+			}
+			return false;
+		}
+		/**
+		 * Is the current module complete?
+		 */
+		isComplete() {
+			return this._isComplete;
+		}
+	}
+	AMDLoader.Module = Module;
+	class ModuleIdProvider {
+		constructor() {
+			this._nextId = 0;
+			this._strModuleIdToIntModuleId = new Map();
+			this._intModuleIdToStrModuleId = [];
+			// Ensure values 0, 1, 2 are assigned accordingly with ModuleId
+			this.getModuleId('exports');
+			this.getModuleId('module');
+			this.getModuleId('require');
+		}
+		getMaxModuleId() {
+			return this._nextId;
+		}
+		getModuleId(strModuleId) {
+			let id = this._strModuleIdToIntModuleId.get(strModuleId);
+			if (typeof id === 'undefined') {
+				id = this._nextId++;
+				this._strModuleIdToIntModuleId.set(strModuleId, id);
+				this._intModuleIdToStrModuleId[id] = strModuleId;
+			}
+			return id;
+		}
+		getStrModuleId(moduleId) {
+			return this._intModuleIdToStrModuleId[moduleId];
+		}
+	}
+	class RegularDependency {
+		constructor(id) {
+			this.id = id;
+		}
+	}
+	RegularDependency.EXPORTS = new RegularDependency(0 /* ModuleId.EXPORTS */);
+	RegularDependency.MODULE = new RegularDependency(1 /* ModuleId.MODULE */);
+	RegularDependency.REQUIRE = new RegularDependency(2 /* ModuleId.REQUIRE */);
+	AMDLoader.RegularDependency = RegularDependency;
+	class PluginDependency {
+		constructor(id, pluginId, pluginParam) {
+			this.id = id;
+			this.pluginId = pluginId;
+			this.pluginParam = pluginParam;
+		}
+	}
+	AMDLoader.PluginDependency = PluginDependency;
+	class ModuleManager {
+		constructor(env, scriptLoader, defineFunc, requireFunc, loaderAvailableTimestamp = 0) {
+			this._env = env;
+			this._scriptLoader = scriptLoader;
+			this._loaderAvailableTimestamp = loaderAvailableTimestamp;
+			this._defineFunc = defineFunc;
+			this._requireFunc = requireFunc;
+			this._moduleIdProvider = new ModuleIdProvider();
+			this._config = new AMDLoader.Configuration(this._env);
+			this._hasDependencyCycle = false;
+			this._modules2 = [];
+			this._knownModules2 = [];
+			this._inverseDependencies2 = [];
+			this._inversePluginDependencies2 = new Map();
+			this._currentAnonymousDefineCall = null;
+			this._recorder = null;
+			this._buildInfoPath = [];
+			this._buildInfoDefineStack = [];
+			this._buildInfoDependencies = [];
+			this._requireFunc.moduleManager = this;
+		}
+		reset() {
+			return new ModuleManager(this._env, this._scriptLoader, this._defineFunc, this._requireFunc, this._loaderAvailableTimestamp);
+		}
+		getGlobalAMDDefineFunc() {
+			return this._defineFunc;
+		}
+		getGlobalAMDRequireFunc() {
+			return this._requireFunc;
+		}
+		static _findRelevantLocationInStack(needle, stack) {
+			let normalize = (str) => str.replace(/\\/g, '/');
+			let normalizedPath = normalize(needle);
+			let stackPieces = stack.split(/\n/);
+			for (let i = 0; i < stackPieces.length; i++) {
+				let m = stackPieces[i].match(/(.*):(\d+):(\d+)\)?$/);
+				if (m) {
+					let stackPath = m[1];
+					let stackLine = m[2];
+					let stackColumn = m[3];
+					let trimPathOffset = Math.max(stackPath.lastIndexOf(' ') + 1, stackPath.lastIndexOf('(') + 1);
+					stackPath = stackPath.substr(trimPathOffset);
+					stackPath = normalize(stackPath);
+					if (stackPath === normalizedPath) {
+						let r = {
+							line: parseInt(stackLine, 10),
+							col: parseInt(stackColumn, 10)
+						};
+						if (r.line === 1) {
+							r.col -= '(function (require, define, __filename, __dirname) { '.length;
+						}
+						return r;
+					}
+				}
+			}
+			throw new Error('Could not correlate define call site for needle ' + needle);
+		}
+		getBuildInfo() {
+			if (!this._config.isBuild()) {
+				return null;
+			}
+			let result = [], resultLen = 0;
+			for (let i = 0, len = this._modules2.length; i < len; i++) {
+				let m = this._modules2[i];
+				if (!m) {
+					continue;
+				}
+				let location = this._buildInfoPath[m.id] || null;
+				let defineStack = this._buildInfoDefineStack[m.id] || null;
+				let dependencies = this._buildInfoDependencies[m.id];
+				result[resultLen++] = {
+					id: m.strId,
+					path: location,
+					defineLocation: (location && defineStack ? ModuleManager._findRelevantLocationInStack(location, defineStack) : null),
+					dependencies: dependencies,
+					shim: null,
+					exports: m.exports
+				};
+			}
+			return result;
+		}
+		getRecorder() {
+			if (!this._recorder) {
+				if (this._config.shouldRecordStats()) {
+					this._recorder = new AMDLoader.LoaderEventRecorder(this._loaderAvailableTimestamp);
+				}
+				else {
+					this._recorder = AMDLoader.NullLoaderEventRecorder.INSTANCE;
+				}
+			}
+			return this._recorder;
+		}
+		getLoaderEvents() {
+			return this.getRecorder().getEvents();
+		}
+		/**
+		 * Defines an anonymous module (without an id). Its name will be resolved as we receive a callback from the scriptLoader.
+		 * @param dependencies @see defineModule
+		 * @param callback @see defineModule
+		 */
+		enqueueDefineAnonymousModule(dependencies, callback) {
+			if (this._currentAnonymousDefineCall !== null) {
+				throw new Error('Can only have one anonymous define call per script file');
+			}
+			let stack = null;
+			if (this._config.isBuild()) {
+				stack = new Error('StackLocation').stack || null;
+			}
+			this._currentAnonymousDefineCall = {
+				stack: stack,
+				dependencies: dependencies,
+				callback: callback
+			};
+		}
+		/**
+		 * Creates a module and stores it in _modules. The manager will immediately begin resolving its dependencies.
+		 * @param strModuleId An unique and absolute id of the module. This must not collide with another module's id
+		 * @param dependencies An array with the dependencies of the module. Special keys are: "require", "exports" and "module"
+		 * @param callback if callback is a function, it will be called with the resolved dependencies. if callback is an object, it will be considered as the exports of the module.
+		 */
+		defineModule(strModuleId, dependencies, callback, errorback, stack, moduleIdResolver = new ModuleIdResolver(strModuleId)) {
+			let moduleId = this._moduleIdProvider.getModuleId(strModuleId);
+			if (this._modules2[moduleId]) {
+				if (!this._config.isDuplicateMessageIgnoredFor(strModuleId)) {
+					console.warn('Duplicate definition of module \'' + strModuleId + '\'');
+				}
+				// Super important! Completely ignore duplicate module definition
+				return;
+			}
+			let m = new Module(moduleId, strModuleId, this._normalizeDependencies(dependencies, moduleIdResolver), callback, errorback, moduleIdResolver);
+			this._modules2[moduleId] = m;
+			if (this._config.isBuild()) {
+				this._buildInfoDefineStack[moduleId] = stack;
+				this._buildInfoDependencies[moduleId] = (m.dependencies || []).map(dep => this._moduleIdProvider.getStrModuleId(dep.id));
+			}
+			// Resolving of dependencies is immediate (not in a timeout). If there's a need to support a packer that concatenates in an
+			// unordered manner, in order to finish processing the file, execute the following method in a timeout
+			this._resolve(m);
+		}
+		_normalizeDependency(dependency, moduleIdResolver) {
+			if (dependency === 'exports') {
+				return RegularDependency.EXPORTS;
+			}
+			if (dependency === 'module') {
+				return RegularDependency.MODULE;
+			}
+			if (dependency === 'require') {
+				return RegularDependency.REQUIRE;
+			}
+			// Normalize dependency and then request it from the manager
+			let bangIndex = dependency.indexOf('!');
+			if (bangIndex >= 0) {
+				let strPluginId = moduleIdResolver.resolveModule(dependency.substr(0, bangIndex));
+				let pluginParam = moduleIdResolver.resolveModule(dependency.substr(bangIndex + 1));
+				let dependencyId = this._moduleIdProvider.getModuleId(strPluginId + '!' + pluginParam);
+				let pluginId = this._moduleIdProvider.getModuleId(strPluginId);
+				return new PluginDependency(dependencyId, pluginId, pluginParam);
+			}
+			return new RegularDependency(this._moduleIdProvider.getModuleId(moduleIdResolver.resolveModule(dependency)));
+		}
+		_normalizeDependencies(dependencies, moduleIdResolver) {
+			let result = [], resultLen = 0;
+			for (let i = 0, len = dependencies.length; i < len; i++) {
+				result[resultLen++] = this._normalizeDependency(dependencies[i], moduleIdResolver);
+			}
+			return result;
+		}
+		_relativeRequire(moduleIdResolver, dependencies, callback, errorback) {
+			if (typeof dependencies === 'string') {
+				return this.synchronousRequire(dependencies, moduleIdResolver);
+			}
+			this.defineModule(AMDLoader.Utilities.generateAnonymousModule(), dependencies, callback, errorback, null, moduleIdResolver);
+		}
+		/**
+		 * Require synchronously a module by its absolute id. If the module is not loaded, an exception will be thrown.
+		 * @param id The unique and absolute id of the required module
+		 * @return The exports of module 'id'
+		 */
+		synchronousRequire(_strModuleId, moduleIdResolver = new ModuleIdResolver(_strModuleId)) {
+			let dependency = this._normalizeDependency(_strModuleId, moduleIdResolver);
+			let m = this._modules2[dependency.id];
+			if (!m) {
+				throw new Error('Check dependency list! Synchronous require cannot resolve module \'' + _strModuleId + '\'. This is the first mention of this module!');
+			}
+			if (!m.isComplete()) {
+				throw new Error('Check dependency list! Synchronous require cannot resolve module \'' + _strModuleId + '\'. This module has not been resolved completely yet.');
+			}
+			if (m.error) {
+				throw m.error;
+			}
+			return m.exports;
+		}
+		configure(params, shouldOverwrite) {
+			let oldShouldRecordStats = this._config.shouldRecordStats();
+			if (shouldOverwrite) {
+				this._config = new AMDLoader.Configuration(this._env, params);
+			}
+			else {
+				this._config = this._config.cloneAndMerge(params);
+			}
+			if (this._config.shouldRecordStats() && !oldShouldRecordStats) {
+				this._recorder = null;
+			}
+		}
+		getConfig() {
+			return this._config;
+		}
+		/**
+		 * Callback from the scriptLoader when a module has been loaded.
+		 * This means its code is available and has been executed.
+		 */
+		_onLoad(moduleId) {
+			if (this._currentAnonymousDefineCall !== null) {
+				let defineCall = this._currentAnonymousDefineCall;
+				this._currentAnonymousDefineCall = null;
+				// Hit an anonymous define call
+				this.defineModule(this._moduleIdProvider.getStrModuleId(moduleId), defineCall.dependencies, defineCall.callback, null, defineCall.stack);
+			}
+		}
+		_createLoadError(moduleId, _err) {
+			let strModuleId = this._moduleIdProvider.getStrModuleId(moduleId);
+			let neededBy = (this._inverseDependencies2[moduleId] || []).map((intModuleId) => this._moduleIdProvider.getStrModuleId(intModuleId));
+			const err = AMDLoader.ensureError(_err);
+			err.phase = 'loading';
+			err.moduleId = strModuleId;
+			err.neededBy = neededBy;
+			return err;
+		}
+		/**
+		 * Callback from the scriptLoader when a module hasn't been loaded.
+		 * This means that the script was not found (e.g. 404) or there was an error in the script.
+		 */
+		_onLoadError(moduleId, err) {
+			const error = this._createLoadError(moduleId, err);
+			if (!this._modules2[moduleId]) {
+				this._modules2[moduleId] = new Module(moduleId, this._moduleIdProvider.getStrModuleId(moduleId), [], () => { }, null, null);
+			}
+			// Find any 'local' error handlers, walk the entire chain of inverse dependencies if necessary.
+			let seenModuleId = [];
+			for (let i = 0, len = this._moduleIdProvider.getMaxModuleId(); i < len; i++) {
+				seenModuleId[i] = false;
+			}
+			let someoneNotified = false;
+			let queue = [];
+			queue.push(moduleId);
+			seenModuleId[moduleId] = true;
+			while (queue.length > 0) {
+				let queueElement = queue.shift();
+				let m = this._modules2[queueElement];
+				if (m) {
+					someoneNotified = m.onDependencyError(error) || someoneNotified;
+				}
+				let inverseDeps = this._inverseDependencies2[queueElement];
+				if (inverseDeps) {
+					for (let i = 0, len = inverseDeps.length; i < len; i++) {
+						let inverseDep = inverseDeps[i];
+						if (!seenModuleId[inverseDep]) {
+							queue.push(inverseDep);
+							seenModuleId[inverseDep] = true;
+						}
+					}
+				}
+			}
+			if (!someoneNotified) {
+				this._config.onError(error);
+			}
+		}
+		/**
+		 * Walks (recursively) the dependencies of 'from' in search of 'to'.
+		 * Returns true if there is such a path or false otherwise.
+		 * @param from Module id to start at
+		 * @param to Module id to look for
+		 */
+		_hasDependencyPath(fromId, toId) {
+			let from = this._modules2[fromId];
+			if (!from) {
+				return false;
+			}
+			let inQueue = [];
+			for (let i = 0, len = this._moduleIdProvider.getMaxModuleId(); i < len; i++) {
+				inQueue[i] = false;
+			}
+			let queue = [];
+			// Insert 'from' in queue
+			queue.push(from);
+			inQueue[fromId] = true;
+			while (queue.length > 0) {
+				// Pop first inserted element of queue
+				let element = queue.shift();
+				let dependencies = element.dependencies;
+				if (dependencies) {
+					// Walk the element's dependencies
+					for (let i = 0, len = dependencies.length; i < len; i++) {
+						let dependency = dependencies[i];
+						if (dependency.id === toId) {
+							// There is a path to 'to'
+							return true;
+						}
+						let dependencyModule = this._modules2[dependency.id];
+						if (dependencyModule && !inQueue[dependency.id]) {
+							// Insert 'dependency' in queue
+							inQueue[dependency.id] = true;
+							queue.push(dependencyModule);
+						}
+					}
+				}
+			}
+			// There is no path to 'to'
+			return false;
+		}
+		/**
+		 * Walks (recursively) the dependencies of 'from' in search of 'to'.
+		 * Returns cycle as array.
+		 * @param from Module id to start at
+		 * @param to Module id to look for
+		 */
+		_findCyclePath(fromId, toId, depth) {
+			if (fromId === toId || depth === 50) {
+				return [fromId];
+			}
+			let from = this._modules2[fromId];
+			if (!from) {
+				return null;
+			}
+			// Walk the element's dependencies
+			let dependencies = from.dependencies;
+			if (dependencies) {
+				for (let i = 0, len = dependencies.length; i < len; i++) {
+					let path = this._findCyclePath(dependencies[i].id, toId, depth + 1);
+					if (path !== null) {
+						path.push(fromId);
+						return path;
+					}
+				}
+			}
+			return null;
+		}
+		/**
+		 * Create the local 'require' that is passed into modules
+		 */
+		_createRequire(moduleIdResolver) {
+			let result = ((dependencies, callback, errorback) => {
+				return this._relativeRequire(moduleIdResolver, dependencies, callback, errorback);
+			});
+			result.toUrl = (id) => {
+				return this._config.requireToUrl(moduleIdResolver.resolveModule(id));
+			};
+			result.getStats = () => {
+				return this.getLoaderEvents();
+			};
+			result.hasDependencyCycle = () => {
+				return this._hasDependencyCycle;
+			};
+			result.config = (params, shouldOverwrite = false) => {
+				this.configure(params, shouldOverwrite);
+			};
+			result.__$__nodeRequire = AMDLoader.global.nodeRequire;
+			return result;
+		}
+		_loadModule(moduleId) {
+			if (this._modules2[moduleId] || this._knownModules2[moduleId]) {
+				// known module
+				return;
+			}
+			this._knownModules2[moduleId] = true;
+			let strModuleId = this._moduleIdProvider.getStrModuleId(moduleId);
+			let paths = this._config.moduleIdToPaths(strModuleId);
+			let scopedPackageRegex = /^@[^\/]+\/[^\/]+$/; // matches @scope/package-name
+			if (this._env.isNode && (strModuleId.indexOf('/') === -1 || scopedPackageRegex.test(strModuleId))) {
+				paths.push('node|' + strModuleId);
+			}
+			let lastPathIndex = -1;
+			let loadNextPath = (err) => {
+				lastPathIndex++;
+				if (lastPathIndex >= paths.length) {
+					// No more paths to try
+					this._onLoadError(moduleId, err);
+				}
+				else {
+					let currentPath = paths[lastPathIndex];
+					let recorder = this.getRecorder();
+					if (this._config.isBuild() && currentPath === 'empty:') {
+						this._buildInfoPath[moduleId] = currentPath;
+						this.defineModule(this._moduleIdProvider.getStrModuleId(moduleId), [], null, null, null);
+						this._onLoad(moduleId);
+						return;
+					}
+					recorder.record(10 /* LoaderEventType.BeginLoadingScript */, currentPath);
+					this._scriptLoader.load(this, currentPath, () => {
+						if (this._config.isBuild()) {
+							this._buildInfoPath[moduleId] = currentPath;
+						}
+						recorder.record(11 /* LoaderEventType.EndLoadingScriptOK */, currentPath);
+						this._onLoad(moduleId);
+					}, (err) => {
+						recorder.record(12 /* LoaderEventType.EndLoadingScriptError */, currentPath);
+						loadNextPath(err);
+					});
+				}
+			};
+			loadNextPath(null);
+		}
+		/**
+		 * Resolve a plugin dependency with the plugin loaded & complete
+		 * @param module The module that has this dependency
+		 * @param pluginDependency The semi-normalized dependency that appears in the module. e.g. 'vs/css!./mycssfile'. Only the plugin part (before !) is normalized
+		 * @param plugin The plugin (what the plugin exports)
+		 */
+		_loadPluginDependency(plugin, pluginDependency) {
+			if (this._modules2[pluginDependency.id] || this._knownModules2[pluginDependency.id]) {
+				// known module
+				return;
+			}
+			this._knownModules2[pluginDependency.id] = true;
+			// Delegate the loading of the resource to the plugin
+			let load = ((value) => {
+				this.defineModule(this._moduleIdProvider.getStrModuleId(pluginDependency.id), [], value, null, null);
+			});
+			load.error = (err) => {
+				this._config.onError(this._createLoadError(pluginDependency.id, err));
+			};
+			plugin.load(pluginDependency.pluginParam, this._createRequire(ModuleIdResolver.ROOT), load, this._config.getOptionsLiteral());
+		}
+		/**
+		 * Examine the dependencies of module 'module' and resolve them as needed.
+		 */
+		_resolve(module) {
+			let dependencies = module.dependencies;
+			if (dependencies) {
+				for (let i = 0, len = dependencies.length; i < len; i++) {
+					let dependency = dependencies[i];
+					if (dependency === RegularDependency.EXPORTS) {
+						module.exportsPassedIn = true;
+						module.unresolvedDependenciesCount--;
+						continue;
+					}
+					if (dependency === RegularDependency.MODULE) {
+						module.unresolvedDependenciesCount--;
+						continue;
+					}
+					if (dependency === RegularDependency.REQUIRE) {
+						module.unresolvedDependenciesCount--;
+						continue;
+					}
+					let dependencyModule = this._modules2[dependency.id];
+					if (dependencyModule && dependencyModule.isComplete()) {
+						if (dependencyModule.error) {
+							module.onDependencyError(dependencyModule.error);
+							return;
+						}
+						module.unresolvedDependenciesCount--;
+						continue;
+					}
+					if (this._hasDependencyPath(dependency.id, module.id)) {
+						this._hasDependencyCycle = true;
+						console.warn('There is a dependency cycle between \'' + this._moduleIdProvider.getStrModuleId(dependency.id) + '\' and \'' + this._moduleIdProvider.getStrModuleId(module.id) + '\'. The cyclic path follows:');
+						let cyclePath = this._findCyclePath(dependency.id, module.id, 0) || [];
+						cyclePath.reverse();
+						cyclePath.push(dependency.id);
+						console.warn(cyclePath.map(id => this._moduleIdProvider.getStrModuleId(id)).join(' => \n'));
+						// Break the cycle
+						module.unresolvedDependenciesCount--;
+						continue;
+					}
+					// record inverse dependency
+					this._inverseDependencies2[dependency.id] = this._inverseDependencies2[dependency.id] || [];
+					this._inverseDependencies2[dependency.id].push(module.id);
+					if (dependency instanceof PluginDependency) {
+						let plugin = this._modules2[dependency.pluginId];
+						if (plugin && plugin.isComplete()) {
+							this._loadPluginDependency(plugin.exports, dependency);
+							continue;
+						}
+						// Record dependency for when the plugin gets loaded
+						let inversePluginDeps = this._inversePluginDependencies2.get(dependency.pluginId);
+						if (!inversePluginDeps) {
+							inversePluginDeps = [];
+							this._inversePluginDependencies2.set(dependency.pluginId, inversePluginDeps);
+						}
+						inversePluginDeps.push(dependency);
+						this._loadModule(dependency.pluginId);
+						continue;
+					}
+					this._loadModule(dependency.id);
+				}
+			}
+			if (module.unresolvedDependenciesCount === 0) {
+				this._onModuleComplete(module);
+			}
+		}
+		_onModuleComplete(module) {
+			let recorder = this.getRecorder();
+			if (module.isComplete()) {
+				// already done
+				return;
+			}
+			let dependencies = module.dependencies;
+			let dependenciesValues = [];
+			if (dependencies) {
+				for (let i = 0, len = dependencies.length; i < len; i++) {
+					let dependency = dependencies[i];
+					if (dependency === RegularDependency.EXPORTS) {
+						dependenciesValues[i] = module.exports;
+						continue;
+					}
+					if (dependency === RegularDependency.MODULE) {
+						dependenciesValues[i] = {
+							id: module.strId,
+							config: () => {
+								return this._config.getConfigForModule(module.strId);
+							}
+						};
+						continue;
+					}
+					if (dependency === RegularDependency.REQUIRE) {
+						dependenciesValues[i] = this._createRequire(module.moduleIdResolver);
+						continue;
+					}
+					let dependencyModule = this._modules2[dependency.id];
+					if (dependencyModule) {
+						dependenciesValues[i] = dependencyModule.exports;
+						continue;
+					}
+					dependenciesValues[i] = null;
+				}
+			}
+			const inversedependenciesProvider = (moduleId) => {
+				return (this._inverseDependencies2[moduleId] || []).map((intModuleId) => this._moduleIdProvider.getStrModuleId(intModuleId));
+			};
+			module.complete(recorder, this._config, dependenciesValues, inversedependenciesProvider);
+			// Fetch and clear inverse dependencies
+			let inverseDeps = this._inverseDependencies2[module.id];
+			this._inverseDependencies2[module.id] = null;
+			if (inverseDeps) {
+				// Resolve one inverse dependency at a time, always
+				// on the lookout for a completed module.
+				for (let i = 0, len = inverseDeps.length; i < len; i++) {
+					let inverseDependencyId = inverseDeps[i];
+					let inverseDependency = this._modules2[inverseDependencyId];
+					inverseDependency.unresolvedDependenciesCount--;
+					if (inverseDependency.unresolvedDependenciesCount === 0) {
+						this._onModuleComplete(inverseDependency);
+					}
+				}
+			}
+			let inversePluginDeps = this._inversePluginDependencies2.get(module.id);
+			if (inversePluginDeps) {
+				// This module is used as a plugin at least once
+				// Fetch and clear these inverse plugin dependencies
+				this._inversePluginDependencies2.delete(module.id);
+				// Resolve plugin dependencies one at a time
+				for (let i = 0, len = inversePluginDeps.length; i < len; i++) {
+					this._loadPluginDependency(module.exports, inversePluginDeps[i]);
+				}
+			}
+		}
+	}
+	AMDLoader.ModuleManager = ModuleManager;
 })(AMDLoader || (AMDLoader = {}));
 var define;
 var AMDLoader;
 (function (AMDLoader) {
-    const env = new AMDLoader.Environment();
-    let moduleManager = null;
-    const DefineFunc = function (id, dependencies, callback) {
-        if (typeof id !== 'string') {
-            callback = dependencies;
-            dependencies = id;
-            id = null;
-        }
-        if (typeof dependencies !== 'object' || !Array.isArray(dependencies)) {
-            callback = dependencies;
-            dependencies = null;
-        }
-        if (!dependencies) {
-            dependencies = ['require', 'exports', 'module'];
-        }
-        if (id) {
-            moduleManager.defineModule(id, dependencies, callback, null, null);
-        }
-        else {
-            moduleManager.enqueueDefineAnonymousModule(dependencies, callback);
-        }
-    };
-    DefineFunc.amd = {
-        jQuery: true
-    };
-    const _requireFunc_config = function (params, shouldOverwrite = false) {
-        moduleManager.configure(params, shouldOverwrite);
-    };
-    const RequireFunc = function () {
-        if (arguments.length === 1) {
-            if ((arguments[0] instanceof Object) && !Array.isArray(arguments[0])) {
-                _requireFunc_config(arguments[0]);
-                return;
-            }
-            if (typeof arguments[0] === 'string') {
-                return moduleManager.synchronousRequire(arguments[0]);
-            }
-        }
-        if (arguments.length === 2 || arguments.length === 3) {
-            if (Array.isArray(arguments[0])) {
-                moduleManager.defineModule(AMDLoader.Utilities.generateAnonymousModule(), arguments[0], arguments[1], arguments[2], null);
-                return;
-            }
-        }
-        throw new Error('Unrecognized require call');
-    };
-    RequireFunc.config = _requireFunc_config;
-    RequireFunc.getConfig = function () {
-        return moduleManager.getConfig().getOptionsLiteral();
-    };
-    RequireFunc.reset = function () {
-        moduleManager = moduleManager.reset();
-    };
-    RequireFunc.getBuildInfo = function () {
-        return moduleManager.getBuildInfo();
-    };
-    RequireFunc.getStats = function () {
-        return moduleManager.getLoaderEvents();
-    };
-    RequireFunc.define = DefineFunc;
-    function init() {
-        if (typeof AMDLoader.global.require !== 'undefined' || typeof require !== 'undefined') {
-            const _nodeRequire = (AMDLoader.global.require || require);
-            if (typeof _nodeRequire === 'function' && typeof _nodeRequire.resolve === 'function') {
-                // re-expose node's require function
-                const nodeRequire = AMDLoader.ensureRecordedNodeRequire(moduleManager.getRecorder(), _nodeRequire);
-                AMDLoader.global.nodeRequire = nodeRequire;
-                RequireFunc.nodeRequire = nodeRequire;
-                RequireFunc.__$__nodeRequire = nodeRequire;
-            }
-        }
-        if (env.isNode && !env.isElectronRenderer && !env.isElectronNodeIntegrationWebWorker) {
-            module.exports = RequireFunc;
-        }
-        else {
-            if (!env.isElectronRenderer) {
-                AMDLoader.global.define = DefineFunc;
-            }
-            AMDLoader.global.require = RequireFunc;
-        }
-    }
-    AMDLoader.init = init;
-    if (typeof AMDLoader.global.define !== 'function' || !AMDLoader.global.define.amd) {
-        moduleManager = new AMDLoader.ModuleManager(env, AMDLoader.createScriptLoader(env), DefineFunc, RequireFunc, AMDLoader.Utilities.getHighPerformanceTimestamp());
-        // The global variable require can configure the loader
-        if (typeof AMDLoader.global.require !== 'undefined' && typeof AMDLoader.global.require !== 'function') {
-            RequireFunc.config(AMDLoader.global.require);
-        }
-        // This define is for the local closure defined in node in the case that the loader is concatenated
-        define = function () {
-            return DefineFunc.apply(null, arguments);
-        };
-        define.amd = DefineFunc.amd;
-        if (typeof doNotInitLoader === 'undefined') {
-            init();
-        }
-    }
+	const env = new AMDLoader.Environment();
+	let moduleManager = null;
+	const DefineFunc = function (id, dependencies, callback) {
+		if (typeof id !== 'string') {
+			callback = dependencies;
+			dependencies = id;
+			id = null;
+		}
+		if (typeof dependencies !== 'object' || !Array.isArray(dependencies)) {
+			callback = dependencies;
+			dependencies = null;
+		}
+		if (!dependencies) {
+			dependencies = ['require', 'exports', 'module'];
+		}
+		if (id) {
+			moduleManager.defineModule(id, dependencies, callback, null, null);
+		}
+		else {
+			moduleManager.enqueueDefineAnonymousModule(dependencies, callback);
+		}
+	};
+	DefineFunc.amd = {
+		jQuery: true
+	};
+	const _requireFunc_config = function (params, shouldOverwrite = false) {
+		moduleManager.configure(params, shouldOverwrite);
+	};
+	const RequireFunc = function () {
+		if (arguments.length === 1) {
+			if ((arguments[0] instanceof Object) && !Array.isArray(arguments[0])) {
+				_requireFunc_config(arguments[0]);
+				return;
+			}
+			if (typeof arguments[0] === 'string') {
+				return moduleManager.synchronousRequire(arguments[0]);
+			}
+		}
+		if (arguments.length === 2 || arguments.length === 3) {
+			if (Array.isArray(arguments[0])) {
+				moduleManager.defineModule(AMDLoader.Utilities.generateAnonymousModule(), arguments[0], arguments[1], arguments[2], null);
+				return;
+			}
+		}
+		throw new Error('Unrecognized require call');
+	};
+	RequireFunc.config = _requireFunc_config;
+	RequireFunc.getConfig = function () {
+		return moduleManager.getConfig().getOptionsLiteral();
+	};
+	RequireFunc.reset = function () {
+		moduleManager = moduleManager.reset();
+	};
+	RequireFunc.getBuildInfo = function () {
+		return moduleManager.getBuildInfo();
+	};
+	RequireFunc.getStats = function () {
+		return moduleManager.getLoaderEvents();
+	};
+	RequireFunc.define = DefineFunc;
+	function init() {
+		if (typeof AMDLoader.global.require !== 'undefined' || typeof require !== 'undefined') {
+			const _nodeRequire = (AMDLoader.global.require || require);
+			if (typeof _nodeRequire === 'function' && typeof _nodeRequire.resolve === 'function') {
+				// re-expose node's require function
+				const nodeRequire = AMDLoader.ensureRecordedNodeRequire(moduleManager.getRecorder(), _nodeRequire);
+				AMDLoader.global.nodeRequire = nodeRequire;
+				RequireFunc.nodeRequire = nodeRequire;
+				RequireFunc.__$__nodeRequire = nodeRequire;
+			}
+		}
+		if (env.isNode && !env.isElectronRenderer && !env.isElectronNodeIntegrationWebWorker) {
+			module.exports = RequireFunc;
+		}
+		else {
+			if (!env.isElectronRenderer) {
+				AMDLoader.global.define = DefineFunc;
+			}
+			AMDLoader.global.require = RequireFunc;
+		}
+	}
+	AMDLoader.init = init;
+	if (typeof AMDLoader.global.define !== 'function' || !AMDLoader.global.define.amd) {
+		moduleManager = new AMDLoader.ModuleManager(env, AMDLoader.createScriptLoader(env), DefineFunc, RequireFunc, AMDLoader.Utilities.getHighPerformanceTimestamp());
+		// The global variable require can configure the loader
+		if (typeof AMDLoader.global.require !== 'undefined' && typeof AMDLoader.global.require !== 'function') {
+			RequireFunc.config(AMDLoader.global.require);
+		}
+		// This define is for the local closure defined in node in the case that the loader is concatenated
+		define = function () {
+			return DefineFunc.apply(null, arguments);
+		};
+		define.amd = DefineFunc.amd;
+		if (typeof doNotInitLoader === 'undefined') {
+			init();
+		}
+	}
 })(AMDLoader || (AMDLoader = {}));
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[19/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.load = exports.create = exports.setPseudoTranslation = exports.getConfiguredDefaultLocale = exports.localize = void 0;
+    exports.localize = localize;
+    exports.localize2 = localize2;
+    exports.getConfiguredDefaultLocale = getConfiguredDefaultLocale;
+    exports.setPseudoTranslation = setPseudoTranslation;
+    exports.create = create;
+    exports.load = load;
     let isPseudo = (typeof document !== 'undefined' && document.location && document.location.hash.indexOf('pseudo=true') >= 0);
     const DEFAULT_TAG = 'i-default';
     function _format(message, args) {
@@ -1964,16 +1963,14 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
         }
         return path + '/';
     }
-    function getMessagesFromTranslationsService(translationServiceUrl, language, name) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const url = endWithSlash(translationServiceUrl) + endWithSlash(language) + 'vscode/' + endWithSlash(name);
-            const res = yield fetch(url);
-            if (res.ok) {
-                const messages = yield res.json();
-                return messages;
-            }
-            throw new Error(`${res.status} - ${res.statusText}`);
-        });
+    async function getMessagesFromTranslationsService(translationServiceUrl, language, name) {
+        const url = endWithSlash(translationServiceUrl) + endWithSlash(language) + 'vscode/' + endWithSlash(name);
+        const res = await fetch(url);
+        if (res.ok) {
+            const messages = await res.json();
+            return messages;
+        }
+        throw new Error(`${res.status} - ${res.statusText}`);
     }
     function createScopedLocalize(scope) {
         return function (idx, defaultValue) {
@@ -1981,40 +1978,66 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
             return _format(scope[idx], restArgs);
         };
     }
+    function createScopedLocalize2(scope) {
+        return (idx, defaultValue, ...args) => ({
+            value: _format(scope[idx], args),
+            original: _format(defaultValue, args)
+        });
+    }
+    /**
+     * @skipMangle
+     */
     function localize(data, message, ...args) {
         return _format(message, args);
     }
-    exports.localize = localize;
+    /**
+     * @skipMangle
+     */
+    function localize2(data, message, ...args) {
+        const original = _format(message, args);
+        return {
+            value: original,
+            original
+        };
+    }
+    /**
+     * @skipMangle
+     */
     function getConfiguredDefaultLocale(_) {
         // This returns undefined because this implementation isn't used and is overwritten by the loader
         // when loaded.
         return undefined;
     }
-    exports.getConfiguredDefaultLocale = getConfiguredDefaultLocale;
+    /**
+     * @skipMangle
+     */
     function setPseudoTranslation(value) {
         isPseudo = value;
     }
-    exports.setPseudoTranslation = setPseudoTranslation;
     /**
      * Invoked in a built product at run-time
+     * @skipMangle
      */
     function create(key, data) {
         var _a;
         return {
             localize: createScopedLocalize(data[key]),
+            localize2: createScopedLocalize2(data[key]),
             getConfiguredDefaultLocale: (_a = data.getConfiguredDefaultLocale) !== null && _a !== void 0 ? _a : ((_) => undefined)
         };
     }
-    exports.create = create;
     /**
      * Invoked by the loader at run-time
+     * @skipMangle
      */
     function load(name, req, load, config) {
         var _a;
         const pluginConfig = (_a = config['vs/nls']) !== null && _a !== void 0 ? _a : {};
         if (!name || name.length === 0) {
+            // TODO: We need to give back the mangled names here
             return load({
                 localize: localize,
+                localize2: localize2,
                 getConfiguredDefaultLocale: () => { var _a; return (_a = pluginConfig.availableLanguages) === null || _a === void 0 ? void 0 : _a['*']; }
             });
         }
@@ -2027,9 +2050,11 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
         const messagesLoaded = (messages) => {
             if (Array.isArray(messages)) {
                 messages.localize = createScopedLocalize(messages);
+                messages.localize2 = createScopedLocalize2(messages);
             }
             else {
                 messages.localize = createScopedLocalize(messages[name]);
+                messages.localize2 = createScopedLocalize2(messages[name]);
             }
             messages.getConfiguredDefaultLocale = () => { var _a; return (_a = pluginConfig.availableLanguages) === null || _a === void 0 ? void 0 : _a['*']; };
             load(messages);
@@ -2046,10 +2071,10 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
             });
         }
         else if (pluginConfig.translationServiceUrl && !useDefaultLanguage) {
-            (() => __awaiter(this, void 0, void 0, function* () {
-                var _b;
+            (async () => {
+                var _a;
                 try {
-                    const messages = yield getMessagesFromTranslationsService(pluginConfig.translationServiceUrl, language, name);
+                    const messages = await getMessagesFromTranslationsService(pluginConfig.translationServiceUrl, language, name);
                     return messagesLoaded(messages);
                 }
                 catch (err) {
@@ -2063,9 +2088,9 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
                         // Since we were unable to load the specific language, try to load the generic language. Ex. we failed to find a
                         // Swiss German (de-CH), so try to load the generic German (de) messages instead.
                         const genericLanguage = language.split('-')[0];
-                        const messages = yield getMessagesFromTranslationsService(pluginConfig.translationServiceUrl, genericLanguage, name);
+                        const messages = await getMessagesFromTranslationsService(pluginConfig.translationServiceUrl, genericLanguage, name);
                         // We got some messages, so we configure the configuration to use the generic language for this session.
-                        (_b = pluginConfig.availableLanguages) !== null && _b !== void 0 ? _b : (pluginConfig.availableLanguages = {});
+                        (_a = pluginConfig.availableLanguages) !== null && _a !== void 0 ? _a : (pluginConfig.availableLanguages = {});
                         pluginConfig.availableLanguages['*'] = genericLanguage;
                         return messagesLoaded(messages);
                     }
@@ -2074,7 +2099,7 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
                         return req([name + '.nls'], messagesLoaded);
                     }
                 }
-            }))();
+            })();
         }
         else {
             req([name + suffix], messagesLoaded, (err) => {
@@ -2087,7 +2112,6 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
             });
         }
     }
-    exports.load = load;
 });
 
 "use strict";
@@ -2096,28 +2120,45 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 (function () {
-    var _a, _b;
-    const MonacoEnvironment = globalThis.MonacoEnvironment;
-    const monacoBaseUrl = MonacoEnvironment && MonacoEnvironment.baseUrl ? MonacoEnvironment.baseUrl : '../../../';
-    const trustedTypesPolicy = (typeof ((_a = self.trustedTypes) === null || _a === void 0 ? void 0 : _a.createPolicy) === 'function'
-        ? (_b = self.trustedTypes) === null || _b === void 0 ? void 0 : _b.createPolicy('amdLoader', {
-            createScriptURL: value => value,
-            createScript: (_, ...args) => {
-                // workaround a chrome issue not allowing to create new functions
-                // see https://github.com/w3c/webappsec-trusted-types/wiki/Trusted-Types-for-function-constructor
-                const fnArgs = args.slice(0, -1).join(',');
-                const fnBody = args.pop().toString();
-                // Do not add a new line to fnBody, as this will confuse source maps.
-                const body = `(function anonymous(${fnArgs}) { ${fnBody}\n})`;
-                return body;
+    const monacoEnvironment = globalThis.MonacoEnvironment;
+    const monacoBaseUrl = monacoEnvironment && monacoEnvironment.baseUrl ? monacoEnvironment.baseUrl : '../../../';
+    function createTrustedTypesPolicy(policyName, policyOptions) {
+        var _a;
+        if (monacoEnvironment === null || monacoEnvironment === void 0 ? void 0 : monacoEnvironment.createTrustedTypesPolicy) {
+            try {
+                return monacoEnvironment.createTrustedTypesPolicy(policyName, policyOptions);
             }
-        })
-        : undefined);
+            catch (err) {
+                console.warn(err);
+                return undefined;
+            }
+        }
+        try {
+            return (_a = self.trustedTypes) === null || _a === void 0 ? void 0 : _a.createPolicy(policyName, policyOptions);
+        }
+        catch (err) {
+            console.warn(err);
+            return undefined;
+        }
+    }
+    const trustedTypesPolicy = createTrustedTypesPolicy('amdLoader', {
+        createScriptURL: value => value,
+        createScript: (_, ...args) => {
+            // workaround a chrome issue not allowing to create new functions
+            // see https://github.com/w3c/webappsec-trusted-types/wiki/Trusted-Types-for-function-constructor
+            const fnArgs = args.slice(0, -1).join(',');
+            const fnBody = args.pop().toString();
+            // Do not add a new line to fnBody, as this will confuse source maps.
+            const body = `(function anonymous(${fnArgs}) { ${fnBody}\n})`;
+            return body;
+        }
+    });
     function canUseEval() {
         try {
             const func = (trustedTypesPolicy
-                ? globalThis.eval(trustedTypesPolicy.createScript('', 'true'))
-                : new Function('true'));
+                ? globalThis.eval(trustedTypesPolicy.createScript('', 'true')) // CodeQL [SM01632] fetch + eval is used on the web worker instead of importScripts if possible because importScripts is synchronous and we observed deadlocks on Safari
+                : new Function('true') // CodeQL [SM01632] fetch + eval is used on the web worker instead of importScripts if possible because importScripts is synchronous and we observed deadlocks on Safari
+            );
             func.call(globalThis);
             return true;
         }
@@ -2143,8 +2184,9 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
                 }).then((text) => {
                     text = `${text}\n//# sourceURL=${loaderSrc}`;
                     const func = (trustedTypesPolicy
-                        ? globalThis.eval(trustedTypesPolicy.createScript('', text))
-                        : new Function(text));
+                        ? globalThis.eval(trustedTypesPolicy.createScript('', text)) // CodeQL [SM01632] fetch + eval is used on the web worker instead of importScripts if possible because importScripts is synchronous and we observed deadlocks on Safari
+                        : new Function(text) // CodeQL [SM01632] fetch + eval is used on the web worker instead of importScripts if possible because importScripts is synchronous and we observed deadlocks on Safari
+                    );
                     func.call(globalThis);
                     resolve();
                 }).then(undefined, reject);
@@ -2202,10 +2244,38 @@ define(__m[25/*vs/nls*/], __M([0/*require*/,1/*exports*/]), function (require, e
     };
 })();
 
-define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[7/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.CallbackIterable = exports.ArrayQueue = exports.findMinBy = exports.findLastMaxBy = exports.findMaxBy = exports.numberComparator = exports.compareBy = exports.CompareResult = exports.splice = exports.insertInto = exports.asArray = exports.pushMany = exports.pushToEnd = exports.pushToStart = exports.arrayInsert = exports.range = exports.firstOrDefault = exports.lastIndex = exports.findLast = exports.distinct = exports.isNonEmptyArray = exports.isFalsyOrEmpty = exports.coalesceInPlace = exports.coalesce = exports.groupBy = exports.quickSelect = exports.findFirstInSorted = exports.binarySearch2 = exports.binarySearch = exports.removeFastWithoutKeepingOrder = exports.equals = exports.tail2 = exports.tail = void 0;
+    exports.Permutation = exports.CallbackIterable = exports.ArrayQueue = exports.booleanComparator = exports.numberComparator = exports.CompareResult = void 0;
+    exports.tail = tail;
+    exports.tail2 = tail2;
+    exports.equals = equals;
+    exports.removeFastWithoutKeepingOrder = removeFastWithoutKeepingOrder;
+    exports.binarySearch = binarySearch;
+    exports.binarySearch2 = binarySearch2;
+    exports.quickSelect = quickSelect;
+    exports.groupBy = groupBy;
+    exports.groupAdjacentBy = groupAdjacentBy;
+    exports.forEachAdjacent = forEachAdjacent;
+    exports.forEachWithNeighbors = forEachWithNeighbors;
+    exports.coalesce = coalesce;
+    exports.coalesceInPlace = coalesceInPlace;
+    exports.isFalsyOrEmpty = isFalsyOrEmpty;
+    exports.isNonEmptyArray = isNonEmptyArray;
+    exports.distinct = distinct;
+    exports.firstOrDefault = firstOrDefault;
+    exports.range = range;
+    exports.arrayInsert = arrayInsert;
+    exports.pushToStart = pushToStart;
+    exports.pushToEnd = pushToEnd;
+    exports.pushMany = pushMany;
+    exports.asArray = asArray;
+    exports.insertInto = insertInto;
+    exports.splice = splice;
+    exports.compareBy = compareBy;
+    exports.tieBreakComparators = tieBreakComparators;
+    exports.reverseOrder = reverseOrder;
     /**
      * Returns the last element of an array.
      * @param array The array.
@@ -2214,14 +2284,12 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
     function tail(array, n = 0) {
         return array[array.length - (1 + n)];
     }
-    exports.tail = tail;
     function tail2(arr) {
         if (arr.length === 0) {
             throw new Error('Invalid tail call');
         }
         return [arr.slice(0, arr.length - 1), arr[arr.length - 1]];
     }
-    exports.tail2 = tail2;
     function equals(one, other, itemEquals = (a, b) => a === b) {
         if (one === other) {
             return true;
@@ -2239,7 +2307,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
         }
         return true;
     }
-    exports.equals = equals;
     /**
      * Remove the element at `index` by replacing it with the last element. This is faster than `splice`
      * but changes the order of the array
@@ -2251,7 +2318,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
         }
         array.pop();
     }
-    exports.removeFastWithoutKeepingOrder = removeFastWithoutKeepingOrder;
     /**
      * Performs a binary search algorithm over a sorted array.
      *
@@ -2266,7 +2332,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
     function binarySearch(array, key, comparator) {
         return binarySearch2(array.length, i => comparator(array[i], key));
     }
-    exports.binarySearch = binarySearch;
     /**
      * Performs a binary search algorithm over a sorted collection. Useful for cases
      * when we need to perform a binary search over something that isn't actually an
@@ -2299,29 +2364,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
         }
         return -(low + 1);
     }
-    exports.binarySearch2 = binarySearch2;
-    /**
-     * Takes a sorted array and a function p. The array is sorted in such a way that all elements where p(x) is false
-     * are located before all elements where p(x) is true.
-     * @returns the least x for which p(x) is true or array.length if no element fullfills the given function.
-     */
-    function findFirstInSorted(array, p) {
-        let low = 0, high = array.length;
-        if (high === 0) {
-            return 0; // no children
-        }
-        while (low < high) {
-            const mid = Math.floor((low + high) / 2);
-            if (p(array[mid])) {
-                high = mid;
-            }
-            else {
-                low = mid + 1;
-            }
-        }
-        return low;
-    }
-    exports.findFirstInSorted = findFirstInSorted;
     function quickSelect(nth, data, compare) {
         nth = nth | 0;
         if (nth >= data.length) {
@@ -2353,7 +2395,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
             return quickSelect(nth - (lower.length + pivots.length), higher, compare);
         }
     }
-    exports.quickSelect = quickSelect;
     function groupBy(data, compare) {
         const result = [];
         let currentGroup = undefined;
@@ -2368,14 +2409,46 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
         }
         return result;
     }
-    exports.groupBy = groupBy;
+    /**
+     * Splits the given items into a list of (non-empty) groups.
+     * `shouldBeGrouped` is used to decide if two consecutive items should be in the same group.
+     * The order of the items is preserved.
+     */
+    function* groupAdjacentBy(items, shouldBeGrouped) {
+        let currentGroup;
+        let last;
+        for (const item of items) {
+            if (last !== undefined && shouldBeGrouped(last, item)) {
+                currentGroup.push(item);
+            }
+            else {
+                if (currentGroup) {
+                    yield currentGroup;
+                }
+                currentGroup = [item];
+            }
+            last = item;
+        }
+        if (currentGroup) {
+            yield currentGroup;
+        }
+    }
+    function forEachAdjacent(arr, f) {
+        for (let i = 0; i <= arr.length; i++) {
+            f(i === 0 ? undefined : arr[i - 1], i === arr.length ? undefined : arr[i]);
+        }
+    }
+    function forEachWithNeighbors(arr, f) {
+        for (let i = 0; i < arr.length; i++) {
+            f(i === 0 ? undefined : arr[i - 1], arr[i], i + 1 === arr.length ? undefined : arr[i + 1]);
+        }
+    }
     /**
      * @returns New array with all falsy values removed. The original array IS NOT modified.
      */
     function coalesce(array) {
         return array.filter(e => !!e);
     }
-    exports.coalesce = coalesce;
     /**
      * Remove all falsy values from `array`. The original array IS modified.
      */
@@ -2389,18 +2462,15 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
         }
         array.length = to;
     }
-    exports.coalesceInPlace = coalesceInPlace;
     /**
      * @returns false if the provided object is an array and not empty.
      */
     function isFalsyOrEmpty(obj) {
         return !Array.isArray(obj) || obj.length === 0;
     }
-    exports.isFalsyOrEmpty = isFalsyOrEmpty;
     function isNonEmptyArray(obj) {
         return Array.isArray(obj) && obj.length > 0;
     }
-    exports.isNonEmptyArray = isNonEmptyArray;
     /**
      * Removes duplicates from the given array. The optional keyFn allows to specify
      * how elements are checked for equality by returning an alternate value for each.
@@ -2416,29 +2486,9 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
             return true;
         });
     }
-    exports.distinct = distinct;
-    function findLast(arr, predicate) {
-        const idx = lastIndex(arr, predicate);
-        if (idx === -1) {
-            return undefined;
-        }
-        return arr[idx];
-    }
-    exports.findLast = findLast;
-    function lastIndex(array, fn) {
-        for (let i = array.length - 1; i >= 0; i--) {
-            const element = array[i];
-            if (fn(element)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-    exports.lastIndex = lastIndex;
     function firstOrDefault(array, notFoundValue) {
         return array.length > 0 ? array[0] : notFoundValue;
     }
-    exports.firstOrDefault = firstOrDefault;
     function range(arg, to) {
         let from = typeof to === 'number' ? arg : 0;
         if (typeof to === 'number') {
@@ -2461,7 +2511,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
         }
         return result;
     }
-    exports.range = range;
     /**
      * Insert `insertArr` inside `target` at `insertIndex`.
      * Please don't touch unless you understand https://jsperf.com/inserting-an-array-within-an-array
@@ -2471,7 +2520,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
         const after = target.slice(insertIndex);
         return before.concat(insertArr, after);
     }
-    exports.arrayInsert = arrayInsert;
     /**
      * Pushes an element to the start of the array, if found.
      */
@@ -2482,7 +2530,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
             arr.unshift(value);
         }
     }
-    exports.pushToStart = pushToStart;
     /**
      * Pushes an element to the end of the array, if found.
      */
@@ -2493,17 +2540,14 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
             arr.push(value);
         }
     }
-    exports.pushToEnd = pushToEnd;
     function pushMany(arr, items) {
         for (const item of items) {
             arr.push(item);
         }
     }
-    exports.pushMany = pushMany;
     function asArray(x) {
         return Array.isArray(x) ? x : [x];
     }
-    exports.asArray = asArray;
     /**
      * Insert the new items in the array.
      * @param array The original array.
@@ -2523,7 +2567,6 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
             array[i + startIdx] = newItems[i];
         }
     }
-    exports.insertInto = insertInto;
     /**
      * Removes elements from an array and inserts new elements in their place, returning the deleted elements. Alternative to the native Array.splice method, it
      * can only support limited number of items due to the maximum call stack size limit.
@@ -2534,11 +2577,14 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
      */
     function splice(array, start, deleteCount, newItems) {
         const index = getActualStartIndex(array, start);
-        const result = array.splice(index, deleteCount);
+        let result = array.splice(index, deleteCount);
+        if (result === undefined) {
+            // see https://bugs.webkit.org/show_bug.cgi?id=261140
+            result = [];
+        }
         insertInto(array, index, newItems);
         return result;
     }
-    exports.splice = splice;
     /**
      * Determine the actual start index (same logic as the native splice() or slice())
      * If greater than the length of the array, start will be set to the length of the array. In this case, no element will be deleted but the method will behave as an adding function, adding as many element as item[n*] provided.
@@ -2555,6 +2601,10 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
             return result < 0;
         }
         CompareResult.isLessThan = isLessThan;
+        function isLessThanOrEqual(result) {
+            return result <= 0;
+        }
+        CompareResult.isLessThanOrEqual = isLessThanOrEqual;
         function isGreaterThan(result) {
             return result > 0;
         }
@@ -2566,57 +2616,31 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
         CompareResult.greaterThan = 1;
         CompareResult.lessThan = -1;
         CompareResult.neitherLessOrGreaterThan = 0;
-    })(CompareResult = exports.CompareResult || (exports.CompareResult = {}));
+    })(CompareResult || (exports.CompareResult = CompareResult = {}));
     function compareBy(selector, comparator) {
         return (a, b) => comparator(selector(a), selector(b));
     }
-    exports.compareBy = compareBy;
+    function tieBreakComparators(...comparators) {
+        return (item1, item2) => {
+            for (const comparator of comparators) {
+                const result = comparator(item1, item2);
+                if (!CompareResult.isNeitherLessOrGreaterThan(result)) {
+                    return result;
+                }
+            }
+            return CompareResult.neitherLessOrGreaterThan;
+        };
+    }
     /**
      * The natural order on numbers.
     */
     const numberComparator = (a, b) => a - b;
     exports.numberComparator = numberComparator;
-    /**
-     * Returns the first item that is equal to or greater than every other item.
-    */
-    function findMaxBy(items, comparator) {
-        if (items.length === 0) {
-            return undefined;
-        }
-        let max = items[0];
-        for (let i = 1; i < items.length; i++) {
-            const item = items[i];
-            if (comparator(item, max) > 0) {
-                max = item;
-            }
-        }
-        return max;
+    const booleanComparator = (a, b) => (0, exports.numberComparator)(a ? 1 : 0, b ? 1 : 0);
+    exports.booleanComparator = booleanComparator;
+    function reverseOrder(comparator) {
+        return (a, b) => -comparator(a, b);
     }
-    exports.findMaxBy = findMaxBy;
-    /**
-     * Returns the last item that is equal to or greater than every other item.
-    */
-    function findLastMaxBy(items, comparator) {
-        if (items.length === 0) {
-            return undefined;
-        }
-        let max = items[0];
-        for (let i = 1; i < items.length; i++) {
-            const item = items[i];
-            if (comparator(item, max) >= 0) {
-                max = item;
-            }
-        }
-        return max;
-    }
-    exports.findLastMaxBy = findLastMaxBy;
-    /**
-     * Returns the first item that is equal to or less than every other item.
-    */
-    function findMinBy(items, comparator) {
-        return findMaxBy(items, (a, b) => -comparator(a, b));
-    }
-    exports.findMinBy = findMinBy;
     class ArrayQueue {
         /**
          * Constructs a queue that is backed by the given array. Runtime is O(1).
@@ -2724,27 +2748,252 @@ define(__m[26/*vs/base/common/arrays*/], __M([0/*require*/,1/*exports*/]), funct
             return result;
         }
     }
-    CallbackIterable.empty = new CallbackIterable(_callback => { });
     exports.CallbackIterable = CallbackIterable;
+    CallbackIterable.empty = new CallbackIterable(_callback => { });
+    /**
+     * Represents a re-arrangement of items in an array.
+     */
+    class Permutation {
+        constructor(_indexMap) {
+            this._indexMap = _indexMap;
+        }
+        /**
+         * Returns a permutation that sorts the given array according to the given compare function.
+         */
+        static createSortPermutation(arr, compareFn) {
+            const sortIndices = Array.from(arr.keys()).sort((index1, index2) => compareFn(arr[index1], arr[index2]));
+            return new Permutation(sortIndices);
+        }
+        /**
+         * Returns a new array with the elements of the given array re-arranged according to this permutation.
+         */
+        apply(arr) {
+            return arr.map((_, index) => arr[this._indexMap[index]]);
+        }
+        /**
+         * Returns a new permutation that undoes the re-arrangement of this permutation.
+        */
+        inverse() {
+            const inverseIndexMap = this._indexMap.slice();
+            for (let i = 0; i < this._indexMap.length; i++) {
+                inverseIndexMap[this._indexMap[i]] = i;
+            }
+            return new Permutation(inverseIndexMap);
+        }
+    }
+    exports.Permutation = Permutation;
 });
 
-define(__m[27/*vs/base/common/cache*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[11/*vs/base/common/arraysFind*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.MonotonousArray = void 0;
+    exports.findLast = findLast;
+    exports.findLastIdx = findLastIdx;
+    exports.findLastMonotonous = findLastMonotonous;
+    exports.findLastIdxMonotonous = findLastIdxMonotonous;
+    exports.findFirstMonotonous = findFirstMonotonous;
+    exports.findFirstIdxMonotonousOrArrLen = findFirstIdxMonotonousOrArrLen;
+    exports.findFirstMaxBy = findFirstMaxBy;
+    exports.findLastMaxBy = findLastMaxBy;
+    exports.findFirstMinBy = findFirstMinBy;
+    exports.findMaxIdxBy = findMaxIdxBy;
+    exports.mapFindFirst = mapFindFirst;
+    function findLast(array, predicate, fromIdx) {
+        const idx = findLastIdx(array, predicate);
+        if (idx === -1) {
+            return undefined;
+        }
+        return array[idx];
+    }
+    function findLastIdx(array, predicate, fromIndex = array.length - 1) {
+        for (let i = fromIndex; i >= 0; i--) {
+            const element = array[i];
+            if (predicate(element)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    /**
+     * Finds the last item where predicate is true using binary search.
+     * `predicate` must be monotonous, i.e. `arr.map(predicate)` must be like `[true, ..., true, false, ..., false]`!
+     *
+     * @returns `undefined` if no item matches, otherwise the last item that matches the predicate.
+     */
+    function findLastMonotonous(array, predicate) {
+        const idx = findLastIdxMonotonous(array, predicate);
+        return idx === -1 ? undefined : array[idx];
+    }
+    /**
+     * Finds the last item where predicate is true using binary search.
+     * `predicate` must be monotonous, i.e. `arr.map(predicate)` must be like `[true, ..., true, false, ..., false]`!
+     *
+     * @returns `startIdx - 1` if predicate is false for all items, otherwise the index of the last item that matches the predicate.
+     */
+    function findLastIdxMonotonous(array, predicate, startIdx = 0, endIdxEx = array.length) {
+        let i = startIdx;
+        let j = endIdxEx;
+        while (i < j) {
+            const k = Math.floor((i + j) / 2);
+            if (predicate(array[k])) {
+                i = k + 1;
+            }
+            else {
+                j = k;
+            }
+        }
+        return i - 1;
+    }
+    /**
+     * Finds the first item where predicate is true using binary search.
+     * `predicate` must be monotonous, i.e. `arr.map(predicate)` must be like `[false, ..., false, true, ..., true]`!
+     *
+     * @returns `undefined` if no item matches, otherwise the first item that matches the predicate.
+     */
+    function findFirstMonotonous(array, predicate) {
+        const idx = findFirstIdxMonotonousOrArrLen(array, predicate);
+        return idx === array.length ? undefined : array[idx];
+    }
+    /**
+     * Finds the first item where predicate is true using binary search.
+     * `predicate` must be monotonous, i.e. `arr.map(predicate)` must be like `[false, ..., false, true, ..., true]`!
+     *
+     * @returns `endIdxEx` if predicate is false for all items, otherwise the index of the first item that matches the predicate.
+     */
+    function findFirstIdxMonotonousOrArrLen(array, predicate, startIdx = 0, endIdxEx = array.length) {
+        let i = startIdx;
+        let j = endIdxEx;
+        while (i < j) {
+            const k = Math.floor((i + j) / 2);
+            if (predicate(array[k])) {
+                j = k;
+            }
+            else {
+                i = k + 1;
+            }
+        }
+        return i;
+    }
+    /**
+     * Use this when
+     * * You have a sorted array
+     * * You query this array with a monotonous predicate to find the last item that has a certain property.
+     * * You query this array multiple times with monotonous predicates that get weaker and weaker.
+     */
+    class MonotonousArray {
+        constructor(_array) {
+            this._array = _array;
+            this._findLastMonotonousLastIdx = 0;
+        }
+        /**
+         * The predicate must be monotonous, i.e. `arr.map(predicate)` must be like `[true, ..., true, false, ..., false]`!
+         * For subsequent calls, current predicate must be weaker than (or equal to) the previous predicate, i.e. more entries must be `true`.
+         */
+        findLastMonotonous(predicate) {
+            if (MonotonousArray.assertInvariants) {
+                if (this._prevFindLastPredicate) {
+                    for (const item of this._array) {
+                        if (this._prevFindLastPredicate(item) && !predicate(item)) {
+                            throw new Error('MonotonousArray: current predicate must be weaker than (or equal to) the previous predicate.');
+                        }
+                    }
+                }
+                this._prevFindLastPredicate = predicate;
+            }
+            const idx = findLastIdxMonotonous(this._array, predicate, this._findLastMonotonousLastIdx);
+            this._findLastMonotonousLastIdx = idx + 1;
+            return idx === -1 ? undefined : this._array[idx];
+        }
+    }
+    exports.MonotonousArray = MonotonousArray;
+    MonotonousArray.assertInvariants = false;
+    /**
+     * Returns the first item that is equal to or greater than every other item.
+    */
+    function findFirstMaxBy(array, comparator) {
+        if (array.length === 0) {
+            return undefined;
+        }
+        let max = array[0];
+        for (let i = 1; i < array.length; i++) {
+            const item = array[i];
+            if (comparator(item, max) > 0) {
+                max = item;
+            }
+        }
+        return max;
+    }
+    /**
+     * Returns the last item that is equal to or greater than every other item.
+    */
+    function findLastMaxBy(array, comparator) {
+        if (array.length === 0) {
+            return undefined;
+        }
+        let max = array[0];
+        for (let i = 1; i < array.length; i++) {
+            const item = array[i];
+            if (comparator(item, max) >= 0) {
+                max = item;
+            }
+        }
+        return max;
+    }
+    /**
+     * Returns the first item that is equal to or less than every other item.
+    */
+    function findFirstMinBy(array, comparator) {
+        return findFirstMaxBy(array, (a, b) => -comparator(a, b));
+    }
+    function findMaxIdxBy(array, comparator) {
+        if (array.length === 0) {
+            return -1;
+        }
+        let maxIdx = 0;
+        for (let i = 1; i < array.length; i++) {
+            const item = array[i];
+            if (comparator(item, array[maxIdx]) > 0) {
+                maxIdx = i;
+            }
+        }
+        return maxIdx;
+    }
+    /**
+     * Returns the first mapped value of the array which is not undefined.
+     */
+    function mapFindFirst(items, mapFn) {
+        for (const value of items) {
+            const mapped = mapFn(value);
+            if (mapped !== undefined) {
+                return mapped;
+            }
+        }
+        return undefined;
+    }
+});
+
+define(__m[34/*vs/base/common/cache*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CachedFunction = exports.LRUCachedFunction = void 0;
     /**
      * Uses a LRU cache to make a given parametrized function cached.
      * Caches just the last value.
-     * The key must be JSON serializable.
     */
     class LRUCachedFunction {
-        constructor(fn) {
+        constructor(fn, _computeKey = JSON.stringify) {
             this.fn = fn;
+            this._computeKey = _computeKey;
             this.lastCache = undefined;
             this.lastArgKey = undefined;
         }
         get(arg) {
-            const key = JSON.stringify(arg);
+            const key = this._computeKey(arg);
             if (this.lastArgKey !== key) {
                 this.lastArgKey = key;
                 this.lastCache = this.fn(arg);
@@ -2780,7 +3029,479 @@ define(__m[27/*vs/base/common/cache*/], __M([0/*require*/,1/*exports*/]), functi
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[28/*vs/base/common/diff/diffChange*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[35/*vs/base/common/color*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Color = exports.HSVA = exports.HSLA = exports.RGBA = void 0;
+    function roundFloat(number, decimalPoints) {
+        const decimal = Math.pow(10, decimalPoints);
+        return Math.round(number * decimal) / decimal;
+    }
+    class RGBA {
+        constructor(r, g, b, a = 1) {
+            this._rgbaBrand = undefined;
+            this.r = Math.min(255, Math.max(0, r)) | 0;
+            this.g = Math.min(255, Math.max(0, g)) | 0;
+            this.b = Math.min(255, Math.max(0, b)) | 0;
+            this.a = roundFloat(Math.max(Math.min(1, a), 0), 3);
+        }
+        static equals(a, b) {
+            return a.r === b.r && a.g === b.g && a.b === b.b && a.a === b.a;
+        }
+    }
+    exports.RGBA = RGBA;
+    class HSLA {
+        constructor(h, s, l, a) {
+            this._hslaBrand = undefined;
+            this.h = Math.max(Math.min(360, h), 0) | 0;
+            this.s = roundFloat(Math.max(Math.min(1, s), 0), 3);
+            this.l = roundFloat(Math.max(Math.min(1, l), 0), 3);
+            this.a = roundFloat(Math.max(Math.min(1, a), 0), 3);
+        }
+        static equals(a, b) {
+            return a.h === b.h && a.s === b.s && a.l === b.l && a.a === b.a;
+        }
+        /**
+         * Converts an RGB color value to HSL. Conversion formula
+         * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+         * Assumes r, g, and b are contained in the set [0, 255] and
+         * returns h in the set [0, 360], s, and l in the set [0, 1].
+         */
+        static fromRGBA(rgba) {
+            const r = rgba.r / 255;
+            const g = rgba.g / 255;
+            const b = rgba.b / 255;
+            const a = rgba.a;
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h = 0;
+            let s = 0;
+            const l = (min + max) / 2;
+            const chroma = max - min;
+            if (chroma > 0) {
+                s = Math.min((l <= 0.5 ? chroma / (2 * l) : chroma / (2 - (2 * l))), 1);
+                switch (max) {
+                    case r:
+                        h = (g - b) / chroma + (g < b ? 6 : 0);
+                        break;
+                    case g:
+                        h = (b - r) / chroma + 2;
+                        break;
+                    case b:
+                        h = (r - g) / chroma + 4;
+                        break;
+                }
+                h *= 60;
+                h = Math.round(h);
+            }
+            return new HSLA(h, s, l, a);
+        }
+        static _hue2rgb(p, q, t) {
+            if (t < 0) {
+                t += 1;
+            }
+            if (t > 1) {
+                t -= 1;
+            }
+            if (t < 1 / 6) {
+                return p + (q - p) * 6 * t;
+            }
+            if (t < 1 / 2) {
+                return q;
+            }
+            if (t < 2 / 3) {
+                return p + (q - p) * (2 / 3 - t) * 6;
+            }
+            return p;
+        }
+        /**
+         * Converts an HSL color value to RGB. Conversion formula
+         * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+         * Assumes h in the set [0, 360] s, and l are contained in the set [0, 1] and
+         * returns r, g, and b in the set [0, 255].
+         */
+        static toRGBA(hsla) {
+            const h = hsla.h / 360;
+            const { s, l, a } = hsla;
+            let r, g, b;
+            if (s === 0) {
+                r = g = b = l; // achromatic
+            }
+            else {
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = HSLA._hue2rgb(p, q, h + 1 / 3);
+                g = HSLA._hue2rgb(p, q, h);
+                b = HSLA._hue2rgb(p, q, h - 1 / 3);
+            }
+            return new RGBA(Math.round(r * 255), Math.round(g * 255), Math.round(b * 255), a);
+        }
+    }
+    exports.HSLA = HSLA;
+    class HSVA {
+        constructor(h, s, v, a) {
+            this._hsvaBrand = undefined;
+            this.h = Math.max(Math.min(360, h), 0) | 0;
+            this.s = roundFloat(Math.max(Math.min(1, s), 0), 3);
+            this.v = roundFloat(Math.max(Math.min(1, v), 0), 3);
+            this.a = roundFloat(Math.max(Math.min(1, a), 0), 3);
+        }
+        static equals(a, b) {
+            return a.h === b.h && a.s === b.s && a.v === b.v && a.a === b.a;
+        }
+        // from http://www.rapidtables.com/convert/color/rgb-to-hsv.htm
+        static fromRGBA(rgba) {
+            const r = rgba.r / 255;
+            const g = rgba.g / 255;
+            const b = rgba.b / 255;
+            const cmax = Math.max(r, g, b);
+            const cmin = Math.min(r, g, b);
+            const delta = cmax - cmin;
+            const s = cmax === 0 ? 0 : (delta / cmax);
+            let m;
+            if (delta === 0) {
+                m = 0;
+            }
+            else if (cmax === r) {
+                m = ((((g - b) / delta) % 6) + 6) % 6;
+            }
+            else if (cmax === g) {
+                m = ((b - r) / delta) + 2;
+            }
+            else {
+                m = ((r - g) / delta) + 4;
+            }
+            return new HSVA(Math.round(m * 60), s, cmax, rgba.a);
+        }
+        // from http://www.rapidtables.com/convert/color/hsv-to-rgb.htm
+        static toRGBA(hsva) {
+            const { h, s, v, a } = hsva;
+            const c = v * s;
+            const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            const m = v - c;
+            let [r, g, b] = [0, 0, 0];
+            if (h < 60) {
+                r = c;
+                g = x;
+            }
+            else if (h < 120) {
+                r = x;
+                g = c;
+            }
+            else if (h < 180) {
+                g = c;
+                b = x;
+            }
+            else if (h < 240) {
+                g = x;
+                b = c;
+            }
+            else if (h < 300) {
+                r = x;
+                b = c;
+            }
+            else if (h <= 360) {
+                r = c;
+                b = x;
+            }
+            r = Math.round((r + m) * 255);
+            g = Math.round((g + m) * 255);
+            b = Math.round((b + m) * 255);
+            return new RGBA(r, g, b, a);
+        }
+    }
+    exports.HSVA = HSVA;
+    class Color {
+        static fromHex(hex) {
+            return Color.Format.CSS.parseHex(hex) || Color.red;
+        }
+        static equals(a, b) {
+            if (!a && !b) {
+                return true;
+            }
+            if (!a || !b) {
+                return false;
+            }
+            return a.equals(b);
+        }
+        get hsla() {
+            if (this._hsla) {
+                return this._hsla;
+            }
+            else {
+                return HSLA.fromRGBA(this.rgba);
+            }
+        }
+        get hsva() {
+            if (this._hsva) {
+                return this._hsva;
+            }
+            return HSVA.fromRGBA(this.rgba);
+        }
+        constructor(arg) {
+            if (!arg) {
+                throw new Error('Color needs a value');
+            }
+            else if (arg instanceof RGBA) {
+                this.rgba = arg;
+            }
+            else if (arg instanceof HSLA) {
+                this._hsla = arg;
+                this.rgba = HSLA.toRGBA(arg);
+            }
+            else if (arg instanceof HSVA) {
+                this._hsva = arg;
+                this.rgba = HSVA.toRGBA(arg);
+            }
+            else {
+                throw new Error('Invalid color ctor argument');
+            }
+        }
+        equals(other) {
+            return !!other && RGBA.equals(this.rgba, other.rgba) && HSLA.equals(this.hsla, other.hsla) && HSVA.equals(this.hsva, other.hsva);
+        }
+        /**
+         * http://www.w3.org/TR/WCAG20/#relativeluminancedef
+         * Returns the number in the set [0, 1]. O => Darkest Black. 1 => Lightest white.
+         */
+        getRelativeLuminance() {
+            const R = Color._relativeLuminanceForComponent(this.rgba.r);
+            const G = Color._relativeLuminanceForComponent(this.rgba.g);
+            const B = Color._relativeLuminanceForComponent(this.rgba.b);
+            const luminance = 0.2126 * R + 0.7152 * G + 0.0722 * B;
+            return roundFloat(luminance, 4);
+        }
+        static _relativeLuminanceForComponent(color) {
+            const c = color / 255;
+            return (c <= 0.03928) ? c / 12.92 : Math.pow(((c + 0.055) / 1.055), 2.4);
+        }
+        /**
+         *	http://24ways.org/2010/calculating-color-contrast
+         *  Return 'true' if lighter color otherwise 'false'
+         */
+        isLighter() {
+            const yiq = (this.rgba.r * 299 + this.rgba.g * 587 + this.rgba.b * 114) / 1000;
+            return yiq >= 128;
+        }
+        isLighterThan(another) {
+            const lum1 = this.getRelativeLuminance();
+            const lum2 = another.getRelativeLuminance();
+            return lum1 > lum2;
+        }
+        isDarkerThan(another) {
+            const lum1 = this.getRelativeLuminance();
+            const lum2 = another.getRelativeLuminance();
+            return lum1 < lum2;
+        }
+        lighten(factor) {
+            return new Color(new HSLA(this.hsla.h, this.hsla.s, this.hsla.l + this.hsla.l * factor, this.hsla.a));
+        }
+        darken(factor) {
+            return new Color(new HSLA(this.hsla.h, this.hsla.s, this.hsla.l - this.hsla.l * factor, this.hsla.a));
+        }
+        transparent(factor) {
+            const { r, g, b, a } = this.rgba;
+            return new Color(new RGBA(r, g, b, a * factor));
+        }
+        isTransparent() {
+            return this.rgba.a === 0;
+        }
+        isOpaque() {
+            return this.rgba.a === 1;
+        }
+        opposite() {
+            return new Color(new RGBA(255 - this.rgba.r, 255 - this.rgba.g, 255 - this.rgba.b, this.rgba.a));
+        }
+        makeOpaque(opaqueBackground) {
+            if (this.isOpaque() || opaqueBackground.rgba.a !== 1) {
+                // only allow to blend onto a non-opaque color onto a opaque color
+                return this;
+            }
+            const { r, g, b, a } = this.rgba;
+            // https://stackoverflow.com/questions/12228548/finding-equivalent-color-with-opacity
+            return new Color(new RGBA(opaqueBackground.rgba.r - a * (opaqueBackground.rgba.r - r), opaqueBackground.rgba.g - a * (opaqueBackground.rgba.g - g), opaqueBackground.rgba.b - a * (opaqueBackground.rgba.b - b), 1));
+        }
+        toString() {
+            if (!this._toString) {
+                this._toString = Color.Format.CSS.format(this);
+            }
+            return this._toString;
+        }
+        static getLighterColor(of, relative, factor) {
+            if (of.isLighterThan(relative)) {
+                return of;
+            }
+            factor = factor ? factor : 0.5;
+            const lum1 = of.getRelativeLuminance();
+            const lum2 = relative.getRelativeLuminance();
+            factor = factor * (lum2 - lum1) / lum2;
+            return of.lighten(factor);
+        }
+        static getDarkerColor(of, relative, factor) {
+            if (of.isDarkerThan(relative)) {
+                return of;
+            }
+            factor = factor ? factor : 0.5;
+            const lum1 = of.getRelativeLuminance();
+            const lum2 = relative.getRelativeLuminance();
+            factor = factor * (lum1 - lum2) / lum1;
+            return of.darken(factor);
+        }
+    }
+    exports.Color = Color;
+    Color.white = new Color(new RGBA(255, 255, 255, 1));
+    Color.black = new Color(new RGBA(0, 0, 0, 1));
+    Color.red = new Color(new RGBA(255, 0, 0, 1));
+    Color.blue = new Color(new RGBA(0, 0, 255, 1));
+    Color.green = new Color(new RGBA(0, 255, 0, 1));
+    Color.cyan = new Color(new RGBA(0, 255, 255, 1));
+    Color.lightgrey = new Color(new RGBA(211, 211, 211, 1));
+    Color.transparent = new Color(new RGBA(0, 0, 0, 0));
+    (function (Color) {
+        let Format;
+        (function (Format) {
+            let CSS;
+            (function (CSS) {
+                function formatRGB(color) {
+                    if (color.rgba.a === 1) {
+                        return `rgb(${color.rgba.r}, ${color.rgba.g}, ${color.rgba.b})`;
+                    }
+                    return Color.Format.CSS.formatRGBA(color);
+                }
+                CSS.formatRGB = formatRGB;
+                function formatRGBA(color) {
+                    return `rgba(${color.rgba.r}, ${color.rgba.g}, ${color.rgba.b}, ${+(color.rgba.a).toFixed(2)})`;
+                }
+                CSS.formatRGBA = formatRGBA;
+                function formatHSL(color) {
+                    if (color.hsla.a === 1) {
+                        return `hsl(${color.hsla.h}, ${(color.hsla.s * 100).toFixed(2)}%, ${(color.hsla.l * 100).toFixed(2)}%)`;
+                    }
+                    return Color.Format.CSS.formatHSLA(color);
+                }
+                CSS.formatHSL = formatHSL;
+                function formatHSLA(color) {
+                    return `hsla(${color.hsla.h}, ${(color.hsla.s * 100).toFixed(2)}%, ${(color.hsla.l * 100).toFixed(2)}%, ${color.hsla.a.toFixed(2)})`;
+                }
+                CSS.formatHSLA = formatHSLA;
+                function _toTwoDigitHex(n) {
+                    const r = n.toString(16);
+                    return r.length !== 2 ? '0' + r : r;
+                }
+                /**
+                 * Formats the color as #RRGGBB
+                 */
+                function formatHex(color) {
+                    return `#${_toTwoDigitHex(color.rgba.r)}${_toTwoDigitHex(color.rgba.g)}${_toTwoDigitHex(color.rgba.b)}`;
+                }
+                CSS.formatHex = formatHex;
+                /**
+                 * Formats the color as #RRGGBBAA
+                 * If 'compact' is set, colors without transparancy will be printed as #RRGGBB
+                 */
+                function formatHexA(color, compact = false) {
+                    if (compact && color.rgba.a === 1) {
+                        return Color.Format.CSS.formatHex(color);
+                    }
+                    return `#${_toTwoDigitHex(color.rgba.r)}${_toTwoDigitHex(color.rgba.g)}${_toTwoDigitHex(color.rgba.b)}${_toTwoDigitHex(Math.round(color.rgba.a * 255))}`;
+                }
+                CSS.formatHexA = formatHexA;
+                /**
+                 * The default format will use HEX if opaque and RGBA otherwise.
+                 */
+                function format(color) {
+                    if (color.isOpaque()) {
+                        return Color.Format.CSS.formatHex(color);
+                    }
+                    return Color.Format.CSS.formatRGBA(color);
+                }
+                CSS.format = format;
+                /**
+                 * Converts an Hex color value to a Color.
+                 * returns r, g, and b are contained in the set [0, 255]
+                 * @param hex string (#RGB, #RGBA, #RRGGBB or #RRGGBBAA).
+                 */
+                function parseHex(hex) {
+                    const length = hex.length;
+                    if (length === 0) {
+                        // Invalid color
+                        return null;
+                    }
+                    if (hex.charCodeAt(0) !== 35 /* CharCode.Hash */) {
+                        // Does not begin with a #
+                        return null;
+                    }
+                    if (length === 7) {
+                        // #RRGGBB format
+                        const r = 16 * _parseHexDigit(hex.charCodeAt(1)) + _parseHexDigit(hex.charCodeAt(2));
+                        const g = 16 * _parseHexDigit(hex.charCodeAt(3)) + _parseHexDigit(hex.charCodeAt(4));
+                        const b = 16 * _parseHexDigit(hex.charCodeAt(5)) + _parseHexDigit(hex.charCodeAt(6));
+                        return new Color(new RGBA(r, g, b, 1));
+                    }
+                    if (length === 9) {
+                        // #RRGGBBAA format
+                        const r = 16 * _parseHexDigit(hex.charCodeAt(1)) + _parseHexDigit(hex.charCodeAt(2));
+                        const g = 16 * _parseHexDigit(hex.charCodeAt(3)) + _parseHexDigit(hex.charCodeAt(4));
+                        const b = 16 * _parseHexDigit(hex.charCodeAt(5)) + _parseHexDigit(hex.charCodeAt(6));
+                        const a = 16 * _parseHexDigit(hex.charCodeAt(7)) + _parseHexDigit(hex.charCodeAt(8));
+                        return new Color(new RGBA(r, g, b, a / 255));
+                    }
+                    if (length === 4) {
+                        // #RGB format
+                        const r = _parseHexDigit(hex.charCodeAt(1));
+                        const g = _parseHexDigit(hex.charCodeAt(2));
+                        const b = _parseHexDigit(hex.charCodeAt(3));
+                        return new Color(new RGBA(16 * r + r, 16 * g + g, 16 * b + b));
+                    }
+                    if (length === 5) {
+                        // #RGBA format
+                        const r = _parseHexDigit(hex.charCodeAt(1));
+                        const g = _parseHexDigit(hex.charCodeAt(2));
+                        const b = _parseHexDigit(hex.charCodeAt(3));
+                        const a = _parseHexDigit(hex.charCodeAt(4));
+                        return new Color(new RGBA(16 * r + r, 16 * g + g, 16 * b + b, (16 * a + a) / 255));
+                    }
+                    // Invalid color
+                    return null;
+                }
+                CSS.parseHex = parseHex;
+                function _parseHexDigit(charCode) {
+                    switch (charCode) {
+                        case 48 /* CharCode.Digit0 */: return 0;
+                        case 49 /* CharCode.Digit1 */: return 1;
+                        case 50 /* CharCode.Digit2 */: return 2;
+                        case 51 /* CharCode.Digit3 */: return 3;
+                        case 52 /* CharCode.Digit4 */: return 4;
+                        case 53 /* CharCode.Digit5 */: return 5;
+                        case 54 /* CharCode.Digit6 */: return 6;
+                        case 55 /* CharCode.Digit7 */: return 7;
+                        case 56 /* CharCode.Digit8 */: return 8;
+                        case 57 /* CharCode.Digit9 */: return 9;
+                        case 97 /* CharCode.a */: return 10;
+                        case 65 /* CharCode.A */: return 10;
+                        case 98 /* CharCode.b */: return 11;
+                        case 66 /* CharCode.B */: return 11;
+                        case 99 /* CharCode.c */: return 12;
+                        case 67 /* CharCode.C */: return 12;
+                        case 100 /* CharCode.d */: return 13;
+                        case 68 /* CharCode.D */: return 13;
+                        case 101 /* CharCode.e */: return 14;
+                        case 69 /* CharCode.E */: return 14;
+                        case 102 /* CharCode.f */: return 15;
+                        case 70 /* CharCode.F */: return 15;
+                    }
+                    return 0;
+                }
+            })(CSS = Format.CSS || (Format.CSS = {}));
+        })(Format = Color.Format || (Color.Format = {}));
+    })(Color || (exports.Color = Color = {}));
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[36/*vs/base/common/diff/diffChange*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DiffChange = void 0;
@@ -2819,10 +3540,17 @@ define(__m[28/*vs/base/common/diff/diffChange*/], __M([0/*require*/,1/*exports*/
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[5/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.BugIndicatingError = exports.ErrorNoTelemetry = exports.NotSupportedError = exports.illegalState = exports.illegalArgument = exports.canceled = exports.CancellationError = exports.isCancellationError = exports.transformErrorForSerialization = exports.onUnexpectedExternalError = exports.onUnexpectedError = exports.errorHandler = exports.ErrorHandler = void 0;
+    exports.BugIndicatingError = exports.ErrorNoTelemetry = exports.NotSupportedError = exports.CancellationError = exports.errorHandler = exports.ErrorHandler = void 0;
+    exports.onUnexpectedError = onUnexpectedError;
+    exports.onUnexpectedExternalError = onUnexpectedExternalError;
+    exports.transformErrorForSerialization = transformErrorForSerialization;
+    exports.isCancellationError = isCancellationError;
+    exports.canceled = canceled;
+    exports.illegalArgument = illegalArgument;
+    exports.illegalState = illegalState;
     // Avoid circular dependency on EventEmitter by implementing a subset of the interface.
     class ErrorHandler {
         constructor() {
@@ -2862,7 +3590,6 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
         }
         return undefined;
     }
-    exports.onUnexpectedError = onUnexpectedError;
     function onUnexpectedExternalError(e) {
         // ignore errors from cancelled promises
         if (!isCancellationError(e)) {
@@ -2870,7 +3597,6 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
         }
         return undefined;
     }
-    exports.onUnexpectedExternalError = onUnexpectedExternalError;
     function transformErrorForSerialization(error) {
         if (error instanceof Error) {
             const { name, message } = error;
@@ -2886,7 +3612,6 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
         // return as is
         return error;
     }
-    exports.transformErrorForSerialization = transformErrorForSerialization;
     const canceledName = 'Canceled';
     /**
      * Checks if the given error is a promise in canceled state
@@ -2897,7 +3622,6 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
         }
         return error instanceof Error && error.name === canceledName && error.message === canceledName;
     }
-    exports.isCancellationError = isCancellationError;
     // !!!IMPORTANT!!!
     // Do NOT change this class because it is also used as an API-type.
     class CancellationError extends Error {
@@ -2915,7 +3639,6 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
         error.name = error.message;
         return error;
     }
-    exports.canceled = canceled;
     function illegalArgument(name) {
         if (name) {
             return new Error(`Illegal argument: ${name}`);
@@ -2924,7 +3647,6 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
             return new Error('Illegal argument');
         }
     }
-    exports.illegalArgument = illegalArgument;
     function illegalState(name) {
         if (name) {
             return new Error(`Illegal state: ${name}`);
@@ -2933,7 +3655,6 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
             return new Error('Illegal state');
         }
     }
-    exports.illegalState = illegalState;
     class NotSupportedError extends Error {
         constructor(message) {
             super('NotSupported');
@@ -2977,7 +3698,7 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
             // Because we know for sure only buggy code throws this,
             // we definitely want to break here and fix the bug.
             // eslint-disable-next-line no-debugger
-            debugger;
+            // debugger;
         }
     }
     exports.BugIndicatingError = BugIndicatingError;
@@ -2987,10 +3708,14 @@ define(__m[4/*vs/base/common/errors*/], __M([0/*require*/,1/*exports*/]), functi
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[10/*vs/base/common/assert*/], __M([0/*require*/,1/*exports*/,4/*vs/base/common/errors*/]), function (require, exports, errors_1) {
+define(__m[12/*vs/base/common/assert*/], __M([0/*require*/,1/*exports*/,5/*vs/base/common/errors*/]), function (require, exports, errors_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.checkAdjacentItems = exports.assertFn = exports.assertNever = exports.ok = void 0;
+    exports.ok = ok;
+    exports.assertNever = assertNever;
+    exports.softAssert = softAssert;
+    exports.assertFn = assertFn;
+    exports.checkAdjacentItems = checkAdjacentItems;
     /**
      * Throws an error with the provided message if the provided value does not evaluate to a true Javascript value.
      *
@@ -3010,11 +3735,17 @@ define(__m[10/*vs/base/common/assert*/], __M([0/*require*/,1/*exports*/,4/*vs/ba
             throw new Error(message ? `Assertion failed (${message})` : 'Assertion Failed');
         }
     }
-    exports.ok = ok;
     function assertNever(value, message = 'Unreachable') {
         throw new Error(message);
     }
-    exports.assertNever = assertNever;
+    /**
+     * Like assert, but doesn't throw.
+     */
+    function softAssert(condition) {
+        if (!condition) {
+            (0, errors_1.onUnexpectedError)(new errors_1.BugIndicatingError('Soft Assertion Failed'));
+        }
+    }
     /**
      * condition must be side-effect free!
      */
@@ -3027,7 +3758,6 @@ define(__m[10/*vs/base/common/assert*/], __M([0/*require*/,1/*exports*/,4/*vs/ba
             (0, errors_1.onUnexpectedError)(new errors_1.BugIndicatingError('Assertion Failed'));
         }
     }
-    exports.assertFn = assertFn;
     function checkAdjacentItems(items, predicate) {
         let i = 0;
         while (i < items.length - 1) {
@@ -3040,18 +3770,20 @@ define(__m[10/*vs/base/common/assert*/], __M([0/*require*/,1/*exports*/,4/*vs/ba
         }
         return true;
     }
-    exports.checkAdjacentItems = checkAdjacentItems;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[14/*vs/base/common/functional*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[20/*vs/base/common/functional*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.once = void 0;
-    function once(fn) {
+    exports.createSingleCallFunction = createSingleCallFunction;
+    /**
+     * Given a function, returns a function that is only calling that function once.
+     */
+    function createSingleCallFunction(fn, fnDidRunCallback) {
         const _this = this;
         let didCall = false;
         let result;
@@ -3060,18 +3792,27 @@ define(__m[14/*vs/base/common/functional*/], __M([0/*require*/,1/*exports*/]), f
                 return result;
             }
             didCall = true;
-            result = fn.apply(_this, arguments);
+            if (fnDidRunCallback) {
+                try {
+                    result = fn.apply(_this, arguments);
+                }
+                finally {
+                    fnDidRunCallback();
+                }
+            }
+            else {
+                result = fn.apply(_this, arguments);
+            }
             return result;
         };
     }
-    exports.once = once;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[15/*vs/base/common/iterator*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[21/*vs/base/common/iterator*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Iterable = void 0;
@@ -3103,6 +3844,12 @@ define(__m[15/*vs/base/common/iterator*/], __M([0/*require*/,1/*exports*/]), fun
             return iterable || _empty;
         }
         Iterable.from = from;
+        function* reverse(array) {
+            for (let i = array.length - 1; i >= 0; i--) {
+                yield array[i];
+            }
+        }
+        Iterable.reverse = reverse;
         function isEmpty(iterable) {
             return !iterable || iterable[Symbol.iterator]().next().done === true;
         }
@@ -3146,9 +3893,7 @@ define(__m[15/*vs/base/common/iterator*/], __M([0/*require*/,1/*exports*/]), fun
         Iterable.map = map;
         function* concat(...iterables) {
             for (const iterable of iterables) {
-                for (const element of iterable) {
-                    yield element;
-                }
+                yield* iterable;
             }
         }
         Iterable.concat = concat;
@@ -3198,17 +3943,26 @@ define(__m[15/*vs/base/common/iterator*/], __M([0/*require*/,1/*exports*/]), fun
             return [consumed, { [Symbol.iterator]() { return iterator; } }];
         }
         Iterable.consume = consume;
-    })(Iterable = exports.Iterable || (exports.Iterable = {}));
+        async function asyncToArray(iterable) {
+            const result = [];
+            for await (const item of iterable) {
+                result.push(item);
+            }
+            return Promise.resolve(result);
+        }
+        Iterable.asyncToArray = asyncToArray;
+    })(Iterable || (exports.Iterable = Iterable = {}));
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[29/*vs/base/common/keyCodes*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[37/*vs/base/common/keyCodes*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.KeyChord = exports.KeyCodeUtils = exports.IMMUTABLE_KEY_CODE_TO_CODE = exports.IMMUTABLE_CODE_TO_KEY_CODE = exports.NATIVE_WINDOWS_KEY_CODE_TO_KEY_CODE = exports.EVENT_KEY_CODE_MAP = void 0;
+    exports.KeyCodeUtils = exports.IMMUTABLE_KEY_CODE_TO_CODE = exports.IMMUTABLE_CODE_TO_KEY_CODE = exports.NATIVE_WINDOWS_KEY_CODE_TO_KEY_CODE = exports.EVENT_KEY_CODE_MAP = void 0;
+    exports.KeyChord = KeyChord;
     class KeyCodeStrMap {
         constructor() {
             this._keyCodeToStr = [];
@@ -3244,251 +3998,251 @@ define(__m[29/*vs/base/common/keyCodes*/], __M([0/*require*/,1/*exports*/]), fun
     for (let i = 0; i <= 193 /* ScanCode.MAX_VALUE */; i++) {
         exports.IMMUTABLE_CODE_TO_KEY_CODE[i] = -1 /* KeyCode.DependsOnKbLayout */;
     }
-    for (let i = 0; i <= 127 /* KeyCode.MAX_VALUE */; i++) {
+    for (let i = 0; i <= 132 /* KeyCode.MAX_VALUE */; i++) {
         exports.IMMUTABLE_KEY_CODE_TO_CODE[i] = -1 /* ScanCode.DependsOnKbLayout */;
     }
     (function () {
         // See https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
-        // See https://github.com/microsoft/node-native-keymap/blob/master/deps/chromium/keyboard_codes_win.h
+        // See https://github.com/microsoft/node-native-keymap/blob/88c0b0e5/deps/chromium/keyboard_codes_win.h
         const empty = '';
         const mappings = [
-            // keyCodeOrd, immutable, scanCode, scanCodeStr, keyCode, keyCodeStr, eventKeyCode, vkey, usUserSettingsLabel, generalUserSettingsLabel
-            [0, 1, 0 /* ScanCode.None */, 'None', 0 /* KeyCode.Unknown */, 'unknown', 0, 'VK_UNKNOWN', empty, empty],
-            [0, 1, 1 /* ScanCode.Hyper */, 'Hyper', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 2 /* ScanCode.Super */, 'Super', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 3 /* ScanCode.Fn */, 'Fn', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 4 /* ScanCode.FnLock */, 'FnLock', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 5 /* ScanCode.Suspend */, 'Suspend', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 6 /* ScanCode.Resume */, 'Resume', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 7 /* ScanCode.Turbo */, 'Turbo', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 8 /* ScanCode.Sleep */, 'Sleep', 0 /* KeyCode.Unknown */, empty, 0, 'VK_SLEEP', empty, empty],
-            [0, 1, 9 /* ScanCode.WakeUp */, 'WakeUp', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [31, 0, 10 /* ScanCode.KeyA */, 'KeyA', 31 /* KeyCode.KeyA */, 'A', 65, 'VK_A', empty, empty],
-            [32, 0, 11 /* ScanCode.KeyB */, 'KeyB', 32 /* KeyCode.KeyB */, 'B', 66, 'VK_B', empty, empty],
-            [33, 0, 12 /* ScanCode.KeyC */, 'KeyC', 33 /* KeyCode.KeyC */, 'C', 67, 'VK_C', empty, empty],
-            [34, 0, 13 /* ScanCode.KeyD */, 'KeyD', 34 /* KeyCode.KeyD */, 'D', 68, 'VK_D', empty, empty],
-            [35, 0, 14 /* ScanCode.KeyE */, 'KeyE', 35 /* KeyCode.KeyE */, 'E', 69, 'VK_E', empty, empty],
-            [36, 0, 15 /* ScanCode.KeyF */, 'KeyF', 36 /* KeyCode.KeyF */, 'F', 70, 'VK_F', empty, empty],
-            [37, 0, 16 /* ScanCode.KeyG */, 'KeyG', 37 /* KeyCode.KeyG */, 'G', 71, 'VK_G', empty, empty],
-            [38, 0, 17 /* ScanCode.KeyH */, 'KeyH', 38 /* KeyCode.KeyH */, 'H', 72, 'VK_H', empty, empty],
-            [39, 0, 18 /* ScanCode.KeyI */, 'KeyI', 39 /* KeyCode.KeyI */, 'I', 73, 'VK_I', empty, empty],
-            [40, 0, 19 /* ScanCode.KeyJ */, 'KeyJ', 40 /* KeyCode.KeyJ */, 'J', 74, 'VK_J', empty, empty],
-            [41, 0, 20 /* ScanCode.KeyK */, 'KeyK', 41 /* KeyCode.KeyK */, 'K', 75, 'VK_K', empty, empty],
-            [42, 0, 21 /* ScanCode.KeyL */, 'KeyL', 42 /* KeyCode.KeyL */, 'L', 76, 'VK_L', empty, empty],
-            [43, 0, 22 /* ScanCode.KeyM */, 'KeyM', 43 /* KeyCode.KeyM */, 'M', 77, 'VK_M', empty, empty],
-            [44, 0, 23 /* ScanCode.KeyN */, 'KeyN', 44 /* KeyCode.KeyN */, 'N', 78, 'VK_N', empty, empty],
-            [45, 0, 24 /* ScanCode.KeyO */, 'KeyO', 45 /* KeyCode.KeyO */, 'O', 79, 'VK_O', empty, empty],
-            [46, 0, 25 /* ScanCode.KeyP */, 'KeyP', 46 /* KeyCode.KeyP */, 'P', 80, 'VK_P', empty, empty],
-            [47, 0, 26 /* ScanCode.KeyQ */, 'KeyQ', 47 /* KeyCode.KeyQ */, 'Q', 81, 'VK_Q', empty, empty],
-            [48, 0, 27 /* ScanCode.KeyR */, 'KeyR', 48 /* KeyCode.KeyR */, 'R', 82, 'VK_R', empty, empty],
-            [49, 0, 28 /* ScanCode.KeyS */, 'KeyS', 49 /* KeyCode.KeyS */, 'S', 83, 'VK_S', empty, empty],
-            [50, 0, 29 /* ScanCode.KeyT */, 'KeyT', 50 /* KeyCode.KeyT */, 'T', 84, 'VK_T', empty, empty],
-            [51, 0, 30 /* ScanCode.KeyU */, 'KeyU', 51 /* KeyCode.KeyU */, 'U', 85, 'VK_U', empty, empty],
-            [52, 0, 31 /* ScanCode.KeyV */, 'KeyV', 52 /* KeyCode.KeyV */, 'V', 86, 'VK_V', empty, empty],
-            [53, 0, 32 /* ScanCode.KeyW */, 'KeyW', 53 /* KeyCode.KeyW */, 'W', 87, 'VK_W', empty, empty],
-            [54, 0, 33 /* ScanCode.KeyX */, 'KeyX', 54 /* KeyCode.KeyX */, 'X', 88, 'VK_X', empty, empty],
-            [55, 0, 34 /* ScanCode.KeyY */, 'KeyY', 55 /* KeyCode.KeyY */, 'Y', 89, 'VK_Y', empty, empty],
-            [56, 0, 35 /* ScanCode.KeyZ */, 'KeyZ', 56 /* KeyCode.KeyZ */, 'Z', 90, 'VK_Z', empty, empty],
-            [22, 0, 36 /* ScanCode.Digit1 */, 'Digit1', 22 /* KeyCode.Digit1 */, '1', 49, 'VK_1', empty, empty],
-            [23, 0, 37 /* ScanCode.Digit2 */, 'Digit2', 23 /* KeyCode.Digit2 */, '2', 50, 'VK_2', empty, empty],
-            [24, 0, 38 /* ScanCode.Digit3 */, 'Digit3', 24 /* KeyCode.Digit3 */, '3', 51, 'VK_3', empty, empty],
-            [25, 0, 39 /* ScanCode.Digit4 */, 'Digit4', 25 /* KeyCode.Digit4 */, '4', 52, 'VK_4', empty, empty],
-            [26, 0, 40 /* ScanCode.Digit5 */, 'Digit5', 26 /* KeyCode.Digit5 */, '5', 53, 'VK_5', empty, empty],
-            [27, 0, 41 /* ScanCode.Digit6 */, 'Digit6', 27 /* KeyCode.Digit6 */, '6', 54, 'VK_6', empty, empty],
-            [28, 0, 42 /* ScanCode.Digit7 */, 'Digit7', 28 /* KeyCode.Digit7 */, '7', 55, 'VK_7', empty, empty],
-            [29, 0, 43 /* ScanCode.Digit8 */, 'Digit8', 29 /* KeyCode.Digit8 */, '8', 56, 'VK_8', empty, empty],
-            [30, 0, 44 /* ScanCode.Digit9 */, 'Digit9', 30 /* KeyCode.Digit9 */, '9', 57, 'VK_9', empty, empty],
-            [21, 0, 45 /* ScanCode.Digit0 */, 'Digit0', 21 /* KeyCode.Digit0 */, '0', 48, 'VK_0', empty, empty],
-            [3, 1, 46 /* ScanCode.Enter */, 'Enter', 3 /* KeyCode.Enter */, 'Enter', 13, 'VK_RETURN', empty, empty],
-            [9, 1, 47 /* ScanCode.Escape */, 'Escape', 9 /* KeyCode.Escape */, 'Escape', 27, 'VK_ESCAPE', empty, empty],
-            [1, 1, 48 /* ScanCode.Backspace */, 'Backspace', 1 /* KeyCode.Backspace */, 'Backspace', 8, 'VK_BACK', empty, empty],
-            [2, 1, 49 /* ScanCode.Tab */, 'Tab', 2 /* KeyCode.Tab */, 'Tab', 9, 'VK_TAB', empty, empty],
-            [10, 1, 50 /* ScanCode.Space */, 'Space', 10 /* KeyCode.Space */, 'Space', 32, 'VK_SPACE', empty, empty],
-            [83, 0, 51 /* ScanCode.Minus */, 'Minus', 83 /* KeyCode.Minus */, '-', 189, 'VK_OEM_MINUS', '-', 'OEM_MINUS'],
-            [81, 0, 52 /* ScanCode.Equal */, 'Equal', 81 /* KeyCode.Equal */, '=', 187, 'VK_OEM_PLUS', '=', 'OEM_PLUS'],
-            [87, 0, 53 /* ScanCode.BracketLeft */, 'BracketLeft', 87 /* KeyCode.BracketLeft */, '[', 219, 'VK_OEM_4', '[', 'OEM_4'],
-            [89, 0, 54 /* ScanCode.BracketRight */, 'BracketRight', 89 /* KeyCode.BracketRight */, ']', 221, 'VK_OEM_6', ']', 'OEM_6'],
-            [88, 0, 55 /* ScanCode.Backslash */, 'Backslash', 88 /* KeyCode.Backslash */, '\\', 220, 'VK_OEM_5', '\\', 'OEM_5'],
-            [0, 0, 56 /* ScanCode.IntlHash */, 'IntlHash', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [80, 0, 57 /* ScanCode.Semicolon */, 'Semicolon', 80 /* KeyCode.Semicolon */, ';', 186, 'VK_OEM_1', ';', 'OEM_1'],
-            [90, 0, 58 /* ScanCode.Quote */, 'Quote', 90 /* KeyCode.Quote */, '\'', 222, 'VK_OEM_7', '\'', 'OEM_7'],
-            [86, 0, 59 /* ScanCode.Backquote */, 'Backquote', 86 /* KeyCode.Backquote */, '`', 192, 'VK_OEM_3', '`', 'OEM_3'],
-            [82, 0, 60 /* ScanCode.Comma */, 'Comma', 82 /* KeyCode.Comma */, ',', 188, 'VK_OEM_COMMA', ',', 'OEM_COMMA'],
-            [84, 0, 61 /* ScanCode.Period */, 'Period', 84 /* KeyCode.Period */, '.', 190, 'VK_OEM_PERIOD', '.', 'OEM_PERIOD'],
-            [85, 0, 62 /* ScanCode.Slash */, 'Slash', 85 /* KeyCode.Slash */, '/', 191, 'VK_OEM_2', '/', 'OEM_2'],
-            [8, 1, 63 /* ScanCode.CapsLock */, 'CapsLock', 8 /* KeyCode.CapsLock */, 'CapsLock', 20, 'VK_CAPITAL', empty, empty],
-            [59, 1, 64 /* ScanCode.F1 */, 'F1', 59 /* KeyCode.F1 */, 'F1', 112, 'VK_F1', empty, empty],
-            [60, 1, 65 /* ScanCode.F2 */, 'F2', 60 /* KeyCode.F2 */, 'F2', 113, 'VK_F2', empty, empty],
-            [61, 1, 66 /* ScanCode.F3 */, 'F3', 61 /* KeyCode.F3 */, 'F3', 114, 'VK_F3', empty, empty],
-            [62, 1, 67 /* ScanCode.F4 */, 'F4', 62 /* KeyCode.F4 */, 'F4', 115, 'VK_F4', empty, empty],
-            [63, 1, 68 /* ScanCode.F5 */, 'F5', 63 /* KeyCode.F5 */, 'F5', 116, 'VK_F5', empty, empty],
-            [64, 1, 69 /* ScanCode.F6 */, 'F6', 64 /* KeyCode.F6 */, 'F6', 117, 'VK_F6', empty, empty],
-            [65, 1, 70 /* ScanCode.F7 */, 'F7', 65 /* KeyCode.F7 */, 'F7', 118, 'VK_F7', empty, empty],
-            [66, 1, 71 /* ScanCode.F8 */, 'F8', 66 /* KeyCode.F8 */, 'F8', 119, 'VK_F8', empty, empty],
-            [67, 1, 72 /* ScanCode.F9 */, 'F9', 67 /* KeyCode.F9 */, 'F9', 120, 'VK_F9', empty, empty],
-            [68, 1, 73 /* ScanCode.F10 */, 'F10', 68 /* KeyCode.F10 */, 'F10', 121, 'VK_F10', empty, empty],
-            [69, 1, 74 /* ScanCode.F11 */, 'F11', 69 /* KeyCode.F11 */, 'F11', 122, 'VK_F11', empty, empty],
-            [70, 1, 75 /* ScanCode.F12 */, 'F12', 70 /* KeyCode.F12 */, 'F12', 123, 'VK_F12', empty, empty],
-            [0, 1, 76 /* ScanCode.PrintScreen */, 'PrintScreen', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [79, 1, 77 /* ScanCode.ScrollLock */, 'ScrollLock', 79 /* KeyCode.ScrollLock */, 'ScrollLock', 145, 'VK_SCROLL', empty, empty],
-            [7, 1, 78 /* ScanCode.Pause */, 'Pause', 7 /* KeyCode.PauseBreak */, 'PauseBreak', 19, 'VK_PAUSE', empty, empty],
-            [19, 1, 79 /* ScanCode.Insert */, 'Insert', 19 /* KeyCode.Insert */, 'Insert', 45, 'VK_INSERT', empty, empty],
-            [14, 1, 80 /* ScanCode.Home */, 'Home', 14 /* KeyCode.Home */, 'Home', 36, 'VK_HOME', empty, empty],
-            [11, 1, 81 /* ScanCode.PageUp */, 'PageUp', 11 /* KeyCode.PageUp */, 'PageUp', 33, 'VK_PRIOR', empty, empty],
-            [20, 1, 82 /* ScanCode.Delete */, 'Delete', 20 /* KeyCode.Delete */, 'Delete', 46, 'VK_DELETE', empty, empty],
-            [13, 1, 83 /* ScanCode.End */, 'End', 13 /* KeyCode.End */, 'End', 35, 'VK_END', empty, empty],
-            [12, 1, 84 /* ScanCode.PageDown */, 'PageDown', 12 /* KeyCode.PageDown */, 'PageDown', 34, 'VK_NEXT', empty, empty],
-            [17, 1, 85 /* ScanCode.ArrowRight */, 'ArrowRight', 17 /* KeyCode.RightArrow */, 'RightArrow', 39, 'VK_RIGHT', 'Right', empty],
-            [15, 1, 86 /* ScanCode.ArrowLeft */, 'ArrowLeft', 15 /* KeyCode.LeftArrow */, 'LeftArrow', 37, 'VK_LEFT', 'Left', empty],
-            [18, 1, 87 /* ScanCode.ArrowDown */, 'ArrowDown', 18 /* KeyCode.DownArrow */, 'DownArrow', 40, 'VK_DOWN', 'Down', empty],
-            [16, 1, 88 /* ScanCode.ArrowUp */, 'ArrowUp', 16 /* KeyCode.UpArrow */, 'UpArrow', 38, 'VK_UP', 'Up', empty],
-            [78, 1, 89 /* ScanCode.NumLock */, 'NumLock', 78 /* KeyCode.NumLock */, 'NumLock', 144, 'VK_NUMLOCK', empty, empty],
-            [108, 1, 90 /* ScanCode.NumpadDivide */, 'NumpadDivide', 108 /* KeyCode.NumpadDivide */, 'NumPad_Divide', 111, 'VK_DIVIDE', empty, empty],
-            [103, 1, 91 /* ScanCode.NumpadMultiply */, 'NumpadMultiply', 103 /* KeyCode.NumpadMultiply */, 'NumPad_Multiply', 106, 'VK_MULTIPLY', empty, empty],
-            [106, 1, 92 /* ScanCode.NumpadSubtract */, 'NumpadSubtract', 106 /* KeyCode.NumpadSubtract */, 'NumPad_Subtract', 109, 'VK_SUBTRACT', empty, empty],
-            [104, 1, 93 /* ScanCode.NumpadAdd */, 'NumpadAdd', 104 /* KeyCode.NumpadAdd */, 'NumPad_Add', 107, 'VK_ADD', empty, empty],
-            [3, 1, 94 /* ScanCode.NumpadEnter */, 'NumpadEnter', 3 /* KeyCode.Enter */, empty, 0, empty, empty, empty],
-            [94, 1, 95 /* ScanCode.Numpad1 */, 'Numpad1', 94 /* KeyCode.Numpad1 */, 'NumPad1', 97, 'VK_NUMPAD1', empty, empty],
-            [95, 1, 96 /* ScanCode.Numpad2 */, 'Numpad2', 95 /* KeyCode.Numpad2 */, 'NumPad2', 98, 'VK_NUMPAD2', empty, empty],
-            [96, 1, 97 /* ScanCode.Numpad3 */, 'Numpad3', 96 /* KeyCode.Numpad3 */, 'NumPad3', 99, 'VK_NUMPAD3', empty, empty],
-            [97, 1, 98 /* ScanCode.Numpad4 */, 'Numpad4', 97 /* KeyCode.Numpad4 */, 'NumPad4', 100, 'VK_NUMPAD4', empty, empty],
-            [98, 1, 99 /* ScanCode.Numpad5 */, 'Numpad5', 98 /* KeyCode.Numpad5 */, 'NumPad5', 101, 'VK_NUMPAD5', empty, empty],
-            [99, 1, 100 /* ScanCode.Numpad6 */, 'Numpad6', 99 /* KeyCode.Numpad6 */, 'NumPad6', 102, 'VK_NUMPAD6', empty, empty],
-            [100, 1, 101 /* ScanCode.Numpad7 */, 'Numpad7', 100 /* KeyCode.Numpad7 */, 'NumPad7', 103, 'VK_NUMPAD7', empty, empty],
-            [101, 1, 102 /* ScanCode.Numpad8 */, 'Numpad8', 101 /* KeyCode.Numpad8 */, 'NumPad8', 104, 'VK_NUMPAD8', empty, empty],
-            [102, 1, 103 /* ScanCode.Numpad9 */, 'Numpad9', 102 /* KeyCode.Numpad9 */, 'NumPad9', 105, 'VK_NUMPAD9', empty, empty],
-            [93, 1, 104 /* ScanCode.Numpad0 */, 'Numpad0', 93 /* KeyCode.Numpad0 */, 'NumPad0', 96, 'VK_NUMPAD0', empty, empty],
-            [107, 1, 105 /* ScanCode.NumpadDecimal */, 'NumpadDecimal', 107 /* KeyCode.NumpadDecimal */, 'NumPad_Decimal', 110, 'VK_DECIMAL', empty, empty],
-            [92, 0, 106 /* ScanCode.IntlBackslash */, 'IntlBackslash', 92 /* KeyCode.IntlBackslash */, 'OEM_102', 226, 'VK_OEM_102', empty, empty],
-            [58, 1, 107 /* ScanCode.ContextMenu */, 'ContextMenu', 58 /* KeyCode.ContextMenu */, 'ContextMenu', 93, empty, empty, empty],
-            [0, 1, 108 /* ScanCode.Power */, 'Power', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 109 /* ScanCode.NumpadEqual */, 'NumpadEqual', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [71, 1, 110 /* ScanCode.F13 */, 'F13', 71 /* KeyCode.F13 */, 'F13', 124, 'VK_F13', empty, empty],
-            [72, 1, 111 /* ScanCode.F14 */, 'F14', 72 /* KeyCode.F14 */, 'F14', 125, 'VK_F14', empty, empty],
-            [73, 1, 112 /* ScanCode.F15 */, 'F15', 73 /* KeyCode.F15 */, 'F15', 126, 'VK_F15', empty, empty],
-            [74, 1, 113 /* ScanCode.F16 */, 'F16', 74 /* KeyCode.F16 */, 'F16', 127, 'VK_F16', empty, empty],
-            [75, 1, 114 /* ScanCode.F17 */, 'F17', 75 /* KeyCode.F17 */, 'F17', 128, 'VK_F17', empty, empty],
-            [76, 1, 115 /* ScanCode.F18 */, 'F18', 76 /* KeyCode.F18 */, 'F18', 129, 'VK_F18', empty, empty],
-            [77, 1, 116 /* ScanCode.F19 */, 'F19', 77 /* KeyCode.F19 */, 'F19', 130, 'VK_F19', empty, empty],
-            [0, 1, 117 /* ScanCode.F20 */, 'F20', 0 /* KeyCode.Unknown */, empty, 0, 'VK_F20', empty, empty],
-            [0, 1, 118 /* ScanCode.F21 */, 'F21', 0 /* KeyCode.Unknown */, empty, 0, 'VK_F21', empty, empty],
-            [0, 1, 119 /* ScanCode.F22 */, 'F22', 0 /* KeyCode.Unknown */, empty, 0, 'VK_F22', empty, empty],
-            [0, 1, 120 /* ScanCode.F23 */, 'F23', 0 /* KeyCode.Unknown */, empty, 0, 'VK_F23', empty, empty],
-            [0, 1, 121 /* ScanCode.F24 */, 'F24', 0 /* KeyCode.Unknown */, empty, 0, 'VK_F24', empty, empty],
-            [0, 1, 122 /* ScanCode.Open */, 'Open', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 123 /* ScanCode.Help */, 'Help', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 124 /* ScanCode.Select */, 'Select', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 125 /* ScanCode.Again */, 'Again', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 126 /* ScanCode.Undo */, 'Undo', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 127 /* ScanCode.Cut */, 'Cut', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 128 /* ScanCode.Copy */, 'Copy', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 129 /* ScanCode.Paste */, 'Paste', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 130 /* ScanCode.Find */, 'Find', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 131 /* ScanCode.AudioVolumeMute */, 'AudioVolumeMute', 112 /* KeyCode.AudioVolumeMute */, 'AudioVolumeMute', 173, 'VK_VOLUME_MUTE', empty, empty],
-            [0, 1, 132 /* ScanCode.AudioVolumeUp */, 'AudioVolumeUp', 113 /* KeyCode.AudioVolumeUp */, 'AudioVolumeUp', 175, 'VK_VOLUME_UP', empty, empty],
-            [0, 1, 133 /* ScanCode.AudioVolumeDown */, 'AudioVolumeDown', 114 /* KeyCode.AudioVolumeDown */, 'AudioVolumeDown', 174, 'VK_VOLUME_DOWN', empty, empty],
-            [105, 1, 134 /* ScanCode.NumpadComma */, 'NumpadComma', 105 /* KeyCode.NUMPAD_SEPARATOR */, 'NumPad_Separator', 108, 'VK_SEPARATOR', empty, empty],
-            [110, 0, 135 /* ScanCode.IntlRo */, 'IntlRo', 110 /* KeyCode.ABNT_C1 */, 'ABNT_C1', 193, 'VK_ABNT_C1', empty, empty],
-            [0, 1, 136 /* ScanCode.KanaMode */, 'KanaMode', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 0, 137 /* ScanCode.IntlYen */, 'IntlYen', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 138 /* ScanCode.Convert */, 'Convert', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 139 /* ScanCode.NonConvert */, 'NonConvert', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 140 /* ScanCode.Lang1 */, 'Lang1', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 141 /* ScanCode.Lang2 */, 'Lang2', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 142 /* ScanCode.Lang3 */, 'Lang3', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 143 /* ScanCode.Lang4 */, 'Lang4', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 144 /* ScanCode.Lang5 */, 'Lang5', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 145 /* ScanCode.Abort */, 'Abort', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 146 /* ScanCode.Props */, 'Props', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 147 /* ScanCode.NumpadParenLeft */, 'NumpadParenLeft', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 148 /* ScanCode.NumpadParenRight */, 'NumpadParenRight', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 149 /* ScanCode.NumpadBackspace */, 'NumpadBackspace', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 150 /* ScanCode.NumpadMemoryStore */, 'NumpadMemoryStore', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 151 /* ScanCode.NumpadMemoryRecall */, 'NumpadMemoryRecall', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 152 /* ScanCode.NumpadMemoryClear */, 'NumpadMemoryClear', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 153 /* ScanCode.NumpadMemoryAdd */, 'NumpadMemoryAdd', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 154 /* ScanCode.NumpadMemorySubtract */, 'NumpadMemorySubtract', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 155 /* ScanCode.NumpadClear */, 'NumpadClear', 126 /* KeyCode.Clear */, 'Clear', 12, 'VK_CLEAR', empty, empty],
-            [0, 1, 156 /* ScanCode.NumpadClearEntry */, 'NumpadClearEntry', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [5, 1, 0 /* ScanCode.None */, empty, 5 /* KeyCode.Ctrl */, 'Ctrl', 17, 'VK_CONTROL', empty, empty],
-            [4, 1, 0 /* ScanCode.None */, empty, 4 /* KeyCode.Shift */, 'Shift', 16, 'VK_SHIFT', empty, empty],
-            [6, 1, 0 /* ScanCode.None */, empty, 6 /* KeyCode.Alt */, 'Alt', 18, 'VK_MENU', empty, empty],
-            [57, 1, 0 /* ScanCode.None */, empty, 57 /* KeyCode.Meta */, 'Meta', 91, 'VK_COMMAND', empty, empty],
-            [5, 1, 157 /* ScanCode.ControlLeft */, 'ControlLeft', 5 /* KeyCode.Ctrl */, empty, 0, 'VK_LCONTROL', empty, empty],
-            [4, 1, 158 /* ScanCode.ShiftLeft */, 'ShiftLeft', 4 /* KeyCode.Shift */, empty, 0, 'VK_LSHIFT', empty, empty],
-            [6, 1, 159 /* ScanCode.AltLeft */, 'AltLeft', 6 /* KeyCode.Alt */, empty, 0, 'VK_LMENU', empty, empty],
-            [57, 1, 160 /* ScanCode.MetaLeft */, 'MetaLeft', 57 /* KeyCode.Meta */, empty, 0, 'VK_LWIN', empty, empty],
-            [5, 1, 161 /* ScanCode.ControlRight */, 'ControlRight', 5 /* KeyCode.Ctrl */, empty, 0, 'VK_RCONTROL', empty, empty],
-            [4, 1, 162 /* ScanCode.ShiftRight */, 'ShiftRight', 4 /* KeyCode.Shift */, empty, 0, 'VK_RSHIFT', empty, empty],
-            [6, 1, 163 /* ScanCode.AltRight */, 'AltRight', 6 /* KeyCode.Alt */, empty, 0, 'VK_RMENU', empty, empty],
-            [57, 1, 164 /* ScanCode.MetaRight */, 'MetaRight', 57 /* KeyCode.Meta */, empty, 0, 'VK_RWIN', empty, empty],
-            [0, 1, 165 /* ScanCode.BrightnessUp */, 'BrightnessUp', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 166 /* ScanCode.BrightnessDown */, 'BrightnessDown', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 167 /* ScanCode.MediaPlay */, 'MediaPlay', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 168 /* ScanCode.MediaRecord */, 'MediaRecord', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 169 /* ScanCode.MediaFastForward */, 'MediaFastForward', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 170 /* ScanCode.MediaRewind */, 'MediaRewind', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [114, 1, 171 /* ScanCode.MediaTrackNext */, 'MediaTrackNext', 119 /* KeyCode.MediaTrackNext */, 'MediaTrackNext', 176, 'VK_MEDIA_NEXT_TRACK', empty, empty],
-            [115, 1, 172 /* ScanCode.MediaTrackPrevious */, 'MediaTrackPrevious', 120 /* KeyCode.MediaTrackPrevious */, 'MediaTrackPrevious', 177, 'VK_MEDIA_PREV_TRACK', empty, empty],
-            [116, 1, 173 /* ScanCode.MediaStop */, 'MediaStop', 121 /* KeyCode.MediaStop */, 'MediaStop', 178, 'VK_MEDIA_STOP', empty, empty],
-            [0, 1, 174 /* ScanCode.Eject */, 'Eject', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [117, 1, 175 /* ScanCode.MediaPlayPause */, 'MediaPlayPause', 122 /* KeyCode.MediaPlayPause */, 'MediaPlayPause', 179, 'VK_MEDIA_PLAY_PAUSE', empty, empty],
-            [0, 1, 176 /* ScanCode.MediaSelect */, 'MediaSelect', 123 /* KeyCode.LaunchMediaPlayer */, 'LaunchMediaPlayer', 181, 'VK_MEDIA_LAUNCH_MEDIA_SELECT', empty, empty],
-            [0, 1, 177 /* ScanCode.LaunchMail */, 'LaunchMail', 124 /* KeyCode.LaunchMail */, 'LaunchMail', 180, 'VK_MEDIA_LAUNCH_MAIL', empty, empty],
-            [0, 1, 178 /* ScanCode.LaunchApp2 */, 'LaunchApp2', 125 /* KeyCode.LaunchApp2 */, 'LaunchApp2', 183, 'VK_MEDIA_LAUNCH_APP2', empty, empty],
-            [0, 1, 179 /* ScanCode.LaunchApp1 */, 'LaunchApp1', 0 /* KeyCode.Unknown */, empty, 0, 'VK_MEDIA_LAUNCH_APP1', empty, empty],
-            [0, 1, 180 /* ScanCode.SelectTask */, 'SelectTask', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 181 /* ScanCode.LaunchScreenSaver */, 'LaunchScreenSaver', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 182 /* ScanCode.BrowserSearch */, 'BrowserSearch', 115 /* KeyCode.BrowserSearch */, 'BrowserSearch', 170, 'VK_BROWSER_SEARCH', empty, empty],
-            [0, 1, 183 /* ScanCode.BrowserHome */, 'BrowserHome', 116 /* KeyCode.BrowserHome */, 'BrowserHome', 172, 'VK_BROWSER_HOME', empty, empty],
-            [112, 1, 184 /* ScanCode.BrowserBack */, 'BrowserBack', 117 /* KeyCode.BrowserBack */, 'BrowserBack', 166, 'VK_BROWSER_BACK', empty, empty],
-            [113, 1, 185 /* ScanCode.BrowserForward */, 'BrowserForward', 118 /* KeyCode.BrowserForward */, 'BrowserForward', 167, 'VK_BROWSER_FORWARD', empty, empty],
-            [0, 1, 186 /* ScanCode.BrowserStop */, 'BrowserStop', 0 /* KeyCode.Unknown */, empty, 0, 'VK_BROWSER_STOP', empty, empty],
-            [0, 1, 187 /* ScanCode.BrowserRefresh */, 'BrowserRefresh', 0 /* KeyCode.Unknown */, empty, 0, 'VK_BROWSER_REFRESH', empty, empty],
-            [0, 1, 188 /* ScanCode.BrowserFavorites */, 'BrowserFavorites', 0 /* KeyCode.Unknown */, empty, 0, 'VK_BROWSER_FAVORITES', empty, empty],
-            [0, 1, 189 /* ScanCode.ZoomToggle */, 'ZoomToggle', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 190 /* ScanCode.MailReply */, 'MailReply', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 191 /* ScanCode.MailForward */, 'MailForward', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
-            [0, 1, 192 /* ScanCode.MailSend */, 'MailSend', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            // immutable, scanCode, scanCodeStr, keyCode, keyCodeStr, eventKeyCode, vkey, usUserSettingsLabel, generalUserSettingsLabel
+            [1, 0 /* ScanCode.None */, 'None', 0 /* KeyCode.Unknown */, 'unknown', 0, 'VK_UNKNOWN', empty, empty],
+            [1, 1 /* ScanCode.Hyper */, 'Hyper', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 2 /* ScanCode.Super */, 'Super', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 3 /* ScanCode.Fn */, 'Fn', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 4 /* ScanCode.FnLock */, 'FnLock', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 5 /* ScanCode.Suspend */, 'Suspend', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 6 /* ScanCode.Resume */, 'Resume', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 7 /* ScanCode.Turbo */, 'Turbo', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 8 /* ScanCode.Sleep */, 'Sleep', 0 /* KeyCode.Unknown */, empty, 0, 'VK_SLEEP', empty, empty],
+            [1, 9 /* ScanCode.WakeUp */, 'WakeUp', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [0, 10 /* ScanCode.KeyA */, 'KeyA', 31 /* KeyCode.KeyA */, 'A', 65, 'VK_A', empty, empty],
+            [0, 11 /* ScanCode.KeyB */, 'KeyB', 32 /* KeyCode.KeyB */, 'B', 66, 'VK_B', empty, empty],
+            [0, 12 /* ScanCode.KeyC */, 'KeyC', 33 /* KeyCode.KeyC */, 'C', 67, 'VK_C', empty, empty],
+            [0, 13 /* ScanCode.KeyD */, 'KeyD', 34 /* KeyCode.KeyD */, 'D', 68, 'VK_D', empty, empty],
+            [0, 14 /* ScanCode.KeyE */, 'KeyE', 35 /* KeyCode.KeyE */, 'E', 69, 'VK_E', empty, empty],
+            [0, 15 /* ScanCode.KeyF */, 'KeyF', 36 /* KeyCode.KeyF */, 'F', 70, 'VK_F', empty, empty],
+            [0, 16 /* ScanCode.KeyG */, 'KeyG', 37 /* KeyCode.KeyG */, 'G', 71, 'VK_G', empty, empty],
+            [0, 17 /* ScanCode.KeyH */, 'KeyH', 38 /* KeyCode.KeyH */, 'H', 72, 'VK_H', empty, empty],
+            [0, 18 /* ScanCode.KeyI */, 'KeyI', 39 /* KeyCode.KeyI */, 'I', 73, 'VK_I', empty, empty],
+            [0, 19 /* ScanCode.KeyJ */, 'KeyJ', 40 /* KeyCode.KeyJ */, 'J', 74, 'VK_J', empty, empty],
+            [0, 20 /* ScanCode.KeyK */, 'KeyK', 41 /* KeyCode.KeyK */, 'K', 75, 'VK_K', empty, empty],
+            [0, 21 /* ScanCode.KeyL */, 'KeyL', 42 /* KeyCode.KeyL */, 'L', 76, 'VK_L', empty, empty],
+            [0, 22 /* ScanCode.KeyM */, 'KeyM', 43 /* KeyCode.KeyM */, 'M', 77, 'VK_M', empty, empty],
+            [0, 23 /* ScanCode.KeyN */, 'KeyN', 44 /* KeyCode.KeyN */, 'N', 78, 'VK_N', empty, empty],
+            [0, 24 /* ScanCode.KeyO */, 'KeyO', 45 /* KeyCode.KeyO */, 'O', 79, 'VK_O', empty, empty],
+            [0, 25 /* ScanCode.KeyP */, 'KeyP', 46 /* KeyCode.KeyP */, 'P', 80, 'VK_P', empty, empty],
+            [0, 26 /* ScanCode.KeyQ */, 'KeyQ', 47 /* KeyCode.KeyQ */, 'Q', 81, 'VK_Q', empty, empty],
+            [0, 27 /* ScanCode.KeyR */, 'KeyR', 48 /* KeyCode.KeyR */, 'R', 82, 'VK_R', empty, empty],
+            [0, 28 /* ScanCode.KeyS */, 'KeyS', 49 /* KeyCode.KeyS */, 'S', 83, 'VK_S', empty, empty],
+            [0, 29 /* ScanCode.KeyT */, 'KeyT', 50 /* KeyCode.KeyT */, 'T', 84, 'VK_T', empty, empty],
+            [0, 30 /* ScanCode.KeyU */, 'KeyU', 51 /* KeyCode.KeyU */, 'U', 85, 'VK_U', empty, empty],
+            [0, 31 /* ScanCode.KeyV */, 'KeyV', 52 /* KeyCode.KeyV */, 'V', 86, 'VK_V', empty, empty],
+            [0, 32 /* ScanCode.KeyW */, 'KeyW', 53 /* KeyCode.KeyW */, 'W', 87, 'VK_W', empty, empty],
+            [0, 33 /* ScanCode.KeyX */, 'KeyX', 54 /* KeyCode.KeyX */, 'X', 88, 'VK_X', empty, empty],
+            [0, 34 /* ScanCode.KeyY */, 'KeyY', 55 /* KeyCode.KeyY */, 'Y', 89, 'VK_Y', empty, empty],
+            [0, 35 /* ScanCode.KeyZ */, 'KeyZ', 56 /* KeyCode.KeyZ */, 'Z', 90, 'VK_Z', empty, empty],
+            [0, 36 /* ScanCode.Digit1 */, 'Digit1', 22 /* KeyCode.Digit1 */, '1', 49, 'VK_1', empty, empty],
+            [0, 37 /* ScanCode.Digit2 */, 'Digit2', 23 /* KeyCode.Digit2 */, '2', 50, 'VK_2', empty, empty],
+            [0, 38 /* ScanCode.Digit3 */, 'Digit3', 24 /* KeyCode.Digit3 */, '3', 51, 'VK_3', empty, empty],
+            [0, 39 /* ScanCode.Digit4 */, 'Digit4', 25 /* KeyCode.Digit4 */, '4', 52, 'VK_4', empty, empty],
+            [0, 40 /* ScanCode.Digit5 */, 'Digit5', 26 /* KeyCode.Digit5 */, '5', 53, 'VK_5', empty, empty],
+            [0, 41 /* ScanCode.Digit6 */, 'Digit6', 27 /* KeyCode.Digit6 */, '6', 54, 'VK_6', empty, empty],
+            [0, 42 /* ScanCode.Digit7 */, 'Digit7', 28 /* KeyCode.Digit7 */, '7', 55, 'VK_7', empty, empty],
+            [0, 43 /* ScanCode.Digit8 */, 'Digit8', 29 /* KeyCode.Digit8 */, '8', 56, 'VK_8', empty, empty],
+            [0, 44 /* ScanCode.Digit9 */, 'Digit9', 30 /* KeyCode.Digit9 */, '9', 57, 'VK_9', empty, empty],
+            [0, 45 /* ScanCode.Digit0 */, 'Digit0', 21 /* KeyCode.Digit0 */, '0', 48, 'VK_0', empty, empty],
+            [1, 46 /* ScanCode.Enter */, 'Enter', 3 /* KeyCode.Enter */, 'Enter', 13, 'VK_RETURN', empty, empty],
+            [1, 47 /* ScanCode.Escape */, 'Escape', 9 /* KeyCode.Escape */, 'Escape', 27, 'VK_ESCAPE', empty, empty],
+            [1, 48 /* ScanCode.Backspace */, 'Backspace', 1 /* KeyCode.Backspace */, 'Backspace', 8, 'VK_BACK', empty, empty],
+            [1, 49 /* ScanCode.Tab */, 'Tab', 2 /* KeyCode.Tab */, 'Tab', 9, 'VK_TAB', empty, empty],
+            [1, 50 /* ScanCode.Space */, 'Space', 10 /* KeyCode.Space */, 'Space', 32, 'VK_SPACE', empty, empty],
+            [0, 51 /* ScanCode.Minus */, 'Minus', 88 /* KeyCode.Minus */, '-', 189, 'VK_OEM_MINUS', '-', 'OEM_MINUS'],
+            [0, 52 /* ScanCode.Equal */, 'Equal', 86 /* KeyCode.Equal */, '=', 187, 'VK_OEM_PLUS', '=', 'OEM_PLUS'],
+            [0, 53 /* ScanCode.BracketLeft */, 'BracketLeft', 92 /* KeyCode.BracketLeft */, '[', 219, 'VK_OEM_4', '[', 'OEM_4'],
+            [0, 54 /* ScanCode.BracketRight */, 'BracketRight', 94 /* KeyCode.BracketRight */, ']', 221, 'VK_OEM_6', ']', 'OEM_6'],
+            [0, 55 /* ScanCode.Backslash */, 'Backslash', 93 /* KeyCode.Backslash */, '\\', 220, 'VK_OEM_5', '\\', 'OEM_5'],
+            [0, 56 /* ScanCode.IntlHash */, 'IntlHash', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty], // has been dropped from the w3c spec
+            [0, 57 /* ScanCode.Semicolon */, 'Semicolon', 85 /* KeyCode.Semicolon */, ';', 186, 'VK_OEM_1', ';', 'OEM_1'],
+            [0, 58 /* ScanCode.Quote */, 'Quote', 95 /* KeyCode.Quote */, '\'', 222, 'VK_OEM_7', '\'', 'OEM_7'],
+            [0, 59 /* ScanCode.Backquote */, 'Backquote', 91 /* KeyCode.Backquote */, '`', 192, 'VK_OEM_3', '`', 'OEM_3'],
+            [0, 60 /* ScanCode.Comma */, 'Comma', 87 /* KeyCode.Comma */, ',', 188, 'VK_OEM_COMMA', ',', 'OEM_COMMA'],
+            [0, 61 /* ScanCode.Period */, 'Period', 89 /* KeyCode.Period */, '.', 190, 'VK_OEM_PERIOD', '.', 'OEM_PERIOD'],
+            [0, 62 /* ScanCode.Slash */, 'Slash', 90 /* KeyCode.Slash */, '/', 191, 'VK_OEM_2', '/', 'OEM_2'],
+            [1, 63 /* ScanCode.CapsLock */, 'CapsLock', 8 /* KeyCode.CapsLock */, 'CapsLock', 20, 'VK_CAPITAL', empty, empty],
+            [1, 64 /* ScanCode.F1 */, 'F1', 59 /* KeyCode.F1 */, 'F1', 112, 'VK_F1', empty, empty],
+            [1, 65 /* ScanCode.F2 */, 'F2', 60 /* KeyCode.F2 */, 'F2', 113, 'VK_F2', empty, empty],
+            [1, 66 /* ScanCode.F3 */, 'F3', 61 /* KeyCode.F3 */, 'F3', 114, 'VK_F3', empty, empty],
+            [1, 67 /* ScanCode.F4 */, 'F4', 62 /* KeyCode.F4 */, 'F4', 115, 'VK_F4', empty, empty],
+            [1, 68 /* ScanCode.F5 */, 'F5', 63 /* KeyCode.F5 */, 'F5', 116, 'VK_F5', empty, empty],
+            [1, 69 /* ScanCode.F6 */, 'F6', 64 /* KeyCode.F6 */, 'F6', 117, 'VK_F6', empty, empty],
+            [1, 70 /* ScanCode.F7 */, 'F7', 65 /* KeyCode.F7 */, 'F7', 118, 'VK_F7', empty, empty],
+            [1, 71 /* ScanCode.F8 */, 'F8', 66 /* KeyCode.F8 */, 'F8', 119, 'VK_F8', empty, empty],
+            [1, 72 /* ScanCode.F9 */, 'F9', 67 /* KeyCode.F9 */, 'F9', 120, 'VK_F9', empty, empty],
+            [1, 73 /* ScanCode.F10 */, 'F10', 68 /* KeyCode.F10 */, 'F10', 121, 'VK_F10', empty, empty],
+            [1, 74 /* ScanCode.F11 */, 'F11', 69 /* KeyCode.F11 */, 'F11', 122, 'VK_F11', empty, empty],
+            [1, 75 /* ScanCode.F12 */, 'F12', 70 /* KeyCode.F12 */, 'F12', 123, 'VK_F12', empty, empty],
+            [1, 76 /* ScanCode.PrintScreen */, 'PrintScreen', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 77 /* ScanCode.ScrollLock */, 'ScrollLock', 84 /* KeyCode.ScrollLock */, 'ScrollLock', 145, 'VK_SCROLL', empty, empty],
+            [1, 78 /* ScanCode.Pause */, 'Pause', 7 /* KeyCode.PauseBreak */, 'PauseBreak', 19, 'VK_PAUSE', empty, empty],
+            [1, 79 /* ScanCode.Insert */, 'Insert', 19 /* KeyCode.Insert */, 'Insert', 45, 'VK_INSERT', empty, empty],
+            [1, 80 /* ScanCode.Home */, 'Home', 14 /* KeyCode.Home */, 'Home', 36, 'VK_HOME', empty, empty],
+            [1, 81 /* ScanCode.PageUp */, 'PageUp', 11 /* KeyCode.PageUp */, 'PageUp', 33, 'VK_PRIOR', empty, empty],
+            [1, 82 /* ScanCode.Delete */, 'Delete', 20 /* KeyCode.Delete */, 'Delete', 46, 'VK_DELETE', empty, empty],
+            [1, 83 /* ScanCode.End */, 'End', 13 /* KeyCode.End */, 'End', 35, 'VK_END', empty, empty],
+            [1, 84 /* ScanCode.PageDown */, 'PageDown', 12 /* KeyCode.PageDown */, 'PageDown', 34, 'VK_NEXT', empty, empty],
+            [1, 85 /* ScanCode.ArrowRight */, 'ArrowRight', 17 /* KeyCode.RightArrow */, 'RightArrow', 39, 'VK_RIGHT', 'Right', empty],
+            [1, 86 /* ScanCode.ArrowLeft */, 'ArrowLeft', 15 /* KeyCode.LeftArrow */, 'LeftArrow', 37, 'VK_LEFT', 'Left', empty],
+            [1, 87 /* ScanCode.ArrowDown */, 'ArrowDown', 18 /* KeyCode.DownArrow */, 'DownArrow', 40, 'VK_DOWN', 'Down', empty],
+            [1, 88 /* ScanCode.ArrowUp */, 'ArrowUp', 16 /* KeyCode.UpArrow */, 'UpArrow', 38, 'VK_UP', 'Up', empty],
+            [1, 89 /* ScanCode.NumLock */, 'NumLock', 83 /* KeyCode.NumLock */, 'NumLock', 144, 'VK_NUMLOCK', empty, empty],
+            [1, 90 /* ScanCode.NumpadDivide */, 'NumpadDivide', 113 /* KeyCode.NumpadDivide */, 'NumPad_Divide', 111, 'VK_DIVIDE', empty, empty],
+            [1, 91 /* ScanCode.NumpadMultiply */, 'NumpadMultiply', 108 /* KeyCode.NumpadMultiply */, 'NumPad_Multiply', 106, 'VK_MULTIPLY', empty, empty],
+            [1, 92 /* ScanCode.NumpadSubtract */, 'NumpadSubtract', 111 /* KeyCode.NumpadSubtract */, 'NumPad_Subtract', 109, 'VK_SUBTRACT', empty, empty],
+            [1, 93 /* ScanCode.NumpadAdd */, 'NumpadAdd', 109 /* KeyCode.NumpadAdd */, 'NumPad_Add', 107, 'VK_ADD', empty, empty],
+            [1, 94 /* ScanCode.NumpadEnter */, 'NumpadEnter', 3 /* KeyCode.Enter */, empty, 0, empty, empty, empty],
+            [1, 95 /* ScanCode.Numpad1 */, 'Numpad1', 99 /* KeyCode.Numpad1 */, 'NumPad1', 97, 'VK_NUMPAD1', empty, empty],
+            [1, 96 /* ScanCode.Numpad2 */, 'Numpad2', 100 /* KeyCode.Numpad2 */, 'NumPad2', 98, 'VK_NUMPAD2', empty, empty],
+            [1, 97 /* ScanCode.Numpad3 */, 'Numpad3', 101 /* KeyCode.Numpad3 */, 'NumPad3', 99, 'VK_NUMPAD3', empty, empty],
+            [1, 98 /* ScanCode.Numpad4 */, 'Numpad4', 102 /* KeyCode.Numpad4 */, 'NumPad4', 100, 'VK_NUMPAD4', empty, empty],
+            [1, 99 /* ScanCode.Numpad5 */, 'Numpad5', 103 /* KeyCode.Numpad5 */, 'NumPad5', 101, 'VK_NUMPAD5', empty, empty],
+            [1, 100 /* ScanCode.Numpad6 */, 'Numpad6', 104 /* KeyCode.Numpad6 */, 'NumPad6', 102, 'VK_NUMPAD6', empty, empty],
+            [1, 101 /* ScanCode.Numpad7 */, 'Numpad7', 105 /* KeyCode.Numpad7 */, 'NumPad7', 103, 'VK_NUMPAD7', empty, empty],
+            [1, 102 /* ScanCode.Numpad8 */, 'Numpad8', 106 /* KeyCode.Numpad8 */, 'NumPad8', 104, 'VK_NUMPAD8', empty, empty],
+            [1, 103 /* ScanCode.Numpad9 */, 'Numpad9', 107 /* KeyCode.Numpad9 */, 'NumPad9', 105, 'VK_NUMPAD9', empty, empty],
+            [1, 104 /* ScanCode.Numpad0 */, 'Numpad0', 98 /* KeyCode.Numpad0 */, 'NumPad0', 96, 'VK_NUMPAD0', empty, empty],
+            [1, 105 /* ScanCode.NumpadDecimal */, 'NumpadDecimal', 112 /* KeyCode.NumpadDecimal */, 'NumPad_Decimal', 110, 'VK_DECIMAL', empty, empty],
+            [0, 106 /* ScanCode.IntlBackslash */, 'IntlBackslash', 97 /* KeyCode.IntlBackslash */, 'OEM_102', 226, 'VK_OEM_102', empty, empty],
+            [1, 107 /* ScanCode.ContextMenu */, 'ContextMenu', 58 /* KeyCode.ContextMenu */, 'ContextMenu', 93, empty, empty, empty],
+            [1, 108 /* ScanCode.Power */, 'Power', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 109 /* ScanCode.NumpadEqual */, 'NumpadEqual', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 110 /* ScanCode.F13 */, 'F13', 71 /* KeyCode.F13 */, 'F13', 124, 'VK_F13', empty, empty],
+            [1, 111 /* ScanCode.F14 */, 'F14', 72 /* KeyCode.F14 */, 'F14', 125, 'VK_F14', empty, empty],
+            [1, 112 /* ScanCode.F15 */, 'F15', 73 /* KeyCode.F15 */, 'F15', 126, 'VK_F15', empty, empty],
+            [1, 113 /* ScanCode.F16 */, 'F16', 74 /* KeyCode.F16 */, 'F16', 127, 'VK_F16', empty, empty],
+            [1, 114 /* ScanCode.F17 */, 'F17', 75 /* KeyCode.F17 */, 'F17', 128, 'VK_F17', empty, empty],
+            [1, 115 /* ScanCode.F18 */, 'F18', 76 /* KeyCode.F18 */, 'F18', 129, 'VK_F18', empty, empty],
+            [1, 116 /* ScanCode.F19 */, 'F19', 77 /* KeyCode.F19 */, 'F19', 130, 'VK_F19', empty, empty],
+            [1, 117 /* ScanCode.F20 */, 'F20', 78 /* KeyCode.F20 */, 'F20', 131, 'VK_F20', empty, empty],
+            [1, 118 /* ScanCode.F21 */, 'F21', 79 /* KeyCode.F21 */, 'F21', 132, 'VK_F21', empty, empty],
+            [1, 119 /* ScanCode.F22 */, 'F22', 80 /* KeyCode.F22 */, 'F22', 133, 'VK_F22', empty, empty],
+            [1, 120 /* ScanCode.F23 */, 'F23', 81 /* KeyCode.F23 */, 'F23', 134, 'VK_F23', empty, empty],
+            [1, 121 /* ScanCode.F24 */, 'F24', 82 /* KeyCode.F24 */, 'F24', 135, 'VK_F24', empty, empty],
+            [1, 122 /* ScanCode.Open */, 'Open', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 123 /* ScanCode.Help */, 'Help', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 124 /* ScanCode.Select */, 'Select', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 125 /* ScanCode.Again */, 'Again', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 126 /* ScanCode.Undo */, 'Undo', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 127 /* ScanCode.Cut */, 'Cut', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 128 /* ScanCode.Copy */, 'Copy', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 129 /* ScanCode.Paste */, 'Paste', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 130 /* ScanCode.Find */, 'Find', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 131 /* ScanCode.AudioVolumeMute */, 'AudioVolumeMute', 117 /* KeyCode.AudioVolumeMute */, 'AudioVolumeMute', 173, 'VK_VOLUME_MUTE', empty, empty],
+            [1, 132 /* ScanCode.AudioVolumeUp */, 'AudioVolumeUp', 118 /* KeyCode.AudioVolumeUp */, 'AudioVolumeUp', 175, 'VK_VOLUME_UP', empty, empty],
+            [1, 133 /* ScanCode.AudioVolumeDown */, 'AudioVolumeDown', 119 /* KeyCode.AudioVolumeDown */, 'AudioVolumeDown', 174, 'VK_VOLUME_DOWN', empty, empty],
+            [1, 134 /* ScanCode.NumpadComma */, 'NumpadComma', 110 /* KeyCode.NUMPAD_SEPARATOR */, 'NumPad_Separator', 108, 'VK_SEPARATOR', empty, empty],
+            [0, 135 /* ScanCode.IntlRo */, 'IntlRo', 115 /* KeyCode.ABNT_C1 */, 'ABNT_C1', 193, 'VK_ABNT_C1', empty, empty],
+            [1, 136 /* ScanCode.KanaMode */, 'KanaMode', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [0, 137 /* ScanCode.IntlYen */, 'IntlYen', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 138 /* ScanCode.Convert */, 'Convert', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 139 /* ScanCode.NonConvert */, 'NonConvert', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 140 /* ScanCode.Lang1 */, 'Lang1', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 141 /* ScanCode.Lang2 */, 'Lang2', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 142 /* ScanCode.Lang3 */, 'Lang3', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 143 /* ScanCode.Lang4 */, 'Lang4', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 144 /* ScanCode.Lang5 */, 'Lang5', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 145 /* ScanCode.Abort */, 'Abort', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 146 /* ScanCode.Props */, 'Props', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 147 /* ScanCode.NumpadParenLeft */, 'NumpadParenLeft', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 148 /* ScanCode.NumpadParenRight */, 'NumpadParenRight', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 149 /* ScanCode.NumpadBackspace */, 'NumpadBackspace', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 150 /* ScanCode.NumpadMemoryStore */, 'NumpadMemoryStore', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 151 /* ScanCode.NumpadMemoryRecall */, 'NumpadMemoryRecall', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 152 /* ScanCode.NumpadMemoryClear */, 'NumpadMemoryClear', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 153 /* ScanCode.NumpadMemoryAdd */, 'NumpadMemoryAdd', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 154 /* ScanCode.NumpadMemorySubtract */, 'NumpadMemorySubtract', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 155 /* ScanCode.NumpadClear */, 'NumpadClear', 131 /* KeyCode.Clear */, 'Clear', 12, 'VK_CLEAR', empty, empty],
+            [1, 156 /* ScanCode.NumpadClearEntry */, 'NumpadClearEntry', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 5 /* KeyCode.Ctrl */, 'Ctrl', 17, 'VK_CONTROL', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 4 /* KeyCode.Shift */, 'Shift', 16, 'VK_SHIFT', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 6 /* KeyCode.Alt */, 'Alt', 18, 'VK_MENU', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 57 /* KeyCode.Meta */, 'Meta', 91, 'VK_COMMAND', empty, empty],
+            [1, 157 /* ScanCode.ControlLeft */, 'ControlLeft', 5 /* KeyCode.Ctrl */, empty, 0, 'VK_LCONTROL', empty, empty],
+            [1, 158 /* ScanCode.ShiftLeft */, 'ShiftLeft', 4 /* KeyCode.Shift */, empty, 0, 'VK_LSHIFT', empty, empty],
+            [1, 159 /* ScanCode.AltLeft */, 'AltLeft', 6 /* KeyCode.Alt */, empty, 0, 'VK_LMENU', empty, empty],
+            [1, 160 /* ScanCode.MetaLeft */, 'MetaLeft', 57 /* KeyCode.Meta */, empty, 0, 'VK_LWIN', empty, empty],
+            [1, 161 /* ScanCode.ControlRight */, 'ControlRight', 5 /* KeyCode.Ctrl */, empty, 0, 'VK_RCONTROL', empty, empty],
+            [1, 162 /* ScanCode.ShiftRight */, 'ShiftRight', 4 /* KeyCode.Shift */, empty, 0, 'VK_RSHIFT', empty, empty],
+            [1, 163 /* ScanCode.AltRight */, 'AltRight', 6 /* KeyCode.Alt */, empty, 0, 'VK_RMENU', empty, empty],
+            [1, 164 /* ScanCode.MetaRight */, 'MetaRight', 57 /* KeyCode.Meta */, empty, 0, 'VK_RWIN', empty, empty],
+            [1, 165 /* ScanCode.BrightnessUp */, 'BrightnessUp', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 166 /* ScanCode.BrightnessDown */, 'BrightnessDown', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 167 /* ScanCode.MediaPlay */, 'MediaPlay', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 168 /* ScanCode.MediaRecord */, 'MediaRecord', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 169 /* ScanCode.MediaFastForward */, 'MediaFastForward', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 170 /* ScanCode.MediaRewind */, 'MediaRewind', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 171 /* ScanCode.MediaTrackNext */, 'MediaTrackNext', 124 /* KeyCode.MediaTrackNext */, 'MediaTrackNext', 176, 'VK_MEDIA_NEXT_TRACK', empty, empty],
+            [1, 172 /* ScanCode.MediaTrackPrevious */, 'MediaTrackPrevious', 125 /* KeyCode.MediaTrackPrevious */, 'MediaTrackPrevious', 177, 'VK_MEDIA_PREV_TRACK', empty, empty],
+            [1, 173 /* ScanCode.MediaStop */, 'MediaStop', 126 /* KeyCode.MediaStop */, 'MediaStop', 178, 'VK_MEDIA_STOP', empty, empty],
+            [1, 174 /* ScanCode.Eject */, 'Eject', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 175 /* ScanCode.MediaPlayPause */, 'MediaPlayPause', 127 /* KeyCode.MediaPlayPause */, 'MediaPlayPause', 179, 'VK_MEDIA_PLAY_PAUSE', empty, empty],
+            [1, 176 /* ScanCode.MediaSelect */, 'MediaSelect', 128 /* KeyCode.LaunchMediaPlayer */, 'LaunchMediaPlayer', 181, 'VK_MEDIA_LAUNCH_MEDIA_SELECT', empty, empty],
+            [1, 177 /* ScanCode.LaunchMail */, 'LaunchMail', 129 /* KeyCode.LaunchMail */, 'LaunchMail', 180, 'VK_MEDIA_LAUNCH_MAIL', empty, empty],
+            [1, 178 /* ScanCode.LaunchApp2 */, 'LaunchApp2', 130 /* KeyCode.LaunchApp2 */, 'LaunchApp2', 183, 'VK_MEDIA_LAUNCH_APP2', empty, empty],
+            [1, 179 /* ScanCode.LaunchApp1 */, 'LaunchApp1', 0 /* KeyCode.Unknown */, empty, 0, 'VK_MEDIA_LAUNCH_APP1', empty, empty],
+            [1, 180 /* ScanCode.SelectTask */, 'SelectTask', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 181 /* ScanCode.LaunchScreenSaver */, 'LaunchScreenSaver', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 182 /* ScanCode.BrowserSearch */, 'BrowserSearch', 120 /* KeyCode.BrowserSearch */, 'BrowserSearch', 170, 'VK_BROWSER_SEARCH', empty, empty],
+            [1, 183 /* ScanCode.BrowserHome */, 'BrowserHome', 121 /* KeyCode.BrowserHome */, 'BrowserHome', 172, 'VK_BROWSER_HOME', empty, empty],
+            [1, 184 /* ScanCode.BrowserBack */, 'BrowserBack', 122 /* KeyCode.BrowserBack */, 'BrowserBack', 166, 'VK_BROWSER_BACK', empty, empty],
+            [1, 185 /* ScanCode.BrowserForward */, 'BrowserForward', 123 /* KeyCode.BrowserForward */, 'BrowserForward', 167, 'VK_BROWSER_FORWARD', empty, empty],
+            [1, 186 /* ScanCode.BrowserStop */, 'BrowserStop', 0 /* KeyCode.Unknown */, empty, 0, 'VK_BROWSER_STOP', empty, empty],
+            [1, 187 /* ScanCode.BrowserRefresh */, 'BrowserRefresh', 0 /* KeyCode.Unknown */, empty, 0, 'VK_BROWSER_REFRESH', empty, empty],
+            [1, 188 /* ScanCode.BrowserFavorites */, 'BrowserFavorites', 0 /* KeyCode.Unknown */, empty, 0, 'VK_BROWSER_FAVORITES', empty, empty],
+            [1, 189 /* ScanCode.ZoomToggle */, 'ZoomToggle', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 190 /* ScanCode.MailReply */, 'MailReply', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 191 /* ScanCode.MailForward */, 'MailForward', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
+            [1, 192 /* ScanCode.MailSend */, 'MailSend', 0 /* KeyCode.Unknown */, empty, 0, empty, empty, empty],
             // See https://lists.w3.org/Archives/Public/www-dom/2010JulSep/att-0182/keyCode-spec.html
             // If an Input Method Editor is processing key input and the event is keydown, return 229.
-            [109, 1, 0 /* ScanCode.None */, empty, 109 /* KeyCode.KEY_IN_COMPOSITION */, 'KeyInComposition', 229, empty, empty, empty],
-            [111, 1, 0 /* ScanCode.None */, empty, 111 /* KeyCode.ABNT_C2 */, 'ABNT_C2', 194, 'VK_ABNT_C2', empty, empty],
-            [91, 1, 0 /* ScanCode.None */, empty, 91 /* KeyCode.OEM_8 */, 'OEM_8', 223, 'VK_OEM_8', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_KANA', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_HANGUL', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_JUNJA', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_FINAL', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_HANJA', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_KANJI', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_CONVERT', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_NONCONVERT', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_ACCEPT', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_MODECHANGE', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_SELECT', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PRINT', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_EXECUTE', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_SNAPSHOT', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_HELP', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_APPS', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PROCESSKEY', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PACKET', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_DBE_SBCSCHAR', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_DBE_DBCSCHAR', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_ATTN', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_CRSEL', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_EXSEL', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_EREOF', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PLAY', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_ZOOM', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_NONAME', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PA1', empty, empty],
-            [0, 1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_OEM_CLEAR', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 114 /* KeyCode.KEY_IN_COMPOSITION */, 'KeyInComposition', 229, empty, empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 116 /* KeyCode.ABNT_C2 */, 'ABNT_C2', 194, 'VK_ABNT_C2', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 96 /* KeyCode.OEM_8 */, 'OEM_8', 223, 'VK_OEM_8', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_KANA', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_HANGUL', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_JUNJA', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_FINAL', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_HANJA', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_KANJI', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_CONVERT', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_NONCONVERT', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_ACCEPT', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_MODECHANGE', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_SELECT', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PRINT', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_EXECUTE', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_SNAPSHOT', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_HELP', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_APPS', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PROCESSKEY', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PACKET', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_DBE_SBCSCHAR', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_DBE_DBCSCHAR', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_ATTN', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_CRSEL', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_EXSEL', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_EREOF', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PLAY', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_ZOOM', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_NONAME', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_PA1', empty, empty],
+            [1, 0 /* ScanCode.None */, empty, 0 /* KeyCode.Unknown */, empty, 0, 'VK_OEM_CLEAR', empty, empty],
         ];
         const seenKeyCode = [];
         const seenScanCode = [];
         for (const mapping of mappings) {
-            const [_keyCodeOrd, immutable, scanCode, scanCodeStr, keyCode, keyCodeStr, eventKeyCode, vkey, usUserSettingsLabel, generalUserSettingsLabel] = mapping;
+            const [immutable, scanCode, scanCodeStr, keyCode, keyCodeStr, eventKeyCode, vkey, usUserSettingsLabel, generalUserSettingsLabel] = mapping;
             if (!seenScanCode[scanCode]) {
                 seenScanCode[scanCode] = true;
                 scanCodeIntToStr[scanCode] = scanCodeStr;
@@ -3548,7 +4302,7 @@ define(__m[29/*vs/base/common/keyCodes*/], __M([0/*require*/,1/*exports*/]), fun
         }
         KeyCodeUtils.fromUserSettings = fromUserSettings;
         function toElectronAccelerator(keyCode) {
-            if (keyCode >= 93 /* KeyCode.Numpad0 */ && keyCode <= 108 /* KeyCode.NumpadDivide */) {
+            if (keyCode >= 98 /* KeyCode.Numpad0 */ && keyCode <= 113 /* KeyCode.NumpadDivide */) {
                 // [Electron Accelerators] Electron is able to parse numpad keys, but unfortunately it
                 // renders them just as regular keys in menus. For example, num0 is rendered as "0",
                 // numdiv is rendered as "/", numsub is rendered as "-".
@@ -3572,19 +4326,18 @@ define(__m[29/*vs/base/common/keyCodes*/], __M([0/*require*/,1/*exports*/]), fun
             return uiMap.keyCodeToStr(keyCode);
         }
         KeyCodeUtils.toElectronAccelerator = toElectronAccelerator;
-    })(KeyCodeUtils = exports.KeyCodeUtils || (exports.KeyCodeUtils = {}));
+    })(KeyCodeUtils || (exports.KeyCodeUtils = KeyCodeUtils = {}));
     function KeyChord(firstPart, secondPart) {
         const chordPart = ((secondPart & 0x0000FFFF) << 16) >>> 0;
         return (firstPart | chordPart) >>> 0;
     }
-    exports.KeyChord = KeyChord;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[30/*vs/base/common/lazy*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[38/*vs/base/common/lazy*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Lazy = void 0;
@@ -3624,14 +4377,18 @@ define(__m[30/*vs/base/common/lazy*/], __M([0/*require*/,1/*exports*/]), functio
     exports.Lazy = Lazy;
 });
 
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*vs/base/common/functional*/,15/*vs/base/common/iterator*/]), function (require, exports, functional_1, iterator_1) {
+define(__m[13/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,20/*vs/base/common/functional*/,21/*vs/base/common/iterator*/]), function (require, exports, functional_1, iterator_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.DisposableMap = exports.ImmortalReference = exports.SafeDisposable = exports.RefCountedDisposable = exports.MutableDisposable = exports.Disposable = exports.DisposableStore = exports.toDisposable = exports.combinedDisposable = exports.dispose = exports.isDisposable = exports.markAsSingleton = exports.setDisposableTracker = void 0;
+    exports.DisposableMap = exports.ImmortalReference = exports.RefCountedDisposable = exports.MutableDisposable = exports.Disposable = exports.DisposableStore = void 0;
+    exports.setDisposableTracker = setDisposableTracker;
+    exports.trackDisposable = trackDisposable;
+    exports.markAsDisposed = markAsDisposed;
+    exports.markAsSingleton = markAsSingleton;
+    exports.isDisposable = isDisposable;
+    exports.dispose = dispose;
+    exports.combinedDisposable = combinedDisposable;
+    exports.toDisposable = toDisposable;
     // #region Disposable Tracking
     /**
      * Enables logging of potentially leaked disposables.
@@ -3645,7 +4402,6 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
     function setDisposableTracker(tracker) {
         disposableTracker = tracker;
     }
-    exports.setDisposableTracker = setDisposableTracker;
     if (TRACK_DISPOSABLES) {
         const __is_disposable_tracked__ = '__is_disposable_tracked__';
         setDisposableTracker(new class {
@@ -3705,14 +4461,12 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
         disposableTracker === null || disposableTracker === void 0 ? void 0 : disposableTracker.markAsSingleton(singleton);
         return singleton;
     }
-    exports.markAsSingleton = markAsSingleton;
     /**
      * Check if `thing` is {@link IDisposable disposable}.
      */
     function isDisposable(thing) {
         return typeof thing.dispose === 'function' && thing.dispose.length === 0;
     }
-    exports.isDisposable = isDisposable;
     function dispose(arg) {
         if (iterator_1.Iterable.is(arg)) {
             const errors = [];
@@ -3739,7 +4493,6 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
             return arg;
         }
     }
-    exports.dispose = dispose;
     /**
      * Combine multiple disposable values into a single {@link IDisposable}.
      */
@@ -3748,20 +4501,20 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
         setParentOfDisposables(disposables, parent);
         return parent;
     }
-    exports.combinedDisposable = combinedDisposable;
     /**
      * Turn a function that implements dispose into an {@link IDisposable}.
+     *
+     * @param fn Clean up function, guaranteed to be called only **once**.
      */
     function toDisposable(fn) {
         const self = trackDisposable({
-            dispose: (0, functional_1.once)(() => {
+            dispose: (0, functional_1.createSingleCallFunction)(() => {
                 markAsDisposed(self);
                 fn();
             })
         });
         return self;
     }
-    exports.toDisposable = toDisposable;
     /**
      * Manages a collection of disposable values.
      *
@@ -3829,9 +4582,21 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
             }
             return o;
         }
+        /**
+         * Deletes the value from the store, but does not dispose it.
+         */
+        deleteAndLeak(o) {
+            if (!o) {
+                return;
+            }
+            if (this._toDispose.has(o)) {
+                this._toDispose.delete(o);
+                setParentOfDisposable(o, null);
+            }
+        }
     }
-    DisposableStore.DISABLE_DISPOSED_WARNING = false;
     exports.DisposableStore = DisposableStore;
+    DisposableStore.DISABLE_DISPOSED_WARNING = false;
     /**
      * Abstract base class for a {@link IDisposable disposable} object.
      *
@@ -3857,13 +4622,13 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
             return this._store.add(o);
         }
     }
+    exports.Disposable = Disposable;
     /**
      * A disposable that does nothing when it is disposed of.
      *
      * TODO: This should not be a static property.
      */
     Disposable.None = Object.freeze({ dispose() { } });
-    exports.Disposable = Disposable;
     /**
      * Manages the lifecycle of a disposable value that may be changed.
      *
@@ -3902,18 +4667,6 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
             (_a = this._value) === null || _a === void 0 ? void 0 : _a.dispose();
             this._value = undefined;
         }
-        /**
-         * Clears the value, but does not dispose it.
-         * The old value is returned.
-        */
-        clearAndLeak() {
-            const oldValue = this._value;
-            this._value = undefined;
-            if (oldValue) {
-                setParentOfDisposable(oldValue, null);
-            }
-            return oldValue;
-        }
     }
     exports.MutableDisposable = MutableDisposable;
     class RefCountedDisposable {
@@ -3933,32 +4686,6 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
         }
     }
     exports.RefCountedDisposable = RefCountedDisposable;
-    /**
-     * A safe disposable can be `unset` so that a leaked reference (listener)
-     * can be cut-off.
-     */
-    class SafeDisposable {
-        constructor() {
-            this.dispose = () => { };
-            this.unset = () => { };
-            this.isset = () => false;
-            trackDisposable(this);
-        }
-        set(fn) {
-            let callback = fn;
-            this.unset = () => callback = undefined;
-            this.isset = () => callback !== undefined;
-            this.dispose = () => {
-                if (callback) {
-                    callback();
-                    callback = undefined;
-                    markAsDisposed(this);
-                }
-            };
-            return this;
-        }
-    }
-    exports.SafeDisposable = SafeDisposable;
     class ImmortalReference {
         constructor(object) {
             this.object = object;
@@ -4031,7 +4758,7 @@ define(__m[11/*vs/base/common/lifecycle*/], __M([0/*require*/,1/*exports*/,14/*v
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[16/*vs/base/common/linkedList*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[22/*vs/base/common/linkedList*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LinkedList = void 0;
@@ -4162,18 +4889,1963 @@ define(__m[16/*vs/base/common/linkedList*/], __M([0/*require*/,1/*exports*/]), f
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/base/common/cache*/,30/*vs/base/common/lazy*/]), function (require, exports, cache_1, lazy_1) {
+define(__m[23/*vs/base/common/map*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+    "use strict";
+    var _a, _b;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.SetMap = exports.BidirectionalMap = exports.LRUCache = exports.LinkedMap = exports.ResourceMap = void 0;
+    class ResourceMapEntry {
+        constructor(uri, value) {
+            this.uri = uri;
+            this.value = value;
+        }
+    }
+    function isEntries(arg) {
+        return Array.isArray(arg);
+    }
+    class ResourceMap {
+        constructor(arg, toKey) {
+            this[_a] = 'ResourceMap';
+            if (arg instanceof ResourceMap) {
+                this.map = new Map(arg.map);
+                this.toKey = toKey !== null && toKey !== void 0 ? toKey : ResourceMap.defaultToKey;
+            }
+            else if (isEntries(arg)) {
+                this.map = new Map();
+                this.toKey = toKey !== null && toKey !== void 0 ? toKey : ResourceMap.defaultToKey;
+                for (const [resource, value] of arg) {
+                    this.set(resource, value);
+                }
+            }
+            else {
+                this.map = new Map();
+                this.toKey = arg !== null && arg !== void 0 ? arg : ResourceMap.defaultToKey;
+            }
+        }
+        set(resource, value) {
+            this.map.set(this.toKey(resource), new ResourceMapEntry(resource, value));
+            return this;
+        }
+        get(resource) {
+            var _c;
+            return (_c = this.map.get(this.toKey(resource))) === null || _c === void 0 ? void 0 : _c.value;
+        }
+        has(resource) {
+            return this.map.has(this.toKey(resource));
+        }
+        get size() {
+            return this.map.size;
+        }
+        clear() {
+            this.map.clear();
+        }
+        delete(resource) {
+            return this.map.delete(this.toKey(resource));
+        }
+        forEach(clb, thisArg) {
+            if (typeof thisArg !== 'undefined') {
+                clb = clb.bind(thisArg);
+            }
+            for (const [_, entry] of this.map) {
+                clb(entry.value, entry.uri, this);
+            }
+        }
+        *values() {
+            for (const entry of this.map.values()) {
+                yield entry.value;
+            }
+        }
+        *keys() {
+            for (const entry of this.map.values()) {
+                yield entry.uri;
+            }
+        }
+        *entries() {
+            for (const entry of this.map.values()) {
+                yield [entry.uri, entry.value];
+            }
+        }
+        *[(_a = Symbol.toStringTag, Symbol.iterator)]() {
+            for (const [, entry] of this.map) {
+                yield [entry.uri, entry.value];
+            }
+        }
+    }
+    exports.ResourceMap = ResourceMap;
+    ResourceMap.defaultToKey = (resource) => resource.toString();
+    class LinkedMap {
+        constructor() {
+            this[_b] = 'LinkedMap';
+            this._map = new Map();
+            this._head = undefined;
+            this._tail = undefined;
+            this._size = 0;
+            this._state = 0;
+        }
+        clear() {
+            this._map.clear();
+            this._head = undefined;
+            this._tail = undefined;
+            this._size = 0;
+            this._state++;
+        }
+        isEmpty() {
+            return !this._head && !this._tail;
+        }
+        get size() {
+            return this._size;
+        }
+        get first() {
+            var _c;
+            return (_c = this._head) === null || _c === void 0 ? void 0 : _c.value;
+        }
+        get last() {
+            var _c;
+            return (_c = this._tail) === null || _c === void 0 ? void 0 : _c.value;
+        }
+        has(key) {
+            return this._map.has(key);
+        }
+        get(key, touch = 0 /* Touch.None */) {
+            const item = this._map.get(key);
+            if (!item) {
+                return undefined;
+            }
+            if (touch !== 0 /* Touch.None */) {
+                this.touch(item, touch);
+            }
+            return item.value;
+        }
+        set(key, value, touch = 0 /* Touch.None */) {
+            let item = this._map.get(key);
+            if (item) {
+                item.value = value;
+                if (touch !== 0 /* Touch.None */) {
+                    this.touch(item, touch);
+                }
+            }
+            else {
+                item = { key, value, next: undefined, previous: undefined };
+                switch (touch) {
+                    case 0 /* Touch.None */:
+                        this.addItemLast(item);
+                        break;
+                    case 1 /* Touch.AsOld */:
+                        this.addItemFirst(item);
+                        break;
+                    case 2 /* Touch.AsNew */:
+                        this.addItemLast(item);
+                        break;
+                    default:
+                        this.addItemLast(item);
+                        break;
+                }
+                this._map.set(key, item);
+                this._size++;
+            }
+            return this;
+        }
+        delete(key) {
+            return !!this.remove(key);
+        }
+        remove(key) {
+            const item = this._map.get(key);
+            if (!item) {
+                return undefined;
+            }
+            this._map.delete(key);
+            this.removeItem(item);
+            this._size--;
+            return item.value;
+        }
+        shift() {
+            if (!this._head && !this._tail) {
+                return undefined;
+            }
+            if (!this._head || !this._tail) {
+                throw new Error('Invalid list');
+            }
+            const item = this._head;
+            this._map.delete(item.key);
+            this.removeItem(item);
+            this._size--;
+            return item.value;
+        }
+        forEach(callbackfn, thisArg) {
+            const state = this._state;
+            let current = this._head;
+            while (current) {
+                if (thisArg) {
+                    callbackfn.bind(thisArg)(current.value, current.key, this);
+                }
+                else {
+                    callbackfn(current.value, current.key, this);
+                }
+                if (this._state !== state) {
+                    throw new Error(`LinkedMap got modified during iteration.`);
+                }
+                current = current.next;
+            }
+        }
+        keys() {
+            const map = this;
+            const state = this._state;
+            let current = this._head;
+            const iterator = {
+                [Symbol.iterator]() {
+                    return iterator;
+                },
+                next() {
+                    if (map._state !== state) {
+                        throw new Error(`LinkedMap got modified during iteration.`);
+                    }
+                    if (current) {
+                        const result = { value: current.key, done: false };
+                        current = current.next;
+                        return result;
+                    }
+                    else {
+                        return { value: undefined, done: true };
+                    }
+                }
+            };
+            return iterator;
+        }
+        values() {
+            const map = this;
+            const state = this._state;
+            let current = this._head;
+            const iterator = {
+                [Symbol.iterator]() {
+                    return iterator;
+                },
+                next() {
+                    if (map._state !== state) {
+                        throw new Error(`LinkedMap got modified during iteration.`);
+                    }
+                    if (current) {
+                        const result = { value: current.value, done: false };
+                        current = current.next;
+                        return result;
+                    }
+                    else {
+                        return { value: undefined, done: true };
+                    }
+                }
+            };
+            return iterator;
+        }
+        entries() {
+            const map = this;
+            const state = this._state;
+            let current = this._head;
+            const iterator = {
+                [Symbol.iterator]() {
+                    return iterator;
+                },
+                next() {
+                    if (map._state !== state) {
+                        throw new Error(`LinkedMap got modified during iteration.`);
+                    }
+                    if (current) {
+                        const result = { value: [current.key, current.value], done: false };
+                        current = current.next;
+                        return result;
+                    }
+                    else {
+                        return { value: undefined, done: true };
+                    }
+                }
+            };
+            return iterator;
+        }
+        [(_b = Symbol.toStringTag, Symbol.iterator)]() {
+            return this.entries();
+        }
+        trimOld(newSize) {
+            if (newSize >= this.size) {
+                return;
+            }
+            if (newSize === 0) {
+                this.clear();
+                return;
+            }
+            let current = this._head;
+            let currentSize = this.size;
+            while (current && currentSize > newSize) {
+                this._map.delete(current.key);
+                current = current.next;
+                currentSize--;
+            }
+            this._head = current;
+            this._size = currentSize;
+            if (current) {
+                current.previous = undefined;
+            }
+            this._state++;
+        }
+        addItemFirst(item) {
+            // First time Insert
+            if (!this._head && !this._tail) {
+                this._tail = item;
+            }
+            else if (!this._head) {
+                throw new Error('Invalid list');
+            }
+            else {
+                item.next = this._head;
+                this._head.previous = item;
+            }
+            this._head = item;
+            this._state++;
+        }
+        addItemLast(item) {
+            // First time Insert
+            if (!this._head && !this._tail) {
+                this._head = item;
+            }
+            else if (!this._tail) {
+                throw new Error('Invalid list');
+            }
+            else {
+                item.previous = this._tail;
+                this._tail.next = item;
+            }
+            this._tail = item;
+            this._state++;
+        }
+        removeItem(item) {
+            if (item === this._head && item === this._tail) {
+                this._head = undefined;
+                this._tail = undefined;
+            }
+            else if (item === this._head) {
+                // This can only happen if size === 1 which is handled
+                // by the case above.
+                if (!item.next) {
+                    throw new Error('Invalid list');
+                }
+                item.next.previous = undefined;
+                this._head = item.next;
+            }
+            else if (item === this._tail) {
+                // This can only happen if size === 1 which is handled
+                // by the case above.
+                if (!item.previous) {
+                    throw new Error('Invalid list');
+                }
+                item.previous.next = undefined;
+                this._tail = item.previous;
+            }
+            else {
+                const next = item.next;
+                const previous = item.previous;
+                if (!next || !previous) {
+                    throw new Error('Invalid list');
+                }
+                next.previous = previous;
+                previous.next = next;
+            }
+            item.next = undefined;
+            item.previous = undefined;
+            this._state++;
+        }
+        touch(item, touch) {
+            if (!this._head || !this._tail) {
+                throw new Error('Invalid list');
+            }
+            if ((touch !== 1 /* Touch.AsOld */ && touch !== 2 /* Touch.AsNew */)) {
+                return;
+            }
+            if (touch === 1 /* Touch.AsOld */) {
+                if (item === this._head) {
+                    return;
+                }
+                const next = item.next;
+                const previous = item.previous;
+                // Unlink the item
+                if (item === this._tail) {
+                    // previous must be defined since item was not head but is tail
+                    // So there are more than on item in the map
+                    previous.next = undefined;
+                    this._tail = previous;
+                }
+                else {
+                    // Both next and previous are not undefined since item was neither head nor tail.
+                    next.previous = previous;
+                    previous.next = next;
+                }
+                // Insert the node at head
+                item.previous = undefined;
+                item.next = this._head;
+                this._head.previous = item;
+                this._head = item;
+                this._state++;
+            }
+            else if (touch === 2 /* Touch.AsNew */) {
+                if (item === this._tail) {
+                    return;
+                }
+                const next = item.next;
+                const previous = item.previous;
+                // Unlink the item.
+                if (item === this._head) {
+                    // next must be defined since item was not tail but is head
+                    // So there are more than on item in the map
+                    next.previous = undefined;
+                    this._head = next;
+                }
+                else {
+                    // Both next and previous are not undefined since item was neither head nor tail.
+                    next.previous = previous;
+                    previous.next = next;
+                }
+                item.next = undefined;
+                item.previous = this._tail;
+                this._tail.next = item;
+                this._tail = item;
+                this._state++;
+            }
+        }
+        toJSON() {
+            const data = [];
+            this.forEach((value, key) => {
+                data.push([key, value]);
+            });
+            return data;
+        }
+        fromJSON(data) {
+            this.clear();
+            for (const [key, value] of data) {
+                this.set(key, value);
+            }
+        }
+    }
+    exports.LinkedMap = LinkedMap;
+    class LRUCache extends LinkedMap {
+        constructor(limit, ratio = 1) {
+            super();
+            this._limit = limit;
+            this._ratio = Math.min(Math.max(0, ratio), 1);
+        }
+        get limit() {
+            return this._limit;
+        }
+        set limit(limit) {
+            this._limit = limit;
+            this.checkTrim();
+        }
+        get(key, touch = 2 /* Touch.AsNew */) {
+            return super.get(key, touch);
+        }
+        peek(key) {
+            return super.get(key, 0 /* Touch.None */);
+        }
+        set(key, value) {
+            super.set(key, value, 2 /* Touch.AsNew */);
+            this.checkTrim();
+            return this;
+        }
+        checkTrim() {
+            if (this.size > this._limit) {
+                this.trimOld(Math.round(this._limit * this._ratio));
+            }
+        }
+    }
+    exports.LRUCache = LRUCache;
+    /**
+     * A map that allows access both by keys and values.
+     * **NOTE**: values need to be unique.
+     */
+    class BidirectionalMap {
+        constructor(entries) {
+            this._m1 = new Map();
+            this._m2 = new Map();
+            if (entries) {
+                for (const [key, value] of entries) {
+                    this.set(key, value);
+                }
+            }
+        }
+        clear() {
+            this._m1.clear();
+            this._m2.clear();
+        }
+        set(key, value) {
+            this._m1.set(key, value);
+            this._m2.set(value, key);
+        }
+        get(key) {
+            return this._m1.get(key);
+        }
+        getKey(value) {
+            return this._m2.get(value);
+        }
+        delete(key) {
+            const value = this._m1.get(key);
+            if (value === undefined) {
+                return false;
+            }
+            this._m1.delete(key);
+            this._m2.delete(value);
+            return true;
+        }
+        keys() {
+            return this._m1.keys();
+        }
+        values() {
+            return this._m1.values();
+        }
+    }
+    exports.BidirectionalMap = BidirectionalMap;
+    class SetMap {
+        constructor() {
+            this.map = new Map();
+        }
+        add(key, value) {
+            let values = this.map.get(key);
+            if (!values) {
+                values = new Set();
+                this.map.set(key, values);
+            }
+            values.add(value);
+        }
+        delete(key, value) {
+            const values = this.map.get(key);
+            if (!values) {
+                return;
+            }
+            values.delete(value);
+            if (values.size === 0) {
+                this.map.delete(key);
+            }
+        }
+        forEach(key, fn) {
+            const values = this.map.get(key);
+            if (!values) {
+                return;
+            }
+            values.forEach(fn);
+        }
+        get(key) {
+            const values = this.map.get(key);
+            if (!values) {
+                return new Set();
+            }
+            return values;
+        }
+    }
+    exports.SetMap = SetMap;
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[24/*vs/base/common/stopwatch*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.StopWatch = void 0;
+    const hasPerformanceNow = (globalThis.performance && typeof globalThis.performance.now === 'function');
+    class StopWatch {
+        static create(highResolution) {
+            return new StopWatch(highResolution);
+        }
+        constructor(highResolution) {
+            this._now = hasPerformanceNow && highResolution === false ? Date.now : globalThis.performance.now.bind(globalThis.performance);
+            this._startTime = this._now();
+            this._stopTime = -1;
+        }
+        stop() {
+            this._stopTime = this._now();
+        }
+        reset() {
+            this._startTime = this._now();
+            this._stopTime = -1;
+        }
+        elapsed() {
+            if (this._stopTime !== -1) {
+                return this._stopTime - this._startTime;
+            }
+            return this._now() - this._startTime;
+        }
+    }
+    exports.StopWatch = StopWatch;
+});
+
+define(__m[9/*vs/base/common/event*/], __M([0/*require*/,1/*exports*/,5/*vs/base/common/errors*/,20/*vs/base/common/functional*/,13/*vs/base/common/lifecycle*/,22/*vs/base/common/linkedList*/,24/*vs/base/common/stopwatch*/]), function (require, exports, errors_1, functional_1, lifecycle_1, linkedList_1, stopwatch_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Relay = exports.EventBufferer = exports.EventMultiplexer = exports.MicrotaskEmitter = exports.DebounceEmitter = exports.PauseableEmitter = exports.createEventDeliveryQueue = exports.Emitter = exports.EventProfiling = exports.Event = void 0;
+    // -----------------------------------------------------------------------------------------------------------------------
+    // Uncomment the next line to print warnings whenever a listener is GC'ed without having been disposed. This is a LEAK.
+    // -----------------------------------------------------------------------------------------------------------------------
+    const _enableListenerGCedWarning = false;
+    // -----------------------------------------------------------------------------------------------------------------------
+    // Uncomment the next line to print warnings whenever an emitter with listeners is disposed. That is a sign of code smell.
+    // -----------------------------------------------------------------------------------------------------------------------
+    const _enableDisposeWithListenerWarning = false;
+    // -----------------------------------------------------------------------------------------------------------------------
+    // Uncomment the next line to print warnings whenever a snapshotted event is used repeatedly without cleanup.
+    // See https://github.com/microsoft/vscode/issues/142851
+    // -----------------------------------------------------------------------------------------------------------------------
+    const _enableSnapshotPotentialLeakWarning = false;
+    var Event;
+    (function (Event) {
+        Event.None = () => lifecycle_1.Disposable.None;
+        function _addLeakageTraceLogic(options) {
+            if (_enableSnapshotPotentialLeakWarning) {
+                const { onDidAddListener: origListenerDidAdd } = options;
+                const stack = Stacktrace.create();
+                let count = 0;
+                options.onDidAddListener = () => {
+                    if (++count === 2) {
+                        console.warn('snapshotted emitter LIKELY used public and SHOULD HAVE BEEN created with DisposableStore. snapshotted here');
+                        stack.print();
+                    }
+                    origListenerDidAdd === null || origListenerDidAdd === void 0 ? void 0 : origListenerDidAdd();
+                };
+            }
+        }
+        /**
+         * Given an event, returns another event which debounces calls and defers the listeners to a later task via a shared
+         * `setTimeout`. The event is converted into a signal (`Event<void>`) to avoid additional object creation as a
+         * result of merging events and to try prevent race conditions that could arise when using related deferred and
+         * non-deferred events.
+         *
+         * This is useful for deferring non-critical work (eg. general UI updates) to ensure it does not block critical work
+         * (eg. latency of keypress to text rendered).
+         *
+         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
+         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
+         * returned event causes this utility to leak a listener on the original event.
+         *
+         * @param event The event source for the new event.
+         * @param disposable A disposable store to add the new EventEmitter to.
+         */
+        function defer(event, disposable) {
+            return debounce(event, () => void 0, 0, undefined, true, undefined, disposable);
+        }
+        Event.defer = defer;
+        /**
+         * Given an event, returns another event which only fires once.
+         *
+         * @param event The event source for the new event.
+         */
+        function once(event) {
+            return (listener, thisArgs = null, disposables) => {
+                // we need this, in case the event fires during the listener call
+                let didFire = false;
+                let result = undefined;
+                result = event(e => {
+                    if (didFire) {
+                        return;
+                    }
+                    else if (result) {
+                        result.dispose();
+                    }
+                    else {
+                        didFire = true;
+                    }
+                    return listener.call(thisArgs, e);
+                }, null, disposables);
+                if (didFire) {
+                    result.dispose();
+                }
+                return result;
+            };
+        }
+        Event.once = once;
+        /**
+         * Maps an event of one type into an event of another type using a mapping function, similar to how
+         * `Array.prototype.map` works.
+         *
+         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
+         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
+         * returned event causes this utility to leak a listener on the original event.
+         *
+         * @param event The event source for the new event.
+         * @param map The mapping function.
+         * @param disposable A disposable store to add the new EventEmitter to.
+         */
+        function map(event, map, disposable) {
+            return snapshot((listener, thisArgs = null, disposables) => event(i => listener.call(thisArgs, map(i)), null, disposables), disposable);
+        }
+        Event.map = map;
+        /**
+         * Wraps an event in another event that performs some function on the event object before firing.
+         *
+         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
+         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
+         * returned event causes this utility to leak a listener on the original event.
+         *
+         * @param event The event source for the new event.
+         * @param each The function to perform on the event object.
+         * @param disposable A disposable store to add the new EventEmitter to.
+         */
+        function forEach(event, each, disposable) {
+            return snapshot((listener, thisArgs = null, disposables) => event(i => { each(i); listener.call(thisArgs, i); }, null, disposables), disposable);
+        }
+        Event.forEach = forEach;
+        function filter(event, filter, disposable) {
+            return snapshot((listener, thisArgs = null, disposables) => event(e => filter(e) && listener.call(thisArgs, e), null, disposables), disposable);
+        }
+        Event.filter = filter;
+        /**
+         * Given an event, returns the same event but typed as `Event<void>`.
+         */
+        function signal(event) {
+            return event;
+        }
+        Event.signal = signal;
+        function any(...events) {
+            return (listener, thisArgs = null, disposables) => {
+                const disposable = (0, lifecycle_1.combinedDisposable)(...events.map(event => event(e => listener.call(thisArgs, e))));
+                return addAndReturnDisposable(disposable, disposables);
+            };
+        }
+        Event.any = any;
+        /**
+         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
+         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
+         * returned event causes this utility to leak a listener on the original event.
+         */
+        function reduce(event, merge, initial, disposable) {
+            let output = initial;
+            return map(event, e => {
+                output = merge(output, e);
+                return output;
+            }, disposable);
+        }
+        Event.reduce = reduce;
+        function snapshot(event, disposable) {
+            let listener;
+            const options = {
+                onWillAddFirstListener() {
+                    listener = event(emitter.fire, emitter);
+                },
+                onDidRemoveLastListener() {
+                    listener === null || listener === void 0 ? void 0 : listener.dispose();
+                }
+            };
+            if (!disposable) {
+                _addLeakageTraceLogic(options);
+            }
+            const emitter = new Emitter(options);
+            disposable === null || disposable === void 0 ? void 0 : disposable.add(emitter);
+            return emitter.event;
+        }
+        /**
+         * Adds the IDisposable to the store if it's set, and returns it. Useful to
+         * Event function implementation.
+         */
+        function addAndReturnDisposable(d, store) {
+            if (store instanceof Array) {
+                store.push(d);
+            }
+            else if (store) {
+                store.add(d);
+            }
+            return d;
+        }
+        function debounce(event, merge, delay = 100, leading = false, flushOnListenerRemove = false, leakWarningThreshold, disposable) {
+            let subscription;
+            let output = undefined;
+            let handle = undefined;
+            let numDebouncedCalls = 0;
+            let doFire;
+            const options = {
+                leakWarningThreshold,
+                onWillAddFirstListener() {
+                    subscription = event(cur => {
+                        numDebouncedCalls++;
+                        output = merge(output, cur);
+                        if (leading && !handle) {
+                            emitter.fire(output);
+                            output = undefined;
+                        }
+                        doFire = () => {
+                            const _output = output;
+                            output = undefined;
+                            handle = undefined;
+                            if (!leading || numDebouncedCalls > 1) {
+                                emitter.fire(_output);
+                            }
+                            numDebouncedCalls = 0;
+                        };
+                        if (typeof delay === 'number') {
+                            clearTimeout(handle);
+                            handle = setTimeout(doFire, delay);
+                        }
+                        else {
+                            if (handle === undefined) {
+                                handle = 0;
+                                queueMicrotask(doFire);
+                            }
+                        }
+                    });
+                },
+                onWillRemoveListener() {
+                    if (flushOnListenerRemove && numDebouncedCalls > 0) {
+                        doFire === null || doFire === void 0 ? void 0 : doFire();
+                    }
+                },
+                onDidRemoveLastListener() {
+                    doFire = undefined;
+                    subscription.dispose();
+                }
+            };
+            if (!disposable) {
+                _addLeakageTraceLogic(options);
+            }
+            const emitter = new Emitter(options);
+            disposable === null || disposable === void 0 ? void 0 : disposable.add(emitter);
+            return emitter.event;
+        }
+        Event.debounce = debounce;
+        /**
+         * Debounces an event, firing after some delay (default=0) with an array of all event original objects.
+         *
+         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
+         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
+         * returned event causes this utility to leak a listener on the original event.
+         */
+        function accumulate(event, delay = 0, disposable) {
+            return Event.debounce(event, (last, e) => {
+                if (!last) {
+                    return [e];
+                }
+                last.push(e);
+                return last;
+            }, delay, undefined, true, undefined, disposable);
+        }
+        Event.accumulate = accumulate;
+        /**
+         * Filters an event such that some condition is _not_ met more than once in a row, effectively ensuring duplicate
+         * event objects from different sources do not fire the same event object.
+         *
+         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
+         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
+         * returned event causes this utility to leak a listener on the original event.
+         *
+         * @param event The event source for the new event.
+         * @param equals The equality condition.
+         * @param disposable A disposable store to add the new EventEmitter to.
+         *
+         * @example
+         * ```
+         * // Fire only one time when a single window is opened or focused
+         * Event.latch(Event.any(onDidOpenWindow, onDidFocusWindow))
+         * ```
+         */
+        function latch(event, equals = (a, b) => a === b, disposable) {
+            let firstCall = true;
+            let cache;
+            return filter(event, value => {
+                const shouldEmit = firstCall || !equals(value, cache);
+                firstCall = false;
+                cache = value;
+                return shouldEmit;
+            }, disposable);
+        }
+        Event.latch = latch;
+        /**
+         * Splits an event whose parameter is a union type into 2 separate events for each type in the union.
+         *
+         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
+         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
+         * returned event causes this utility to leak a listener on the original event.
+         *
+         * @example
+         * ```
+         * const event = new EventEmitter<number | undefined>().event;
+         * const [numberEvent, undefinedEvent] = Event.split(event, isUndefined);
+         * ```
+         *
+         * @param event The event source for the new event.
+         * @param isT A function that determines what event is of the first type.
+         * @param disposable A disposable store to add the new EventEmitter to.
+         */
+        function split(event, isT, disposable) {
+            return [
+                Event.filter(event, isT, disposable),
+                Event.filter(event, e => !isT(e), disposable),
+            ];
+        }
+        Event.split = split;
+        /**
+         * Buffers an event until it has a listener attached.
+         *
+         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
+         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
+         * returned event causes this utility to leak a listener on the original event.
+         *
+         * @param event The event source for the new event.
+         * @param flushAfterTimeout Determines whether to flush the buffer after a timeout immediately or after a
+         * `setTimeout` when the first event listener is added.
+         * @param _buffer Internal: A source event array used for tests.
+         *
+         * @example
+         * ```
+         * // Start accumulating events, when the first listener is attached, flush
+         * // the event after a timeout such that multiple listeners attached before
+         * // the timeout would receive the event
+         * this.onInstallExtension = Event.buffer(service.onInstallExtension, true);
+         * ```
+         */
+        function buffer(event, flushAfterTimeout = false, _buffer = [], disposable) {
+            let buffer = _buffer.slice();
+            let listener = event(e => {
+                if (buffer) {
+                    buffer.push(e);
+                }
+                else {
+                    emitter.fire(e);
+                }
+            });
+            if (disposable) {
+                disposable.add(listener);
+            }
+            const flush = () => {
+                buffer === null || buffer === void 0 ? void 0 : buffer.forEach(e => emitter.fire(e));
+                buffer = null;
+            };
+            const emitter = new Emitter({
+                onWillAddFirstListener() {
+                    if (!listener) {
+                        listener = event(e => emitter.fire(e));
+                        if (disposable) {
+                            disposable.add(listener);
+                        }
+                    }
+                },
+                onDidAddFirstListener() {
+                    if (buffer) {
+                        if (flushAfterTimeout) {
+                            setTimeout(flush);
+                        }
+                        else {
+                            flush();
+                        }
+                    }
+                },
+                onDidRemoveLastListener() {
+                    if (listener) {
+                        listener.dispose();
+                    }
+                    listener = null;
+                }
+            });
+            if (disposable) {
+                disposable.add(emitter);
+            }
+            return emitter.event;
+        }
+        Event.buffer = buffer;
+        /**
+         * Wraps the event in an {@link IChainableEvent}, allowing a more functional programming style.
+         *
+         * @example
+         * ```
+         * // Normal
+         * const onEnterPressNormal = Event.filter(
+         *   Event.map(onKeyPress.event, e => new StandardKeyboardEvent(e)),
+         *   e.keyCode === KeyCode.Enter
+         * ).event;
+         *
+         * // Using chain
+         * const onEnterPressChain = Event.chain(onKeyPress.event, $ => $
+         *   .map(e => new StandardKeyboardEvent(e))
+         *   .filter(e => e.keyCode === KeyCode.Enter)
+         * );
+         * ```
+         */
+        function chain(event, sythensize) {
+            const fn = (listener, thisArgs, disposables) => {
+                const cs = sythensize(new ChainableSynthesis());
+                return event(function (value) {
+                    const result = cs.evaluate(value);
+                    if (result !== HaltChainable) {
+                        listener.call(thisArgs, result);
+                    }
+                }, undefined, disposables);
+            };
+            return fn;
+        }
+        Event.chain = chain;
+        const HaltChainable = Symbol('HaltChainable');
+        class ChainableSynthesis {
+            constructor() {
+                this.steps = [];
+            }
+            map(fn) {
+                this.steps.push(fn);
+                return this;
+            }
+            forEach(fn) {
+                this.steps.push(v => {
+                    fn(v);
+                    return v;
+                });
+                return this;
+            }
+            filter(fn) {
+                this.steps.push(v => fn(v) ? v : HaltChainable);
+                return this;
+            }
+            reduce(merge, initial) {
+                let last = initial;
+                this.steps.push(v => {
+                    last = merge(last, v);
+                    return last;
+                });
+                return this;
+            }
+            latch(equals = (a, b) => a === b) {
+                let firstCall = true;
+                let cache;
+                this.steps.push(value => {
+                    const shouldEmit = firstCall || !equals(value, cache);
+                    firstCall = false;
+                    cache = value;
+                    return shouldEmit ? value : HaltChainable;
+                });
+                return this;
+            }
+            evaluate(value) {
+                for (const step of this.steps) {
+                    value = step(value);
+                    if (value === HaltChainable) {
+                        break;
+                    }
+                }
+                return value;
+            }
+        }
+        /**
+         * Creates an {@link Event} from a node event emitter.
+         */
+        function fromNodeEventEmitter(emitter, eventName, map = id => id) {
+            const fn = (...args) => result.fire(map(...args));
+            const onFirstListenerAdd = () => emitter.on(eventName, fn);
+            const onLastListenerRemove = () => emitter.removeListener(eventName, fn);
+            const result = new Emitter({ onWillAddFirstListener: onFirstListenerAdd, onDidRemoveLastListener: onLastListenerRemove });
+            return result.event;
+        }
+        Event.fromNodeEventEmitter = fromNodeEventEmitter;
+        /**
+         * Creates an {@link Event} from a DOM event emitter.
+         */
+        function fromDOMEventEmitter(emitter, eventName, map = id => id) {
+            const fn = (...args) => result.fire(map(...args));
+            const onFirstListenerAdd = () => emitter.addEventListener(eventName, fn);
+            const onLastListenerRemove = () => emitter.removeEventListener(eventName, fn);
+            const result = new Emitter({ onWillAddFirstListener: onFirstListenerAdd, onDidRemoveLastListener: onLastListenerRemove });
+            return result.event;
+        }
+        Event.fromDOMEventEmitter = fromDOMEventEmitter;
+        /**
+         * Creates a promise out of an event, using the {@link Event.once} helper.
+         */
+        function toPromise(event) {
+            return new Promise(resolve => once(event)(resolve));
+        }
+        Event.toPromise = toPromise;
+        /**
+         * Creates an event out of a promise that fires once when the promise is
+         * resolved with the result of the promise or `undefined`.
+         */
+        function fromPromise(promise) {
+            const result = new Emitter();
+            promise.then(res => {
+                result.fire(res);
+            }, () => {
+                result.fire(undefined);
+            }).finally(() => {
+                result.dispose();
+            });
+            return result.event;
+        }
+        Event.fromPromise = fromPromise;
+        function runAndSubscribe(event, handler, initial) {
+            handler(initial);
+            return event(e => handler(e));
+        }
+        Event.runAndSubscribe = runAndSubscribe;
+        class EmitterObserver {
+            constructor(_observable, store) {
+                this._observable = _observable;
+                this._counter = 0;
+                this._hasChanged = false;
+                const options = {
+                    onWillAddFirstListener: () => {
+                        _observable.addObserver(this);
+                    },
+                    onDidRemoveLastListener: () => {
+                        _observable.removeObserver(this);
+                    }
+                };
+                if (!store) {
+                    _addLeakageTraceLogic(options);
+                }
+                this.emitter = new Emitter(options);
+                if (store) {
+                    store.add(this.emitter);
+                }
+            }
+            beginUpdate(_observable) {
+                // assert(_observable === this.obs);
+                this._counter++;
+            }
+            handlePossibleChange(_observable) {
+                // assert(_observable === this.obs);
+            }
+            handleChange(_observable, _change) {
+                // assert(_observable === this.obs);
+                this._hasChanged = true;
+            }
+            endUpdate(_observable) {
+                // assert(_observable === this.obs);
+                this._counter--;
+                if (this._counter === 0) {
+                    this._observable.reportChanges();
+                    if (this._hasChanged) {
+                        this._hasChanged = false;
+                        this.emitter.fire(this._observable.get());
+                    }
+                }
+            }
+        }
+        /**
+         * Creates an event emitter that is fired when the observable changes.
+         * Each listeners subscribes to the emitter.
+         */
+        function fromObservable(obs, store) {
+            const observer = new EmitterObserver(obs, store);
+            return observer.emitter.event;
+        }
+        Event.fromObservable = fromObservable;
+        /**
+         * Each listener is attached to the observable directly.
+         */
+        function fromObservableLight(observable) {
+            return (listener, thisArgs, disposables) => {
+                let count = 0;
+                let didChange = false;
+                const observer = {
+                    beginUpdate() {
+                        count++;
+                    },
+                    endUpdate() {
+                        count--;
+                        if (count === 0) {
+                            observable.reportChanges();
+                            if (didChange) {
+                                didChange = false;
+                                listener.call(thisArgs);
+                            }
+                        }
+                    },
+                    handlePossibleChange() {
+                        // noop
+                    },
+                    handleChange() {
+                        didChange = true;
+                    }
+                };
+                observable.addObserver(observer);
+                observable.reportChanges();
+                const disposable = {
+                    dispose() {
+                        observable.removeObserver(observer);
+                    }
+                };
+                if (disposables instanceof lifecycle_1.DisposableStore) {
+                    disposables.add(disposable);
+                }
+                else if (Array.isArray(disposables)) {
+                    disposables.push(disposable);
+                }
+                return disposable;
+            };
+        }
+        Event.fromObservableLight = fromObservableLight;
+    })(Event || (exports.Event = Event = {}));
+    class EventProfiling {
+        constructor(name) {
+            this.listenerCount = 0;
+            this.invocationCount = 0;
+            this.elapsedOverall = 0;
+            this.durations = [];
+            this.name = `${name}_${EventProfiling._idPool++}`;
+            EventProfiling.all.add(this);
+        }
+        start(listenerCount) {
+            this._stopWatch = new stopwatch_1.StopWatch();
+            this.listenerCount = listenerCount;
+        }
+        stop() {
+            if (this._stopWatch) {
+                const elapsed = this._stopWatch.elapsed();
+                this.durations.push(elapsed);
+                this.elapsedOverall += elapsed;
+                this.invocationCount += 1;
+                this._stopWatch = undefined;
+            }
+        }
+    }
+    exports.EventProfiling = EventProfiling;
+    EventProfiling.all = new Set();
+    EventProfiling._idPool = 0;
+    let _globalLeakWarningThreshold = -1;
+    class LeakageMonitor {
+        constructor(threshold, name = Math.random().toString(18).slice(2, 5)) {
+            this.threshold = threshold;
+            this.name = name;
+            this._warnCountdown = 0;
+        }
+        dispose() {
+            var _a;
+            (_a = this._stacks) === null || _a === void 0 ? void 0 : _a.clear();
+        }
+        check(stack, listenerCount) {
+            const threshold = this.threshold;
+            if (threshold <= 0 || listenerCount < threshold) {
+                return undefined;
+            }
+            if (!this._stacks) {
+                this._stacks = new Map();
+            }
+            const count = (this._stacks.get(stack.value) || 0);
+            this._stacks.set(stack.value, count + 1);
+            this._warnCountdown -= 1;
+            if (this._warnCountdown <= 0) {
+                // only warn on first exceed and then every time the limit
+                // is exceeded by 50% again
+                this._warnCountdown = threshold * 0.5;
+                // find most frequent listener and print warning
+                let topStack;
+                let topCount = 0;
+                for (const [stack, count] of this._stacks) {
+                    if (!topStack || topCount < count) {
+                        topStack = stack;
+                        topCount = count;
+                    }
+                }
+                console.warn(`[${this.name}] potential listener LEAK detected, having ${listenerCount} listeners already. MOST frequent listener (${topCount}):`);
+                console.warn(topStack);
+            }
+            return () => {
+                const count = (this._stacks.get(stack.value) || 0);
+                this._stacks.set(stack.value, count - 1);
+            };
+        }
+    }
+    class Stacktrace {
+        static create() {
+            var _a;
+            return new Stacktrace((_a = new Error().stack) !== null && _a !== void 0 ? _a : '');
+        }
+        constructor(value) {
+            this.value = value;
+        }
+        print() {
+            console.warn(this.value.split('\n').slice(2).join('\n'));
+        }
+    }
+    class UniqueContainer {
+        constructor(value) {
+            this.value = value;
+        }
+    }
+    const compactionThreshold = 2;
+    const forEachListener = (listeners, fn) => {
+        if (listeners instanceof UniqueContainer) {
+            fn(listeners);
+        }
+        else {
+            for (let i = 0; i < listeners.length; i++) {
+                const l = listeners[i];
+                if (l) {
+                    fn(l);
+                }
+            }
+        }
+    };
+    const _listenerFinalizers = _enableListenerGCedWarning
+        ? new FinalizationRegistry(heldValue => {
+            if (typeof heldValue === 'string') {
+                console.warn('[LEAKING LISTENER] GC\'ed a listener that was NOT yet disposed. This is where is was created:');
+                console.warn(heldValue);
+            }
+        })
+        : undefined;
+    /**
+     * The Emitter can be used to expose an Event to the public
+     * to fire it from the insides.
+     * Sample:
+        class Document {
+    
+            private readonly _onDidChange = new Emitter<(value:string)=>any>();
+    
+            public onDidChange = this._onDidChange.event;
+    
+            // getter-style
+            // get onDidChange(): Event<(value:string)=>any> {
+            // 	return this._onDidChange.event;
+            // }
+    
+            private _doIt() {
+                //...
+                this._onDidChange.fire(value);
+            }
+        }
+     */
+    class Emitter {
+        constructor(options) {
+            var _a, _b, _c, _d, _e;
+            this._size = 0;
+            this._options = options;
+            this._leakageMon = _globalLeakWarningThreshold > 0 || ((_a = this._options) === null || _a === void 0 ? void 0 : _a.leakWarningThreshold) ? new LeakageMonitor((_c = (_b = this._options) === null || _b === void 0 ? void 0 : _b.leakWarningThreshold) !== null && _c !== void 0 ? _c : _globalLeakWarningThreshold) : undefined;
+            this._perfMon = ((_d = this._options) === null || _d === void 0 ? void 0 : _d._profName) ? new EventProfiling(this._options._profName) : undefined;
+            this._deliveryQueue = (_e = this._options) === null || _e === void 0 ? void 0 : _e.deliveryQueue;
+        }
+        dispose() {
+            var _a, _b, _c, _d;
+            if (!this._disposed) {
+                this._disposed = true;
+                // It is bad to have listeners at the time of disposing an emitter, it is worst to have listeners keep the emitter
+                // alive via the reference that's embedded in their disposables. Therefore we loop over all remaining listeners and
+                // unset their subscriptions/disposables. Looping and blaming remaining listeners is done on next tick because the
+                // the following programming pattern is very popular:
+                //
+                // const someModel = this._disposables.add(new ModelObject()); // (1) create and register model
+                // this._disposables.add(someModel.onDidChange(() => { ... }); // (2) subscribe and register model-event listener
+                // ...later...
+                // this._disposables.dispose(); disposes (1) then (2): don't warn after (1) but after the "overall dispose" is done
+                if (((_a = this._deliveryQueue) === null || _a === void 0 ? void 0 : _a.current) === this) {
+                    this._deliveryQueue.reset();
+                }
+                if (this._listeners) {
+                    if (_enableDisposeWithListenerWarning) {
+                        const listeners = this._listeners;
+                        queueMicrotask(() => {
+                            forEachListener(listeners, l => { var _a; return (_a = l.stack) === null || _a === void 0 ? void 0 : _a.print(); });
+                        });
+                    }
+                    this._listeners = undefined;
+                    this._size = 0;
+                }
+                (_c = (_b = this._options) === null || _b === void 0 ? void 0 : _b.onDidRemoveLastListener) === null || _c === void 0 ? void 0 : _c.call(_b);
+                (_d = this._leakageMon) === null || _d === void 0 ? void 0 : _d.dispose();
+            }
+        }
+        /**
+         * For the public to allow to subscribe
+         * to events from this Emitter
+         */
+        get event() {
+            var _a;
+            (_a = this._event) !== null && _a !== void 0 ? _a : (this._event = (callback, thisArgs, disposables) => {
+                var _a, _b, _c, _d, _e;
+                if (this._leakageMon && this._size > this._leakageMon.threshold * 3) {
+                    console.warn(`[${this._leakageMon.name}] REFUSES to accept new listeners because it exceeded its threshold by far`);
+                    return lifecycle_1.Disposable.None;
+                }
+                if (this._disposed) {
+                    // todo: should we warn if a listener is added to a disposed emitter? This happens often
+                    return lifecycle_1.Disposable.None;
+                }
+                if (thisArgs) {
+                    callback = callback.bind(thisArgs);
+                }
+                const contained = new UniqueContainer(callback);
+                let removeMonitor;
+                let stack;
+                if (this._leakageMon && this._size >= Math.ceil(this._leakageMon.threshold * 0.2)) {
+                    // check and record this emitter for potential leakage
+                    contained.stack = Stacktrace.create();
+                    removeMonitor = this._leakageMon.check(contained.stack, this._size + 1);
+                }
+                if (_enableDisposeWithListenerWarning) {
+                    contained.stack = stack !== null && stack !== void 0 ? stack : Stacktrace.create();
+                }
+                if (!this._listeners) {
+                    (_b = (_a = this._options) === null || _a === void 0 ? void 0 : _a.onWillAddFirstListener) === null || _b === void 0 ? void 0 : _b.call(_a, this);
+                    this._listeners = contained;
+                    (_d = (_c = this._options) === null || _c === void 0 ? void 0 : _c.onDidAddFirstListener) === null || _d === void 0 ? void 0 : _d.call(_c, this);
+                }
+                else if (this._listeners instanceof UniqueContainer) {
+                    (_e = this._deliveryQueue) !== null && _e !== void 0 ? _e : (this._deliveryQueue = new EventDeliveryQueuePrivate());
+                    this._listeners = [this._listeners, contained];
+                }
+                else {
+                    this._listeners.push(contained);
+                }
+                this._size++;
+                const result = (0, lifecycle_1.toDisposable)(() => {
+                    _listenerFinalizers === null || _listenerFinalizers === void 0 ? void 0 : _listenerFinalizers.unregister(result);
+                    removeMonitor === null || removeMonitor === void 0 ? void 0 : removeMonitor();
+                    this._removeListener(contained);
+                });
+                if (disposables instanceof lifecycle_1.DisposableStore) {
+                    disposables.add(result);
+                }
+                else if (Array.isArray(disposables)) {
+                    disposables.push(result);
+                }
+                if (_listenerFinalizers) {
+                    const stack = new Error().stack.split('\n').slice(2).join('\n').trim();
+                    _listenerFinalizers.register(result, stack, result);
+                }
+                return result;
+            });
+            return this._event;
+        }
+        _removeListener(listener) {
+            var _a, _b, _c, _d;
+            (_b = (_a = this._options) === null || _a === void 0 ? void 0 : _a.onWillRemoveListener) === null || _b === void 0 ? void 0 : _b.call(_a, this);
+            if (!this._listeners) {
+                return; // expected if a listener gets disposed
+            }
+            if (this._size === 1) {
+                this._listeners = undefined;
+                (_d = (_c = this._options) === null || _c === void 0 ? void 0 : _c.onDidRemoveLastListener) === null || _d === void 0 ? void 0 : _d.call(_c, this);
+                this._size = 0;
+                return;
+            }
+            // size > 1 which requires that listeners be a list:
+            const listeners = this._listeners;
+            const index = listeners.indexOf(listener);
+            if (index === -1) {
+                console.log('disposed?', this._disposed);
+                console.log('size?', this._size);
+                console.log('arr?', JSON.stringify(this._listeners));
+                throw new Error('Attempted to dispose unknown listener');
+            }
+            this._size--;
+            listeners[index] = undefined;
+            const adjustDeliveryQueue = this._deliveryQueue.current === this;
+            if (this._size * compactionThreshold <= listeners.length) {
+                let n = 0;
+                for (let i = 0; i < listeners.length; i++) {
+                    if (listeners[i]) {
+                        listeners[n++] = listeners[i];
+                    }
+                    else if (adjustDeliveryQueue) {
+                        this._deliveryQueue.end--;
+                        if (n < this._deliveryQueue.i) {
+                            this._deliveryQueue.i--;
+                        }
+                    }
+                }
+                listeners.length = n;
+            }
+        }
+        _deliver(listener, value) {
+            var _a;
+            if (!listener) {
+                return;
+            }
+            const errorHandler = ((_a = this._options) === null || _a === void 0 ? void 0 : _a.onListenerError) || errors_1.onUnexpectedError;
+            if (!errorHandler) {
+                listener.value(value);
+                return;
+            }
+            try {
+                listener.value(value);
+            }
+            catch (e) {
+                errorHandler(e);
+            }
+        }
+        /** Delivers items in the queue. Assumes the queue is ready to go. */
+        _deliverQueue(dq) {
+            const listeners = dq.current._listeners;
+            while (dq.i < dq.end) {
+                // important: dq.i is incremented before calling deliver() because it might reenter deliverQueue()
+                this._deliver(listeners[dq.i++], dq.value);
+            }
+            dq.reset();
+        }
+        /**
+         * To be kept private to fire an event to
+         * subscribers
+         */
+        fire(event) {
+            var _a, _b, _c, _d;
+            if ((_a = this._deliveryQueue) === null || _a === void 0 ? void 0 : _a.current) {
+                this._deliverQueue(this._deliveryQueue);
+                (_b = this._perfMon) === null || _b === void 0 ? void 0 : _b.stop(); // last fire() will have starting perfmon, stop it before starting the next dispatch
+            }
+            (_c = this._perfMon) === null || _c === void 0 ? void 0 : _c.start(this._size);
+            if (!this._listeners) {
+                // no-op
+            }
+            else if (this._listeners instanceof UniqueContainer) {
+                this._deliver(this._listeners, event);
+            }
+            else {
+                const dq = this._deliveryQueue;
+                dq.enqueue(this, event, this._listeners.length);
+                this._deliverQueue(dq);
+            }
+            (_d = this._perfMon) === null || _d === void 0 ? void 0 : _d.stop();
+        }
+        hasListeners() {
+            return this._size > 0;
+        }
+    }
+    exports.Emitter = Emitter;
+    const createEventDeliveryQueue = () => new EventDeliveryQueuePrivate();
+    exports.createEventDeliveryQueue = createEventDeliveryQueue;
+    class EventDeliveryQueuePrivate {
+        constructor() {
+            /**
+             * Index in current's listener list.
+             */
+            this.i = -1;
+            /**
+             * The last index in the listener's list to deliver.
+             */
+            this.end = 0;
+        }
+        enqueue(emitter, value, end) {
+            this.i = 0;
+            this.end = end;
+            this.current = emitter;
+            this.value = value;
+        }
+        reset() {
+            this.i = this.end; // force any current emission loop to stop, mainly for during dispose
+            this.current = undefined;
+            this.value = undefined;
+        }
+    }
+    class PauseableEmitter extends Emitter {
+        constructor(options) {
+            super(options);
+            this._isPaused = 0;
+            this._eventQueue = new linkedList_1.LinkedList();
+            this._mergeFn = options === null || options === void 0 ? void 0 : options.merge;
+        }
+        pause() {
+            this._isPaused++;
+        }
+        resume() {
+            if (this._isPaused !== 0 && --this._isPaused === 0) {
+                if (this._mergeFn) {
+                    // use the merge function to create a single composite
+                    // event. make a copy in case firing pauses this emitter
+                    if (this._eventQueue.size > 0) {
+                        const events = Array.from(this._eventQueue);
+                        this._eventQueue.clear();
+                        super.fire(this._mergeFn(events));
+                    }
+                }
+                else {
+                    // no merging, fire each event individually and test
+                    // that this emitter isn't paused halfway through
+                    while (!this._isPaused && this._eventQueue.size !== 0) {
+                        super.fire(this._eventQueue.shift());
+                    }
+                }
+            }
+        }
+        fire(event) {
+            if (this._size) {
+                if (this._isPaused !== 0) {
+                    this._eventQueue.push(event);
+                }
+                else {
+                    super.fire(event);
+                }
+            }
+        }
+    }
+    exports.PauseableEmitter = PauseableEmitter;
+    class DebounceEmitter extends PauseableEmitter {
+        constructor(options) {
+            var _a;
+            super(options);
+            this._delay = (_a = options.delay) !== null && _a !== void 0 ? _a : 100;
+        }
+        fire(event) {
+            if (!this._handle) {
+                this.pause();
+                this._handle = setTimeout(() => {
+                    this._handle = undefined;
+                    this.resume();
+                }, this._delay);
+            }
+            super.fire(event);
+        }
+    }
+    exports.DebounceEmitter = DebounceEmitter;
+    /**
+     * An emitter which queue all events and then process them at the
+     * end of the event loop.
+     */
+    class MicrotaskEmitter extends Emitter {
+        constructor(options) {
+            super(options);
+            this._queuedEvents = [];
+            this._mergeFn = options === null || options === void 0 ? void 0 : options.merge;
+        }
+        fire(event) {
+            if (!this.hasListeners()) {
+                return;
+            }
+            this._queuedEvents.push(event);
+            if (this._queuedEvents.length === 1) {
+                queueMicrotask(() => {
+                    if (this._mergeFn) {
+                        super.fire(this._mergeFn(this._queuedEvents));
+                    }
+                    else {
+                        this._queuedEvents.forEach(e => super.fire(e));
+                    }
+                    this._queuedEvents = [];
+                });
+            }
+        }
+    }
+    exports.MicrotaskEmitter = MicrotaskEmitter;
+    /**
+     * An event emitter that multiplexes many events into a single event.
+     *
+     * @example Listen to the `onData` event of all `Thing`s, dynamically adding and removing `Thing`s
+     * to the multiplexer as needed.
+     *
+     * ```typescript
+     * const anythingDataMultiplexer = new EventMultiplexer<{ data: string }>();
+     *
+     * const thingListeners = DisposableMap<Thing, IDisposable>();
+     *
+     * thingService.onDidAddThing(thing => {
+     *   thingListeners.set(thing, anythingDataMultiplexer.add(thing.onData);
+     * });
+     * thingService.onDidRemoveThing(thing => {
+     *   thingListeners.deleteAndDispose(thing);
+     * });
+     *
+     * anythingDataMultiplexer.event(e => {
+     *   console.log('Something fired data ' + e.data)
+     * });
+     * ```
+     */
+    class EventMultiplexer {
+        constructor() {
+            this.hasListeners = false;
+            this.events = [];
+            this.emitter = new Emitter({
+                onWillAddFirstListener: () => this.onFirstListenerAdd(),
+                onDidRemoveLastListener: () => this.onLastListenerRemove()
+            });
+        }
+        get event() {
+            return this.emitter.event;
+        }
+        add(event) {
+            const e = { event: event, listener: null };
+            this.events.push(e);
+            if (this.hasListeners) {
+                this.hook(e);
+            }
+            const dispose = () => {
+                if (this.hasListeners) {
+                    this.unhook(e);
+                }
+                const idx = this.events.indexOf(e);
+                this.events.splice(idx, 1);
+            };
+            return (0, lifecycle_1.toDisposable)((0, functional_1.createSingleCallFunction)(dispose));
+        }
+        onFirstListenerAdd() {
+            this.hasListeners = true;
+            this.events.forEach(e => this.hook(e));
+        }
+        onLastListenerRemove() {
+            this.hasListeners = false;
+            this.events.forEach(e => this.unhook(e));
+        }
+        hook(e) {
+            e.listener = e.event(r => this.emitter.fire(r));
+        }
+        unhook(e) {
+            var _a;
+            (_a = e.listener) === null || _a === void 0 ? void 0 : _a.dispose();
+            e.listener = null;
+        }
+        dispose() {
+            var _a;
+            this.emitter.dispose();
+            for (const e of this.events) {
+                (_a = e.listener) === null || _a === void 0 ? void 0 : _a.dispose();
+            }
+            this.events = [];
+        }
+    }
+    exports.EventMultiplexer = EventMultiplexer;
+    /**
+     * The EventBufferer is useful in situations in which you want
+     * to delay firing your events during some code.
+     * You can wrap that code and be sure that the event will not
+     * be fired during that wrap.
+     *
+     * ```
+     * const emitter: Emitter;
+     * const delayer = new EventDelayer();
+     * const delayedEvent = delayer.wrapEvent(emitter.event);
+     *
+     * delayedEvent(console.log);
+     *
+     * delayer.bufferEvents(() => {
+     *   emitter.fire(); // event will not be fired yet
+     * });
+     *
+     * // event will only be fired at this point
+     * ```
+     */
+    class EventBufferer {
+        constructor() {
+            this.buffers = [];
+        }
+        wrapEvent(event) {
+            return (listener, thisArgs, disposables) => {
+                return event(i => {
+                    const buffer = this.buffers[this.buffers.length - 1];
+                    if (buffer) {
+                        buffer.push(() => listener.call(thisArgs, i));
+                    }
+                    else {
+                        listener.call(thisArgs, i);
+                    }
+                }, undefined, disposables);
+            };
+        }
+        bufferEvents(fn) {
+            const buffer = [];
+            this.buffers.push(buffer);
+            const r = fn();
+            this.buffers.pop();
+            buffer.forEach(flush => flush());
+            return r;
+        }
+    }
+    exports.EventBufferer = EventBufferer;
+    /**
+     * A Relay is an event forwarder which functions as a replugabble event pipe.
+     * Once created, you can connect an input event to it and it will simply forward
+     * events from that input event through its own `event` property. The `input`
+     * can be changed at any point in time.
+     */
+    class Relay {
+        constructor() {
+            this.listening = false;
+            this.inputEvent = Event.None;
+            this.inputEventListener = lifecycle_1.Disposable.None;
+            this.emitter = new Emitter({
+                onDidAddFirstListener: () => {
+                    this.listening = true;
+                    this.inputEventListener = this.inputEvent(this.emitter.fire, this.emitter);
+                },
+                onDidRemoveLastListener: () => {
+                    this.listening = false;
+                    this.inputEventListener.dispose();
+                }
+            });
+            this.event = this.emitter.event;
+        }
+        set input(event) {
+            this.inputEvent = event;
+            if (this.listening) {
+                this.inputEventListener.dispose();
+                this.inputEventListener = event(this.emitter.fire, this.emitter);
+            }
+        }
+        dispose() {
+            this.inputEventListener.dispose();
+            this.emitter.dispose();
+        }
+    }
+    exports.Relay = Relay;
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[39/*vs/base/common/cancellation*/], __M([0/*require*/,1/*exports*/,9/*vs/base/common/event*/]), function (require, exports, event_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.CancellationTokenSource = exports.CancellationToken = void 0;
+    const shortcutEvent = Object.freeze(function (callback, context) {
+        const handle = setTimeout(callback.bind(context), 0);
+        return { dispose() { clearTimeout(handle); } };
+    });
+    var CancellationToken;
+    (function (CancellationToken) {
+        function isCancellationToken(thing) {
+            if (thing === CancellationToken.None || thing === CancellationToken.Cancelled) {
+                return true;
+            }
+            if (thing instanceof MutableToken) {
+                return true;
+            }
+            if (!thing || typeof thing !== 'object') {
+                return false;
+            }
+            return typeof thing.isCancellationRequested === 'boolean'
+                && typeof thing.onCancellationRequested === 'function';
+        }
+        CancellationToken.isCancellationToken = isCancellationToken;
+        CancellationToken.None = Object.freeze({
+            isCancellationRequested: false,
+            onCancellationRequested: event_1.Event.None
+        });
+        CancellationToken.Cancelled = Object.freeze({
+            isCancellationRequested: true,
+            onCancellationRequested: shortcutEvent
+        });
+    })(CancellationToken || (exports.CancellationToken = CancellationToken = {}));
+    class MutableToken {
+        constructor() {
+            this._isCancelled = false;
+            this._emitter = null;
+        }
+        cancel() {
+            if (!this._isCancelled) {
+                this._isCancelled = true;
+                if (this._emitter) {
+                    this._emitter.fire(undefined);
+                    this.dispose();
+                }
+            }
+        }
+        get isCancellationRequested() {
+            return this._isCancelled;
+        }
+        get onCancellationRequested() {
+            if (this._isCancelled) {
+                return shortcutEvent;
+            }
+            if (!this._emitter) {
+                this._emitter = new event_1.Emitter();
+            }
+            return this._emitter.event;
+        }
+        dispose() {
+            if (this._emitter) {
+                this._emitter.dispose();
+                this._emitter = null;
+            }
+        }
+    }
+    class CancellationTokenSource {
+        constructor(parent) {
+            this._token = undefined;
+            this._parentListener = undefined;
+            this._parentListener = parent && parent.onCancellationRequested(this.cancel, this);
+        }
+        get token() {
+            if (!this._token) {
+                // be lazy and create the token only when
+                // actually needed
+                this._token = new MutableToken();
+            }
+            return this._token;
+        }
+        cancel() {
+            if (!this._token) {
+                // save an object by returning the default
+                // cancelled token when cancellation happens
+                // before someone asks for the token
+                this._token = CancellationToken.Cancelled;
+            }
+            else if (this._token instanceof MutableToken) {
+                // actually cancel
+                this._token.cancel();
+            }
+        }
+        dispose(cancel = false) {
+            var _a;
+            if (cancel) {
+                this.cancel();
+            }
+            (_a = this._parentListener) === null || _a === void 0 ? void 0 : _a.dispose();
+            if (!this._token) {
+                // ensure to initialize with an empty token if we had none
+                this._token = CancellationToken.None;
+            }
+            else if (this._token instanceof MutableToken) {
+                // actually dispose
+                this._token.dispose();
+            }
+        }
+    }
+    exports.CancellationTokenSource = CancellationTokenSource;
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[6/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,34/*vs/base/common/cache*/,38/*vs/base/common/lazy*/]), function (require, exports, cache_1, lazy_1) {
     "use strict";
     var _a;
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.InvisibleCharacters = exports.AmbiguousCharacters = exports.noBreakWhitespace = exports.getLeftDeleteOffset = exports.singleLetterHash = exports.containsUppercaseCharacter = exports.startsWithUTF8BOM = exports.UTF8_BOM_CHARACTER = exports.isEmojiImprecise = exports.isFullWidthCharacter = exports.containsUnusualLineTerminators = exports.UNUSUAL_LINE_TERMINATORS = exports.isBasicASCII = exports.containsRTL = exports.getCharContainingOffset = exports.prevCharLength = exports.nextCharLength = exports.GraphemeIterator = exports.CodePointIterator = exports.getNextCodePoint = exports.computeCodePoint = exports.isLowSurrogate = exports.isHighSurrogate = exports.commonSuffixLength = exports.commonPrefixLength = exports.startsWithIgnoreCase = exports.equalsIgnoreCase = exports.isUpperAsciiLetter = exports.isLowerAsciiLetter = exports.isAsciiDigit = exports.compareSubstringIgnoreCase = exports.compareIgnoreCase = exports.compareSubstring = exports.compare = exports.lastNonWhitespaceIndex = exports.getLeadingWhitespace = exports.firstNonWhitespaceIndex = exports.splitLines = exports.regExpFlags = exports.regExpLeadsToEndlessLoop = exports.createRegExp = exports.stripWildcards = exports.convertSimple2RegExpPattern = exports.rtrim = exports.ltrim = exports.trim = exports.escapeRegExpCharacters = exports.escape = exports.format = exports.isFalsyOrWhitespace = void 0;
+    exports.InvisibleCharacters = exports.AmbiguousCharacters = exports.noBreakWhitespace = exports.UTF8_BOM_CHARACTER = exports.UNUSUAL_LINE_TERMINATORS = exports.GraphemeIterator = exports.CodePointIterator = void 0;
+    exports.isFalsyOrWhitespace = isFalsyOrWhitespace;
+    exports.format = format;
+    exports.htmlAttributeEncodeValue = htmlAttributeEncodeValue;
+    exports.escape = escape;
+    exports.escapeRegExpCharacters = escapeRegExpCharacters;
+    exports.trim = trim;
+    exports.ltrim = ltrim;
+    exports.rtrim = rtrim;
+    exports.convertSimple2RegExpPattern = convertSimple2RegExpPattern;
+    exports.stripWildcards = stripWildcards;
+    exports.createRegExp = createRegExp;
+    exports.regExpLeadsToEndlessLoop = regExpLeadsToEndlessLoop;
+    exports.splitLines = splitLines;
+    exports.splitLinesIncludeSeparators = splitLinesIncludeSeparators;
+    exports.firstNonWhitespaceIndex = firstNonWhitespaceIndex;
+    exports.getLeadingWhitespace = getLeadingWhitespace;
+    exports.lastNonWhitespaceIndex = lastNonWhitespaceIndex;
+    exports.compare = compare;
+    exports.compareSubstring = compareSubstring;
+    exports.compareIgnoreCase = compareIgnoreCase;
+    exports.compareSubstringIgnoreCase = compareSubstringIgnoreCase;
+    exports.isAsciiDigit = isAsciiDigit;
+    exports.isLowerAsciiLetter = isLowerAsciiLetter;
+    exports.isUpperAsciiLetter = isUpperAsciiLetter;
+    exports.equalsIgnoreCase = equalsIgnoreCase;
+    exports.startsWithIgnoreCase = startsWithIgnoreCase;
+    exports.commonPrefixLength = commonPrefixLength;
+    exports.commonSuffixLength = commonSuffixLength;
+    exports.isHighSurrogate = isHighSurrogate;
+    exports.isLowSurrogate = isLowSurrogate;
+    exports.computeCodePoint = computeCodePoint;
+    exports.getNextCodePoint = getNextCodePoint;
+    exports.nextCharLength = nextCharLength;
+    exports.prevCharLength = prevCharLength;
+    exports.getCharContainingOffset = getCharContainingOffset;
+    exports.containsRTL = containsRTL;
+    exports.isBasicASCII = isBasicASCII;
+    exports.containsUnusualLineTerminators = containsUnusualLineTerminators;
+    exports.isFullWidthCharacter = isFullWidthCharacter;
+    exports.isEmojiImprecise = isEmojiImprecise;
+    exports.startsWithUTF8BOM = startsWithUTF8BOM;
+    exports.containsUppercaseCharacter = containsUppercaseCharacter;
+    exports.singleLetterHash = singleLetterHash;
+    exports.getLeftDeleteOffset = getLeftDeleteOffset;
     function isFalsyOrWhitespace(str) {
         if (!str || typeof str !== 'string') {
             return true;
         }
         return str.trim().length === 0;
     }
-    exports.isFalsyOrWhitespace = isFalsyOrWhitespace;
     const _formatRegexp = /{(\d+)}/g;
     /**
      * Helper to produce a string with a variable number of arguments. Insert variable segments
@@ -4192,7 +6864,24 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
                 args[idx];
         });
     }
-    exports.format = format;
+    /**
+     * Encodes the given value so that it can be used as literal value in html attributes.
+     *
+     * In other words, computes `$val`, such that `attr` in `<div attr="$val" />` has the runtime value `value`.
+     * This prevents XSS injection.
+     */
+    function htmlAttributeEncodeValue(value) {
+        return value.replace(/[<>"'&]/g, ch => {
+            switch (ch) {
+                case '<': return '&lt;';
+                case '>': return '&gt;';
+                case '"': return '&quot;';
+                case '\'': return '&apos;';
+                case '&': return '&amp;';
+            }
+            return ch;
+        });
+    }
     /**
      * Converts HTML characters inside the string to use entities instead. Makes the string safe from
      * being used e.g. in HTMLElement.innerHTML.
@@ -4207,14 +6896,12 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
             }
         });
     }
-    exports.escape = escape;
     /**
      * Escapes regular expression characters in a given string
      */
     function escapeRegExpCharacters(value) {
         return value.replace(/[\\\{\}\*\+\?\|\^\$\.\[\]\(\)]/g, '\\$&');
     }
-    exports.escapeRegExpCharacters = escapeRegExpCharacters;
     /**
      * Removes all occurrences of needle from the beginning and end of haystack.
      * @param haystack string to trim
@@ -4224,7 +6911,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         const trimmed = ltrim(haystack, needle);
         return rtrim(trimmed, needle);
     }
-    exports.trim = trim;
     /**
      * Removes all occurrences of needle from the beginning of haystack.
      * @param haystack string to trim
@@ -4244,7 +6930,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return haystack.substring(offset);
     }
-    exports.ltrim = ltrim;
     /**
      * Removes all occurrences of needle from the end of haystack.
      * @param haystack string to trim
@@ -4271,15 +6956,12 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return haystack.substring(0, offset);
     }
-    exports.rtrim = rtrim;
     function convertSimple2RegExpPattern(pattern) {
         return pattern.replace(/[\-\\\{\}\+\?\|\^\$\.\,\[\]\(\)\#\s]/g, '\\$&').replace(/[\*]/g, '.*');
     }
-    exports.convertSimple2RegExpPattern = convertSimple2RegExpPattern;
     function stripWildcards(pattern) {
         return pattern.replace(/\*/g, '');
     }
-    exports.stripWildcards = stripWildcards;
     function createRegExp(searchString, isRegex, options = {}) {
         if (!searchString) {
             throw new Error('Cannot create regex from empty string');
@@ -4310,7 +6992,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return new RegExp(searchString, modifiers);
     }
-    exports.createRegExp = createRegExp;
     function regExpLeadsToEndlessLoop(regexp) {
         // Exit early if it's one of these special cases which are meant to match
         // against an empty string
@@ -4322,18 +7003,18 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         const match = regexp.exec('');
         return !!(match && regexp.lastIndex === 0);
     }
-    exports.regExpLeadsToEndlessLoop = regExpLeadsToEndlessLoop;
-    function regExpFlags(regexp) {
-        return (regexp.global ? 'g' : '')
-            + (regexp.ignoreCase ? 'i' : '')
-            + (regexp.multiline ? 'm' : '')
-            + (regexp /* standalone editor compilation */.unicode ? 'u' : '');
-    }
-    exports.regExpFlags = regExpFlags;
     function splitLines(str) {
         return str.split(/\r\n|\r|\n/);
     }
-    exports.splitLines = splitLines;
+    function splitLinesIncludeSeparators(str) {
+        var _b;
+        const linesWithSeparators = [];
+        const splitLinesAndSeparators = str.split(/(\r\n|\r|\n)/);
+        for (let i = 0; i < Math.ceil(splitLinesAndSeparators.length / 2); i++) {
+            linesWithSeparators.push(splitLinesAndSeparators[2 * i] + ((_b = splitLinesAndSeparators[2 * i + 1]) !== null && _b !== void 0 ? _b : ''));
+        }
+        return linesWithSeparators;
+    }
     /**
      * Returns first index of the string that is not whitespace.
      * If string is empty or contains only whitespaces, returns -1
@@ -4347,7 +7028,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return -1;
     }
-    exports.firstNonWhitespaceIndex = firstNonWhitespaceIndex;
     /**
      * Returns the leading whitespace of the string.
      * If the string contains only whitespaces, returns entire string
@@ -4361,7 +7041,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return str.substring(start, end);
     }
-    exports.getLeadingWhitespace = getLeadingWhitespace;
     /**
      * Returns last index of the string that is not whitespace.
      * If string is empty or contains only whitespaces, returns -1
@@ -4375,7 +7054,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return -1;
     }
-    exports.lastNonWhitespaceIndex = lastNonWhitespaceIndex;
     function compare(a, b) {
         if (a < b) {
             return -1;
@@ -4387,7 +7065,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
             return 0;
         }
     }
-    exports.compare = compare;
     function compareSubstring(a, b, aStart = 0, aEnd = a.length, bStart = 0, bEnd = b.length) {
         for (; aStart < aEnd && bStart < bEnd; aStart++, bStart++) {
             const codeA = a.charCodeAt(aStart);
@@ -4409,11 +7086,9 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return 0;
     }
-    exports.compareSubstring = compareSubstring;
     function compareIgnoreCase(a, b) {
         return compareSubstringIgnoreCase(a, b, 0, a.length, 0, b.length);
     }
-    exports.compareIgnoreCase = compareIgnoreCase;
     function compareSubstringIgnoreCase(a, b, aStart = 0, aEnd = a.length, bStart = 0, bEnd = b.length) {
         for (; aStart < aEnd && bStart < bEnd; aStart++, bStart++) {
             let codeA = a.charCodeAt(aStart);
@@ -4451,23 +7126,18 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return 0;
     }
-    exports.compareSubstringIgnoreCase = compareSubstringIgnoreCase;
     function isAsciiDigit(code) {
         return code >= 48 /* CharCode.Digit0 */ && code <= 57 /* CharCode.Digit9 */;
     }
-    exports.isAsciiDigit = isAsciiDigit;
     function isLowerAsciiLetter(code) {
         return code >= 97 /* CharCode.a */ && code <= 122 /* CharCode.z */;
     }
-    exports.isLowerAsciiLetter = isLowerAsciiLetter;
     function isUpperAsciiLetter(code) {
         return code >= 65 /* CharCode.A */ && code <= 90 /* CharCode.Z */;
     }
-    exports.isUpperAsciiLetter = isUpperAsciiLetter;
     function equalsIgnoreCase(a, b) {
         return a.length === b.length && compareSubstringIgnoreCase(a, b) === 0;
     }
-    exports.equalsIgnoreCase = equalsIgnoreCase;
     function startsWithIgnoreCase(str, candidate) {
         const candidateLength = candidate.length;
         if (candidate.length > str.length) {
@@ -4475,7 +7145,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return compareSubstringIgnoreCase(str, candidate, 0, candidateLength) === 0;
     }
-    exports.startsWithIgnoreCase = startsWithIgnoreCase;
     /**
      * @returns the length of the common prefix of the two strings.
      */
@@ -4489,7 +7158,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return len;
     }
-    exports.commonPrefixLength = commonPrefixLength;
     /**
      * @returns the length of the common suffix of the two strings.
      */
@@ -4505,28 +7173,24 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return len;
     }
-    exports.commonSuffixLength = commonSuffixLength;
     /**
      * See http://en.wikipedia.org/wiki/Surrogate_pair
      */
     function isHighSurrogate(charCode) {
         return (0xD800 <= charCode && charCode <= 0xDBFF);
     }
-    exports.isHighSurrogate = isHighSurrogate;
     /**
      * See http://en.wikipedia.org/wiki/Surrogate_pair
      */
     function isLowSurrogate(charCode) {
         return (0xDC00 <= charCode && charCode <= 0xDFFF);
     }
-    exports.isLowSurrogate = isLowSurrogate;
     /**
      * See http://en.wikipedia.org/wiki/Surrogate_pair
      */
     function computeCodePoint(highSurrogate, lowSurrogate) {
         return ((highSurrogate - 0xD800) << 10) + (lowSurrogate - 0xDC00) + 0x10000;
     }
-    exports.computeCodePoint = computeCodePoint;
     /**
      * get the code point that begins at offset `offset`
      */
@@ -4540,7 +7204,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return charCode;
     }
-    exports.getNextCodePoint = getNextCodePoint;
     /**
      * get the code point that ends right before offset `offset`
      */
@@ -4631,12 +7294,10 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         const iterator = new GraphemeIterator(str, initialOffset);
         return iterator.nextGraphemeLength();
     }
-    exports.nextCharLength = nextCharLength;
     function prevCharLength(str, initialOffset) {
         const iterator = new GraphemeIterator(str, initialOffset);
         return iterator.prevGraphemeLength();
     }
-    exports.prevCharLength = prevCharLength;
     function getCharContainingOffset(str, offset) {
         if (offset > 0 && isLowSurrogate(str.charCodeAt(offset))) {
             offset--;
@@ -4645,7 +7306,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         const startOffset = endOffset - prevCharLength(str, endOffset);
         return [startOffset, endOffset];
     }
-    exports.getCharContainingOffset = getCharContainingOffset;
     let CONTAINS_RTL = undefined;
     function makeContainsRtl() {
         // Generated using https://github.com/alexdima/unicode-utils/blob/main/rtl-test.js
@@ -4660,7 +7320,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return CONTAINS_RTL.test(str);
     }
-    exports.containsRTL = containsRTL;
     const IS_BASIC_ASCII = /^[\t\n\r\x20-\x7E]*$/;
     /**
      * Returns true if `str` contains only basic ASCII characters in the range 32 - 126 (including 32 and 126) or \n, \r, \t
@@ -4668,7 +7327,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
     function isBasicASCII(str) {
         return IS_BASIC_ASCII.test(str);
     }
-    exports.isBasicASCII = isBasicASCII;
     exports.UNUSUAL_LINE_TERMINATORS = /[\u2028\u2029]/; // LINE SEPARATOR (LS) or PARAGRAPH SEPARATOR (PS)
     /**
      * Returns true if `str` contains unusual line terminators, like LS or PS
@@ -4676,7 +7334,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
     function containsUnusualLineTerminators(str) {
         return exports.UNUSUAL_LINE_TERMINATORS.test(str);
     }
-    exports.containsUnusualLineTerminators = containsUnusualLineTerminators;
     function isFullWidthCharacter(charCode) {
         // Do a cheap trick to better support wrapping of wide characters, treat them as 2 columns
         // http://jrgraphix.net/research/unicode_blocks.php
@@ -4720,7 +7377,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
             || (charCode >= 0xF900 && charCode <= 0xFAFF)
             || (charCode >= 0xFF01 && charCode <= 0xFF5E));
     }
-    exports.isFullWidthCharacter = isFullWidthCharacter;
     /**
      * A fast function (therefore imprecise) to check if code points are emojis.
      * Generated using https://github.com/alexdima/unicode-utils/blob/main/emoji-test.js
@@ -4732,13 +7388,11 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
             || (x >= 128992 && x <= 129008) || (x >= 129280 && x <= 129535)
             || (x >= 129648 && x <= 129782));
     }
-    exports.isEmojiImprecise = isEmojiImprecise;
     // -- UTF-8 BOM
     exports.UTF8_BOM_CHARACTER = String.fromCharCode(65279 /* CharCode.UTF8_BOM */);
     function startsWithUTF8BOM(str) {
         return !!(str && str.length > 0 && str.charCodeAt(0) === 65279 /* CharCode.UTF8_BOM */);
     }
-    exports.startsWithUTF8BOM = startsWithUTF8BOM;
     function containsUppercaseCharacter(target, ignoreEscapedChars = false) {
         if (!target) {
             return false;
@@ -4748,7 +7402,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return target.toLowerCase() !== target;
     }
-    exports.containsUppercaseCharacter = containsUppercaseCharacter;
     /**
      * Produces 'a'-'z', followed by 'A'-'Z'... followed by 'a'-'z', etc.
      */
@@ -4760,7 +7413,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         return String.fromCharCode(65 /* CharCode.A */ + n - LETTERS_CNT);
     }
-    exports.singleLetterHash = singleLetterHash;
     function breakBetweenGraphemeBreakType(breakTypeA, breakTypeB) {
         // http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundary_Rules
         // !!! Let's make the common case a bit faster
@@ -4901,7 +7553,6 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         iterator.prevCodePoint();
         return iterator.offset;
     }
-    exports.getLeftDeleteOffset = getLeftDeleteOffset;
     function getOffsetBeforeLastEmojiComponent(initialOffset, str) {
         // See https://www.unicode.org/reports/tr51/tr51-14.html#EBNF_and_Regex for the
         // structure of emojis.
@@ -4938,10 +7589,10 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
     exports.noBreakWhitespace = '\xa0';
     class AmbiguousCharacters {
         static getInstance(locales) {
-            return AmbiguousCharacters.cache.get(Array.from(locales));
+            return _a.cache.get(Array.from(locales));
         }
         static getLocales() {
-            return AmbiguousCharacters._locales.value;
+            return _a._locales.value;
         }
         constructor(confusableDictionary) {
             this.confusableDictionary = confusableDictionary;
@@ -4960,6 +7611,7 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
             return new Set(this.confusableDictionary.keys());
         }
     }
+    exports.AmbiguousCharacters = AmbiguousCharacters;
     _a = AmbiguousCharacters;
     AmbiguousCharacters.ambiguousCharacterData = new lazy_1.Lazy(() => {
         // Generated using https://github.com/hediet/vscode-unicode-data
@@ -5005,10 +7657,9 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
         }
         const commonMap = arrayToMap(data['_common']);
         const map = mergeMaps(commonMap, languageSpecificMap);
-        return new AmbiguousCharacters(map);
+        return new _a(map);
     });
-    AmbiguousCharacters._locales = new lazy_1.Lazy(() => Object.keys(AmbiguousCharacters.ambiguousCharacterData.value).filter((k) => !k.startsWith('_')));
-    exports.AmbiguousCharacters = AmbiguousCharacters;
+    AmbiguousCharacters._locales = new lazy_1.Lazy(() => Object.keys(_a.ambiguousCharacterData.value).filter((k) => !k.startsWith('_')));
     class InvisibleCharacters {
         static getRawData() {
             // Generated using https://github.com/hediet/vscode-unicode-data
@@ -5027,25 +7678,29 @@ define(__m[5/*vs/base/common/strings*/], __M([0/*require*/,1/*exports*/,27/*vs/b
             return InvisibleCharacters.getData();
         }
     }
-    InvisibleCharacters._data = undefined;
     exports.InvisibleCharacters = InvisibleCharacters;
+    InvisibleCharacters._data = undefined;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[31/*vs/base/common/hash*/], __M([0/*require*/,1/*exports*/,5/*vs/base/common/strings*/]), function (require, exports, strings) {
+define(__m[40/*vs/base/common/hash*/], __M([0/*require*/,1/*exports*/,6/*vs/base/common/strings*/]), function (require, exports, strings) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.StringSHA1 = exports.toHexString = exports.stringHash = exports.numberHash = exports.doHash = exports.hash = void 0;
+    exports.StringSHA1 = void 0;
+    exports.hash = hash;
+    exports.doHash = doHash;
+    exports.numberHash = numberHash;
+    exports.stringHash = stringHash;
+    exports.toHexString = toHexString;
     /**
      * Return a hash value for an object.
      */
     function hash(obj) {
         return doHash(obj, 0);
     }
-    exports.hash = hash;
     function doHash(obj, hashVal) {
         switch (typeof obj) {
             case 'object':
@@ -5068,11 +7723,9 @@ define(__m[31/*vs/base/common/hash*/], __M([0/*require*/,1/*exports*/,5/*vs/base
                 return numberHash(617, hashVal);
         }
     }
-    exports.doHash = doHash;
     function numberHash(val, initialHashVal) {
         return (((initialHashVal << 5) - initialHashVal) + val) | 0; // hashVal * 31 + ch, keep as int32
     }
-    exports.numberHash = numberHash;
     function booleanHash(b, initialHashVal) {
         return numberHash(b ? 433 : 863, initialHashVal);
     }
@@ -5083,7 +7736,6 @@ define(__m[31/*vs/base/common/hash*/], __M([0/*require*/,1/*exports*/,5/*vs/base
         }
         return hashVal;
     }
-    exports.stringHash = stringHash;
     function arrayHash(arr, initialHashVal) {
         initialHashVal = numberHash(104579, initialHashVal);
         return arr.reduce((hashVal, item) => doHash(item, hashVal), initialHashVal);
@@ -5120,7 +7772,6 @@ define(__m[31/*vs/base/common/hash*/], __M([0/*require*/,1/*exports*/,5/*vs/base
         }
         return leftPad((bufferOrValue >>> 0).toString(16), bitsize / 4);
     }
-    exports.toHexString = toHexString;
     /**
      * A SHA1 implementation that works with strings and does not allocate.
      */
@@ -5296,18 +7947,19 @@ define(__m[31/*vs/base/common/hash*/], __M([0/*require*/,1/*exports*/,5/*vs/base
             this._h4 = (this._h4 + e) & 0xffffffff;
         }
     }
-    StringSHA1._bigBlock32 = new DataView(new ArrayBuffer(320)); // 80 * 4 = 320
     exports.StringSHA1 = StringSHA1;
+    StringSHA1._bigBlock32 = new DataView(new ArrayBuffer(320)); // 80 * 4 = 320
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[17/*vs/base/common/diff/diff*/], __M([0/*require*/,1/*exports*/,28/*vs/base/common/diff/diffChange*/,31/*vs/base/common/hash*/]), function (require, exports, diffChange_1, hash_1) {
+define(__m[25/*vs/base/common/diff/diff*/], __M([0/*require*/,1/*exports*/,36/*vs/base/common/diff/diffChange*/,40/*vs/base/common/hash*/]), function (require, exports, diffChange_1, hash_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.LcsDiff = exports.stringDiff = exports.StringDiffSequence = void 0;
+    exports.LcsDiff = exports.StringDiffSequence = void 0;
+    exports.stringDiff = stringDiff;
     class StringDiffSequence {
         constructor(source) {
             this.source = source;
@@ -5325,7 +7977,6 @@ define(__m[17/*vs/base/common/diff/diff*/], __M([0/*require*/,1/*exports*/,28/*v
     function stringDiff(original, modified, pretty) {
         return new LcsDiff(new StringDiffSequence(original), new StringDiffSequence(modified)).ComputeDiff(pretty).changes;
     }
-    exports.stringDiff = stringDiff;
     //
     // The code below has been ported from a C# implementation in VS
     //
@@ -6210,17 +8861,29 @@ define(__m[17/*vs/base/common/diff/diff*/], __M([0/*require*/,1/*exports*/,28/*v
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[18/*vs/base/common/types*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[26/*vs/base/common/types*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.withNullAsUndefined = exports.validateConstraint = exports.validateConstraints = exports.isFunction = exports.assertIsDefined = exports.assertType = exports.isUndefinedOrNull = exports.isDefined = exports.isUndefined = exports.isBoolean = exports.isIterable = exports.isNumber = exports.isTypedArray = exports.isObject = exports.isString = void 0;
+    exports.isString = isString;
+    exports.isObject = isObject;
+    exports.isTypedArray = isTypedArray;
+    exports.isNumber = isNumber;
+    exports.isIterable = isIterable;
+    exports.isBoolean = isBoolean;
+    exports.isUndefined = isUndefined;
+    exports.isDefined = isDefined;
+    exports.isUndefinedOrNull = isUndefinedOrNull;
+    exports.assertType = assertType;
+    exports.assertIsDefined = assertIsDefined;
+    exports.isFunction = isFunction;
+    exports.validateConstraints = validateConstraints;
+    exports.validateConstraint = validateConstraint;
     /**
      * @returns whether the provided parameter is a JavaScript String or not.
      */
     function isString(str) {
         return (typeof str === 'string');
     }
-    exports.isString = isString;
     /**
      * @returns whether the provided parameter is of type `object` but **not**
      *	`null`, an `array`, a `regexp`, nor a `date`.
@@ -6235,7 +8898,6 @@ define(__m[18/*vs/base/common/types*/], __M([0/*require*/,1/*exports*/]), functi
             && !(obj instanceof RegExp)
             && !(obj instanceof Date);
     }
-    exports.isObject = isObject;
     /**
      * @returns whether the provided parameter is of type `Buffer` or Uint8Array dervived type
      */
@@ -6244,7 +8906,6 @@ define(__m[18/*vs/base/common/types*/], __M([0/*require*/,1/*exports*/]), functi
         return typeof obj === 'object'
             && obj instanceof TypedArray;
     }
-    exports.isTypedArray = isTypedArray;
     /**
      * In **contrast** to just checking `typeof` this will return `false` for `NaN`.
      * @returns whether the provided parameter is a JavaScript Number or not.
@@ -6252,48 +8913,41 @@ define(__m[18/*vs/base/common/types*/], __M([0/*require*/,1/*exports*/]), functi
     function isNumber(obj) {
         return (typeof obj === 'number' && !isNaN(obj));
     }
-    exports.isNumber = isNumber;
     /**
      * @returns whether the provided parameter is an Iterable, casting to the given generic
      */
     function isIterable(obj) {
         return !!obj && typeof obj[Symbol.iterator] === 'function';
     }
-    exports.isIterable = isIterable;
     /**
      * @returns whether the provided parameter is a JavaScript Boolean or not.
      */
     function isBoolean(obj) {
         return (obj === true || obj === false);
     }
-    exports.isBoolean = isBoolean;
     /**
      * @returns whether the provided parameter is undefined.
      */
     function isUndefined(obj) {
         return (typeof obj === 'undefined');
     }
-    exports.isUndefined = isUndefined;
     /**
      * @returns whether the provided parameter is defined.
      */
     function isDefined(arg) {
         return !isUndefinedOrNull(arg);
     }
-    exports.isDefined = isDefined;
     /**
      * @returns whether the provided parameter is undefined or null.
      */
     function isUndefinedOrNull(obj) {
         return (isUndefined(obj) || obj === null);
     }
-    exports.isUndefinedOrNull = isUndefinedOrNull;
     function assertType(condition, type) {
         if (!condition) {
             throw new Error(type ? `Unexpected type, expected '${type}'` : 'Unexpected type');
         }
     }
-    exports.assertType = assertType;
     /**
      * Asserts that the argument passed in is neither undefined nor null.
      */
@@ -6303,21 +8957,18 @@ define(__m[18/*vs/base/common/types*/], __M([0/*require*/,1/*exports*/]), functi
         }
         return arg;
     }
-    exports.assertIsDefined = assertIsDefined;
     /**
      * @returns whether the provided parameter is a JavaScript Function or not.
      */
     function isFunction(obj) {
         return (typeof obj === 'function');
     }
-    exports.isFunction = isFunction;
     function validateConstraints(args, constraints) {
         const len = Math.min(args.length, constraints.length);
         for (let i = 0; i < len; i++) {
             validateConstraint(args[i], constraints[i]);
         }
     }
-    exports.validateConstraints = validateConstraints;
     function validateConstraint(arg, constraint) {
         if (isString(constraint)) {
             if (typeof arg !== constraint) {
@@ -6342,20 +8993,13 @@ define(__m[18/*vs/base/common/types*/], __M([0/*require*/,1/*exports*/]), functi
             throw new Error(`argument does not match one of these constraints: arg instanceof constraint, arg.constructor === constraint, nor constraint(arg) === true`);
         }
     }
-    exports.validateConstraint = validateConstraint;
-    /**
-     * Converts null to undefined, passes all other values through.
-     */
-    function withNullAsUndefined(x) {
-        return x === null ? undefined : x;
-    }
-    exports.withNullAsUndefined = withNullAsUndefined;
 });
 
-define(__m[32/*vs/base/common/codicons*/], __M([0/*require*/,1/*exports*/,18/*vs/base/common/types*/]), function (require, exports, types_1) {
+define(__m[27/*vs/base/common/codiconsUtil*/], __M([0/*require*/,1/*exports*/,26/*vs/base/common/types*/]), function (require, exports, types_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Codicon = exports.getCodiconFontCharacters = void 0;
+    exports.register = register;
+    exports.getCodiconFontCharacters = getCodiconFontCharacters;
     const _codiconFontCharacters = Object.create(null);
     function register(id, fontCharacter) {
         if ((0, types_1.isString)(fontCharacter)) {
@@ -6374,7 +9018,623 @@ define(__m[32/*vs/base/common/codicons*/], __M([0/*require*/,1/*exports*/,18/*vs
     function getCodiconFontCharacters() {
         return _codiconFontCharacters;
     }
-    exports.getCodiconFontCharacters = getCodiconFontCharacters;
+});
+
+define(__m[41/*vs/base/common/codiconsLibrary*/], __M([0/*require*/,1/*exports*/,27/*vs/base/common/codiconsUtil*/]), function (require, exports, codiconsUtil_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.codiconsLibrary = void 0;
+    // This file is automatically generated by (microsoft/vscode-codicons)/scripts/export-to-ts.js
+    // Please don't edit it, as your changes will be overwritten.
+    // Instead, add mappings to codiconsDerived in codicons.ts.
+    exports.codiconsLibrary = {
+        add: (0, codiconsUtil_1.register)('add', 0xea60),
+        plus: (0, codiconsUtil_1.register)('plus', 0xea60),
+        gistNew: (0, codiconsUtil_1.register)('gist-new', 0xea60),
+        repoCreate: (0, codiconsUtil_1.register)('repo-create', 0xea60),
+        lightbulb: (0, codiconsUtil_1.register)('lightbulb', 0xea61),
+        lightBulb: (0, codiconsUtil_1.register)('light-bulb', 0xea61),
+        repo: (0, codiconsUtil_1.register)('repo', 0xea62),
+        repoDelete: (0, codiconsUtil_1.register)('repo-delete', 0xea62),
+        gistFork: (0, codiconsUtil_1.register)('gist-fork', 0xea63),
+        repoForked: (0, codiconsUtil_1.register)('repo-forked', 0xea63),
+        gitPullRequest: (0, codiconsUtil_1.register)('git-pull-request', 0xea64),
+        gitPullRequestAbandoned: (0, codiconsUtil_1.register)('git-pull-request-abandoned', 0xea64),
+        recordKeys: (0, codiconsUtil_1.register)('record-keys', 0xea65),
+        keyboard: (0, codiconsUtil_1.register)('keyboard', 0xea65),
+        tag: (0, codiconsUtil_1.register)('tag', 0xea66),
+        gitPullRequestLabel: (0, codiconsUtil_1.register)('git-pull-request-label', 0xea66),
+        tagAdd: (0, codiconsUtil_1.register)('tag-add', 0xea66),
+        tagRemove: (0, codiconsUtil_1.register)('tag-remove', 0xea66),
+        person: (0, codiconsUtil_1.register)('person', 0xea67),
+        personFollow: (0, codiconsUtil_1.register)('person-follow', 0xea67),
+        personOutline: (0, codiconsUtil_1.register)('person-outline', 0xea67),
+        personFilled: (0, codiconsUtil_1.register)('person-filled', 0xea67),
+        gitBranch: (0, codiconsUtil_1.register)('git-branch', 0xea68),
+        gitBranchCreate: (0, codiconsUtil_1.register)('git-branch-create', 0xea68),
+        gitBranchDelete: (0, codiconsUtil_1.register)('git-branch-delete', 0xea68),
+        sourceControl: (0, codiconsUtil_1.register)('source-control', 0xea68),
+        mirror: (0, codiconsUtil_1.register)('mirror', 0xea69),
+        mirrorPublic: (0, codiconsUtil_1.register)('mirror-public', 0xea69),
+        star: (0, codiconsUtil_1.register)('star', 0xea6a),
+        starAdd: (0, codiconsUtil_1.register)('star-add', 0xea6a),
+        starDelete: (0, codiconsUtil_1.register)('star-delete', 0xea6a),
+        starEmpty: (0, codiconsUtil_1.register)('star-empty', 0xea6a),
+        comment: (0, codiconsUtil_1.register)('comment', 0xea6b),
+        commentAdd: (0, codiconsUtil_1.register)('comment-add', 0xea6b),
+        alert: (0, codiconsUtil_1.register)('alert', 0xea6c),
+        warning: (0, codiconsUtil_1.register)('warning', 0xea6c),
+        search: (0, codiconsUtil_1.register)('search', 0xea6d),
+        searchSave: (0, codiconsUtil_1.register)('search-save', 0xea6d),
+        logOut: (0, codiconsUtil_1.register)('log-out', 0xea6e),
+        signOut: (0, codiconsUtil_1.register)('sign-out', 0xea6e),
+        logIn: (0, codiconsUtil_1.register)('log-in', 0xea6f),
+        signIn: (0, codiconsUtil_1.register)('sign-in', 0xea6f),
+        eye: (0, codiconsUtil_1.register)('eye', 0xea70),
+        eyeUnwatch: (0, codiconsUtil_1.register)('eye-unwatch', 0xea70),
+        eyeWatch: (0, codiconsUtil_1.register)('eye-watch', 0xea70),
+        circleFilled: (0, codiconsUtil_1.register)('circle-filled', 0xea71),
+        primitiveDot: (0, codiconsUtil_1.register)('primitive-dot', 0xea71),
+        closeDirty: (0, codiconsUtil_1.register)('close-dirty', 0xea71),
+        debugBreakpoint: (0, codiconsUtil_1.register)('debug-breakpoint', 0xea71),
+        debugBreakpointDisabled: (0, codiconsUtil_1.register)('debug-breakpoint-disabled', 0xea71),
+        debugHint: (0, codiconsUtil_1.register)('debug-hint', 0xea71),
+        terminalDecorationSuccess: (0, codiconsUtil_1.register)('terminal-decoration-success', 0xea71),
+        primitiveSquare: (0, codiconsUtil_1.register)('primitive-square', 0xea72),
+        edit: (0, codiconsUtil_1.register)('edit', 0xea73),
+        pencil: (0, codiconsUtil_1.register)('pencil', 0xea73),
+        info: (0, codiconsUtil_1.register)('info', 0xea74),
+        issueOpened: (0, codiconsUtil_1.register)('issue-opened', 0xea74),
+        gistPrivate: (0, codiconsUtil_1.register)('gist-private', 0xea75),
+        gitForkPrivate: (0, codiconsUtil_1.register)('git-fork-private', 0xea75),
+        lock: (0, codiconsUtil_1.register)('lock', 0xea75),
+        mirrorPrivate: (0, codiconsUtil_1.register)('mirror-private', 0xea75),
+        close: (0, codiconsUtil_1.register)('close', 0xea76),
+        removeClose: (0, codiconsUtil_1.register)('remove-close', 0xea76),
+        x: (0, codiconsUtil_1.register)('x', 0xea76),
+        repoSync: (0, codiconsUtil_1.register)('repo-sync', 0xea77),
+        sync: (0, codiconsUtil_1.register)('sync', 0xea77),
+        clone: (0, codiconsUtil_1.register)('clone', 0xea78),
+        desktopDownload: (0, codiconsUtil_1.register)('desktop-download', 0xea78),
+        beaker: (0, codiconsUtil_1.register)('beaker', 0xea79),
+        microscope: (0, codiconsUtil_1.register)('microscope', 0xea79),
+        vm: (0, codiconsUtil_1.register)('vm', 0xea7a),
+        deviceDesktop: (0, codiconsUtil_1.register)('device-desktop', 0xea7a),
+        file: (0, codiconsUtil_1.register)('file', 0xea7b),
+        fileText: (0, codiconsUtil_1.register)('file-text', 0xea7b),
+        more: (0, codiconsUtil_1.register)('more', 0xea7c),
+        ellipsis: (0, codiconsUtil_1.register)('ellipsis', 0xea7c),
+        kebabHorizontal: (0, codiconsUtil_1.register)('kebab-horizontal', 0xea7c),
+        mailReply: (0, codiconsUtil_1.register)('mail-reply', 0xea7d),
+        reply: (0, codiconsUtil_1.register)('reply', 0xea7d),
+        organization: (0, codiconsUtil_1.register)('organization', 0xea7e),
+        organizationFilled: (0, codiconsUtil_1.register)('organization-filled', 0xea7e),
+        organizationOutline: (0, codiconsUtil_1.register)('organization-outline', 0xea7e),
+        newFile: (0, codiconsUtil_1.register)('new-file', 0xea7f),
+        fileAdd: (0, codiconsUtil_1.register)('file-add', 0xea7f),
+        newFolder: (0, codiconsUtil_1.register)('new-folder', 0xea80),
+        fileDirectoryCreate: (0, codiconsUtil_1.register)('file-directory-create', 0xea80),
+        trash: (0, codiconsUtil_1.register)('trash', 0xea81),
+        trashcan: (0, codiconsUtil_1.register)('trashcan', 0xea81),
+        history: (0, codiconsUtil_1.register)('history', 0xea82),
+        clock: (0, codiconsUtil_1.register)('clock', 0xea82),
+        folder: (0, codiconsUtil_1.register)('folder', 0xea83),
+        fileDirectory: (0, codiconsUtil_1.register)('file-directory', 0xea83),
+        symbolFolder: (0, codiconsUtil_1.register)('symbol-folder', 0xea83),
+        logoGithub: (0, codiconsUtil_1.register)('logo-github', 0xea84),
+        markGithub: (0, codiconsUtil_1.register)('mark-github', 0xea84),
+        github: (0, codiconsUtil_1.register)('github', 0xea84),
+        terminal: (0, codiconsUtil_1.register)('terminal', 0xea85),
+        console: (0, codiconsUtil_1.register)('console', 0xea85),
+        repl: (0, codiconsUtil_1.register)('repl', 0xea85),
+        zap: (0, codiconsUtil_1.register)('zap', 0xea86),
+        symbolEvent: (0, codiconsUtil_1.register)('symbol-event', 0xea86),
+        error: (0, codiconsUtil_1.register)('error', 0xea87),
+        stop: (0, codiconsUtil_1.register)('stop', 0xea87),
+        variable: (0, codiconsUtil_1.register)('variable', 0xea88),
+        symbolVariable: (0, codiconsUtil_1.register)('symbol-variable', 0xea88),
+        array: (0, codiconsUtil_1.register)('array', 0xea8a),
+        symbolArray: (0, codiconsUtil_1.register)('symbol-array', 0xea8a),
+        symbolModule: (0, codiconsUtil_1.register)('symbol-module', 0xea8b),
+        symbolPackage: (0, codiconsUtil_1.register)('symbol-package', 0xea8b),
+        symbolNamespace: (0, codiconsUtil_1.register)('symbol-namespace', 0xea8b),
+        symbolObject: (0, codiconsUtil_1.register)('symbol-object', 0xea8b),
+        symbolMethod: (0, codiconsUtil_1.register)('symbol-method', 0xea8c),
+        symbolFunction: (0, codiconsUtil_1.register)('symbol-function', 0xea8c),
+        symbolConstructor: (0, codiconsUtil_1.register)('symbol-constructor', 0xea8c),
+        symbolBoolean: (0, codiconsUtil_1.register)('symbol-boolean', 0xea8f),
+        symbolNull: (0, codiconsUtil_1.register)('symbol-null', 0xea8f),
+        symbolNumeric: (0, codiconsUtil_1.register)('symbol-numeric', 0xea90),
+        symbolNumber: (0, codiconsUtil_1.register)('symbol-number', 0xea90),
+        symbolStructure: (0, codiconsUtil_1.register)('symbol-structure', 0xea91),
+        symbolStruct: (0, codiconsUtil_1.register)('symbol-struct', 0xea91),
+        symbolParameter: (0, codiconsUtil_1.register)('symbol-parameter', 0xea92),
+        symbolTypeParameter: (0, codiconsUtil_1.register)('symbol-type-parameter', 0xea92),
+        symbolKey: (0, codiconsUtil_1.register)('symbol-key', 0xea93),
+        symbolText: (0, codiconsUtil_1.register)('symbol-text', 0xea93),
+        symbolReference: (0, codiconsUtil_1.register)('symbol-reference', 0xea94),
+        goToFile: (0, codiconsUtil_1.register)('go-to-file', 0xea94),
+        symbolEnum: (0, codiconsUtil_1.register)('symbol-enum', 0xea95),
+        symbolValue: (0, codiconsUtil_1.register)('symbol-value', 0xea95),
+        symbolRuler: (0, codiconsUtil_1.register)('symbol-ruler', 0xea96),
+        symbolUnit: (0, codiconsUtil_1.register)('symbol-unit', 0xea96),
+        activateBreakpoints: (0, codiconsUtil_1.register)('activate-breakpoints', 0xea97),
+        archive: (0, codiconsUtil_1.register)('archive', 0xea98),
+        arrowBoth: (0, codiconsUtil_1.register)('arrow-both', 0xea99),
+        arrowDown: (0, codiconsUtil_1.register)('arrow-down', 0xea9a),
+        arrowLeft: (0, codiconsUtil_1.register)('arrow-left', 0xea9b),
+        arrowRight: (0, codiconsUtil_1.register)('arrow-right', 0xea9c),
+        arrowSmallDown: (0, codiconsUtil_1.register)('arrow-small-down', 0xea9d),
+        arrowSmallLeft: (0, codiconsUtil_1.register)('arrow-small-left', 0xea9e),
+        arrowSmallRight: (0, codiconsUtil_1.register)('arrow-small-right', 0xea9f),
+        arrowSmallUp: (0, codiconsUtil_1.register)('arrow-small-up', 0xeaa0),
+        arrowUp: (0, codiconsUtil_1.register)('arrow-up', 0xeaa1),
+        bell: (0, codiconsUtil_1.register)('bell', 0xeaa2),
+        bold: (0, codiconsUtil_1.register)('bold', 0xeaa3),
+        book: (0, codiconsUtil_1.register)('book', 0xeaa4),
+        bookmark: (0, codiconsUtil_1.register)('bookmark', 0xeaa5),
+        debugBreakpointConditionalUnverified: (0, codiconsUtil_1.register)('debug-breakpoint-conditional-unverified', 0xeaa6),
+        debugBreakpointConditional: (0, codiconsUtil_1.register)('debug-breakpoint-conditional', 0xeaa7),
+        debugBreakpointConditionalDisabled: (0, codiconsUtil_1.register)('debug-breakpoint-conditional-disabled', 0xeaa7),
+        debugBreakpointDataUnverified: (0, codiconsUtil_1.register)('debug-breakpoint-data-unverified', 0xeaa8),
+        debugBreakpointData: (0, codiconsUtil_1.register)('debug-breakpoint-data', 0xeaa9),
+        debugBreakpointDataDisabled: (0, codiconsUtil_1.register)('debug-breakpoint-data-disabled', 0xeaa9),
+        debugBreakpointLogUnverified: (0, codiconsUtil_1.register)('debug-breakpoint-log-unverified', 0xeaaa),
+        debugBreakpointLog: (0, codiconsUtil_1.register)('debug-breakpoint-log', 0xeaab),
+        debugBreakpointLogDisabled: (0, codiconsUtil_1.register)('debug-breakpoint-log-disabled', 0xeaab),
+        briefcase: (0, codiconsUtil_1.register)('briefcase', 0xeaac),
+        broadcast: (0, codiconsUtil_1.register)('broadcast', 0xeaad),
+        browser: (0, codiconsUtil_1.register)('browser', 0xeaae),
+        bug: (0, codiconsUtil_1.register)('bug', 0xeaaf),
+        calendar: (0, codiconsUtil_1.register)('calendar', 0xeab0),
+        caseSensitive: (0, codiconsUtil_1.register)('case-sensitive', 0xeab1),
+        check: (0, codiconsUtil_1.register)('check', 0xeab2),
+        checklist: (0, codiconsUtil_1.register)('checklist', 0xeab3),
+        chevronDown: (0, codiconsUtil_1.register)('chevron-down', 0xeab4),
+        chevronLeft: (0, codiconsUtil_1.register)('chevron-left', 0xeab5),
+        chevronRight: (0, codiconsUtil_1.register)('chevron-right', 0xeab6),
+        chevronUp: (0, codiconsUtil_1.register)('chevron-up', 0xeab7),
+        chromeClose: (0, codiconsUtil_1.register)('chrome-close', 0xeab8),
+        chromeMaximize: (0, codiconsUtil_1.register)('chrome-maximize', 0xeab9),
+        chromeMinimize: (0, codiconsUtil_1.register)('chrome-minimize', 0xeaba),
+        chromeRestore: (0, codiconsUtil_1.register)('chrome-restore', 0xeabb),
+        circleOutline: (0, codiconsUtil_1.register)('circle-outline', 0xeabc),
+        circle: (0, codiconsUtil_1.register)('circle', 0xeabc),
+        debugBreakpointUnverified: (0, codiconsUtil_1.register)('debug-breakpoint-unverified', 0xeabc),
+        terminalDecorationIncomplete: (0, codiconsUtil_1.register)('terminal-decoration-incomplete', 0xeabc),
+        circleSlash: (0, codiconsUtil_1.register)('circle-slash', 0xeabd),
+        circuitBoard: (0, codiconsUtil_1.register)('circuit-board', 0xeabe),
+        clearAll: (0, codiconsUtil_1.register)('clear-all', 0xeabf),
+        clippy: (0, codiconsUtil_1.register)('clippy', 0xeac0),
+        closeAll: (0, codiconsUtil_1.register)('close-all', 0xeac1),
+        cloudDownload: (0, codiconsUtil_1.register)('cloud-download', 0xeac2),
+        cloudUpload: (0, codiconsUtil_1.register)('cloud-upload', 0xeac3),
+        code: (0, codiconsUtil_1.register)('code', 0xeac4),
+        collapseAll: (0, codiconsUtil_1.register)('collapse-all', 0xeac5),
+        colorMode: (0, codiconsUtil_1.register)('color-mode', 0xeac6),
+        commentDiscussion: (0, codiconsUtil_1.register)('comment-discussion', 0xeac7),
+        creditCard: (0, codiconsUtil_1.register)('credit-card', 0xeac9),
+        dash: (0, codiconsUtil_1.register)('dash', 0xeacc),
+        dashboard: (0, codiconsUtil_1.register)('dashboard', 0xeacd),
+        database: (0, codiconsUtil_1.register)('database', 0xeace),
+        debugContinue: (0, codiconsUtil_1.register)('debug-continue', 0xeacf),
+        debugDisconnect: (0, codiconsUtil_1.register)('debug-disconnect', 0xead0),
+        debugPause: (0, codiconsUtil_1.register)('debug-pause', 0xead1),
+        debugRestart: (0, codiconsUtil_1.register)('debug-restart', 0xead2),
+        debugStart: (0, codiconsUtil_1.register)('debug-start', 0xead3),
+        debugStepInto: (0, codiconsUtil_1.register)('debug-step-into', 0xead4),
+        debugStepOut: (0, codiconsUtil_1.register)('debug-step-out', 0xead5),
+        debugStepOver: (0, codiconsUtil_1.register)('debug-step-over', 0xead6),
+        debugStop: (0, codiconsUtil_1.register)('debug-stop', 0xead7),
+        debug: (0, codiconsUtil_1.register)('debug', 0xead8),
+        deviceCameraVideo: (0, codiconsUtil_1.register)('device-camera-video', 0xead9),
+        deviceCamera: (0, codiconsUtil_1.register)('device-camera', 0xeada),
+        deviceMobile: (0, codiconsUtil_1.register)('device-mobile', 0xeadb),
+        diffAdded: (0, codiconsUtil_1.register)('diff-added', 0xeadc),
+        diffIgnored: (0, codiconsUtil_1.register)('diff-ignored', 0xeadd),
+        diffModified: (0, codiconsUtil_1.register)('diff-modified', 0xeade),
+        diffRemoved: (0, codiconsUtil_1.register)('diff-removed', 0xeadf),
+        diffRenamed: (0, codiconsUtil_1.register)('diff-renamed', 0xeae0),
+        diff: (0, codiconsUtil_1.register)('diff', 0xeae1),
+        diffSidebyside: (0, codiconsUtil_1.register)('diff-sidebyside', 0xeae1),
+        discard: (0, codiconsUtil_1.register)('discard', 0xeae2),
+        editorLayout: (0, codiconsUtil_1.register)('editor-layout', 0xeae3),
+        emptyWindow: (0, codiconsUtil_1.register)('empty-window', 0xeae4),
+        exclude: (0, codiconsUtil_1.register)('exclude', 0xeae5),
+        extensions: (0, codiconsUtil_1.register)('extensions', 0xeae6),
+        eyeClosed: (0, codiconsUtil_1.register)('eye-closed', 0xeae7),
+        fileBinary: (0, codiconsUtil_1.register)('file-binary', 0xeae8),
+        fileCode: (0, codiconsUtil_1.register)('file-code', 0xeae9),
+        fileMedia: (0, codiconsUtil_1.register)('file-media', 0xeaea),
+        filePdf: (0, codiconsUtil_1.register)('file-pdf', 0xeaeb),
+        fileSubmodule: (0, codiconsUtil_1.register)('file-submodule', 0xeaec),
+        fileSymlinkDirectory: (0, codiconsUtil_1.register)('file-symlink-directory', 0xeaed),
+        fileSymlinkFile: (0, codiconsUtil_1.register)('file-symlink-file', 0xeaee),
+        fileZip: (0, codiconsUtil_1.register)('file-zip', 0xeaef),
+        files: (0, codiconsUtil_1.register)('files', 0xeaf0),
+        filter: (0, codiconsUtil_1.register)('filter', 0xeaf1),
+        flame: (0, codiconsUtil_1.register)('flame', 0xeaf2),
+        foldDown: (0, codiconsUtil_1.register)('fold-down', 0xeaf3),
+        foldUp: (0, codiconsUtil_1.register)('fold-up', 0xeaf4),
+        fold: (0, codiconsUtil_1.register)('fold', 0xeaf5),
+        folderActive: (0, codiconsUtil_1.register)('folder-active', 0xeaf6),
+        folderOpened: (0, codiconsUtil_1.register)('folder-opened', 0xeaf7),
+        gear: (0, codiconsUtil_1.register)('gear', 0xeaf8),
+        gift: (0, codiconsUtil_1.register)('gift', 0xeaf9),
+        gistSecret: (0, codiconsUtil_1.register)('gist-secret', 0xeafa),
+        gist: (0, codiconsUtil_1.register)('gist', 0xeafb),
+        gitCommit: (0, codiconsUtil_1.register)('git-commit', 0xeafc),
+        gitCompare: (0, codiconsUtil_1.register)('git-compare', 0xeafd),
+        compareChanges: (0, codiconsUtil_1.register)('compare-changes', 0xeafd),
+        gitMerge: (0, codiconsUtil_1.register)('git-merge', 0xeafe),
+        githubAction: (0, codiconsUtil_1.register)('github-action', 0xeaff),
+        githubAlt: (0, codiconsUtil_1.register)('github-alt', 0xeb00),
+        globe: (0, codiconsUtil_1.register)('globe', 0xeb01),
+        grabber: (0, codiconsUtil_1.register)('grabber', 0xeb02),
+        graph: (0, codiconsUtil_1.register)('graph', 0xeb03),
+        gripper: (0, codiconsUtil_1.register)('gripper', 0xeb04),
+        heart: (0, codiconsUtil_1.register)('heart', 0xeb05),
+        home: (0, codiconsUtil_1.register)('home', 0xeb06),
+        horizontalRule: (0, codiconsUtil_1.register)('horizontal-rule', 0xeb07),
+        hubot: (0, codiconsUtil_1.register)('hubot', 0xeb08),
+        inbox: (0, codiconsUtil_1.register)('inbox', 0xeb09),
+        issueReopened: (0, codiconsUtil_1.register)('issue-reopened', 0xeb0b),
+        issues: (0, codiconsUtil_1.register)('issues', 0xeb0c),
+        italic: (0, codiconsUtil_1.register)('italic', 0xeb0d),
+        jersey: (0, codiconsUtil_1.register)('jersey', 0xeb0e),
+        json: (0, codiconsUtil_1.register)('json', 0xeb0f),
+        kebabVertical: (0, codiconsUtil_1.register)('kebab-vertical', 0xeb10),
+        key: (0, codiconsUtil_1.register)('key', 0xeb11),
+        law: (0, codiconsUtil_1.register)('law', 0xeb12),
+        lightbulbAutofix: (0, codiconsUtil_1.register)('lightbulb-autofix', 0xeb13),
+        linkExternal: (0, codiconsUtil_1.register)('link-external', 0xeb14),
+        link: (0, codiconsUtil_1.register)('link', 0xeb15),
+        listOrdered: (0, codiconsUtil_1.register)('list-ordered', 0xeb16),
+        listUnordered: (0, codiconsUtil_1.register)('list-unordered', 0xeb17),
+        liveShare: (0, codiconsUtil_1.register)('live-share', 0xeb18),
+        loading: (0, codiconsUtil_1.register)('loading', 0xeb19),
+        location: (0, codiconsUtil_1.register)('location', 0xeb1a),
+        mailRead: (0, codiconsUtil_1.register)('mail-read', 0xeb1b),
+        mail: (0, codiconsUtil_1.register)('mail', 0xeb1c),
+        markdown: (0, codiconsUtil_1.register)('markdown', 0xeb1d),
+        megaphone: (0, codiconsUtil_1.register)('megaphone', 0xeb1e),
+        mention: (0, codiconsUtil_1.register)('mention', 0xeb1f),
+        milestone: (0, codiconsUtil_1.register)('milestone', 0xeb20),
+        gitPullRequestMilestone: (0, codiconsUtil_1.register)('git-pull-request-milestone', 0xeb20),
+        mortarBoard: (0, codiconsUtil_1.register)('mortar-board', 0xeb21),
+        move: (0, codiconsUtil_1.register)('move', 0xeb22),
+        multipleWindows: (0, codiconsUtil_1.register)('multiple-windows', 0xeb23),
+        mute: (0, codiconsUtil_1.register)('mute', 0xeb24),
+        noNewline: (0, codiconsUtil_1.register)('no-newline', 0xeb25),
+        note: (0, codiconsUtil_1.register)('note', 0xeb26),
+        octoface: (0, codiconsUtil_1.register)('octoface', 0xeb27),
+        openPreview: (0, codiconsUtil_1.register)('open-preview', 0xeb28),
+        package: (0, codiconsUtil_1.register)('package', 0xeb29),
+        paintcan: (0, codiconsUtil_1.register)('paintcan', 0xeb2a),
+        pin: (0, codiconsUtil_1.register)('pin', 0xeb2b),
+        play: (0, codiconsUtil_1.register)('play', 0xeb2c),
+        run: (0, codiconsUtil_1.register)('run', 0xeb2c),
+        plug: (0, codiconsUtil_1.register)('plug', 0xeb2d),
+        preserveCase: (0, codiconsUtil_1.register)('preserve-case', 0xeb2e),
+        preview: (0, codiconsUtil_1.register)('preview', 0xeb2f),
+        project: (0, codiconsUtil_1.register)('project', 0xeb30),
+        pulse: (0, codiconsUtil_1.register)('pulse', 0xeb31),
+        question: (0, codiconsUtil_1.register)('question', 0xeb32),
+        quote: (0, codiconsUtil_1.register)('quote', 0xeb33),
+        radioTower: (0, codiconsUtil_1.register)('radio-tower', 0xeb34),
+        reactions: (0, codiconsUtil_1.register)('reactions', 0xeb35),
+        references: (0, codiconsUtil_1.register)('references', 0xeb36),
+        refresh: (0, codiconsUtil_1.register)('refresh', 0xeb37),
+        regex: (0, codiconsUtil_1.register)('regex', 0xeb38),
+        remoteExplorer: (0, codiconsUtil_1.register)('remote-explorer', 0xeb39),
+        remote: (0, codiconsUtil_1.register)('remote', 0xeb3a),
+        remove: (0, codiconsUtil_1.register)('remove', 0xeb3b),
+        replaceAll: (0, codiconsUtil_1.register)('replace-all', 0xeb3c),
+        replace: (0, codiconsUtil_1.register)('replace', 0xeb3d),
+        repoClone: (0, codiconsUtil_1.register)('repo-clone', 0xeb3e),
+        repoForcePush: (0, codiconsUtil_1.register)('repo-force-push', 0xeb3f),
+        repoPull: (0, codiconsUtil_1.register)('repo-pull', 0xeb40),
+        repoPush: (0, codiconsUtil_1.register)('repo-push', 0xeb41),
+        report: (0, codiconsUtil_1.register)('report', 0xeb42),
+        requestChanges: (0, codiconsUtil_1.register)('request-changes', 0xeb43),
+        rocket: (0, codiconsUtil_1.register)('rocket', 0xeb44),
+        rootFolderOpened: (0, codiconsUtil_1.register)('root-folder-opened', 0xeb45),
+        rootFolder: (0, codiconsUtil_1.register)('root-folder', 0xeb46),
+        rss: (0, codiconsUtil_1.register)('rss', 0xeb47),
+        ruby: (0, codiconsUtil_1.register)('ruby', 0xeb48),
+        saveAll: (0, codiconsUtil_1.register)('save-all', 0xeb49),
+        saveAs: (0, codiconsUtil_1.register)('save-as', 0xeb4a),
+        save: (0, codiconsUtil_1.register)('save', 0xeb4b),
+        screenFull: (0, codiconsUtil_1.register)('screen-full', 0xeb4c),
+        screenNormal: (0, codiconsUtil_1.register)('screen-normal', 0xeb4d),
+        searchStop: (0, codiconsUtil_1.register)('search-stop', 0xeb4e),
+        server: (0, codiconsUtil_1.register)('server', 0xeb50),
+        settingsGear: (0, codiconsUtil_1.register)('settings-gear', 0xeb51),
+        settings: (0, codiconsUtil_1.register)('settings', 0xeb52),
+        shield: (0, codiconsUtil_1.register)('shield', 0xeb53),
+        smiley: (0, codiconsUtil_1.register)('smiley', 0xeb54),
+        sortPrecedence: (0, codiconsUtil_1.register)('sort-precedence', 0xeb55),
+        splitHorizontal: (0, codiconsUtil_1.register)('split-horizontal', 0xeb56),
+        splitVertical: (0, codiconsUtil_1.register)('split-vertical', 0xeb57),
+        squirrel: (0, codiconsUtil_1.register)('squirrel', 0xeb58),
+        starFull: (0, codiconsUtil_1.register)('star-full', 0xeb59),
+        starHalf: (0, codiconsUtil_1.register)('star-half', 0xeb5a),
+        symbolClass: (0, codiconsUtil_1.register)('symbol-class', 0xeb5b),
+        symbolColor: (0, codiconsUtil_1.register)('symbol-color', 0xeb5c),
+        symbolConstant: (0, codiconsUtil_1.register)('symbol-constant', 0xeb5d),
+        symbolEnumMember: (0, codiconsUtil_1.register)('symbol-enum-member', 0xeb5e),
+        symbolField: (0, codiconsUtil_1.register)('symbol-field', 0xeb5f),
+        symbolFile: (0, codiconsUtil_1.register)('symbol-file', 0xeb60),
+        symbolInterface: (0, codiconsUtil_1.register)('symbol-interface', 0xeb61),
+        symbolKeyword: (0, codiconsUtil_1.register)('symbol-keyword', 0xeb62),
+        symbolMisc: (0, codiconsUtil_1.register)('symbol-misc', 0xeb63),
+        symbolOperator: (0, codiconsUtil_1.register)('symbol-operator', 0xeb64),
+        symbolProperty: (0, codiconsUtil_1.register)('symbol-property', 0xeb65),
+        wrench: (0, codiconsUtil_1.register)('wrench', 0xeb65),
+        wrenchSubaction: (0, codiconsUtil_1.register)('wrench-subaction', 0xeb65),
+        symbolSnippet: (0, codiconsUtil_1.register)('symbol-snippet', 0xeb66),
+        tasklist: (0, codiconsUtil_1.register)('tasklist', 0xeb67),
+        telescope: (0, codiconsUtil_1.register)('telescope', 0xeb68),
+        textSize: (0, codiconsUtil_1.register)('text-size', 0xeb69),
+        threeBars: (0, codiconsUtil_1.register)('three-bars', 0xeb6a),
+        thumbsdown: (0, codiconsUtil_1.register)('thumbsdown', 0xeb6b),
+        thumbsup: (0, codiconsUtil_1.register)('thumbsup', 0xeb6c),
+        tools: (0, codiconsUtil_1.register)('tools', 0xeb6d),
+        triangleDown: (0, codiconsUtil_1.register)('triangle-down', 0xeb6e),
+        triangleLeft: (0, codiconsUtil_1.register)('triangle-left', 0xeb6f),
+        triangleRight: (0, codiconsUtil_1.register)('triangle-right', 0xeb70),
+        triangleUp: (0, codiconsUtil_1.register)('triangle-up', 0xeb71),
+        twitter: (0, codiconsUtil_1.register)('twitter', 0xeb72),
+        unfold: (0, codiconsUtil_1.register)('unfold', 0xeb73),
+        unlock: (0, codiconsUtil_1.register)('unlock', 0xeb74),
+        unmute: (0, codiconsUtil_1.register)('unmute', 0xeb75),
+        unverified: (0, codiconsUtil_1.register)('unverified', 0xeb76),
+        verified: (0, codiconsUtil_1.register)('verified', 0xeb77),
+        versions: (0, codiconsUtil_1.register)('versions', 0xeb78),
+        vmActive: (0, codiconsUtil_1.register)('vm-active', 0xeb79),
+        vmOutline: (0, codiconsUtil_1.register)('vm-outline', 0xeb7a),
+        vmRunning: (0, codiconsUtil_1.register)('vm-running', 0xeb7b),
+        watch: (0, codiconsUtil_1.register)('watch', 0xeb7c),
+        whitespace: (0, codiconsUtil_1.register)('whitespace', 0xeb7d),
+        wholeWord: (0, codiconsUtil_1.register)('whole-word', 0xeb7e),
+        window: (0, codiconsUtil_1.register)('window', 0xeb7f),
+        wordWrap: (0, codiconsUtil_1.register)('word-wrap', 0xeb80),
+        zoomIn: (0, codiconsUtil_1.register)('zoom-in', 0xeb81),
+        zoomOut: (0, codiconsUtil_1.register)('zoom-out', 0xeb82),
+        listFilter: (0, codiconsUtil_1.register)('list-filter', 0xeb83),
+        listFlat: (0, codiconsUtil_1.register)('list-flat', 0xeb84),
+        listSelection: (0, codiconsUtil_1.register)('list-selection', 0xeb85),
+        selection: (0, codiconsUtil_1.register)('selection', 0xeb85),
+        listTree: (0, codiconsUtil_1.register)('list-tree', 0xeb86),
+        debugBreakpointFunctionUnverified: (0, codiconsUtil_1.register)('debug-breakpoint-function-unverified', 0xeb87),
+        debugBreakpointFunction: (0, codiconsUtil_1.register)('debug-breakpoint-function', 0xeb88),
+        debugBreakpointFunctionDisabled: (0, codiconsUtil_1.register)('debug-breakpoint-function-disabled', 0xeb88),
+        debugStackframeActive: (0, codiconsUtil_1.register)('debug-stackframe-active', 0xeb89),
+        circleSmallFilled: (0, codiconsUtil_1.register)('circle-small-filled', 0xeb8a),
+        debugStackframeDot: (0, codiconsUtil_1.register)('debug-stackframe-dot', 0xeb8a),
+        terminalDecorationMark: (0, codiconsUtil_1.register)('terminal-decoration-mark', 0xeb8a),
+        debugStackframe: (0, codiconsUtil_1.register)('debug-stackframe', 0xeb8b),
+        debugStackframeFocused: (0, codiconsUtil_1.register)('debug-stackframe-focused', 0xeb8b),
+        debugBreakpointUnsupported: (0, codiconsUtil_1.register)('debug-breakpoint-unsupported', 0xeb8c),
+        symbolString: (0, codiconsUtil_1.register)('symbol-string', 0xeb8d),
+        debugReverseContinue: (0, codiconsUtil_1.register)('debug-reverse-continue', 0xeb8e),
+        debugStepBack: (0, codiconsUtil_1.register)('debug-step-back', 0xeb8f),
+        debugRestartFrame: (0, codiconsUtil_1.register)('debug-restart-frame', 0xeb90),
+        debugAlt: (0, codiconsUtil_1.register)('debug-alt', 0xeb91),
+        callIncoming: (0, codiconsUtil_1.register)('call-incoming', 0xeb92),
+        callOutgoing: (0, codiconsUtil_1.register)('call-outgoing', 0xeb93),
+        menu: (0, codiconsUtil_1.register)('menu', 0xeb94),
+        expandAll: (0, codiconsUtil_1.register)('expand-all', 0xeb95),
+        feedback: (0, codiconsUtil_1.register)('feedback', 0xeb96),
+        gitPullRequestReviewer: (0, codiconsUtil_1.register)('git-pull-request-reviewer', 0xeb96),
+        groupByRefType: (0, codiconsUtil_1.register)('group-by-ref-type', 0xeb97),
+        ungroupByRefType: (0, codiconsUtil_1.register)('ungroup-by-ref-type', 0xeb98),
+        account: (0, codiconsUtil_1.register)('account', 0xeb99),
+        gitPullRequestAssignee: (0, codiconsUtil_1.register)('git-pull-request-assignee', 0xeb99),
+        bellDot: (0, codiconsUtil_1.register)('bell-dot', 0xeb9a),
+        debugConsole: (0, codiconsUtil_1.register)('debug-console', 0xeb9b),
+        library: (0, codiconsUtil_1.register)('library', 0xeb9c),
+        output: (0, codiconsUtil_1.register)('output', 0xeb9d),
+        runAll: (0, codiconsUtil_1.register)('run-all', 0xeb9e),
+        syncIgnored: (0, codiconsUtil_1.register)('sync-ignored', 0xeb9f),
+        pinned: (0, codiconsUtil_1.register)('pinned', 0xeba0),
+        githubInverted: (0, codiconsUtil_1.register)('github-inverted', 0xeba1),
+        serverProcess: (0, codiconsUtil_1.register)('server-process', 0xeba2),
+        serverEnvironment: (0, codiconsUtil_1.register)('server-environment', 0xeba3),
+        pass: (0, codiconsUtil_1.register)('pass', 0xeba4),
+        issueClosed: (0, codiconsUtil_1.register)('issue-closed', 0xeba4),
+        stopCircle: (0, codiconsUtil_1.register)('stop-circle', 0xeba5),
+        playCircle: (0, codiconsUtil_1.register)('play-circle', 0xeba6),
+        record: (0, codiconsUtil_1.register)('record', 0xeba7),
+        debugAltSmall: (0, codiconsUtil_1.register)('debug-alt-small', 0xeba8),
+        vmConnect: (0, codiconsUtil_1.register)('vm-connect', 0xeba9),
+        cloud: (0, codiconsUtil_1.register)('cloud', 0xebaa),
+        merge: (0, codiconsUtil_1.register)('merge', 0xebab),
+        export: (0, codiconsUtil_1.register)('export', 0xebac),
+        graphLeft: (0, codiconsUtil_1.register)('graph-left', 0xebad),
+        magnet: (0, codiconsUtil_1.register)('magnet', 0xebae),
+        notebook: (0, codiconsUtil_1.register)('notebook', 0xebaf),
+        redo: (0, codiconsUtil_1.register)('redo', 0xebb0),
+        checkAll: (0, codiconsUtil_1.register)('check-all', 0xebb1),
+        pinnedDirty: (0, codiconsUtil_1.register)('pinned-dirty', 0xebb2),
+        passFilled: (0, codiconsUtil_1.register)('pass-filled', 0xebb3),
+        circleLargeFilled: (0, codiconsUtil_1.register)('circle-large-filled', 0xebb4),
+        circleLarge: (0, codiconsUtil_1.register)('circle-large', 0xebb5),
+        circleLargeOutline: (0, codiconsUtil_1.register)('circle-large-outline', 0xebb5),
+        combine: (0, codiconsUtil_1.register)('combine', 0xebb6),
+        gather: (0, codiconsUtil_1.register)('gather', 0xebb6),
+        table: (0, codiconsUtil_1.register)('table', 0xebb7),
+        variableGroup: (0, codiconsUtil_1.register)('variable-group', 0xebb8),
+        typeHierarchy: (0, codiconsUtil_1.register)('type-hierarchy', 0xebb9),
+        typeHierarchySub: (0, codiconsUtil_1.register)('type-hierarchy-sub', 0xebba),
+        typeHierarchySuper: (0, codiconsUtil_1.register)('type-hierarchy-super', 0xebbb),
+        gitPullRequestCreate: (0, codiconsUtil_1.register)('git-pull-request-create', 0xebbc),
+        runAbove: (0, codiconsUtil_1.register)('run-above', 0xebbd),
+        runBelow: (0, codiconsUtil_1.register)('run-below', 0xebbe),
+        notebookTemplate: (0, codiconsUtil_1.register)('notebook-template', 0xebbf),
+        debugRerun: (0, codiconsUtil_1.register)('debug-rerun', 0xebc0),
+        workspaceTrusted: (0, codiconsUtil_1.register)('workspace-trusted', 0xebc1),
+        workspaceUntrusted: (0, codiconsUtil_1.register)('workspace-untrusted', 0xebc2),
+        workspaceUnknown: (0, codiconsUtil_1.register)('workspace-unknown', 0xebc3),
+        terminalCmd: (0, codiconsUtil_1.register)('terminal-cmd', 0xebc4),
+        terminalDebian: (0, codiconsUtil_1.register)('terminal-debian', 0xebc5),
+        terminalLinux: (0, codiconsUtil_1.register)('terminal-linux', 0xebc6),
+        terminalPowershell: (0, codiconsUtil_1.register)('terminal-powershell', 0xebc7),
+        terminalTmux: (0, codiconsUtil_1.register)('terminal-tmux', 0xebc8),
+        terminalUbuntu: (0, codiconsUtil_1.register)('terminal-ubuntu', 0xebc9),
+        terminalBash: (0, codiconsUtil_1.register)('terminal-bash', 0xebca),
+        arrowSwap: (0, codiconsUtil_1.register)('arrow-swap', 0xebcb),
+        copy: (0, codiconsUtil_1.register)('copy', 0xebcc),
+        personAdd: (0, codiconsUtil_1.register)('person-add', 0xebcd),
+        filterFilled: (0, codiconsUtil_1.register)('filter-filled', 0xebce),
+        wand: (0, codiconsUtil_1.register)('wand', 0xebcf),
+        debugLineByLine: (0, codiconsUtil_1.register)('debug-line-by-line', 0xebd0),
+        inspect: (0, codiconsUtil_1.register)('inspect', 0xebd1),
+        layers: (0, codiconsUtil_1.register)('layers', 0xebd2),
+        layersDot: (0, codiconsUtil_1.register)('layers-dot', 0xebd3),
+        layersActive: (0, codiconsUtil_1.register)('layers-active', 0xebd4),
+        compass: (0, codiconsUtil_1.register)('compass', 0xebd5),
+        compassDot: (0, codiconsUtil_1.register)('compass-dot', 0xebd6),
+        compassActive: (0, codiconsUtil_1.register)('compass-active', 0xebd7),
+        azure: (0, codiconsUtil_1.register)('azure', 0xebd8),
+        issueDraft: (0, codiconsUtil_1.register)('issue-draft', 0xebd9),
+        gitPullRequestClosed: (0, codiconsUtil_1.register)('git-pull-request-closed', 0xebda),
+        gitPullRequestDraft: (0, codiconsUtil_1.register)('git-pull-request-draft', 0xebdb),
+        debugAll: (0, codiconsUtil_1.register)('debug-all', 0xebdc),
+        debugCoverage: (0, codiconsUtil_1.register)('debug-coverage', 0xebdd),
+        runErrors: (0, codiconsUtil_1.register)('run-errors', 0xebde),
+        folderLibrary: (0, codiconsUtil_1.register)('folder-library', 0xebdf),
+        debugContinueSmall: (0, codiconsUtil_1.register)('debug-continue-small', 0xebe0),
+        beakerStop: (0, codiconsUtil_1.register)('beaker-stop', 0xebe1),
+        graphLine: (0, codiconsUtil_1.register)('graph-line', 0xebe2),
+        graphScatter: (0, codiconsUtil_1.register)('graph-scatter', 0xebe3),
+        pieChart: (0, codiconsUtil_1.register)('pie-chart', 0xebe4),
+        bracket: (0, codiconsUtil_1.register)('bracket', 0xeb0f),
+        bracketDot: (0, codiconsUtil_1.register)('bracket-dot', 0xebe5),
+        bracketError: (0, codiconsUtil_1.register)('bracket-error', 0xebe6),
+        lockSmall: (0, codiconsUtil_1.register)('lock-small', 0xebe7),
+        azureDevops: (0, codiconsUtil_1.register)('azure-devops', 0xebe8),
+        verifiedFilled: (0, codiconsUtil_1.register)('verified-filled', 0xebe9),
+        newline: (0, codiconsUtil_1.register)('newline', 0xebea),
+        layout: (0, codiconsUtil_1.register)('layout', 0xebeb),
+        layoutActivitybarLeft: (0, codiconsUtil_1.register)('layout-activitybar-left', 0xebec),
+        layoutActivitybarRight: (0, codiconsUtil_1.register)('layout-activitybar-right', 0xebed),
+        layoutPanelLeft: (0, codiconsUtil_1.register)('layout-panel-left', 0xebee),
+        layoutPanelCenter: (0, codiconsUtil_1.register)('layout-panel-center', 0xebef),
+        layoutPanelJustify: (0, codiconsUtil_1.register)('layout-panel-justify', 0xebf0),
+        layoutPanelRight: (0, codiconsUtil_1.register)('layout-panel-right', 0xebf1),
+        layoutPanel: (0, codiconsUtil_1.register)('layout-panel', 0xebf2),
+        layoutSidebarLeft: (0, codiconsUtil_1.register)('layout-sidebar-left', 0xebf3),
+        layoutSidebarRight: (0, codiconsUtil_1.register)('layout-sidebar-right', 0xebf4),
+        layoutStatusbar: (0, codiconsUtil_1.register)('layout-statusbar', 0xebf5),
+        layoutMenubar: (0, codiconsUtil_1.register)('layout-menubar', 0xebf6),
+        layoutCentered: (0, codiconsUtil_1.register)('layout-centered', 0xebf7),
+        target: (0, codiconsUtil_1.register)('target', 0xebf8),
+        indent: (0, codiconsUtil_1.register)('indent', 0xebf9),
+        recordSmall: (0, codiconsUtil_1.register)('record-small', 0xebfa),
+        errorSmall: (0, codiconsUtil_1.register)('error-small', 0xebfb),
+        terminalDecorationError: (0, codiconsUtil_1.register)('terminal-decoration-error', 0xebfb),
+        arrowCircleDown: (0, codiconsUtil_1.register)('arrow-circle-down', 0xebfc),
+        arrowCircleLeft: (0, codiconsUtil_1.register)('arrow-circle-left', 0xebfd),
+        arrowCircleRight: (0, codiconsUtil_1.register)('arrow-circle-right', 0xebfe),
+        arrowCircleUp: (0, codiconsUtil_1.register)('arrow-circle-up', 0xebff),
+        layoutSidebarRightOff: (0, codiconsUtil_1.register)('layout-sidebar-right-off', 0xec00),
+        layoutPanelOff: (0, codiconsUtil_1.register)('layout-panel-off', 0xec01),
+        layoutSidebarLeftOff: (0, codiconsUtil_1.register)('layout-sidebar-left-off', 0xec02),
+        blank: (0, codiconsUtil_1.register)('blank', 0xec03),
+        heartFilled: (0, codiconsUtil_1.register)('heart-filled', 0xec04),
+        map: (0, codiconsUtil_1.register)('map', 0xec05),
+        mapHorizontal: (0, codiconsUtil_1.register)('map-horizontal', 0xec05),
+        foldHorizontal: (0, codiconsUtil_1.register)('fold-horizontal', 0xec05),
+        mapFilled: (0, codiconsUtil_1.register)('map-filled', 0xec06),
+        mapHorizontalFilled: (0, codiconsUtil_1.register)('map-horizontal-filled', 0xec06),
+        foldHorizontalFilled: (0, codiconsUtil_1.register)('fold-horizontal-filled', 0xec06),
+        circleSmall: (0, codiconsUtil_1.register)('circle-small', 0xec07),
+        bellSlash: (0, codiconsUtil_1.register)('bell-slash', 0xec08),
+        bellSlashDot: (0, codiconsUtil_1.register)('bell-slash-dot', 0xec09),
+        commentUnresolved: (0, codiconsUtil_1.register)('comment-unresolved', 0xec0a),
+        gitPullRequestGoToChanges: (0, codiconsUtil_1.register)('git-pull-request-go-to-changes', 0xec0b),
+        gitPullRequestNewChanges: (0, codiconsUtil_1.register)('git-pull-request-new-changes', 0xec0c),
+        searchFuzzy: (0, codiconsUtil_1.register)('search-fuzzy', 0xec0d),
+        commentDraft: (0, codiconsUtil_1.register)('comment-draft', 0xec0e),
+        send: (0, codiconsUtil_1.register)('send', 0xec0f),
+        sparkle: (0, codiconsUtil_1.register)('sparkle', 0xec10),
+        insert: (0, codiconsUtil_1.register)('insert', 0xec11),
+        mic: (0, codiconsUtil_1.register)('mic', 0xec12),
+        thumbsdownFilled: (0, codiconsUtil_1.register)('thumbsdown-filled', 0xec13),
+        thumbsupFilled: (0, codiconsUtil_1.register)('thumbsup-filled', 0xec14),
+        coffee: (0, codiconsUtil_1.register)('coffee', 0xec15),
+        snake: (0, codiconsUtil_1.register)('snake', 0xec16),
+        game: (0, codiconsUtil_1.register)('game', 0xec17),
+        vr: (0, codiconsUtil_1.register)('vr', 0xec18),
+        chip: (0, codiconsUtil_1.register)('chip', 0xec19),
+        piano: (0, codiconsUtil_1.register)('piano', 0xec1a),
+        music: (0, codiconsUtil_1.register)('music', 0xec1b),
+        micFilled: (0, codiconsUtil_1.register)('mic-filled', 0xec1c),
+        repoFetch: (0, codiconsUtil_1.register)('repo-fetch', 0xec1d),
+        copilot: (0, codiconsUtil_1.register)('copilot', 0xec1e),
+        lightbulbSparkle: (0, codiconsUtil_1.register)('lightbulb-sparkle', 0xec1f),
+        robot: (0, codiconsUtil_1.register)('robot', 0xec20),
+        sparkleFilled: (0, codiconsUtil_1.register)('sparkle-filled', 0xec21),
+        diffSingle: (0, codiconsUtil_1.register)('diff-single', 0xec22),
+        diffMultiple: (0, codiconsUtil_1.register)('diff-multiple', 0xec23),
+        surroundWith: (0, codiconsUtil_1.register)('surround-with', 0xec24),
+        share: (0, codiconsUtil_1.register)('share', 0xec25),
+        gitStash: (0, codiconsUtil_1.register)('git-stash', 0xec26),
+        gitStashApply: (0, codiconsUtil_1.register)('git-stash-apply', 0xec27),
+        gitStashPop: (0, codiconsUtil_1.register)('git-stash-pop', 0xec28),
+        vscode: (0, codiconsUtil_1.register)('vscode', 0xec29),
+        vscodeInsiders: (0, codiconsUtil_1.register)('vscode-insiders', 0xec2a),
+        codeOss: (0, codiconsUtil_1.register)('code-oss', 0xec2b),
+        runCoverage: (0, codiconsUtil_1.register)('run-coverage', 0xec2c),
+        runAllCoverage: (0, codiconsUtil_1.register)('run-all-coverage', 0xec2d),
+        coverage: (0, codiconsUtil_1.register)('coverage', 0xec2e),
+        githubProject: (0, codiconsUtil_1.register)('github-project', 0xec2f),
+        mapVertical: (0, codiconsUtil_1.register)('map-vertical', 0xec30),
+        foldVertical: (0, codiconsUtil_1.register)('fold-vertical', 0xec30),
+        mapVerticalFilled: (0, codiconsUtil_1.register)('map-vertical-filled', 0xec31),
+        foldVerticalFilled: (0, codiconsUtil_1.register)('fold-vertical-filled', 0xec31),
+    };
+});
+
+define(__m[42/*vs/base/common/codicons*/], __M([0/*require*/,1/*exports*/,27/*vs/base/common/codiconsUtil*/,41/*vs/base/common/codiconsLibrary*/]), function (require, exports, codiconsUtil_1, codiconsLibrary_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Codicon = exports.codiconsDerived = void 0;
+    /**
+     * Derived icons, that could become separate icons.
+     * These mappings should be moved into the mapping file in the vscode-codicons repo at some point.
+     */
+    exports.codiconsDerived = {
+        dialogError: (0, codiconsUtil_1.register)('dialog-error', 'error'),
+        dialogWarning: (0, codiconsUtil_1.register)('dialog-warning', 'warning'),
+        dialogInfo: (0, codiconsUtil_1.register)('dialog-info', 'info'),
+        dialogClose: (0, codiconsUtil_1.register)('dialog-close', 'close'),
+        treeItemExpanded: (0, codiconsUtil_1.register)('tree-item-expanded', 'chevron-down'), // collapsed is done with rotation
+        treeFilterOnTypeOn: (0, codiconsUtil_1.register)('tree-filter-on-type-on', 'list-filter'),
+        treeFilterOnTypeOff: (0, codiconsUtil_1.register)('tree-filter-on-type-off', 'list-selection'),
+        treeFilterClear: (0, codiconsUtil_1.register)('tree-filter-clear', 'close'),
+        treeItemLoading: (0, codiconsUtil_1.register)('tree-item-loading', 'loading'),
+        menuSelection: (0, codiconsUtil_1.register)('menu-selection', 'check'),
+        menuSubmenu: (0, codiconsUtil_1.register)('menu-submenu', 'chevron-right'),
+        menuBarMore: (0, codiconsUtil_1.register)('menubar-more', 'more'),
+        scrollbarButtonLeft: (0, codiconsUtil_1.register)('scrollbar-button-left', 'triangle-left'),
+        scrollbarButtonRight: (0, codiconsUtil_1.register)('scrollbar-button-right', 'triangle-right'),
+        scrollbarButtonUp: (0, codiconsUtil_1.register)('scrollbar-button-up', 'triangle-up'),
+        scrollbarButtonDown: (0, codiconsUtil_1.register)('scrollbar-button-down', 'triangle-down'),
+        toolBarMore: (0, codiconsUtil_1.register)('toolbar-more', 'more'),
+        quickInputBack: (0, codiconsUtil_1.register)('quick-input-back', 'arrow-left'),
+        dropDownButton: (0, codiconsUtil_1.register)('drop-down-button', 0xeab4),
+        symbolCustomColor: (0, codiconsUtil_1.register)('symbol-customcolor', 0xeb5c),
+        exportIcon: (0, codiconsUtil_1.register)('export', 0xebac),
+        workspaceUnspecified: (0, codiconsUtil_1.register)('workspace-unspecified', 0xebc3),
+        newLine: (0, codiconsUtil_1.register)('newline', 0xebea),
+        thumbsDownFilled: (0, codiconsUtil_1.register)('thumbsdown-filled', 0xec13),
+        thumbsUpFilled: (0, codiconsUtil_1.register)('thumbsup-filled', 0xec14),
+        gitFetch: (0, codiconsUtil_1.register)('git-fetch', 0xec1d),
+        lightbulbSparkleAutofix: (0, codiconsUtil_1.register)('lightbulb-sparkle-autofix', 0xec1f),
+        debugBreakpointPending: (0, codiconsUtil_1.register)('debug-breakpoint-pending', 0xebd9),
+    };
     /**
      * The Codicon library is a set of default icons that are built-in in VS Code.
      *
@@ -6383,546 +9643,8 @@ define(__m[32/*vs/base/common/codicons*/], __M([0/*require*/,1/*exports*/,18/*vs
      * In that call a Codicon can be named as default.
      */
     exports.Codicon = {
-        // built-in icons, with image name
-        add: register('add', 0xea60),
-        plus: register('plus', 0xea60),
-        gistNew: register('gist-new', 0xea60),
-        repoCreate: register('repo-create', 0xea60),
-        lightbulb: register('lightbulb', 0xea61),
-        lightBulb: register('light-bulb', 0xea61),
-        repo: register('repo', 0xea62),
-        repoDelete: register('repo-delete', 0xea62),
-        gistFork: register('gist-fork', 0xea63),
-        repoForked: register('repo-forked', 0xea63),
-        gitPullRequest: register('git-pull-request', 0xea64),
-        gitPullRequestAbandoned: register('git-pull-request-abandoned', 0xea64),
-        recordKeys: register('record-keys', 0xea65),
-        keyboard: register('keyboard', 0xea65),
-        tag: register('tag', 0xea66),
-        tagAdd: register('tag-add', 0xea66),
-        tagRemove: register('tag-remove', 0xea66),
-        person: register('person', 0xea67),
-        personFollow: register('person-follow', 0xea67),
-        personOutline: register('person-outline', 0xea67),
-        personFilled: register('person-filled', 0xea67),
-        gitBranch: register('git-branch', 0xea68),
-        gitBranchCreate: register('git-branch-create', 0xea68),
-        gitBranchDelete: register('git-branch-delete', 0xea68),
-        sourceControl: register('source-control', 0xea68),
-        mirror: register('mirror', 0xea69),
-        mirrorPublic: register('mirror-public', 0xea69),
-        star: register('star', 0xea6a),
-        starAdd: register('star-add', 0xea6a),
-        starDelete: register('star-delete', 0xea6a),
-        starEmpty: register('star-empty', 0xea6a),
-        comment: register('comment', 0xea6b),
-        commentAdd: register('comment-add', 0xea6b),
-        alert: register('alert', 0xea6c),
-        warning: register('warning', 0xea6c),
-        search: register('search', 0xea6d),
-        searchSave: register('search-save', 0xea6d),
-        logOut: register('log-out', 0xea6e),
-        signOut: register('sign-out', 0xea6e),
-        logIn: register('log-in', 0xea6f),
-        signIn: register('sign-in', 0xea6f),
-        eye: register('eye', 0xea70),
-        eyeUnwatch: register('eye-unwatch', 0xea70),
-        eyeWatch: register('eye-watch', 0xea70),
-        circleFilled: register('circle-filled', 0xea71),
-        primitiveDot: register('primitive-dot', 0xea71),
-        closeDirty: register('close-dirty', 0xea71),
-        debugBreakpoint: register('debug-breakpoint', 0xea71),
-        debugBreakpointDisabled: register('debug-breakpoint-disabled', 0xea71),
-        debugHint: register('debug-hint', 0xea71),
-        primitiveSquare: register('primitive-square', 0xea72),
-        edit: register('edit', 0xea73),
-        pencil: register('pencil', 0xea73),
-        info: register('info', 0xea74),
-        issueOpened: register('issue-opened', 0xea74),
-        gistPrivate: register('gist-private', 0xea75),
-        gitForkPrivate: register('git-fork-private', 0xea75),
-        lock: register('lock', 0xea75),
-        mirrorPrivate: register('mirror-private', 0xea75),
-        close: register('close', 0xea76),
-        removeClose: register('remove-close', 0xea76),
-        x: register('x', 0xea76),
-        repoSync: register('repo-sync', 0xea77),
-        sync: register('sync', 0xea77),
-        clone: register('clone', 0xea78),
-        desktopDownload: register('desktop-download', 0xea78),
-        beaker: register('beaker', 0xea79),
-        microscope: register('microscope', 0xea79),
-        vm: register('vm', 0xea7a),
-        deviceDesktop: register('device-desktop', 0xea7a),
-        file: register('file', 0xea7b),
-        fileText: register('file-text', 0xea7b),
-        more: register('more', 0xea7c),
-        ellipsis: register('ellipsis', 0xea7c),
-        kebabHorizontal: register('kebab-horizontal', 0xea7c),
-        mailReply: register('mail-reply', 0xea7d),
-        reply: register('reply', 0xea7d),
-        organization: register('organization', 0xea7e),
-        organizationFilled: register('organization-filled', 0xea7e),
-        organizationOutline: register('organization-outline', 0xea7e),
-        newFile: register('new-file', 0xea7f),
-        fileAdd: register('file-add', 0xea7f),
-        newFolder: register('new-folder', 0xea80),
-        fileDirectoryCreate: register('file-directory-create', 0xea80),
-        trash: register('trash', 0xea81),
-        trashcan: register('trashcan', 0xea81),
-        history: register('history', 0xea82),
-        clock: register('clock', 0xea82),
-        folder: register('folder', 0xea83),
-        fileDirectory: register('file-directory', 0xea83),
-        symbolFolder: register('symbol-folder', 0xea83),
-        logoGithub: register('logo-github', 0xea84),
-        markGithub: register('mark-github', 0xea84),
-        github: register('github', 0xea84),
-        terminal: register('terminal', 0xea85),
-        console: register('console', 0xea85),
-        repl: register('repl', 0xea85),
-        zap: register('zap', 0xea86),
-        symbolEvent: register('symbol-event', 0xea86),
-        error: register('error', 0xea87),
-        stop: register('stop', 0xea87),
-        variable: register('variable', 0xea88),
-        symbolVariable: register('symbol-variable', 0xea88),
-        array: register('array', 0xea8a),
-        symbolArray: register('symbol-array', 0xea8a),
-        symbolModule: register('symbol-module', 0xea8b),
-        symbolPackage: register('symbol-package', 0xea8b),
-        symbolNamespace: register('symbol-namespace', 0xea8b),
-        symbolObject: register('symbol-object', 0xea8b),
-        symbolMethod: register('symbol-method', 0xea8c),
-        symbolFunction: register('symbol-function', 0xea8c),
-        symbolConstructor: register('symbol-constructor', 0xea8c),
-        symbolBoolean: register('symbol-boolean', 0xea8f),
-        symbolNull: register('symbol-null', 0xea8f),
-        symbolNumeric: register('symbol-numeric', 0xea90),
-        symbolNumber: register('symbol-number', 0xea90),
-        symbolStructure: register('symbol-structure', 0xea91),
-        symbolStruct: register('symbol-struct', 0xea91),
-        symbolParameter: register('symbol-parameter', 0xea92),
-        symbolTypeParameter: register('symbol-type-parameter', 0xea92),
-        symbolKey: register('symbol-key', 0xea93),
-        symbolText: register('symbol-text', 0xea93),
-        symbolReference: register('symbol-reference', 0xea94),
-        goToFile: register('go-to-file', 0xea94),
-        symbolEnum: register('symbol-enum', 0xea95),
-        symbolValue: register('symbol-value', 0xea95),
-        symbolRuler: register('symbol-ruler', 0xea96),
-        symbolUnit: register('symbol-unit', 0xea96),
-        activateBreakpoints: register('activate-breakpoints', 0xea97),
-        archive: register('archive', 0xea98),
-        arrowBoth: register('arrow-both', 0xea99),
-        arrowDown: register('arrow-down', 0xea9a),
-        arrowLeft: register('arrow-left', 0xea9b),
-        arrowRight: register('arrow-right', 0xea9c),
-        arrowSmallDown: register('arrow-small-down', 0xea9d),
-        arrowSmallLeft: register('arrow-small-left', 0xea9e),
-        arrowSmallRight: register('arrow-small-right', 0xea9f),
-        arrowSmallUp: register('arrow-small-up', 0xeaa0),
-        arrowUp: register('arrow-up', 0xeaa1),
-        bell: register('bell', 0xeaa2),
-        bold: register('bold', 0xeaa3),
-        book: register('book', 0xeaa4),
-        bookmark: register('bookmark', 0xeaa5),
-        debugBreakpointConditionalUnverified: register('debug-breakpoint-conditional-unverified', 0xeaa6),
-        debugBreakpointConditional: register('debug-breakpoint-conditional', 0xeaa7),
-        debugBreakpointConditionalDisabled: register('debug-breakpoint-conditional-disabled', 0xeaa7),
-        debugBreakpointDataUnverified: register('debug-breakpoint-data-unverified', 0xeaa8),
-        debugBreakpointData: register('debug-breakpoint-data', 0xeaa9),
-        debugBreakpointDataDisabled: register('debug-breakpoint-data-disabled', 0xeaa9),
-        debugBreakpointLogUnverified: register('debug-breakpoint-log-unverified', 0xeaaa),
-        debugBreakpointLog: register('debug-breakpoint-log', 0xeaab),
-        debugBreakpointLogDisabled: register('debug-breakpoint-log-disabled', 0xeaab),
-        briefcase: register('briefcase', 0xeaac),
-        broadcast: register('broadcast', 0xeaad),
-        browser: register('browser', 0xeaae),
-        bug: register('bug', 0xeaaf),
-        calendar: register('calendar', 0xeab0),
-        caseSensitive: register('case-sensitive', 0xeab1),
-        check: register('check', 0xeab2),
-        checklist: register('checklist', 0xeab3),
-        chevronDown: register('chevron-down', 0xeab4),
-        dropDownButton: register('drop-down-button', 0xeab4),
-        chevronLeft: register('chevron-left', 0xeab5),
-        chevronRight: register('chevron-right', 0xeab6),
-        chevronUp: register('chevron-up', 0xeab7),
-        chromeClose: register('chrome-close', 0xeab8),
-        chromeMaximize: register('chrome-maximize', 0xeab9),
-        chromeMinimize: register('chrome-minimize', 0xeaba),
-        chromeRestore: register('chrome-restore', 0xeabb),
-        circle: register('circle', 0xeabc),
-        circleOutline: register('circle-outline', 0xeabc),
-        debugBreakpointUnverified: register('debug-breakpoint-unverified', 0xeabc),
-        circleSlash: register('circle-slash', 0xeabd),
-        circuitBoard: register('circuit-board', 0xeabe),
-        clearAll: register('clear-all', 0xeabf),
-        clippy: register('clippy', 0xeac0),
-        closeAll: register('close-all', 0xeac1),
-        cloudDownload: register('cloud-download', 0xeac2),
-        cloudUpload: register('cloud-upload', 0xeac3),
-        code: register('code', 0xeac4),
-        collapseAll: register('collapse-all', 0xeac5),
-        colorMode: register('color-mode', 0xeac6),
-        commentDiscussion: register('comment-discussion', 0xeac7),
-        compareChanges: register('compare-changes', 0xeafd),
-        creditCard: register('credit-card', 0xeac9),
-        dash: register('dash', 0xeacc),
-        dashboard: register('dashboard', 0xeacd),
-        database: register('database', 0xeace),
-        debugContinue: register('debug-continue', 0xeacf),
-        debugDisconnect: register('debug-disconnect', 0xead0),
-        debugPause: register('debug-pause', 0xead1),
-        debugRestart: register('debug-restart', 0xead2),
-        debugStart: register('debug-start', 0xead3),
-        debugStepInto: register('debug-step-into', 0xead4),
-        debugStepOut: register('debug-step-out', 0xead5),
-        debugStepOver: register('debug-step-over', 0xead6),
-        debugStop: register('debug-stop', 0xead7),
-        debug: register('debug', 0xead8),
-        deviceCameraVideo: register('device-camera-video', 0xead9),
-        deviceCamera: register('device-camera', 0xeada),
-        deviceMobile: register('device-mobile', 0xeadb),
-        diffAdded: register('diff-added', 0xeadc),
-        diffIgnored: register('diff-ignored', 0xeadd),
-        diffModified: register('diff-modified', 0xeade),
-        diffRemoved: register('diff-removed', 0xeadf),
-        diffRenamed: register('diff-renamed', 0xeae0),
-        diff: register('diff', 0xeae1),
-        discard: register('discard', 0xeae2),
-        editorLayout: register('editor-layout', 0xeae3),
-        emptyWindow: register('empty-window', 0xeae4),
-        exclude: register('exclude', 0xeae5),
-        extensions: register('extensions', 0xeae6),
-        eyeClosed: register('eye-closed', 0xeae7),
-        fileBinary: register('file-binary', 0xeae8),
-        fileCode: register('file-code', 0xeae9),
-        fileMedia: register('file-media', 0xeaea),
-        filePdf: register('file-pdf', 0xeaeb),
-        fileSubmodule: register('file-submodule', 0xeaec),
-        fileSymlinkDirectory: register('file-symlink-directory', 0xeaed),
-        fileSymlinkFile: register('file-symlink-file', 0xeaee),
-        fileZip: register('file-zip', 0xeaef),
-        files: register('files', 0xeaf0),
-        filter: register('filter', 0xeaf1),
-        flame: register('flame', 0xeaf2),
-        foldDown: register('fold-down', 0xeaf3),
-        foldUp: register('fold-up', 0xeaf4),
-        fold: register('fold', 0xeaf5),
-        folderActive: register('folder-active', 0xeaf6),
-        folderOpened: register('folder-opened', 0xeaf7),
-        gear: register('gear', 0xeaf8),
-        gift: register('gift', 0xeaf9),
-        gistSecret: register('gist-secret', 0xeafa),
-        gist: register('gist', 0xeafb),
-        gitCommit: register('git-commit', 0xeafc),
-        gitCompare: register('git-compare', 0xeafd),
-        gitMerge: register('git-merge', 0xeafe),
-        githubAction: register('github-action', 0xeaff),
-        githubAlt: register('github-alt', 0xeb00),
-        globe: register('globe', 0xeb01),
-        grabber: register('grabber', 0xeb02),
-        graph: register('graph', 0xeb03),
-        gripper: register('gripper', 0xeb04),
-        heart: register('heart', 0xeb05),
-        home: register('home', 0xeb06),
-        horizontalRule: register('horizontal-rule', 0xeb07),
-        hubot: register('hubot', 0xeb08),
-        inbox: register('inbox', 0xeb09),
-        issueClosed: register('issue-closed', 0xeba4),
-        issueReopened: register('issue-reopened', 0xeb0b),
-        issues: register('issues', 0xeb0c),
-        italic: register('italic', 0xeb0d),
-        jersey: register('jersey', 0xeb0e),
-        json: register('json', 0xeb0f),
-        bracket: register('bracket', 0xeb0f),
-        kebabVertical: register('kebab-vertical', 0xeb10),
-        key: register('key', 0xeb11),
-        law: register('law', 0xeb12),
-        lightbulbAutofix: register('lightbulb-autofix', 0xeb13),
-        linkExternal: register('link-external', 0xeb14),
-        link: register('link', 0xeb15),
-        listOrdered: register('list-ordered', 0xeb16),
-        listUnordered: register('list-unordered', 0xeb17),
-        liveShare: register('live-share', 0xeb18),
-        loading: register('loading', 0xeb19),
-        location: register('location', 0xeb1a),
-        mailRead: register('mail-read', 0xeb1b),
-        mail: register('mail', 0xeb1c),
-        markdown: register('markdown', 0xeb1d),
-        megaphone: register('megaphone', 0xeb1e),
-        mention: register('mention', 0xeb1f),
-        milestone: register('milestone', 0xeb20),
-        mortarBoard: register('mortar-board', 0xeb21),
-        move: register('move', 0xeb22),
-        multipleWindows: register('multiple-windows', 0xeb23),
-        mute: register('mute', 0xeb24),
-        noNewline: register('no-newline', 0xeb25),
-        note: register('note', 0xeb26),
-        octoface: register('octoface', 0xeb27),
-        openPreview: register('open-preview', 0xeb28),
-        package_: register('package', 0xeb29),
-        paintcan: register('paintcan', 0xeb2a),
-        pin: register('pin', 0xeb2b),
-        play: register('play', 0xeb2c),
-        run: register('run', 0xeb2c),
-        plug: register('plug', 0xeb2d),
-        preserveCase: register('preserve-case', 0xeb2e),
-        preview: register('preview', 0xeb2f),
-        project: register('project', 0xeb30),
-        pulse: register('pulse', 0xeb31),
-        question: register('question', 0xeb32),
-        quote: register('quote', 0xeb33),
-        radioTower: register('radio-tower', 0xeb34),
-        reactions: register('reactions', 0xeb35),
-        references: register('references', 0xeb36),
-        refresh: register('refresh', 0xeb37),
-        regex: register('regex', 0xeb38),
-        remoteExplorer: register('remote-explorer', 0xeb39),
-        remote: register('remote', 0xeb3a),
-        remove: register('remove', 0xeb3b),
-        replaceAll: register('replace-all', 0xeb3c),
-        replace: register('replace', 0xeb3d),
-        repoClone: register('repo-clone', 0xeb3e),
-        repoForcePush: register('repo-force-push', 0xeb3f),
-        repoPull: register('repo-pull', 0xeb40),
-        repoPush: register('repo-push', 0xeb41),
-        report: register('report', 0xeb42),
-        requestChanges: register('request-changes', 0xeb43),
-        rocket: register('rocket', 0xeb44),
-        rootFolderOpened: register('root-folder-opened', 0xeb45),
-        rootFolder: register('root-folder', 0xeb46),
-        rss: register('rss', 0xeb47),
-        ruby: register('ruby', 0xeb48),
-        saveAll: register('save-all', 0xeb49),
-        saveAs: register('save-as', 0xeb4a),
-        save: register('save', 0xeb4b),
-        screenFull: register('screen-full', 0xeb4c),
-        screenNormal: register('screen-normal', 0xeb4d),
-        searchStop: register('search-stop', 0xeb4e),
-        server: register('server', 0xeb50),
-        settingsGear: register('settings-gear', 0xeb51),
-        settings: register('settings', 0xeb52),
-        shield: register('shield', 0xeb53),
-        smiley: register('smiley', 0xeb54),
-        sortPrecedence: register('sort-precedence', 0xeb55),
-        splitHorizontal: register('split-horizontal', 0xeb56),
-        splitVertical: register('split-vertical', 0xeb57),
-        squirrel: register('squirrel', 0xeb58),
-        starFull: register('star-full', 0xeb59),
-        starHalf: register('star-half', 0xeb5a),
-        symbolClass: register('symbol-class', 0xeb5b),
-        symbolColor: register('symbol-color', 0xeb5c),
-        symbolCustomColor: register('symbol-customcolor', 0xeb5c),
-        symbolConstant: register('symbol-constant', 0xeb5d),
-        symbolEnumMember: register('symbol-enum-member', 0xeb5e),
-        symbolField: register('symbol-field', 0xeb5f),
-        symbolFile: register('symbol-file', 0xeb60),
-        symbolInterface: register('symbol-interface', 0xeb61),
-        symbolKeyword: register('symbol-keyword', 0xeb62),
-        symbolMisc: register('symbol-misc', 0xeb63),
-        symbolOperator: register('symbol-operator', 0xeb64),
-        symbolProperty: register('symbol-property', 0xeb65),
-        wrench: register('wrench', 0xeb65),
-        wrenchSubaction: register('wrench-subaction', 0xeb65),
-        symbolSnippet: register('symbol-snippet', 0xeb66),
-        tasklist: register('tasklist', 0xeb67),
-        telescope: register('telescope', 0xeb68),
-        textSize: register('text-size', 0xeb69),
-        threeBars: register('three-bars', 0xeb6a),
-        thumbsdown: register('thumbsdown', 0xeb6b),
-        thumbsup: register('thumbsup', 0xeb6c),
-        tools: register('tools', 0xeb6d),
-        triangleDown: register('triangle-down', 0xeb6e),
-        triangleLeft: register('triangle-left', 0xeb6f),
-        triangleRight: register('triangle-right', 0xeb70),
-        triangleUp: register('triangle-up', 0xeb71),
-        twitter: register('twitter', 0xeb72),
-        unfold: register('unfold', 0xeb73),
-        unlock: register('unlock', 0xeb74),
-        unmute: register('unmute', 0xeb75),
-        unverified: register('unverified', 0xeb76),
-        verified: register('verified', 0xeb77),
-        versions: register('versions', 0xeb78),
-        vmActive: register('vm-active', 0xeb79),
-        vmOutline: register('vm-outline', 0xeb7a),
-        vmRunning: register('vm-running', 0xeb7b),
-        watch: register('watch', 0xeb7c),
-        whitespace: register('whitespace', 0xeb7d),
-        wholeWord: register('whole-word', 0xeb7e),
-        window: register('window', 0xeb7f),
-        wordWrap: register('word-wrap', 0xeb80),
-        zoomIn: register('zoom-in', 0xeb81),
-        zoomOut: register('zoom-out', 0xeb82),
-        listFilter: register('list-filter', 0xeb83),
-        listFlat: register('list-flat', 0xeb84),
-        listSelection: register('list-selection', 0xeb85),
-        selection: register('selection', 0xeb85),
-        listTree: register('list-tree', 0xeb86),
-        debugBreakpointFunctionUnverified: register('debug-breakpoint-function-unverified', 0xeb87),
-        debugBreakpointFunction: register('debug-breakpoint-function', 0xeb88),
-        debugBreakpointFunctionDisabled: register('debug-breakpoint-function-disabled', 0xeb88),
-        debugStackframeActive: register('debug-stackframe-active', 0xeb89),
-        circleSmallFilled: register('circle-small-filled', 0xeb8a),
-        debugStackframeDot: register('debug-stackframe-dot', 0xeb8a),
-        debugStackframe: register('debug-stackframe', 0xeb8b),
-        debugStackframeFocused: register('debug-stackframe-focused', 0xeb8b),
-        debugBreakpointUnsupported: register('debug-breakpoint-unsupported', 0xeb8c),
-        symbolString: register('symbol-string', 0xeb8d),
-        debugReverseContinue: register('debug-reverse-continue', 0xeb8e),
-        debugStepBack: register('debug-step-back', 0xeb8f),
-        debugRestartFrame: register('debug-restart-frame', 0xeb90),
-        callIncoming: register('call-incoming', 0xeb92),
-        callOutgoing: register('call-outgoing', 0xeb93),
-        menu: register('menu', 0xeb94),
-        expandAll: register('expand-all', 0xeb95),
-        feedback: register('feedback', 0xeb96),
-        groupByRefType: register('group-by-ref-type', 0xeb97),
-        ungroupByRefType: register('ungroup-by-ref-type', 0xeb98),
-        account: register('account', 0xeb99),
-        bellDot: register('bell-dot', 0xeb9a),
-        debugConsole: register('debug-console', 0xeb9b),
-        library: register('library', 0xeb9c),
-        output: register('output', 0xeb9d),
-        runAll: register('run-all', 0xeb9e),
-        syncIgnored: register('sync-ignored', 0xeb9f),
-        pinned: register('pinned', 0xeba0),
-        githubInverted: register('github-inverted', 0xeba1),
-        debugAlt: register('debug-alt', 0xeb91),
-        serverProcess: register('server-process', 0xeba2),
-        serverEnvironment: register('server-environment', 0xeba3),
-        pass: register('pass', 0xeba4),
-        stopCircle: register('stop-circle', 0xeba5),
-        playCircle: register('play-circle', 0xeba6),
-        record: register('record', 0xeba7),
-        debugAltSmall: register('debug-alt-small', 0xeba8),
-        vmConnect: register('vm-connect', 0xeba9),
-        cloud: register('cloud', 0xebaa),
-        merge: register('merge', 0xebab),
-        exportIcon: register('export', 0xebac),
-        graphLeft: register('graph-left', 0xebad),
-        magnet: register('magnet', 0xebae),
-        notebook: register('notebook', 0xebaf),
-        redo: register('redo', 0xebb0),
-        checkAll: register('check-all', 0xebb1),
-        pinnedDirty: register('pinned-dirty', 0xebb2),
-        passFilled: register('pass-filled', 0xebb3),
-        circleLargeFilled: register('circle-large-filled', 0xebb4),
-        circleLarge: register('circle-large', 0xebb5),
-        circleLargeOutline: register('circle-large-outline', 0xebb5),
-        combine: register('combine', 0xebb6),
-        gather: register('gather', 0xebb6),
-        table: register('table', 0xebb7),
-        variableGroup: register('variable-group', 0xebb8),
-        typeHierarchy: register('type-hierarchy', 0xebb9),
-        typeHierarchySub: register('type-hierarchy-sub', 0xebba),
-        typeHierarchySuper: register('type-hierarchy-super', 0xebbb),
-        gitPullRequestCreate: register('git-pull-request-create', 0xebbc),
-        runAbove: register('run-above', 0xebbd),
-        runBelow: register('run-below', 0xebbe),
-        notebookTemplate: register('notebook-template', 0xebbf),
-        debugRerun: register('debug-rerun', 0xebc0),
-        workspaceTrusted: register('workspace-trusted', 0xebc1),
-        workspaceUntrusted: register('workspace-untrusted', 0xebc2),
-        workspaceUnspecified: register('workspace-unspecified', 0xebc3),
-        terminalCmd: register('terminal-cmd', 0xebc4),
-        terminalDebian: register('terminal-debian', 0xebc5),
-        terminalLinux: register('terminal-linux', 0xebc6),
-        terminalPowershell: register('terminal-powershell', 0xebc7),
-        terminalTmux: register('terminal-tmux', 0xebc8),
-        terminalUbuntu: register('terminal-ubuntu', 0xebc9),
-        terminalBash: register('terminal-bash', 0xebca),
-        arrowSwap: register('arrow-swap', 0xebcb),
-        copy: register('copy', 0xebcc),
-        personAdd: register('person-add', 0xebcd),
-        filterFilled: register('filter-filled', 0xebce),
-        wand: register('wand', 0xebcf),
-        debugLineByLine: register('debug-line-by-line', 0xebd0),
-        inspect: register('inspect', 0xebd1),
-        layers: register('layers', 0xebd2),
-        layersDot: register('layers-dot', 0xebd3),
-        layersActive: register('layers-active', 0xebd4),
-        compass: register('compass', 0xebd5),
-        compassDot: register('compass-dot', 0xebd6),
-        compassActive: register('compass-active', 0xebd7),
-        azure: register('azure', 0xebd8),
-        issueDraft: register('issue-draft', 0xebd9),
-        gitPullRequestClosed: register('git-pull-request-closed', 0xebda),
-        gitPullRequestDraft: register('git-pull-request-draft', 0xebdb),
-        debugAll: register('debug-all', 0xebdc),
-        debugCoverage: register('debug-coverage', 0xebdd),
-        runErrors: register('run-errors', 0xebde),
-        folderLibrary: register('folder-library', 0xebdf),
-        debugContinueSmall: register('debug-continue-small', 0xebe0),
-        beakerStop: register('beaker-stop', 0xebe1),
-        graphLine: register('graph-line', 0xebe2),
-        graphScatter: register('graph-scatter', 0xebe3),
-        pieChart: register('pie-chart', 0xebe4),
-        bracketDot: register('bracket-dot', 0xebe5),
-        bracketError: register('bracket-error', 0xebe6),
-        lockSmall: register('lock-small', 0xebe7),
-        azureDevops: register('azure-devops', 0xebe8),
-        verifiedFilled: register('verified-filled', 0xebe9),
-        newLine: register('newline', 0xebea),
-        layout: register('layout', 0xebeb),
-        layoutActivitybarLeft: register('layout-activitybar-left', 0xebec),
-        layoutActivitybarRight: register('layout-activitybar-right', 0xebed),
-        layoutPanelLeft: register('layout-panel-left', 0xebee),
-        layoutPanelCenter: register('layout-panel-center', 0xebef),
-        layoutPanelJustify: register('layout-panel-justify', 0xebf0),
-        layoutPanelRight: register('layout-panel-right', 0xebf1),
-        layoutPanel: register('layout-panel', 0xebf2),
-        layoutSidebarLeft: register('layout-sidebar-left', 0xebf3),
-        layoutSidebarRight: register('layout-sidebar-right', 0xebf4),
-        layoutStatusbar: register('layout-statusbar', 0xebf5),
-        layoutMenubar: register('layout-menubar', 0xebf6),
-        layoutCentered: register('layout-centered', 0xebf7),
-        layoutSidebarRightOff: register('layout-sidebar-right-off', 0xec00),
-        layoutPanelOff: register('layout-panel-off', 0xec01),
-        layoutSidebarLeftOff: register('layout-sidebar-left-off', 0xec02),
-        target: register('target', 0xebf8),
-        indent: register('indent', 0xebf9),
-        recordSmall: register('record-small', 0xebfa),
-        errorSmall: register('error-small', 0xebfb),
-        arrowCircleDown: register('arrow-circle-down', 0xebfc),
-        arrowCircleLeft: register('arrow-circle-left', 0xebfd),
-        arrowCircleRight: register('arrow-circle-right', 0xebfe),
-        arrowCircleUp: register('arrow-circle-up', 0xebff),
-        heartFilled: register('heart-filled', 0xec04),
-        map: register('map', 0xec05),
-        mapFilled: register('map-filled', 0xec06),
-        circleSmall: register('circle-small', 0xec07),
-        bellSlash: register('bell-slash', 0xec08),
-        bellSlashDot: register('bell-slash-dot', 0xec09),
-        commentUnresolved: register('comment-unresolved', 0xec0a),
-        gitPullRequestGoToChanges: register('git-pull-request-go-to-changes', 0xec0b),
-        gitPullRequestNewChanges: register('git-pull-request-new-changes', 0xec0c),
-        searchFuzzy: register('search-fuzzy', 0xec0d),
-        commentDraft: register('comment-draft', 0xec0e),
-        send: register('send', 0xec0f),
-        sparkle: register('sparkle', 0xec10),
-        insert: register('insert', 0xec11),
-        // derived icons, that could become separate icons
-        dialogError: register('dialog-error', 'error'),
-        dialogWarning: register('dialog-warning', 'warning'),
-        dialogInfo: register('dialog-info', 'info'),
-        dialogClose: register('dialog-close', 'close'),
-        treeItemExpanded: register('tree-item-expanded', 'chevron-down'),
-        treeFilterOnTypeOn: register('tree-filter-on-type-on', 'list-filter'),
-        treeFilterOnTypeOff: register('tree-filter-on-type-off', 'list-selection'),
-        treeFilterClear: register('tree-filter-clear', 'close'),
-        treeItemLoading: register('tree-item-loading', 'loading'),
-        menuSelection: register('menu-selection', 'check'),
-        menuSubmenu: register('menu-submenu', 'chevron-right'),
-        menuBarMore: register('menubar-more', 'more'),
-        scrollbarButtonLeft: register('scrollbar-button-left', 'triangle-left'),
-        scrollbarButtonRight: register('scrollbar-button-right', 'triangle-right'),
-        scrollbarButtonUp: register('scrollbar-button-up', 'triangle-up'),
-        scrollbarButtonDown: register('scrollbar-button-down', 'triangle-down'),
-        toolBarMore: register('toolbar-more', 'more'),
-        quickInputBack: register('quick-input-back', 'arrow-left')
+        ...codiconsLibrary_1.codiconsLibrary,
+        ...exports.codiconsDerived
     };
 });
 
@@ -6930,10 +9652,17 @@ define(__m[32/*vs/base/common/codicons*/], __M([0/*require*/,1/*exports*/,18/*vs
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[12/*vs/base/common/objects*/], __M([0/*require*/,1/*exports*/,18/*vs/base/common/types*/]), function (require, exports, types_1) {
+define(__m[14/*vs/base/common/objects*/], __M([0/*require*/,1/*exports*/,26/*vs/base/common/types*/]), function (require, exports, types_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.createProxyObject = exports.getAllMethodNames = exports.getAllPropertyNames = exports.equals = exports.mixin = exports.cloneAndChange = exports.deepFreeze = exports.deepClone = void 0;
+    exports.deepClone = deepClone;
+    exports.deepFreeze = deepFreeze;
+    exports.cloneAndChange = cloneAndChange;
+    exports.mixin = mixin;
+    exports.equals = equals;
+    exports.getAllPropertyNames = getAllPropertyNames;
+    exports.getAllMethodNames = getAllMethodNames;
+    exports.createProxyObject = createProxyObject;
     function deepClone(obj) {
         if (!obj || typeof obj !== 'object') {
             return obj;
@@ -6947,7 +9676,6 @@ define(__m[12/*vs/base/common/objects*/], __M([0/*require*/,1/*exports*/,18/*vs/
         });
         return result;
     }
-    exports.deepClone = deepClone;
     function deepFreeze(obj) {
         if (!obj || typeof obj !== 'object') {
             return obj;
@@ -6967,12 +9695,10 @@ define(__m[12/*vs/base/common/objects*/], __M([0/*require*/,1/*exports*/,18/*vs/
         }
         return obj;
     }
-    exports.deepFreeze = deepFreeze;
     const _hasOwnProperty = Object.prototype.hasOwnProperty;
     function cloneAndChange(obj, changer) {
         return _cloneAndChange(obj, changer, new Set());
     }
-    exports.cloneAndChange = cloneAndChange;
     function _cloneAndChange(obj, changer, seen) {
         if ((0, types_1.isUndefinedOrNull)(obj)) {
             return obj;
@@ -7031,7 +9757,6 @@ define(__m[12/*vs/base/common/objects*/], __M([0/*require*/,1/*exports*/,18/*vs/
         }
         return destination;
     }
-    exports.mixin = mixin;
     function equals(one, other) {
         if (one === other) {
             return true;
@@ -7082,17 +9807,14 @@ define(__m[12/*vs/base/common/objects*/], __M([0/*require*/,1/*exports*/,18/*vs/
         }
         return true;
     }
-    exports.equals = equals;
     function getAllPropertyNames(obj) {
         let res = [];
-        let proto = Object.getPrototypeOf(obj);
-        while (Object.prototype !== proto) {
-            res = res.concat(Object.getOwnPropertyNames(proto));
-            proto = Object.getPrototypeOf(proto);
+        while (Object.prototype !== obj) {
+            res = res.concat(Object.getOwnPropertyNames(obj));
+            obj = Object.getPrototypeOf(obj);
         }
         return res;
     }
-    exports.getAllPropertyNames = getAllPropertyNames;
     function getAllMethodNames(obj) {
         const methods = [];
         for (const prop of getAllPropertyNames(obj)) {
@@ -7102,7 +9824,6 @@ define(__m[12/*vs/base/common/objects*/], __M([0/*require*/,1/*exports*/,18/*vs/
         }
         return methods;
     }
-    exports.getAllMethodNames = getAllMethodNames;
     function createProxyObject(methodNames, invoke) {
         const createProxyMethod = (method) => {
             return function () {
@@ -7116,17 +9837,17 @@ define(__m[12/*vs/base/common/objects*/], __M([0/*require*/,1/*exports*/,18/*vs/
         }
         return result;
     }
-    exports.createProxyObject = createProxyObject;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[19/*vs/base/common/uint*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[28/*vs/base/common/uint*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.toUint32 = exports.toUint8 = void 0;
+    exports.toUint8 = toUint8;
+    exports.toUint32 = toUint32;
     function toUint8(v) {
         if (v < 0) {
             return 0;
@@ -7136,7 +9857,6 @@ define(__m[19/*vs/base/common/uint*/], __M([0/*require*/,1/*exports*/]), functio
         }
         return v | 0;
     }
-    exports.toUint8 = toUint8;
     function toUint32(v) {
         if (v < 0) {
             return 0;
@@ -7146,14 +9866,13 @@ define(__m[19/*vs/base/common/uint*/], __M([0/*require*/,1/*exports*/]), functio
         }
         return v | 0;
     }
-    exports.toUint32 = toUint32;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[20/*vs/editor/common/core/characterClassifier*/], __M([0/*require*/,1/*exports*/,19/*vs/base/common/uint*/]), function (require, exports, uint_1) {
+define(__m[29/*vs/editor/common/core/characterClassifier*/], __M([0/*require*/,1/*exports*/,28/*vs/base/common/uint*/]), function (require, exports, uint_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CharacterSet = exports.CharacterClassifier = void 0;
@@ -7216,154 +9935,10 @@ define(__m[20/*vs/editor/common/core/characterClassifier*/], __M([0/*require*/,1
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[21/*vs/editor/common/core/lineRange*/], __M([0/*require*/,1/*exports*/,4/*vs/base/common/errors*/]), function (require, exports, errors_1) {
+define(__m[3/*vs/editor/common/core/offsetRange*/], __M([0/*require*/,1/*exports*/,5/*vs/base/common/errors*/]), function (require, exports, errors_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.LineRange = void 0;
-    /**
-     * A range of lines (1-based).
-     */
-    class LineRange {
-        /**
-         * @param lineRanges An array of sorted line ranges.
-         */
-        static joinMany(lineRanges) {
-            if (lineRanges.length === 0) {
-                return [];
-            }
-            let result = lineRanges[0];
-            for (let i = 1; i < lineRanges.length; i++) {
-                result = this.join(result, lineRanges[i]);
-            }
-            return result;
-        }
-        /**
-         * @param lineRanges1 Must be sorted.
-         * @param lineRanges2 Must be sorted.
-         */
-        static join(lineRanges1, lineRanges2) {
-            if (lineRanges1.length === 0) {
-                return lineRanges2;
-            }
-            if (lineRanges2.length === 0) {
-                return lineRanges1;
-            }
-            const result = [];
-            let i1 = 0;
-            let i2 = 0;
-            let current = null;
-            while (i1 < lineRanges1.length || i2 < lineRanges2.length) {
-                let next = null;
-                if (i1 < lineRanges1.length && i2 < lineRanges2.length) {
-                    const lineRange1 = lineRanges1[i1];
-                    const lineRange2 = lineRanges2[i2];
-                    if (lineRange1.startLineNumber < lineRange2.startLineNumber) {
-                        next = lineRange1;
-                        i1++;
-                    }
-                    else {
-                        next = lineRange2;
-                        i2++;
-                    }
-                }
-                else if (i1 < lineRanges1.length) {
-                    next = lineRanges1[i1];
-                    i1++;
-                }
-                else {
-                    next = lineRanges2[i2];
-                    i2++;
-                }
-                if (current === null) {
-                    current = next;
-                }
-                else {
-                    if (current.endLineNumberExclusive >= next.startLineNumber) {
-                        // merge
-                        current = new LineRange(current.startLineNumber, Math.max(current.endLineNumberExclusive, next.endLineNumberExclusive));
-                    }
-                    else {
-                        // push
-                        result.push(current);
-                        current = next;
-                    }
-                }
-            }
-            if (current !== null) {
-                result.push(current);
-            }
-            return result;
-        }
-        constructor(startLineNumber, endLineNumberExclusive) {
-            if (startLineNumber > endLineNumberExclusive) {
-                throw new errors_1.BugIndicatingError(`startLineNumber ${startLineNumber} cannot be after endLineNumberExclusive ${endLineNumberExclusive}`);
-            }
-            this.startLineNumber = startLineNumber;
-            this.endLineNumberExclusive = endLineNumberExclusive;
-        }
-        /**
-         * Indicates if this line range contains the given line number.
-         */
-        contains(lineNumber) {
-            return this.startLineNumber <= lineNumber && lineNumber < this.endLineNumberExclusive;
-        }
-        /**
-         * Indicates if this line range is empty.
-         */
-        get isEmpty() {
-            return this.startLineNumber === this.endLineNumberExclusive;
-        }
-        /**
-         * Moves this line range by the given offset of line numbers.
-         */
-        delta(offset) {
-            return new LineRange(this.startLineNumber + offset, this.endLineNumberExclusive + offset);
-        }
-        /**
-         * The number of lines this line range spans.
-         */
-        get length() {
-            return this.endLineNumberExclusive - this.startLineNumber;
-        }
-        /**
-         * Creates a line range that combines this and the given line range.
-         */
-        join(other) {
-            return new LineRange(Math.min(this.startLineNumber, other.startLineNumber), Math.max(this.endLineNumberExclusive, other.endLineNumberExclusive));
-        }
-        toString() {
-            return `[${this.startLineNumber},${this.endLineNumberExclusive})`;
-        }
-        /**
-         * The resulting range is empty if the ranges do not intersect, but touch.
-         * If the ranges don't even touch, the result is undefined.
-         */
-        intersect(other) {
-            const startLineNumber = Math.max(this.startLineNumber, other.startLineNumber);
-            const endLineNumberExclusive = Math.min(this.endLineNumberExclusive, other.endLineNumberExclusive);
-            if (startLineNumber <= endLineNumberExclusive) {
-                return new LineRange(startLineNumber, endLineNumberExclusive);
-            }
-            return undefined;
-        }
-        overlapOrTouch(other) {
-            return this.startLineNumber <= other.endLineNumberExclusive && other.startLineNumber <= this.endLineNumberExclusive;
-        }
-        equals(b) {
-            return this.startLineNumber === b.startLineNumber && this.endLineNumberExclusive === b.endLineNumberExclusive;
-        }
-    }
-    exports.LineRange = LineRange;
-});
-
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-define(__m[6/*vs/editor/common/core/offsetRange*/], __M([0/*require*/,1/*exports*/,4/*vs/base/common/errors*/]), function (require, exports, errors_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.OffsetRange = void 0;
+    exports.OffsetRangeSet = exports.OffsetRange = void 0;
     /**
      * A range of offsets (0-based).
     */
@@ -7392,6 +9967,12 @@ define(__m[6/*vs/editor/common/core/offsetRange*/], __M([0/*require*/,1/*exports
             }
             return new OffsetRange(start, endExclusive);
         }
+        static ofLength(length) {
+            return new OffsetRange(0, length);
+        }
+        static ofStartAndLength(start, length) {
+            return new OffsetRange(start, start + length);
+        }
         constructor(start, endExclusive) {
             this.start = start;
             this.endExclusive = endExclusive;
@@ -7405,17 +9986,20 @@ define(__m[6/*vs/editor/common/core/offsetRange*/], __M([0/*require*/,1/*exports
         delta(offset) {
             return new OffsetRange(this.start + offset, this.endExclusive + offset);
         }
+        deltaStart(offset) {
+            return new OffsetRange(this.start + offset, this.endExclusive);
+        }
+        deltaEnd(offset) {
+            return new OffsetRange(this.start, this.endExclusive + offset);
+        }
         get length() {
             return this.endExclusive - this.start;
         }
         toString() {
             return `[${this.start}, ${this.endExclusive})`;
         }
-        equals(other) {
-            return this.start === other.start && this.endExclusive === other.endExclusive;
-        }
-        containsRange(other) {
-            return this.start <= other.start && other.endExclusive <= this.endExclusive;
+        contains(offset) {
+            return this.start <= offset && offset < this.endExclusive;
         }
         /**
          * for all numbers n: range1.contains(n) or range2.contains(n) => range1.join(range2).contains(n)
@@ -7438,15 +10022,120 @@ define(__m[6/*vs/editor/common/core/offsetRange*/], __M([0/*require*/,1/*exports
             }
             return undefined;
         }
+        intersects(other) {
+            const start = Math.max(this.start, other.start);
+            const end = Math.min(this.endExclusive, other.endExclusive);
+            return start < end;
+        }
+        isBefore(other) {
+            return this.endExclusive <= other.start;
+        }
+        isAfter(other) {
+            return this.start >= other.endExclusive;
+        }
+        slice(arr) {
+            return arr.slice(this.start, this.endExclusive);
+        }
+        substring(str) {
+            return str.substring(this.start, this.endExclusive);
+        }
+        /**
+         * Returns the given value if it is contained in this instance, otherwise the closest value that is contained.
+         * The range must not be empty.
+         */
+        clip(value) {
+            if (this.isEmpty) {
+                throw new errors_1.BugIndicatingError(`Invalid clipping range: ${this.toString()}`);
+            }
+            return Math.max(this.start, Math.min(this.endExclusive - 1, value));
+        }
+        /**
+         * Returns `r := value + k * length` such that `r` is contained in this range.
+         * The range must not be empty.
+         *
+         * E.g. `[5, 10).clipCyclic(10) === 5`, `[5, 10).clipCyclic(11) === 6` and `[5, 10).clipCyclic(4) === 9`.
+         */
+        clipCyclic(value) {
+            if (this.isEmpty) {
+                throw new errors_1.BugIndicatingError(`Invalid clipping range: ${this.toString()}`);
+            }
+            if (value < this.start) {
+                return this.endExclusive - ((this.start - value) % this.length);
+            }
+            if (value >= this.endExclusive) {
+                return this.start + ((value - this.start) % this.length);
+            }
+            return value;
+        }
+        forEach(f) {
+            for (let i = this.start; i < this.endExclusive; i++) {
+                f(i);
+            }
+        }
     }
     exports.OffsetRange = OffsetRange;
+    class OffsetRangeSet {
+        constructor() {
+            this._sortedRanges = [];
+        }
+        addRange(range) {
+            let i = 0;
+            while (i < this._sortedRanges.length && this._sortedRanges[i].endExclusive < range.start) {
+                i++;
+            }
+            let j = i;
+            while (j < this._sortedRanges.length && this._sortedRanges[j].start <= range.endExclusive) {
+                j++;
+            }
+            if (i === j) {
+                this._sortedRanges.splice(i, 0, range);
+            }
+            else {
+                const start = Math.min(range.start, this._sortedRanges[i].start);
+                const end = Math.max(range.endExclusive, this._sortedRanges[j - 1].endExclusive);
+                this._sortedRanges.splice(i, j - i, new OffsetRange(start, end));
+            }
+        }
+        toString() {
+            return this._sortedRanges.map(r => r.toString()).join(', ');
+        }
+        /**
+         * Returns of there is a value that is contained in this instance and the given range.
+         */
+        intersectsStrict(other) {
+            // TODO use binary search
+            let i = 0;
+            while (i < this._sortedRanges.length && this._sortedRanges[i].endExclusive <= other.start) {
+                i++;
+            }
+            return i < this._sortedRanges.length && this._sortedRanges[i].start < other.endExclusive;
+        }
+        intersectWithRange(other) {
+            // TODO use binary search + slice
+            const result = new OffsetRangeSet();
+            for (const range of this._sortedRanges) {
+                const intersection = range.intersect(other);
+                if (intersection) {
+                    result.addRange(intersection);
+                }
+            }
+            return result;
+        }
+        intersectWithRangeLength(other) {
+            return this.intersectWithRange(other).length;
+        }
+        get length() {
+            return this._sortedRanges.reduce((prev, cur) => prev + cur.length, 0);
+        }
+    }
+    exports.OffsetRangeSet = OffsetRangeSet;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[3/*vs/editor/common/core/position*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[4/*vs/editor/common/core/position*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Position = void 0;
@@ -7579,6 +10268,12 @@ define(__m[3/*vs/editor/common/core/position*/], __M([0/*require*/,1/*exports*/]
                 && (typeof obj.lineNumber === 'number')
                 && (typeof obj.column === 'number'));
         }
+        toJSON() {
+            return {
+                lineNumber: this.lineNumber,
+                column: this.column
+            };
+        }
     }
     exports.Position = Position;
 });
@@ -7587,7 +10282,7 @@ define(__m[3/*vs/editor/common/core/position*/], __M([0/*require*/,1/*exports*/]
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[2/*vs/editor/common/core/range*/], __M([0/*require*/,1/*exports*/,3/*vs/editor/common/core/position*/]), function (require, exports, position_1) {
+define(__m[2/*vs/editor/common/core/range*/], __M([0/*require*/,1/*exports*/,4/*vs/editor/common/core/position*/]), function (require, exports, position_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Range = void 0;
@@ -7993,7 +10688,312 @@ define(__m[2/*vs/editor/common/core/range*/], __M([0/*require*/,1/*exports*/,3/*
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[33/*vs/editor/common/core/selection*/], __M([0/*require*/,1/*exports*/,3/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/]), function (require, exports, position_1, range_1) {
+define(__m[10/*vs/editor/common/core/lineRange*/], __M([0/*require*/,1/*exports*/,5/*vs/base/common/errors*/,3/*vs/editor/common/core/offsetRange*/,2/*vs/editor/common/core/range*/,11/*vs/base/common/arraysFind*/]), function (require, exports, errors_1, offsetRange_1, range_1, arraysFind_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.LineRangeSet = exports.LineRange = void 0;
+    /**
+     * A range of lines (1-based).
+     */
+    class LineRange {
+        static fromRangeInclusive(range) {
+            return new LineRange(range.startLineNumber, range.endLineNumber + 1);
+        }
+        /**
+         * @param lineRanges An array of sorted line ranges.
+         */
+        static joinMany(lineRanges) {
+            if (lineRanges.length === 0) {
+                return [];
+            }
+            let result = new LineRangeSet(lineRanges[0].slice());
+            for (let i = 1; i < lineRanges.length; i++) {
+                result = result.getUnion(new LineRangeSet(lineRanges[i].slice()));
+            }
+            return result.ranges;
+        }
+        static join(lineRanges) {
+            if (lineRanges.length === 0) {
+                throw new errors_1.BugIndicatingError('lineRanges cannot be empty');
+            }
+            let startLineNumber = lineRanges[0].startLineNumber;
+            let endLineNumberExclusive = lineRanges[0].endLineNumberExclusive;
+            for (let i = 1; i < lineRanges.length; i++) {
+                startLineNumber = Math.min(startLineNumber, lineRanges[i].startLineNumber);
+                endLineNumberExclusive = Math.max(endLineNumberExclusive, lineRanges[i].endLineNumberExclusive);
+            }
+            return new LineRange(startLineNumber, endLineNumberExclusive);
+        }
+        static ofLength(startLineNumber, length) {
+            return new LineRange(startLineNumber, startLineNumber + length);
+        }
+        /**
+         * @internal
+         */
+        static deserialize(lineRange) {
+            return new LineRange(lineRange[0], lineRange[1]);
+        }
+        constructor(startLineNumber, endLineNumberExclusive) {
+            if (startLineNumber > endLineNumberExclusive) {
+                throw new errors_1.BugIndicatingError(`startLineNumber ${startLineNumber} cannot be after endLineNumberExclusive ${endLineNumberExclusive}`);
+            }
+            this.startLineNumber = startLineNumber;
+            this.endLineNumberExclusive = endLineNumberExclusive;
+        }
+        /**
+         * Indicates if this line range contains the given line number.
+         */
+        contains(lineNumber) {
+            return this.startLineNumber <= lineNumber && lineNumber < this.endLineNumberExclusive;
+        }
+        /**
+         * Indicates if this line range is empty.
+         */
+        get isEmpty() {
+            return this.startLineNumber === this.endLineNumberExclusive;
+        }
+        /**
+         * Moves this line range by the given offset of line numbers.
+         */
+        delta(offset) {
+            return new LineRange(this.startLineNumber + offset, this.endLineNumberExclusive + offset);
+        }
+        deltaLength(offset) {
+            return new LineRange(this.startLineNumber, this.endLineNumberExclusive + offset);
+        }
+        /**
+         * The number of lines this line range spans.
+         */
+        get length() {
+            return this.endLineNumberExclusive - this.startLineNumber;
+        }
+        /**
+         * Creates a line range that combines this and the given line range.
+         */
+        join(other) {
+            return new LineRange(Math.min(this.startLineNumber, other.startLineNumber), Math.max(this.endLineNumberExclusive, other.endLineNumberExclusive));
+        }
+        toString() {
+            return `[${this.startLineNumber},${this.endLineNumberExclusive})`;
+        }
+        /**
+         * The resulting range is empty if the ranges do not intersect, but touch.
+         * If the ranges don't even touch, the result is undefined.
+         */
+        intersect(other) {
+            const startLineNumber = Math.max(this.startLineNumber, other.startLineNumber);
+            const endLineNumberExclusive = Math.min(this.endLineNumberExclusive, other.endLineNumberExclusive);
+            if (startLineNumber <= endLineNumberExclusive) {
+                return new LineRange(startLineNumber, endLineNumberExclusive);
+            }
+            return undefined;
+        }
+        intersectsStrict(other) {
+            return this.startLineNumber < other.endLineNumberExclusive && other.startLineNumber < this.endLineNumberExclusive;
+        }
+        overlapOrTouch(other) {
+            return this.startLineNumber <= other.endLineNumberExclusive && other.startLineNumber <= this.endLineNumberExclusive;
+        }
+        equals(b) {
+            return this.startLineNumber === b.startLineNumber && this.endLineNumberExclusive === b.endLineNumberExclusive;
+        }
+        toInclusiveRange() {
+            if (this.isEmpty) {
+                return null;
+            }
+            return new range_1.Range(this.startLineNumber, 1, this.endLineNumberExclusive - 1, Number.MAX_SAFE_INTEGER);
+        }
+        toExclusiveRange() {
+            return new range_1.Range(this.startLineNumber, 1, this.endLineNumberExclusive, 1);
+        }
+        mapToLineArray(f) {
+            const result = [];
+            for (let lineNumber = this.startLineNumber; lineNumber < this.endLineNumberExclusive; lineNumber++) {
+                result.push(f(lineNumber));
+            }
+            return result;
+        }
+        forEach(f) {
+            for (let lineNumber = this.startLineNumber; lineNumber < this.endLineNumberExclusive; lineNumber++) {
+                f(lineNumber);
+            }
+        }
+        /**
+         * @internal
+         */
+        serialize() {
+            return [this.startLineNumber, this.endLineNumberExclusive];
+        }
+        includes(lineNumber) {
+            return this.startLineNumber <= lineNumber && lineNumber < this.endLineNumberExclusive;
+        }
+        /**
+         * Converts this 1-based line range to a 0-based offset range (subtracts 1!).
+         * @internal
+         */
+        toOffsetRange() {
+            return new offsetRange_1.OffsetRange(this.startLineNumber - 1, this.endLineNumberExclusive - 1);
+        }
+    }
+    exports.LineRange = LineRange;
+    class LineRangeSet {
+        constructor(
+        /**
+         * Sorted by start line number.
+         * No two line ranges are touching or intersecting.
+         */
+        _normalizedRanges = []) {
+            this._normalizedRanges = _normalizedRanges;
+        }
+        get ranges() {
+            return this._normalizedRanges;
+        }
+        addRange(range) {
+            if (range.length === 0) {
+                return;
+            }
+            // Idea: Find joinRange such that:
+            // replaceRange = _normalizedRanges.replaceRange(joinRange, range.joinAll(joinRange.map(idx => this._normalizedRanges[idx])))
+            // idx of first element that touches range or that is after range
+            const joinRangeStartIdx = (0, arraysFind_1.findFirstIdxMonotonousOrArrLen)(this._normalizedRanges, r => r.endLineNumberExclusive >= range.startLineNumber);
+            // idx of element after { last element that touches range or that is before range }
+            const joinRangeEndIdxExclusive = (0, arraysFind_1.findLastIdxMonotonous)(this._normalizedRanges, r => r.startLineNumber <= range.endLineNumberExclusive) + 1;
+            if (joinRangeStartIdx === joinRangeEndIdxExclusive) {
+                // If there is no element that touches range, then joinRangeStartIdx === joinRangeEndIdxExclusive and that value is the index of the element after range
+                this._normalizedRanges.splice(joinRangeStartIdx, 0, range);
+            }
+            else if (joinRangeStartIdx === joinRangeEndIdxExclusive - 1) {
+                // Else, there is an element that touches range and in this case it is both the first and last element. Thus we can replace it
+                const joinRange = this._normalizedRanges[joinRangeStartIdx];
+                this._normalizedRanges[joinRangeStartIdx] = joinRange.join(range);
+            }
+            else {
+                // First and last element are different - we need to replace the entire range
+                const joinRange = this._normalizedRanges[joinRangeStartIdx].join(this._normalizedRanges[joinRangeEndIdxExclusive - 1]).join(range);
+                this._normalizedRanges.splice(joinRangeStartIdx, joinRangeEndIdxExclusive - joinRangeStartIdx, joinRange);
+            }
+        }
+        contains(lineNumber) {
+            const rangeThatStartsBeforeEnd = (0, arraysFind_1.findLastMonotonous)(this._normalizedRanges, r => r.startLineNumber <= lineNumber);
+            return !!rangeThatStartsBeforeEnd && rangeThatStartsBeforeEnd.endLineNumberExclusive > lineNumber;
+        }
+        intersects(range) {
+            const rangeThatStartsBeforeEnd = (0, arraysFind_1.findLastMonotonous)(this._normalizedRanges, r => r.startLineNumber < range.endLineNumberExclusive);
+            return !!rangeThatStartsBeforeEnd && rangeThatStartsBeforeEnd.endLineNumberExclusive > range.startLineNumber;
+        }
+        getUnion(other) {
+            if (this._normalizedRanges.length === 0) {
+                return other;
+            }
+            if (other._normalizedRanges.length === 0) {
+                return this;
+            }
+            const result = [];
+            let i1 = 0;
+            let i2 = 0;
+            let current = null;
+            while (i1 < this._normalizedRanges.length || i2 < other._normalizedRanges.length) {
+                let next = null;
+                if (i1 < this._normalizedRanges.length && i2 < other._normalizedRanges.length) {
+                    const lineRange1 = this._normalizedRanges[i1];
+                    const lineRange2 = other._normalizedRanges[i2];
+                    if (lineRange1.startLineNumber < lineRange2.startLineNumber) {
+                        next = lineRange1;
+                        i1++;
+                    }
+                    else {
+                        next = lineRange2;
+                        i2++;
+                    }
+                }
+                else if (i1 < this._normalizedRanges.length) {
+                    next = this._normalizedRanges[i1];
+                    i1++;
+                }
+                else {
+                    next = other._normalizedRanges[i2];
+                    i2++;
+                }
+                if (current === null) {
+                    current = next;
+                }
+                else {
+                    if (current.endLineNumberExclusive >= next.startLineNumber) {
+                        // merge
+                        current = new LineRange(current.startLineNumber, Math.max(current.endLineNumberExclusive, next.endLineNumberExclusive));
+                    }
+                    else {
+                        // push
+                        result.push(current);
+                        current = next;
+                    }
+                }
+            }
+            if (current !== null) {
+                result.push(current);
+            }
+            return new LineRangeSet(result);
+        }
+        /**
+         * Subtracts all ranges in this set from `range` and returns the result.
+         */
+        subtractFrom(range) {
+            // idx of first element that touches range or that is after range
+            const joinRangeStartIdx = (0, arraysFind_1.findFirstIdxMonotonousOrArrLen)(this._normalizedRanges, r => r.endLineNumberExclusive >= range.startLineNumber);
+            // idx of element after { last element that touches range or that is before range }
+            const joinRangeEndIdxExclusive = (0, arraysFind_1.findLastIdxMonotonous)(this._normalizedRanges, r => r.startLineNumber <= range.endLineNumberExclusive) + 1;
+            if (joinRangeStartIdx === joinRangeEndIdxExclusive) {
+                return new LineRangeSet([range]);
+            }
+            const result = [];
+            let startLineNumber = range.startLineNumber;
+            for (let i = joinRangeStartIdx; i < joinRangeEndIdxExclusive; i++) {
+                const r = this._normalizedRanges[i];
+                if (r.startLineNumber > startLineNumber) {
+                    result.push(new LineRange(startLineNumber, r.startLineNumber));
+                }
+                startLineNumber = r.endLineNumberExclusive;
+            }
+            if (startLineNumber < range.endLineNumberExclusive) {
+                result.push(new LineRange(startLineNumber, range.endLineNumberExclusive));
+            }
+            return new LineRangeSet(result);
+        }
+        toString() {
+            return this._normalizedRanges.map(r => r.toString()).join(', ');
+        }
+        getIntersection(other) {
+            const result = [];
+            let i1 = 0;
+            let i2 = 0;
+            while (i1 < this._normalizedRanges.length && i2 < other._normalizedRanges.length) {
+                const r1 = this._normalizedRanges[i1];
+                const r2 = other._normalizedRanges[i2];
+                const i = r1.intersect(r2);
+                if (i && !i.isEmpty) {
+                    result.push(i);
+                }
+                if (r1.endLineNumberExclusive < r2.endLineNumberExclusive) {
+                    i1++;
+                }
+                else {
+                    i2++;
+                }
+            }
+            return new LineRangeSet(result);
+        }
+        getWithDelta(value) {
+            return new LineRangeSet(this._normalizedRanges.map(r => r.delta(value)));
+        }
+    }
+    exports.LineRangeSet = LineRangeSet;
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[43/*vs/editor/common/core/selection*/], __M([0/*require*/,1/*exports*/,4/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/]), function (require, exports, position_1, range_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Selection = void 0;
@@ -8140,41 +11140,101 @@ define(__m[33/*vs/editor/common/core/selection*/], __M([0/*require*/,1/*exports*
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[34/*vs/editor/common/core/wordCharacterClassifier*/], __M([0/*require*/,1/*exports*/,20/*vs/editor/common/core/characterClassifier*/]), function (require, exports, characterClassifier_1) {
+define(__m[44/*vs/editor/common/core/wordCharacterClassifier*/], __M([0/*require*/,1/*exports*/,23/*vs/base/common/map*/,29/*vs/editor/common/core/characterClassifier*/]), function (require, exports, map_1, characterClassifier_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getMapForWordSeparators = exports.WordCharacterClassifier = void 0;
+    exports.WordCharacterClassifier = void 0;
+    exports.getMapForWordSeparators = getMapForWordSeparators;
     class WordCharacterClassifier extends characterClassifier_1.CharacterClassifier {
-        constructor(wordSeparators) {
+        constructor(wordSeparators, intlSegmenterLocales) {
             super(0 /* WordCharacterClass.Regular */);
+            this._segmenter = null;
+            this._cachedLine = null;
+            this._cachedSegments = [];
+            this.intlSegmenterLocales = intlSegmenterLocales;
+            if (this.intlSegmenterLocales.length > 0) {
+                this._segmenter = new Intl.Segmenter(this.intlSegmenterLocales, { granularity: 'word' });
+            }
+            else {
+                this._segmenter = null;
+            }
             for (let i = 0, len = wordSeparators.length; i < len; i++) {
                 this.set(wordSeparators.charCodeAt(i), 2 /* WordCharacterClass.WordSeparator */);
             }
             this.set(32 /* CharCode.Space */, 1 /* WordCharacterClass.Whitespace */);
             this.set(9 /* CharCode.Tab */, 1 /* WordCharacterClass.Whitespace */);
         }
+        findPrevIntlWordBeforeOrAtOffset(line, offset) {
+            let candidate = null;
+            for (const segment of this._getIntlSegmenterWordsOnLine(line)) {
+                if (segment.index > offset) {
+                    break;
+                }
+                candidate = segment;
+            }
+            return candidate;
+        }
+        findNextIntlWordAtOrAfterOffset(lineContent, offset) {
+            for (const segment of this._getIntlSegmenterWordsOnLine(lineContent)) {
+                if (segment.index < offset) {
+                    continue;
+                }
+                return segment;
+            }
+            return null;
+        }
+        _getIntlSegmenterWordsOnLine(line) {
+            if (!this._segmenter) {
+                return [];
+            }
+            // Check if the line has changed from the previous call
+            if (this._cachedLine === line) {
+                return this._cachedSegments;
+            }
+            // Update the cache with the new line
+            this._cachedLine = line;
+            this._cachedSegments = this._filterWordSegments(this._segmenter.segment(line));
+            return this._cachedSegments;
+        }
+        _filterWordSegments(segments) {
+            const result = [];
+            for (const segment of segments) {
+                if (this._isWordLike(segment)) {
+                    result.push(segment);
+                }
+            }
+            return result;
+        }
+        _isWordLike(segment) {
+            if (segment.isWordLike) {
+                return true;
+            }
+            return false;
+        }
     }
     exports.WordCharacterClassifier = WordCharacterClassifier;
-    function once(computeFn) {
-        const cache = {}; // TODO@Alex unbounded cache
-        return (input) => {
-            if (!cache.hasOwnProperty(input)) {
-                cache[input] = computeFn(input);
-            }
-            return cache[input];
-        };
+    const wordClassifierCache = new map_1.LRUCache(10);
+    function getMapForWordSeparators(wordSeparators, intlSegmenterLocales) {
+        const key = `${wordSeparators}/${intlSegmenterLocales.join(',')}`;
+        let result = wordClassifierCache.get(key);
+        if (!result) {
+            result = new WordCharacterClassifier(wordSeparators, intlSegmenterLocales);
+            wordClassifierCache.set(key, result);
+        }
+        return result;
     }
-    exports.getMapForWordSeparators = once((input) => new WordCharacterClassifier(input));
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[22/*vs/editor/common/core/wordHelper*/], __M([0/*require*/,1/*exports*/,15/*vs/base/common/iterator*/,16/*vs/base/common/linkedList*/]), function (require, exports, iterator_1, linkedList_1) {
+define(__m[30/*vs/editor/common/core/wordHelper*/], __M([0/*require*/,1/*exports*/,21/*vs/base/common/iterator*/,22/*vs/base/common/linkedList*/]), function (require, exports, iterator_1, linkedList_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getWordAtText = exports.ensureValidWordDefinition = exports.DEFAULT_WORD_REGEXP = exports.USUAL_WORD_SEPARATORS = void 0;
+    exports.DEFAULT_WORD_REGEXP = exports.USUAL_WORD_SEPARATORS = void 0;
+    exports.ensureValidWordDefinition = ensureValidWordDefinition;
+    exports.getWordAtText = getWordAtText;
     exports.USUAL_WORD_SEPARATORS = '`~!@#$%^&*()-=+[{]}\\|;:\'",.<>/?';
     /**
      * Create a word definition regular expression based on default word separators.
@@ -8219,7 +11279,6 @@ define(__m[22/*vs/editor/common/core/wordHelper*/], __M([0/*require*/,1/*exports
         result.lastIndex = 0;
         return result;
     }
-    exports.ensureValidWordDefinition = ensureValidWordDefinition;
     const _defaultConfig = new linkedList_1.LinkedList();
     _defaultConfig.unshift({
         maxLen: 1000,
@@ -8227,6 +11286,8 @@ define(__m[22/*vs/editor/common/core/wordHelper*/], __M([0/*require*/,1/*exports
         timeBudget: 150
     });
     function getWordAtText(column, wordDefinition, text, textOffset, config) {
+        // Ensure the regex has the 'g' flag, otherwise this will loop forever
+        wordDefinition = ensureValidWordDefinition(wordDefinition);
         if (!config) {
             config = iterator_1.Iterable.first(_defaultConfig);
         }
@@ -8279,7 +11340,6 @@ define(__m[22/*vs/editor/common/core/wordHelper*/], __M([0/*require*/,1/*exports
         }
         return null;
     }
-    exports.getWordAtText = getWordAtText;
     function _findRegexMatchEnclosingPosition(wordDefinition, text, pos, stopPos) {
         let match;
         while (match = wordDefinition.exec(text)) {
@@ -8299,16 +11359,16 @@ define(__m[22/*vs/editor/common/core/wordHelper*/], __M([0/*require*/,1/*exports
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[7/*vs/editor/common/diff/algorithms/diffAlgorithm*/], __M([0/*require*/,1/*exports*/,4/*vs/base/common/errors*/,6/*vs/editor/common/core/offsetRange*/]), function (require, exports, errors_1, offsetRange_1) {
+define(__m[8/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/diffAlgorithm*/], __M([0/*require*/,1/*exports*/,7/*vs/base/common/arrays*/,5/*vs/base/common/errors*/,3/*vs/editor/common/core/offsetRange*/]), function (require, exports, arrays_1, errors_1, offsetRange_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.DateTimeout = exports.InfiniteTimeout = exports.SequenceDiff = exports.DiffAlgorithmResult = void 0;
+    exports.DateTimeout = exports.InfiniteTimeout = exports.OffsetPair = exports.SequenceDiff = exports.DiffAlgorithmResult = void 0;
     class DiffAlgorithmResult {
         static trivial(seq1, seq2) {
-            return new DiffAlgorithmResult([new SequenceDiff(new offsetRange_1.OffsetRange(0, seq1.length), new offsetRange_1.OffsetRange(0, seq2.length))], false);
+            return new DiffAlgorithmResult([new SequenceDiff(offsetRange_1.OffsetRange.ofLength(seq1.length), offsetRange_1.OffsetRange.ofLength(seq2.length))], false);
         }
         static trivialTimedOut(seq1, seq2) {
-            return new DiffAlgorithmResult([new SequenceDiff(new offsetRange_1.OffsetRange(0, seq1.length), new offsetRange_1.OffsetRange(0, seq2.length))], true);
+            return new DiffAlgorithmResult([new SequenceDiff(offsetRange_1.OffsetRange.ofLength(seq1.length), offsetRange_1.OffsetRange.ofLength(seq2.length))], true);
         }
         constructor(diffs, 
         /**
@@ -8322,11 +11382,21 @@ define(__m[7/*vs/editor/common/diff/algorithms/diffAlgorithm*/], __M([0/*require
     }
     exports.DiffAlgorithmResult = DiffAlgorithmResult;
     class SequenceDiff {
+        static invert(sequenceDiffs, doc1Length) {
+            const result = [];
+            (0, arrays_1.forEachAdjacent)(sequenceDiffs, (a, b) => {
+                result.push(SequenceDiff.fromOffsetPairs(a ? a.getEndExclusives() : OffsetPair.zero, b ? b.getStarts() : new OffsetPair(doc1Length, (a ? a.seq2Range.endExclusive - a.seq1Range.endExclusive : 0) + doc1Length)));
+            });
+            return result;
+        }
+        static fromOffsetPairs(start, endExclusive) {
+            return new SequenceDiff(new offsetRange_1.OffsetRange(start.offset1, endExclusive.offset1), new offsetRange_1.OffsetRange(start.offset2, endExclusive.offset2));
+        }
         constructor(seq1Range, seq2Range) {
             this.seq1Range = seq1Range;
             this.seq2Range = seq2Range;
         }
-        reverse() {
+        swap() {
             return new SequenceDiff(this.seq2Range, this.seq1Range);
         }
         toString() {
@@ -8335,15 +11405,68 @@ define(__m[7/*vs/editor/common/diff/algorithms/diffAlgorithm*/], __M([0/*require
         join(other) {
             return new SequenceDiff(this.seq1Range.join(other.seq1Range), this.seq2Range.join(other.seq2Range));
         }
+        delta(offset) {
+            if (offset === 0) {
+                return this;
+            }
+            return new SequenceDiff(this.seq1Range.delta(offset), this.seq2Range.delta(offset));
+        }
+        deltaStart(offset) {
+            if (offset === 0) {
+                return this;
+            }
+            return new SequenceDiff(this.seq1Range.deltaStart(offset), this.seq2Range.deltaStart(offset));
+        }
+        deltaEnd(offset) {
+            if (offset === 0) {
+                return this;
+            }
+            return new SequenceDiff(this.seq1Range.deltaEnd(offset), this.seq2Range.deltaEnd(offset));
+        }
+        intersect(other) {
+            const i1 = this.seq1Range.intersect(other.seq1Range);
+            const i2 = this.seq2Range.intersect(other.seq2Range);
+            if (!i1 || !i2) {
+                return undefined;
+            }
+            return new SequenceDiff(i1, i2);
+        }
+        getStarts() {
+            return new OffsetPair(this.seq1Range.start, this.seq2Range.start);
+        }
+        getEndExclusives() {
+            return new OffsetPair(this.seq1Range.endExclusive, this.seq2Range.endExclusive);
+        }
     }
     exports.SequenceDiff = SequenceDiff;
+    class OffsetPair {
+        constructor(offset1, offset2) {
+            this.offset1 = offset1;
+            this.offset2 = offset2;
+        }
+        toString() {
+            return `${this.offset1} <-> ${this.offset2}`;
+        }
+        delta(offset) {
+            if (offset === 0) {
+                return this;
+            }
+            return new OffsetPair(this.offset1 + offset, this.offset2 + offset);
+        }
+        equals(other) {
+            return this.offset1 === other.offset1 && this.offset2 === other.offset2;
+        }
+    }
+    exports.OffsetPair = OffsetPair;
+    OffsetPair.zero = new OffsetPair(0, 0);
+    OffsetPair.max = new OffsetPair(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
     class InfiniteTimeout {
         isValid() {
             return true;
         }
     }
-    InfiniteTimeout.instance = new InfiniteTimeout();
     exports.InfiniteTimeout = InfiniteTimeout;
+    InfiniteTimeout.instance = new InfiniteTimeout();
     class DateTimeout {
         constructor(timeout) {
             this.timeout = timeout;
@@ -8371,154 +11494,7 @@ define(__m[7/*vs/editor/common/diff/algorithms/diffAlgorithm*/], __M([0/*require
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[35/*vs/editor/common/diff/algorithms/joinSequenceDiffs*/], __M([0/*require*/,1/*exports*/,6/*vs/editor/common/core/offsetRange*/,7/*vs/editor/common/diff/algorithms/diffAlgorithm*/]), function (require, exports, offsetRange_1, diffAlgorithm_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.shiftSequenceDiffs = exports.joinSequenceDiffs = exports.smoothenSequenceDiffs = exports.optimizeSequenceDiffs = void 0;
-    function optimizeSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
-        let result = sequenceDiffs;
-        result = joinSequenceDiffs(sequence1, sequence2, result);
-        result = shiftSequenceDiffs(sequence1, sequence2, result);
-        return result;
-    }
-    exports.optimizeSequenceDiffs = optimizeSequenceDiffs;
-    function smoothenSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
-        const result = [];
-        for (const s of sequenceDiffs) {
-            const last = result[result.length - 1];
-            if (!last) {
-                result.push(s);
-                continue;
-            }
-            if (s.seq1Range.start - last.seq1Range.endExclusive <= 2 || s.seq2Range.start - last.seq2Range.endExclusive <= 2) {
-                result[result.length - 1] = new diffAlgorithm_1.SequenceDiff(last.seq1Range.join(s.seq1Range), last.seq2Range.join(s.seq2Range));
-            }
-            else {
-                result.push(s);
-            }
-        }
-        return result;
-    }
-    exports.smoothenSequenceDiffs = smoothenSequenceDiffs;
-    /**
-     * This function fixes issues like this:
-     * ```
-     * import { Baz, Bar } from "foo";
-     * ```
-     * <->
-     * ```
-     * import { Baz, Bar, Foo } from "foo";
-     * ```
-     * Computed diff: [ {Add "," after Bar}, {Add "Foo " after space} }
-     * Improved diff: [{Add ", Foo" after Bar}]
-     */
-    function joinSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
-        const result = [];
-        if (sequenceDiffs.length > 0) {
-            result.push(sequenceDiffs[0]);
-        }
-        for (let i = 1; i < sequenceDiffs.length; i++) {
-            const lastResult = result[result.length - 1];
-            const cur = sequenceDiffs[i];
-            if (cur.seq1Range.isEmpty) {
-                let all = true;
-                const length = cur.seq1Range.start - lastResult.seq1Range.endExclusive;
-                for (let i = 1; i <= length; i++) {
-                    if (sequence2.getElement(cur.seq2Range.start - i) !== sequence2.getElement(cur.seq2Range.endExclusive - i)) {
-                        all = false;
-                        break;
-                    }
-                }
-                if (all) {
-                    // Merge previous and current diff
-                    result[result.length - 1] = new diffAlgorithm_1.SequenceDiff(lastResult.seq1Range, new offsetRange_1.OffsetRange(lastResult.seq2Range.start, cur.seq2Range.endExclusive - length));
-                    continue;
-                }
-            }
-            result.push(cur);
-        }
-        return result;
-    }
-    exports.joinSequenceDiffs = joinSequenceDiffs;
-    // align character level diffs at whitespace characters
-    // import { IBar } from "foo";
-    // import { I[Arr, I]Bar } from "foo";
-    // ->
-    // import { [IArr, ]IBar } from "foo";
-    // import { ITransaction, observableValue, transaction } from 'vs/base/common/observable';
-    // import { ITransaction, observable[FromEvent, observable]Value, transaction } from 'vs/base/common/observable';
-    // ->
-    // import { ITransaction, [observableFromEvent, ]observableValue, transaction } from 'vs/base/common/observable';
-    // collectBrackets(level + 1, levelPerBracketType);
-    // collectBrackets(level + 1, levelPerBracket[ + 1, levelPerBracket]Type);
-    // ->
-    // collectBrackets(level + 1, [levelPerBracket + 1, ]levelPerBracketType);
-    function shiftSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
-        if (!sequence1.getBoundaryScore || !sequence2.getBoundaryScore) {
-            return sequenceDiffs;
-        }
-        for (let i = 0; i < sequenceDiffs.length; i++) {
-            const diff = sequenceDiffs[i];
-            if (diff.seq1Range.isEmpty) {
-                const seq2PrevEndExclusive = (i > 0 ? sequenceDiffs[i - 1].seq2Range.endExclusive : -1);
-                const seq2NextStart = (i + 1 < sequenceDiffs.length ? sequenceDiffs[i + 1].seq2Range.start : sequence2.length);
-                sequenceDiffs[i] = shiftDiffToBetterPosition(diff, sequence1, sequence2, seq2NextStart, seq2PrevEndExclusive);
-            }
-            else if (diff.seq2Range.isEmpty) {
-                const seq1PrevEndExclusive = (i > 0 ? sequenceDiffs[i - 1].seq1Range.endExclusive : -1);
-                const seq1NextStart = (i + 1 < sequenceDiffs.length ? sequenceDiffs[i + 1].seq1Range.start : sequence1.length);
-                sequenceDiffs[i] = shiftDiffToBetterPosition(diff.reverse(), sequence2, sequence1, seq1NextStart, seq1PrevEndExclusive).reverse();
-            }
-        }
-        return sequenceDiffs;
-    }
-    exports.shiftSequenceDiffs = shiftSequenceDiffs;
-    function shiftDiffToBetterPosition(diff, sequence1, sequence2, seq2NextStart, seq2PrevEndExclusive) {
-        const maxShiftLimit = 20; // To prevent performance issues
-        // don't touch previous or next!
-        let deltaBefore = 1;
-        while (diff.seq2Range.start - deltaBefore > seq2PrevEndExclusive &&
-            sequence2.getElement(diff.seq2Range.start - deltaBefore) ===
-                sequence2.getElement(diff.seq2Range.endExclusive - deltaBefore) && deltaBefore < maxShiftLimit) {
-            deltaBefore++;
-        }
-        deltaBefore--;
-        let deltaAfter = 0;
-        while (diff.seq2Range.start + deltaAfter < seq2NextStart &&
-            sequence2.getElement(diff.seq2Range.start + deltaAfter) ===
-                sequence2.getElement(diff.seq2Range.endExclusive + deltaAfter) && deltaAfter < maxShiftLimit) {
-            deltaAfter++;
-        }
-        if (deltaBefore === 0 && deltaAfter === 0) {
-            return diff;
-        }
-        // Visualize `[sequence1.text, diff.seq1Range.start + deltaAfter]`
-        // and `[sequence2.text, diff.seq2Range.start + deltaAfter, diff.seq2Range.endExclusive + deltaAfter]`
-        let bestDelta = 0;
-        let bestScore = -1;
-        // find best scored delta
-        for (let delta = -deltaBefore; delta <= deltaAfter; delta++) {
-            const seq2OffsetStart = diff.seq2Range.start + delta;
-            const seq2OffsetEndExclusive = diff.seq2Range.endExclusive + delta;
-            const seq1Offset = diff.seq1Range.start + delta;
-            const score = sequence1.getBoundaryScore(seq1Offset) + sequence2.getBoundaryScore(seq2OffsetStart) + sequence2.getBoundaryScore(seq2OffsetEndExclusive);
-            if (score > bestScore) {
-                bestScore = score;
-                bestDelta = delta;
-            }
-        }
-        if (bestDelta !== 0) {
-            return new diffAlgorithm_1.SequenceDiff(diff.seq1Range.delta(bestDelta), diff.seq2Range.delta(bestDelta));
-        }
-        return diff;
-    }
-});
-
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-define(__m[36/*vs/editor/common/diff/algorithms/myersDiffAlgorithm*/], __M([0/*require*/,1/*exports*/,6/*vs/editor/common/core/offsetRange*/,7/*vs/editor/common/diff/algorithms/diffAlgorithm*/]), function (require, exports, offsetRange_1, diffAlgorithm_1) {
+define(__m[31/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/myersDiffAlgorithm*/], __M([0/*require*/,1/*exports*/,3/*vs/editor/common/core/offsetRange*/,8/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/diffAlgorithm*/]), function (require, exports, offsetRange_1, diffAlgorithm_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.MyersDiffAlgorithm = void 0;
@@ -8532,8 +11508,10 @@ define(__m[36/*vs/editor/common/diff/algorithms/myersDiffAlgorithm*/], __M([0/*r
             if (seq1.length === 0 || seq2.length === 0) {
                 return diffAlgorithm_1.DiffAlgorithmResult.trivial(seq1, seq2);
             }
+            const seqX = seq1; // Text on the x axis
+            const seqY = seq2; // Text on the y axis
             function getXAfterSnake(x, y) {
-                while (x < seq1.length && y < seq2.length && seq1.getElement(x) === seq2.getElement(y)) {
+                while (x < seqX.length && y < seqY.length && seqX.getElement(x) === seqY.getElement(y)) {
                     x++;
                     y++;
                 }
@@ -8543,6 +11521,7 @@ define(__m[36/*vs/editor/common/diff/algorithms/myersDiffAlgorithm*/], __M([0/*r
             // V[k]: X value of longest d-line that ends in diagonal k.
             // d-line: path from (0,0) to (x,y) that uses exactly d non-diagonals.
             // diagonal k: Set of points (x,y) with x-y = k.
+            // k=1 -> (1,0),(2,1)
             const V = new FastInt32Array();
             V.set(0, getXAfterSnake(0, 0));
             const paths = new FastArrayNegativeIndices();
@@ -8550,27 +11529,39 @@ define(__m[36/*vs/editor/common/diff/algorithms/myersDiffAlgorithm*/], __M([0/*r
             let k = 0;
             loop: while (true) {
                 d++;
-                for (k = -d; k <= d; k += 2) {
-                    if (!timeout.isValid()) {
-                        return diffAlgorithm_1.DiffAlgorithmResult.trivialTimedOut(seq1, seq2);
-                    }
-                    const maxXofDLineTop = k === d ? -1 : V.get(k + 1); // We take a vertical non-diagonal
-                    const maxXofDLineLeft = k === -d ? -1 : V.get(k - 1) + 1; // We take a horizontal non-diagonal (+1 x)
-                    const x = Math.min(Math.max(maxXofDLineTop, maxXofDLineLeft), seq1.length);
+                if (!timeout.isValid()) {
+                    return diffAlgorithm_1.DiffAlgorithmResult.trivialTimedOut(seqX, seqY);
+                }
+                // The paper has `for (k = -d; k <= d; k += 2)`, but we can ignore diagonals that cannot influence the result.
+                const lowerBound = -Math.min(d, seqY.length + (d % 2));
+                const upperBound = Math.min(d, seqX.length + (d % 2));
+                for (k = lowerBound; k <= upperBound; k += 2) {
+                    let step = 0;
+                    // We can use the X values of (d-1)-lines to compute X value of the longest d-lines.
+                    const maxXofDLineTop = k === upperBound ? -1 : V.get(k + 1); // We take a vertical non-diagonal (add a symbol in seqX)
+                    const maxXofDLineLeft = k === lowerBound ? -1 : V.get(k - 1) + 1; // We take a horizontal non-diagonal (+1 x) (delete a symbol in seqX)
+                    step++;
+                    const x = Math.min(Math.max(maxXofDLineTop, maxXofDLineLeft), seqX.length);
                     const y = x - k;
+                    step++;
+                    if (x > seqX.length || y > seqY.length) {
+                        // This diagonal is irrelevant for the result.
+                        // TODO: Don't pay the cost for this in the next iteration.
+                        continue;
+                    }
                     const newMaxX = getXAfterSnake(x, y);
                     V.set(k, newMaxX);
                     const lastPath = x === maxXofDLineTop ? paths.get(k + 1) : paths.get(k - 1);
                     paths.set(k, newMaxX !== x ? new SnakePath(lastPath, x, y, newMaxX - x) : lastPath);
-                    if (V.get(k) === seq1.length && V.get(k) - k === seq2.length) {
+                    if (V.get(k) === seqX.length && V.get(k) - k === seqY.length) {
                         break loop;
                     }
                 }
             }
             let path = paths.get(k);
             const result = [];
-            let lastAligningPosS1 = seq1.length;
-            let lastAligningPosS2 = seq2.length;
+            let lastAligningPosS1 = seqX.length;
+            let lastAligningPosS2 = seqY.length;
             while (true) {
                 const endX = path ? path.x + path.length : 0;
                 const endY = path ? path.y + path.length : 0;
@@ -8667,10 +11658,430 @@ define(__m[36/*vs/editor/common/diff/algorithms/myersDiffAlgorithm*/], __M([0/*r
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[37/*vs/editor/common/diff/algorithms/utils*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[45/*vs/editor/common/diff/defaultLinesDiffComputer/heuristicSequenceOptimizations*/], __M([0/*require*/,1/*exports*/,7/*vs/base/common/arrays*/,3/*vs/editor/common/core/offsetRange*/,8/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/diffAlgorithm*/]), function (require, exports, arrays_1, offsetRange_1, diffAlgorithm_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Array2D = void 0;
+    exports.optimizeSequenceDiffs = optimizeSequenceDiffs;
+    exports.removeShortMatches = removeShortMatches;
+    exports.extendDiffsToEntireWordIfAppropriate = extendDiffsToEntireWordIfAppropriate;
+    exports.removeVeryShortMatchingLinesBetweenDiffs = removeVeryShortMatchingLinesBetweenDiffs;
+    exports.removeVeryShortMatchingTextBetweenLongDiffs = removeVeryShortMatchingTextBetweenLongDiffs;
+    function optimizeSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
+        let result = sequenceDiffs;
+        result = joinSequenceDiffsByShifting(sequence1, sequence2, result);
+        // Sometimes, calling this function twice improves the result.
+        // Uncomment the second invocation and run the tests to see the difference.
+        result = joinSequenceDiffsByShifting(sequence1, sequence2, result);
+        result = shiftSequenceDiffs(sequence1, sequence2, result);
+        return result;
+    }
+    /**
+     * This function fixes issues like this:
+     * ```
+     * import { Baz, Bar } from "foo";
+     * ```
+     * <->
+     * ```
+     * import { Baz, Bar, Foo } from "foo";
+     * ```
+     * Computed diff: [ {Add "," after Bar}, {Add "Foo " after space} }
+     * Improved diff: [{Add ", Foo" after Bar}]
+     */
+    function joinSequenceDiffsByShifting(sequence1, sequence2, sequenceDiffs) {
+        if (sequenceDiffs.length === 0) {
+            return sequenceDiffs;
+        }
+        const result = [];
+        result.push(sequenceDiffs[0]);
+        // First move them all to the left as much as possible and join them if possible
+        for (let i = 1; i < sequenceDiffs.length; i++) {
+            const prevResult = result[result.length - 1];
+            let cur = sequenceDiffs[i];
+            if (cur.seq1Range.isEmpty || cur.seq2Range.isEmpty) {
+                const length = cur.seq1Range.start - prevResult.seq1Range.endExclusive;
+                let d;
+                for (d = 1; d <= length; d++) {
+                    if (sequence1.getElement(cur.seq1Range.start - d) !== sequence1.getElement(cur.seq1Range.endExclusive - d) ||
+                        sequence2.getElement(cur.seq2Range.start - d) !== sequence2.getElement(cur.seq2Range.endExclusive - d)) {
+                        break;
+                    }
+                }
+                d--;
+                if (d === length) {
+                    // Merge previous and current diff
+                    result[result.length - 1] = new diffAlgorithm_1.SequenceDiff(new offsetRange_1.OffsetRange(prevResult.seq1Range.start, cur.seq1Range.endExclusive - length), new offsetRange_1.OffsetRange(prevResult.seq2Range.start, cur.seq2Range.endExclusive - length));
+                    continue;
+                }
+                cur = cur.delta(-d);
+            }
+            result.push(cur);
+        }
+        const result2 = [];
+        // Then move them all to the right and join them again if possible
+        for (let i = 0; i < result.length - 1; i++) {
+            const nextResult = result[i + 1];
+            let cur = result[i];
+            if (cur.seq1Range.isEmpty || cur.seq2Range.isEmpty) {
+                const length = nextResult.seq1Range.start - cur.seq1Range.endExclusive;
+                let d;
+                for (d = 0; d < length; d++) {
+                    if (!sequence1.isStronglyEqual(cur.seq1Range.start + d, cur.seq1Range.endExclusive + d) ||
+                        !sequence2.isStronglyEqual(cur.seq2Range.start + d, cur.seq2Range.endExclusive + d)) {
+                        break;
+                    }
+                }
+                if (d === length) {
+                    // Merge previous and current diff, write to result!
+                    result[i + 1] = new diffAlgorithm_1.SequenceDiff(new offsetRange_1.OffsetRange(cur.seq1Range.start + length, nextResult.seq1Range.endExclusive), new offsetRange_1.OffsetRange(cur.seq2Range.start + length, nextResult.seq2Range.endExclusive));
+                    continue;
+                }
+                if (d > 0) {
+                    cur = cur.delta(d);
+                }
+            }
+            result2.push(cur);
+        }
+        if (result.length > 0) {
+            result2.push(result[result.length - 1]);
+        }
+        return result2;
+    }
+    // align character level diffs at whitespace characters
+    // import { IBar } from "foo";
+    // import { I[Arr, I]Bar } from "foo";
+    // ->
+    // import { [IArr, ]IBar } from "foo";
+    // import { ITransaction, observableValue, transaction } from 'vs/base/common/observable';
+    // import { ITransaction, observable[FromEvent, observable]Value, transaction } from 'vs/base/common/observable';
+    // ->
+    // import { ITransaction, [observableFromEvent, ]observableValue, transaction } from 'vs/base/common/observable';
+    // collectBrackets(level + 1, levelPerBracketType);
+    // collectBrackets(level + 1, levelPerBracket[ + 1, levelPerBracket]Type);
+    // ->
+    // collectBrackets(level + 1, [levelPerBracket + 1, ]levelPerBracketType);
+    function shiftSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
+        if (!sequence1.getBoundaryScore || !sequence2.getBoundaryScore) {
+            return sequenceDiffs;
+        }
+        for (let i = 0; i < sequenceDiffs.length; i++) {
+            const prevDiff = (i > 0 ? sequenceDiffs[i - 1] : undefined);
+            const diff = sequenceDiffs[i];
+            const nextDiff = (i + 1 < sequenceDiffs.length ? sequenceDiffs[i + 1] : undefined);
+            const seq1ValidRange = new offsetRange_1.OffsetRange(prevDiff ? prevDiff.seq1Range.endExclusive + 1 : 0, nextDiff ? nextDiff.seq1Range.start - 1 : sequence1.length);
+            const seq2ValidRange = new offsetRange_1.OffsetRange(prevDiff ? prevDiff.seq2Range.endExclusive + 1 : 0, nextDiff ? nextDiff.seq2Range.start - 1 : sequence2.length);
+            if (diff.seq1Range.isEmpty) {
+                sequenceDiffs[i] = shiftDiffToBetterPosition(diff, sequence1, sequence2, seq1ValidRange, seq2ValidRange);
+            }
+            else if (diff.seq2Range.isEmpty) {
+                sequenceDiffs[i] = shiftDiffToBetterPosition(diff.swap(), sequence2, sequence1, seq2ValidRange, seq1ValidRange).swap();
+            }
+        }
+        return sequenceDiffs;
+    }
+    function shiftDiffToBetterPosition(diff, sequence1, sequence2, seq1ValidRange, seq2ValidRange) {
+        const maxShiftLimit = 100; // To prevent performance issues
+        // don't touch previous or next!
+        let deltaBefore = 1;
+        while (diff.seq1Range.start - deltaBefore >= seq1ValidRange.start &&
+            diff.seq2Range.start - deltaBefore >= seq2ValidRange.start &&
+            sequence2.isStronglyEqual(diff.seq2Range.start - deltaBefore, diff.seq2Range.endExclusive - deltaBefore) && deltaBefore < maxShiftLimit) {
+            deltaBefore++;
+        }
+        deltaBefore--;
+        let deltaAfter = 0;
+        while (diff.seq1Range.start + deltaAfter < seq1ValidRange.endExclusive &&
+            diff.seq2Range.endExclusive + deltaAfter < seq2ValidRange.endExclusive &&
+            sequence2.isStronglyEqual(diff.seq2Range.start + deltaAfter, diff.seq2Range.endExclusive + deltaAfter) && deltaAfter < maxShiftLimit) {
+            deltaAfter++;
+        }
+        if (deltaBefore === 0 && deltaAfter === 0) {
+            return diff;
+        }
+        // Visualize `[sequence1.text, diff.seq1Range.start + deltaAfter]`
+        // and `[sequence2.text, diff.seq2Range.start + deltaAfter, diff.seq2Range.endExclusive + deltaAfter]`
+        let bestDelta = 0;
+        let bestScore = -1;
+        // find best scored delta
+        for (let delta = -deltaBefore; delta <= deltaAfter; delta++) {
+            const seq2OffsetStart = diff.seq2Range.start + delta;
+            const seq2OffsetEndExclusive = diff.seq2Range.endExclusive + delta;
+            const seq1Offset = diff.seq1Range.start + delta;
+            const score = sequence1.getBoundaryScore(seq1Offset) + sequence2.getBoundaryScore(seq2OffsetStart) + sequence2.getBoundaryScore(seq2OffsetEndExclusive);
+            if (score > bestScore) {
+                bestScore = score;
+                bestDelta = delta;
+            }
+        }
+        return diff.delta(bestDelta);
+    }
+    function removeShortMatches(sequence1, sequence2, sequenceDiffs) {
+        const result = [];
+        for (const s of sequenceDiffs) {
+            const last = result[result.length - 1];
+            if (!last) {
+                result.push(s);
+                continue;
+            }
+            if (s.seq1Range.start - last.seq1Range.endExclusive <= 2 || s.seq2Range.start - last.seq2Range.endExclusive <= 2) {
+                result[result.length - 1] = new diffAlgorithm_1.SequenceDiff(last.seq1Range.join(s.seq1Range), last.seq2Range.join(s.seq2Range));
+            }
+            else {
+                result.push(s);
+            }
+        }
+        return result;
+    }
+    function extendDiffsToEntireWordIfAppropriate(sequence1, sequence2, sequenceDiffs) {
+        const equalMappings = diffAlgorithm_1.SequenceDiff.invert(sequenceDiffs, sequence1.length);
+        const additional = [];
+        let lastPoint = new diffAlgorithm_1.OffsetPair(0, 0);
+        function scanWord(pair, equalMapping) {
+            if (pair.offset1 < lastPoint.offset1 || pair.offset2 < lastPoint.offset2) {
+                return;
+            }
+            const w1 = sequence1.findWordContaining(pair.offset1);
+            const w2 = sequence2.findWordContaining(pair.offset2);
+            if (!w1 || !w2) {
+                return;
+            }
+            let w = new diffAlgorithm_1.SequenceDiff(w1, w2);
+            const equalPart = w.intersect(equalMapping);
+            let equalChars1 = equalPart.seq1Range.length;
+            let equalChars2 = equalPart.seq2Range.length;
+            // The words do not touch previous equals mappings, as we would have processed them already.
+            // But they might touch the next ones.
+            while (equalMappings.length > 0) {
+                const next = equalMappings[0];
+                const intersects = next.seq1Range.intersects(w.seq1Range) || next.seq2Range.intersects(w.seq2Range);
+                if (!intersects) {
+                    break;
+                }
+                const v1 = sequence1.findWordContaining(next.seq1Range.start);
+                const v2 = sequence2.findWordContaining(next.seq2Range.start);
+                // Because there is an intersection, we know that the words are not empty.
+                const v = new diffAlgorithm_1.SequenceDiff(v1, v2);
+                const equalPart = v.intersect(next);
+                equalChars1 += equalPart.seq1Range.length;
+                equalChars2 += equalPart.seq2Range.length;
+                w = w.join(v);
+                if (w.seq1Range.endExclusive >= next.seq1Range.endExclusive) {
+                    // The word extends beyond the next equal mapping.
+                    equalMappings.shift();
+                }
+                else {
+                    break;
+                }
+            }
+            if (equalChars1 + equalChars2 < (w.seq1Range.length + w.seq2Range.length) * 2 / 3) {
+                additional.push(w);
+            }
+            lastPoint = w.getEndExclusives();
+        }
+        while (equalMappings.length > 0) {
+            const next = equalMappings.shift();
+            if (next.seq1Range.isEmpty) {
+                continue;
+            }
+            scanWord(next.getStarts(), next);
+            // The equal parts are not empty, so -1 gives us a character that is equal in both parts.
+            scanWord(next.getEndExclusives().delta(-1), next);
+        }
+        const merged = mergeSequenceDiffs(sequenceDiffs, additional);
+        return merged;
+    }
+    function mergeSequenceDiffs(sequenceDiffs1, sequenceDiffs2) {
+        const result = [];
+        while (sequenceDiffs1.length > 0 || sequenceDiffs2.length > 0) {
+            const sd1 = sequenceDiffs1[0];
+            const sd2 = sequenceDiffs2[0];
+            let next;
+            if (sd1 && (!sd2 || sd1.seq1Range.start < sd2.seq1Range.start)) {
+                next = sequenceDiffs1.shift();
+            }
+            else {
+                next = sequenceDiffs2.shift();
+            }
+            if (result.length > 0 && result[result.length - 1].seq1Range.endExclusive >= next.seq1Range.start) {
+                result[result.length - 1] = result[result.length - 1].join(next);
+            }
+            else {
+                result.push(next);
+            }
+        }
+        return result;
+    }
+    function removeVeryShortMatchingLinesBetweenDiffs(sequence1, _sequence2, sequenceDiffs) {
+        let diffs = sequenceDiffs;
+        if (diffs.length === 0) {
+            return diffs;
+        }
+        let counter = 0;
+        let shouldRepeat;
+        do {
+            shouldRepeat = false;
+            const result = [
+                diffs[0]
+            ];
+            for (let i = 1; i < diffs.length; i++) {
+                const cur = diffs[i];
+                const lastResult = result[result.length - 1];
+                function shouldJoinDiffs(before, after) {
+                    const unchangedRange = new offsetRange_1.OffsetRange(lastResult.seq1Range.endExclusive, cur.seq1Range.start);
+                    const unchangedText = sequence1.getText(unchangedRange);
+                    const unchangedTextWithoutWs = unchangedText.replace(/\s/g, '');
+                    if (unchangedTextWithoutWs.length <= 4
+                        && (before.seq1Range.length + before.seq2Range.length > 5 || after.seq1Range.length + after.seq2Range.length > 5)) {
+                        return true;
+                    }
+                    return false;
+                }
+                const shouldJoin = shouldJoinDiffs(lastResult, cur);
+                if (shouldJoin) {
+                    shouldRepeat = true;
+                    result[result.length - 1] = result[result.length - 1].join(cur);
+                }
+                else {
+                    result.push(cur);
+                }
+            }
+            diffs = result;
+        } while (counter++ < 10 && shouldRepeat);
+        return diffs;
+    }
+    function removeVeryShortMatchingTextBetweenLongDiffs(sequence1, sequence2, sequenceDiffs) {
+        let diffs = sequenceDiffs;
+        if (diffs.length === 0) {
+            return diffs;
+        }
+        let counter = 0;
+        let shouldRepeat;
+        do {
+            shouldRepeat = false;
+            const result = [
+                diffs[0]
+            ];
+            for (let i = 1; i < diffs.length; i++) {
+                const cur = diffs[i];
+                const lastResult = result[result.length - 1];
+                function shouldJoinDiffs(before, after) {
+                    const unchangedRange = new offsetRange_1.OffsetRange(lastResult.seq1Range.endExclusive, cur.seq1Range.start);
+                    const unchangedLineCount = sequence1.countLinesIn(unchangedRange);
+                    if (unchangedLineCount > 5 || unchangedRange.length > 500) {
+                        return false;
+                    }
+                    const unchangedText = sequence1.getText(unchangedRange).trim();
+                    if (unchangedText.length > 20 || unchangedText.split(/\r\n|\r|\n/).length > 1) {
+                        return false;
+                    }
+                    const beforeLineCount1 = sequence1.countLinesIn(before.seq1Range);
+                    const beforeSeq1Length = before.seq1Range.length;
+                    const beforeLineCount2 = sequence2.countLinesIn(before.seq2Range);
+                    const beforeSeq2Length = before.seq2Range.length;
+                    const afterLineCount1 = sequence1.countLinesIn(after.seq1Range);
+                    const afterSeq1Length = after.seq1Range.length;
+                    const afterLineCount2 = sequence2.countLinesIn(after.seq2Range);
+                    const afterSeq2Length = after.seq2Range.length;
+                    // TODO: Maybe a neural net can be used to derive the result from these numbers
+                    const max = 2 * 40 + 50;
+                    function cap(v) {
+                        return Math.min(v, max);
+                    }
+                    if (Math.pow(Math.pow(cap(beforeLineCount1 * 40 + beforeSeq1Length), 1.5) + Math.pow(cap(beforeLineCount2 * 40 + beforeSeq2Length), 1.5), 1.5)
+                        + Math.pow(Math.pow(cap(afterLineCount1 * 40 + afterSeq1Length), 1.5) + Math.pow(cap(afterLineCount2 * 40 + afterSeq2Length), 1.5), 1.5) > ((max ** 1.5) ** 1.5) * 1.3) {
+                        return true;
+                    }
+                    return false;
+                }
+                const shouldJoin = shouldJoinDiffs(lastResult, cur);
+                if (shouldJoin) {
+                    shouldRepeat = true;
+                    result[result.length - 1] = result[result.length - 1].join(cur);
+                }
+                else {
+                    result.push(cur);
+                }
+            }
+            diffs = result;
+        } while (counter++ < 10 && shouldRepeat);
+        const newDiffs = [];
+        // Remove short suffixes/prefixes
+        (0, arrays_1.forEachWithNeighbors)(diffs, (prev, cur, next) => {
+            let newDiff = cur;
+            function shouldMarkAsChanged(text) {
+                return text.length > 0 && text.trim().length <= 3 && cur.seq1Range.length + cur.seq2Range.length > 100;
+            }
+            const fullRange1 = sequence1.extendToFullLines(cur.seq1Range);
+            const prefix = sequence1.getText(new offsetRange_1.OffsetRange(fullRange1.start, cur.seq1Range.start));
+            if (shouldMarkAsChanged(prefix)) {
+                newDiff = newDiff.deltaStart(-prefix.length);
+            }
+            const suffix = sequence1.getText(new offsetRange_1.OffsetRange(cur.seq1Range.endExclusive, fullRange1.endExclusive));
+            if (shouldMarkAsChanged(suffix)) {
+                newDiff = newDiff.deltaEnd(suffix.length);
+            }
+            const availableSpace = diffAlgorithm_1.SequenceDiff.fromOffsetPairs(prev ? prev.getEndExclusives() : diffAlgorithm_1.OffsetPair.zero, next ? next.getStarts() : diffAlgorithm_1.OffsetPair.max);
+            const result = newDiff.intersect(availableSpace);
+            if (newDiffs.length > 0 && result.getStarts().equals(newDiffs[newDiffs.length - 1].getEndExclusives())) {
+                newDiffs[newDiffs.length - 1] = newDiffs[newDiffs.length - 1].join(result);
+            }
+            else {
+                newDiffs.push(result);
+            }
+        });
+        return newDiffs;
+    }
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[46/*vs/editor/common/diff/defaultLinesDiffComputer/lineSequence*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.LineSequence = void 0;
+    class LineSequence {
+        constructor(trimmedHash, lines) {
+            this.trimmedHash = trimmedHash;
+            this.lines = lines;
+        }
+        getElement(offset) {
+            return this.trimmedHash[offset];
+        }
+        get length() {
+            return this.trimmedHash.length;
+        }
+        getBoundaryScore(length) {
+            const indentationBefore = length === 0 ? 0 : getIndentation(this.lines[length - 1]);
+            const indentationAfter = length === this.lines.length ? 0 : getIndentation(this.lines[length]);
+            return 1000 - (indentationBefore + indentationAfter);
+        }
+        getText(range) {
+            return this.lines.slice(range.start, range.endExclusive).join('\n');
+        }
+        isStronglyEqual(offset1, offset2) {
+            return this.lines[offset1] === this.lines[offset2];
+        }
+    }
+    exports.LineSequence = LineSequence;
+    function getIndentation(str) {
+        let i = 0;
+        while (i < str.length && (str.charCodeAt(i) === 32 /* CharCode.Space */ || str.charCodeAt(i) === 9 /* CharCode.Tab */)) {
+            i++;
+        }
+        return i;
+    }
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[15/*vs/editor/common/diff/defaultLinesDiffComputer/utils*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.LineRangeFragment = exports.Array2D = void 0;
+    exports.isSpace = isSpace;
     class Array2D {
         constructor(width, height) {
             this.width = width;
@@ -8686,13 +12097,57 @@ define(__m[37/*vs/editor/common/diff/algorithms/utils*/], __M([0/*require*/,1/*e
         }
     }
     exports.Array2D = Array2D;
+    function isSpace(charCode) {
+        return charCode === 32 /* CharCode.Space */ || charCode === 9 /* CharCode.Tab */;
+    }
+    class LineRangeFragment {
+        static getKey(chr) {
+            let key = this.chrKeys.get(chr);
+            if (key === undefined) {
+                key = this.chrKeys.size;
+                this.chrKeys.set(chr, key);
+            }
+            return key;
+        }
+        constructor(range, lines, source) {
+            this.range = range;
+            this.lines = lines;
+            this.source = source;
+            this.histogram = [];
+            let counter = 0;
+            for (let i = range.startLineNumber - 1; i < range.endLineNumberExclusive - 1; i++) {
+                const line = lines[i];
+                for (let j = 0; j < line.length; j++) {
+                    counter++;
+                    const chr = line[j];
+                    const key = LineRangeFragment.getKey(chr);
+                    this.histogram[key] = (this.histogram[key] || 0) + 1;
+                }
+                counter++;
+                const key = LineRangeFragment.getKey('\n');
+                this.histogram[key] = (this.histogram[key] || 0) + 1;
+            }
+            this.totalCount = counter;
+        }
+        computeSimilarity(other) {
+            var _a, _b;
+            let sumDifferences = 0;
+            const maxLength = Math.max(this.histogram.length, other.histogram.length);
+            for (let i = 0; i < maxLength; i++) {
+                sumDifferences += Math.abs(((_a = this.histogram[i]) !== null && _a !== void 0 ? _a : 0) - ((_b = other.histogram[i]) !== null && _b !== void 0 ? _b : 0));
+            }
+            return 1 - (sumDifferences / (this.totalCount + other.totalCount));
+        }
+    }
+    exports.LineRangeFragment = LineRangeFragment;
+    LineRangeFragment.chrKeys = new Map();
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[38/*vs/editor/common/diff/algorithms/dynamicProgrammingDiffing*/], __M([0/*require*/,1/*exports*/,6/*vs/editor/common/core/offsetRange*/,7/*vs/editor/common/diff/algorithms/diffAlgorithm*/,37/*vs/editor/common/diff/algorithms/utils*/]), function (require, exports, offsetRange_1, diffAlgorithm_1, utils_1) {
+define(__m[47/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/dynamicProgrammingDiffing*/], __M([0/*require*/,1/*exports*/,3/*vs/editor/common/core/offsetRange*/,8/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/diffAlgorithm*/,15/*vs/editor/common/diff/defaultLinesDiffComputer/utils*/]), function (require, exports, offsetRange_1, diffAlgorithm_1, utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DynamicProgrammingDiffing = void 0;
@@ -8794,36 +12249,306 @@ define(__m[38/*vs/editor/common/diff/algorithms/dynamicProgrammingDiffing*/], __
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[23/*vs/editor/common/diff/linesDiffComputer*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[32/*vs/editor/common/diff/defaultLinesDiffComputer/linesSliceCharSequence*/], __M([0/*require*/,1/*exports*/,11/*vs/base/common/arraysFind*/,3/*vs/editor/common/core/offsetRange*/,4/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/,15/*vs/editor/common/diff/defaultLinesDiffComputer/utils*/]), function (require, exports, arraysFind_1, offsetRange_1, position_1, range_1, utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.RangeMapping = exports.LineRangeMapping = exports.LinesDiff = void 0;
+    exports.LinesSliceCharSequence = void 0;
+    class LinesSliceCharSequence {
+        constructor(lines, lineRange, considerWhitespaceChanges) {
+            // This slice has to have lineRange.length many \n! (otherwise diffing against an empty slice will be problematic)
+            // (Unless it covers the entire document, in that case the other slice also has to cover the entire document ands it's okay)
+            this.lines = lines;
+            this.considerWhitespaceChanges = considerWhitespaceChanges;
+            this.elements = [];
+            this.firstCharOffsetByLine = [];
+            // To account for trimming
+            this.additionalOffsetByLine = [];
+            // If the slice covers the end, but does not start at the beginning, we include just the \n of the previous line.
+            let trimFirstLineFully = false;
+            if (lineRange.start > 0 && lineRange.endExclusive >= lines.length) {
+                lineRange = new offsetRange_1.OffsetRange(lineRange.start - 1, lineRange.endExclusive);
+                trimFirstLineFully = true;
+            }
+            this.lineRange = lineRange;
+            this.firstCharOffsetByLine[0] = 0;
+            for (let i = this.lineRange.start; i < this.lineRange.endExclusive; i++) {
+                let line = lines[i];
+                let offset = 0;
+                if (trimFirstLineFully) {
+                    offset = line.length;
+                    line = '';
+                    trimFirstLineFully = false;
+                }
+                else if (!considerWhitespaceChanges) {
+                    const trimmedStartLine = line.trimStart();
+                    offset = line.length - trimmedStartLine.length;
+                    line = trimmedStartLine.trimEnd();
+                }
+                this.additionalOffsetByLine.push(offset);
+                for (let i = 0; i < line.length; i++) {
+                    this.elements.push(line.charCodeAt(i));
+                }
+                // Don't add an \n that does not exist in the document.
+                if (i < lines.length - 1) {
+                    this.elements.push('\n'.charCodeAt(0));
+                    this.firstCharOffsetByLine[i - this.lineRange.start + 1] = this.elements.length;
+                }
+            }
+            // To account for the last line
+            this.additionalOffsetByLine.push(0);
+        }
+        toString() {
+            return `Slice: "${this.text}"`;
+        }
+        get text() {
+            return this.getText(new offsetRange_1.OffsetRange(0, this.length));
+        }
+        getText(range) {
+            return this.elements.slice(range.start, range.endExclusive).map(e => String.fromCharCode(e)).join('');
+        }
+        getElement(offset) {
+            return this.elements[offset];
+        }
+        get length() {
+            return this.elements.length;
+        }
+        getBoundaryScore(length) {
+            //   a   b   c   ,           d   e   f
+            // 11  0   0   12  15  6   13  0   0   11
+            const prevCategory = getCategory(length > 0 ? this.elements[length - 1] : -1);
+            const nextCategory = getCategory(length < this.elements.length ? this.elements[length] : -1);
+            if (prevCategory === 7 /* CharBoundaryCategory.LineBreakCR */ && nextCategory === 8 /* CharBoundaryCategory.LineBreakLF */) {
+                // don't break between \r and \n
+                return 0;
+            }
+            if (prevCategory === 8 /* CharBoundaryCategory.LineBreakLF */) {
+                // prefer the linebreak before the change
+                return 150;
+            }
+            let score = 0;
+            if (prevCategory !== nextCategory) {
+                score += 10;
+                if (prevCategory === 0 /* CharBoundaryCategory.WordLower */ && nextCategory === 1 /* CharBoundaryCategory.WordUpper */) {
+                    score += 1;
+                }
+            }
+            score += getCategoryBoundaryScore(prevCategory);
+            score += getCategoryBoundaryScore(nextCategory);
+            return score;
+        }
+        translateOffset(offset) {
+            // find smallest i, so that lineBreakOffsets[i] <= offset using binary search
+            if (this.lineRange.isEmpty) {
+                return new position_1.Position(this.lineRange.start + 1, 1);
+            }
+            const i = (0, arraysFind_1.findLastIdxMonotonous)(this.firstCharOffsetByLine, (value) => value <= offset);
+            return new position_1.Position(this.lineRange.start + i + 1, offset - this.firstCharOffsetByLine[i] + this.additionalOffsetByLine[i] + 1);
+        }
+        translateRange(range) {
+            return range_1.Range.fromPositions(this.translateOffset(range.start), this.translateOffset(range.endExclusive));
+        }
+        /**
+         * Finds the word that contains the character at the given offset
+         */
+        findWordContaining(offset) {
+            if (offset < 0 || offset >= this.elements.length) {
+                return undefined;
+            }
+            if (!isWordChar(this.elements[offset])) {
+                return undefined;
+            }
+            // find start
+            let start = offset;
+            while (start > 0 && isWordChar(this.elements[start - 1])) {
+                start--;
+            }
+            // find end
+            let end = offset;
+            while (end < this.elements.length && isWordChar(this.elements[end])) {
+                end++;
+            }
+            return new offsetRange_1.OffsetRange(start, end);
+        }
+        countLinesIn(range) {
+            return this.translateOffset(range.endExclusive).lineNumber - this.translateOffset(range.start).lineNumber;
+        }
+        isStronglyEqual(offset1, offset2) {
+            return this.elements[offset1] === this.elements[offset2];
+        }
+        extendToFullLines(range) {
+            var _a, _b;
+            const start = (_a = (0, arraysFind_1.findLastMonotonous)(this.firstCharOffsetByLine, x => x <= range.start)) !== null && _a !== void 0 ? _a : 0;
+            const end = (_b = (0, arraysFind_1.findFirstMonotonous)(this.firstCharOffsetByLine, x => range.endExclusive <= x)) !== null && _b !== void 0 ? _b : this.elements.length;
+            return new offsetRange_1.OffsetRange(start, end);
+        }
+    }
+    exports.LinesSliceCharSequence = LinesSliceCharSequence;
+    function isWordChar(charCode) {
+        return charCode >= 97 /* CharCode.a */ && charCode <= 122 /* CharCode.z */
+            || charCode >= 65 /* CharCode.A */ && charCode <= 90 /* CharCode.Z */
+            || charCode >= 48 /* CharCode.Digit0 */ && charCode <= 57 /* CharCode.Digit9 */;
+    }
+    const score = {
+        [0 /* CharBoundaryCategory.WordLower */]: 0,
+        [1 /* CharBoundaryCategory.WordUpper */]: 0,
+        [2 /* CharBoundaryCategory.WordNumber */]: 0,
+        [3 /* CharBoundaryCategory.End */]: 10,
+        [4 /* CharBoundaryCategory.Other */]: 2,
+        [5 /* CharBoundaryCategory.Separator */]: 30,
+        [6 /* CharBoundaryCategory.Space */]: 3,
+        [7 /* CharBoundaryCategory.LineBreakCR */]: 10,
+        [8 /* CharBoundaryCategory.LineBreakLF */]: 10,
+    };
+    function getCategoryBoundaryScore(category) {
+        return score[category];
+    }
+    function getCategory(charCode) {
+        if (charCode === 10 /* CharCode.LineFeed */) {
+            return 8 /* CharBoundaryCategory.LineBreakLF */;
+        }
+        else if (charCode === 13 /* CharCode.CarriageReturn */) {
+            return 7 /* CharBoundaryCategory.LineBreakCR */;
+        }
+        else if ((0, utils_1.isSpace)(charCode)) {
+            return 6 /* CharBoundaryCategory.Space */;
+        }
+        else if (charCode >= 97 /* CharCode.a */ && charCode <= 122 /* CharCode.z */) {
+            return 0 /* CharBoundaryCategory.WordLower */;
+        }
+        else if (charCode >= 65 /* CharCode.A */ && charCode <= 90 /* CharCode.Z */) {
+            return 1 /* CharBoundaryCategory.WordUpper */;
+        }
+        else if (charCode >= 48 /* CharCode.Digit0 */ && charCode <= 57 /* CharCode.Digit9 */) {
+            return 2 /* CharBoundaryCategory.WordNumber */;
+        }
+        else if (charCode === -1) {
+            return 3 /* CharBoundaryCategory.End */;
+        }
+        else if (charCode === 44 /* CharCode.Comma */ || charCode === 59 /* CharCode.Semicolon */) {
+            return 5 /* CharBoundaryCategory.Separator */;
+        }
+        else {
+            return 4 /* CharBoundaryCategory.Other */;
+        }
+    }
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[33/*vs/editor/common/diff/linesDiffComputer*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.MovedText = exports.LinesDiff = void 0;
     class LinesDiff {
         constructor(changes, 
+        /**
+         * Sorted by original line ranges.
+         * The original line ranges and the modified line ranges must be disjoint (but can be touching).
+         */
+        moves, 
         /**
          * Indicates if the time out was reached.
          * In that case, the diffs might be an approximation and the user should be asked to rerun the diff with more time.
          */
         hitTimeout) {
             this.changes = changes;
+            this.moves = moves;
             this.hitTimeout = hitTimeout;
         }
     }
     exports.LinesDiff = LinesDiff;
+    class MovedText {
+        constructor(lineRangeMapping, changes) {
+            this.lineRangeMapping = lineRangeMapping;
+            this.changes = changes;
+        }
+    }
+    exports.MovedText = MovedText;
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[16/*vs/editor/common/diff/rangeMapping*/], __M([0/*require*/,1/*exports*/,10/*vs/editor/common/core/lineRange*/]), function (require, exports, lineRange_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.RangeMapping = exports.DetailedLineRangeMapping = exports.LineRangeMapping = void 0;
     /**
      * Maps a line range in the original text model to a line range in the modified text model.
      */
     class LineRangeMapping {
-        constructor(originalRange, modifiedRange, innerChanges) {
-            this.originalRange = originalRange;
-            this.modifiedRange = modifiedRange;
-            this.innerChanges = innerChanges;
+        static inverse(mapping, originalLineCount, modifiedLineCount) {
+            const result = [];
+            let lastOriginalEndLineNumber = 1;
+            let lastModifiedEndLineNumber = 1;
+            for (const m of mapping) {
+                const r = new LineRangeMapping(new lineRange_1.LineRange(lastOriginalEndLineNumber, m.original.startLineNumber), new lineRange_1.LineRange(lastModifiedEndLineNumber, m.modified.startLineNumber));
+                if (!r.modified.isEmpty) {
+                    result.push(r);
+                }
+                lastOriginalEndLineNumber = m.original.endLineNumberExclusive;
+                lastModifiedEndLineNumber = m.modified.endLineNumberExclusive;
+            }
+            const r = new LineRangeMapping(new lineRange_1.LineRange(lastOriginalEndLineNumber, originalLineCount + 1), new lineRange_1.LineRange(lastModifiedEndLineNumber, modifiedLineCount + 1));
+            if (!r.modified.isEmpty) {
+                result.push(r);
+            }
+            return result;
+        }
+        static clip(mapping, originalRange, modifiedRange) {
+            const result = [];
+            for (const m of mapping) {
+                const original = m.original.intersect(originalRange);
+                const modified = m.modified.intersect(modifiedRange);
+                if (original && !original.isEmpty && modified && !modified.isEmpty) {
+                    result.push(new LineRangeMapping(original, modified));
+                }
+            }
+            return result;
+        }
+        constructor(originalRange, modifiedRange) {
+            this.original = originalRange;
+            this.modified = modifiedRange;
         }
         toString() {
-            return `{${this.originalRange.toString()}->${this.modifiedRange.toString()}}`;
+            return `{${this.original.toString()}->${this.modified.toString()}}`;
+        }
+        flip() {
+            return new LineRangeMapping(this.modified, this.original);
+        }
+        join(other) {
+            return new LineRangeMapping(this.original.join(other.original), this.modified.join(other.modified));
         }
     }
     exports.LineRangeMapping = LineRangeMapping;
+    /**
+     * Maps a line range in the original text model to a line range in the modified text model.
+     * Also contains inner range mappings.
+     */
+    class DetailedLineRangeMapping extends LineRangeMapping {
+        static fromRangeMappings(rangeMappings) {
+            const originalRange = lineRange_1.LineRange.join(rangeMappings.map(r => lineRange_1.LineRange.fromRangeInclusive(r.originalRange)));
+            const modifiedRange = lineRange_1.LineRange.join(rangeMappings.map(r => lineRange_1.LineRange.fromRangeInclusive(r.modifiedRange)));
+            return new DetailedLineRangeMapping(originalRange, modifiedRange, rangeMappings);
+        }
+        constructor(originalRange, modifiedRange, innerChanges) {
+            super(originalRange, modifiedRange);
+            this.innerChanges = innerChanges;
+        }
+        flip() {
+            var _a;
+            return new DetailedLineRangeMapping(this.modified, this.original, (_a = this.innerChanges) === null || _a === void 0 ? void 0 : _a.map(c => c.flip()));
+        }
+        withInnerChangesFromLineRanges() {
+            return new DetailedLineRangeMapping(this.original, this.modified, [
+                new RangeMapping(this.original.toExclusiveRange(), this.modified.toExclusiveRange()),
+            ]);
+        }
+    }
+    exports.DetailedLineRangeMapping = DetailedLineRangeMapping;
     /**
      * Maps a range in the original text model to a range in the modified text model.
      */
@@ -8835,6 +12560,9 @@ define(__m[23/*vs/editor/common/diff/linesDiffComputer*/], __M([0/*require*/,1/*
         toString() {
             return `{${this.originalRange.toString()}->${this.modifiedRange.toString()}}`;
         }
+        flip() {
+            return new RangeMapping(this.modifiedRange, this.originalRange);
+        }
     }
     exports.RangeMapping = RangeMapping;
 });
@@ -8843,12 +12571,472 @@ define(__m[23/*vs/editor/common/diff/linesDiffComputer*/], __M([0/*require*/,1/*
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[39/*vs/editor/common/diff/smartLinesDiffComputer*/], __M([0/*require*/,1/*exports*/,17/*vs/base/common/diff/diff*/,23/*vs/editor/common/diff/linesDiffComputer*/,5/*vs/base/common/strings*/,2/*vs/editor/common/core/range*/,10/*vs/base/common/assert*/,21/*vs/editor/common/core/lineRange*/]), function (require, exports, diff_1, linesDiffComputer_1, strings, range_1, assert_1, lineRange_1) {
+define(__m[48/*vs/editor/common/diff/defaultLinesDiffComputer/computeMovedLines*/], __M([0/*require*/,1/*exports*/,8/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/diffAlgorithm*/,16/*vs/editor/common/diff/rangeMapping*/,7/*vs/base/common/arrays*/,11/*vs/base/common/arraysFind*/,23/*vs/base/common/map*/,10/*vs/editor/common/core/lineRange*/,3/*vs/editor/common/core/offsetRange*/,32/*vs/editor/common/diff/defaultLinesDiffComputer/linesSliceCharSequence*/,15/*vs/editor/common/diff/defaultLinesDiffComputer/utils*/,31/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/myersDiffAlgorithm*/]), function (require, exports, diffAlgorithm_1, rangeMapping_1, arrays_1, arraysFind_1, map_1, lineRange_1, offsetRange_1, linesSliceCharSequence_1, utils_1, myersDiffAlgorithm_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.DiffComputer = exports.SmartLinesDiffComputer = void 0;
+    exports.computeMovedLines = computeMovedLines;
+    function computeMovedLines(changes, originalLines, modifiedLines, hashedOriginalLines, hashedModifiedLines, timeout) {
+        let { moves, excludedChanges } = computeMovesFromSimpleDeletionsToSimpleInsertions(changes, originalLines, modifiedLines, timeout);
+        if (!timeout.isValid()) {
+            return [];
+        }
+        const filteredChanges = changes.filter(c => !excludedChanges.has(c));
+        const unchangedMoves = computeUnchangedMoves(filteredChanges, hashedOriginalLines, hashedModifiedLines, originalLines, modifiedLines, timeout);
+        (0, arrays_1.pushMany)(moves, unchangedMoves);
+        moves = joinCloseConsecutiveMoves(moves);
+        // Ignore too short moves
+        moves = moves.filter(current => {
+            const lines = current.original.toOffsetRange().slice(originalLines).map(l => l.trim());
+            const originalText = lines.join('\n');
+            return originalText.length >= 15 && countWhere(lines, l => l.length >= 2) >= 2;
+        });
+        moves = removeMovesInSameDiff(changes, moves);
+        return moves;
+    }
+    function countWhere(arr, predicate) {
+        let count = 0;
+        for (const t of arr) {
+            if (predicate(t)) {
+                count++;
+            }
+        }
+        return count;
+    }
+    function computeMovesFromSimpleDeletionsToSimpleInsertions(changes, originalLines, modifiedLines, timeout) {
+        const moves = [];
+        const deletions = changes
+            .filter(c => c.modified.isEmpty && c.original.length >= 3)
+            .map(d => new utils_1.LineRangeFragment(d.original, originalLines, d));
+        const insertions = new Set(changes
+            .filter(c => c.original.isEmpty && c.modified.length >= 3)
+            .map(d => new utils_1.LineRangeFragment(d.modified, modifiedLines, d)));
+        const excludedChanges = new Set();
+        for (const deletion of deletions) {
+            let highestSimilarity = -1;
+            let best;
+            for (const insertion of insertions) {
+                const similarity = deletion.computeSimilarity(insertion);
+                if (similarity > highestSimilarity) {
+                    highestSimilarity = similarity;
+                    best = insertion;
+                }
+            }
+            if (highestSimilarity > 0.90 && best) {
+                insertions.delete(best);
+                moves.push(new rangeMapping_1.LineRangeMapping(deletion.range, best.range));
+                excludedChanges.add(deletion.source);
+                excludedChanges.add(best.source);
+            }
+            if (!timeout.isValid()) {
+                return { moves, excludedChanges };
+            }
+        }
+        return { moves, excludedChanges };
+    }
+    function computeUnchangedMoves(changes, hashedOriginalLines, hashedModifiedLines, originalLines, modifiedLines, timeout) {
+        const moves = [];
+        const original3LineHashes = new map_1.SetMap();
+        for (const change of changes) {
+            for (let i = change.original.startLineNumber; i < change.original.endLineNumberExclusive - 2; i++) {
+                const key = `${hashedOriginalLines[i - 1]}:${hashedOriginalLines[i + 1 - 1]}:${hashedOriginalLines[i + 2 - 1]}`;
+                original3LineHashes.add(key, { range: new lineRange_1.LineRange(i, i + 3) });
+            }
+        }
+        const possibleMappings = [];
+        changes.sort((0, arrays_1.compareBy)(c => c.modified.startLineNumber, arrays_1.numberComparator));
+        for (const change of changes) {
+            let lastMappings = [];
+            for (let i = change.modified.startLineNumber; i < change.modified.endLineNumberExclusive - 2; i++) {
+                const key = `${hashedModifiedLines[i - 1]}:${hashedModifiedLines[i + 1 - 1]}:${hashedModifiedLines[i + 2 - 1]}`;
+                const currentModifiedRange = new lineRange_1.LineRange(i, i + 3);
+                const nextMappings = [];
+                original3LineHashes.forEach(key, ({ range }) => {
+                    for (const lastMapping of lastMappings) {
+                        // does this match extend some last match?
+                        if (lastMapping.originalLineRange.endLineNumberExclusive + 1 === range.endLineNumberExclusive &&
+                            lastMapping.modifiedLineRange.endLineNumberExclusive + 1 === currentModifiedRange.endLineNumberExclusive) {
+                            lastMapping.originalLineRange = new lineRange_1.LineRange(lastMapping.originalLineRange.startLineNumber, range.endLineNumberExclusive);
+                            lastMapping.modifiedLineRange = new lineRange_1.LineRange(lastMapping.modifiedLineRange.startLineNumber, currentModifiedRange.endLineNumberExclusive);
+                            nextMappings.push(lastMapping);
+                            return;
+                        }
+                    }
+                    const mapping = {
+                        modifiedLineRange: currentModifiedRange,
+                        originalLineRange: range,
+                    };
+                    possibleMappings.push(mapping);
+                    nextMappings.push(mapping);
+                });
+                lastMappings = nextMappings;
+            }
+            if (!timeout.isValid()) {
+                return [];
+            }
+        }
+        possibleMappings.sort((0, arrays_1.reverseOrder)((0, arrays_1.compareBy)(m => m.modifiedLineRange.length, arrays_1.numberComparator)));
+        const modifiedSet = new lineRange_1.LineRangeSet();
+        const originalSet = new lineRange_1.LineRangeSet();
+        for (const mapping of possibleMappings) {
+            const diffOrigToMod = mapping.modifiedLineRange.startLineNumber - mapping.originalLineRange.startLineNumber;
+            const modifiedSections = modifiedSet.subtractFrom(mapping.modifiedLineRange);
+            const originalTranslatedSections = originalSet.subtractFrom(mapping.originalLineRange).getWithDelta(diffOrigToMod);
+            const modifiedIntersectedSections = modifiedSections.getIntersection(originalTranslatedSections);
+            for (const s of modifiedIntersectedSections.ranges) {
+                if (s.length < 3) {
+                    continue;
+                }
+                const modifiedLineRange = s;
+                const originalLineRange = s.delta(-diffOrigToMod);
+                moves.push(new rangeMapping_1.LineRangeMapping(originalLineRange, modifiedLineRange));
+                modifiedSet.addRange(modifiedLineRange);
+                originalSet.addRange(originalLineRange);
+            }
+        }
+        moves.sort((0, arrays_1.compareBy)(m => m.original.startLineNumber, arrays_1.numberComparator));
+        const monotonousChanges = new arraysFind_1.MonotonousArray(changes);
+        for (let i = 0; i < moves.length; i++) {
+            const move = moves[i];
+            const firstTouchingChangeOrig = monotonousChanges.findLastMonotonous(c => c.original.startLineNumber <= move.original.startLineNumber);
+            const firstTouchingChangeMod = (0, arraysFind_1.findLastMonotonous)(changes, c => c.modified.startLineNumber <= move.modified.startLineNumber);
+            const linesAbove = Math.max(move.original.startLineNumber - firstTouchingChangeOrig.original.startLineNumber, move.modified.startLineNumber - firstTouchingChangeMod.modified.startLineNumber);
+            const lastTouchingChangeOrig = monotonousChanges.findLastMonotonous(c => c.original.startLineNumber < move.original.endLineNumberExclusive);
+            const lastTouchingChangeMod = (0, arraysFind_1.findLastMonotonous)(changes, c => c.modified.startLineNumber < move.modified.endLineNumberExclusive);
+            const linesBelow = Math.max(lastTouchingChangeOrig.original.endLineNumberExclusive - move.original.endLineNumberExclusive, lastTouchingChangeMod.modified.endLineNumberExclusive - move.modified.endLineNumberExclusive);
+            let extendToTop;
+            for (extendToTop = 0; extendToTop < linesAbove; extendToTop++) {
+                const origLine = move.original.startLineNumber - extendToTop - 1;
+                const modLine = move.modified.startLineNumber - extendToTop - 1;
+                if (origLine > originalLines.length || modLine > modifiedLines.length) {
+                    break;
+                }
+                if (modifiedSet.contains(modLine) || originalSet.contains(origLine)) {
+                    break;
+                }
+                if (!areLinesSimilar(originalLines[origLine - 1], modifiedLines[modLine - 1], timeout)) {
+                    break;
+                }
+            }
+            if (extendToTop > 0) {
+                originalSet.addRange(new lineRange_1.LineRange(move.original.startLineNumber - extendToTop, move.original.startLineNumber));
+                modifiedSet.addRange(new lineRange_1.LineRange(move.modified.startLineNumber - extendToTop, move.modified.startLineNumber));
+            }
+            let extendToBottom;
+            for (extendToBottom = 0; extendToBottom < linesBelow; extendToBottom++) {
+                const origLine = move.original.endLineNumberExclusive + extendToBottom;
+                const modLine = move.modified.endLineNumberExclusive + extendToBottom;
+                if (origLine > originalLines.length || modLine > modifiedLines.length) {
+                    break;
+                }
+                if (modifiedSet.contains(modLine) || originalSet.contains(origLine)) {
+                    break;
+                }
+                if (!areLinesSimilar(originalLines[origLine - 1], modifiedLines[modLine - 1], timeout)) {
+                    break;
+                }
+            }
+            if (extendToBottom > 0) {
+                originalSet.addRange(new lineRange_1.LineRange(move.original.endLineNumberExclusive, move.original.endLineNumberExclusive + extendToBottom));
+                modifiedSet.addRange(new lineRange_1.LineRange(move.modified.endLineNumberExclusive, move.modified.endLineNumberExclusive + extendToBottom));
+            }
+            if (extendToTop > 0 || extendToBottom > 0) {
+                moves[i] = new rangeMapping_1.LineRangeMapping(new lineRange_1.LineRange(move.original.startLineNumber - extendToTop, move.original.endLineNumberExclusive + extendToBottom), new lineRange_1.LineRange(move.modified.startLineNumber - extendToTop, move.modified.endLineNumberExclusive + extendToBottom));
+            }
+        }
+        return moves;
+    }
+    function areLinesSimilar(line1, line2, timeout) {
+        if (line1.trim() === line2.trim()) {
+            return true;
+        }
+        if (line1.length > 300 && line2.length > 300) {
+            return false;
+        }
+        const myersDiffingAlgorithm = new myersDiffAlgorithm_1.MyersDiffAlgorithm();
+        const result = myersDiffingAlgorithm.compute(new linesSliceCharSequence_1.LinesSliceCharSequence([line1], new offsetRange_1.OffsetRange(0, 1), false), new linesSliceCharSequence_1.LinesSliceCharSequence([line2], new offsetRange_1.OffsetRange(0, 1), false), timeout);
+        let commonNonSpaceCharCount = 0;
+        const inverted = diffAlgorithm_1.SequenceDiff.invert(result.diffs, line1.length);
+        for (const seq of inverted) {
+            seq.seq1Range.forEach(idx => {
+                if (!(0, utils_1.isSpace)(line1.charCodeAt(idx))) {
+                    commonNonSpaceCharCount++;
+                }
+            });
+        }
+        function countNonWsChars(str) {
+            let count = 0;
+            for (let i = 0; i < line1.length; i++) {
+                if (!(0, utils_1.isSpace)(str.charCodeAt(i))) {
+                    count++;
+                }
+            }
+            return count;
+        }
+        const longerLineLength = countNonWsChars(line1.length > line2.length ? line1 : line2);
+        const r = commonNonSpaceCharCount / longerLineLength > 0.6 && longerLineLength > 10;
+        return r;
+    }
+    function joinCloseConsecutiveMoves(moves) {
+        if (moves.length === 0) {
+            return moves;
+        }
+        moves.sort((0, arrays_1.compareBy)(m => m.original.startLineNumber, arrays_1.numberComparator));
+        const result = [moves[0]];
+        for (let i = 1; i < moves.length; i++) {
+            const last = result[result.length - 1];
+            const current = moves[i];
+            const originalDist = current.original.startLineNumber - last.original.endLineNumberExclusive;
+            const modifiedDist = current.modified.startLineNumber - last.modified.endLineNumberExclusive;
+            const currentMoveAfterLast = originalDist >= 0 && modifiedDist >= 0;
+            if (currentMoveAfterLast && originalDist + modifiedDist <= 2) {
+                result[result.length - 1] = last.join(current);
+                continue;
+            }
+            result.push(current);
+        }
+        return result;
+    }
+    function removeMovesInSameDiff(changes, moves) {
+        const changesMonotonous = new arraysFind_1.MonotonousArray(changes);
+        moves = moves.filter(m => {
+            const diffBeforeEndOfMoveOriginal = changesMonotonous.findLastMonotonous(c => c.original.startLineNumber < m.original.endLineNumberExclusive)
+                || new rangeMapping_1.LineRangeMapping(new lineRange_1.LineRange(1, 1), new lineRange_1.LineRange(1, 1));
+            const diffBeforeEndOfMoveModified = (0, arraysFind_1.findLastMonotonous)(changes, c => c.modified.startLineNumber < m.modified.endLineNumberExclusive);
+            const differentDiffs = diffBeforeEndOfMoveOriginal !== diffBeforeEndOfMoveModified;
+            return differentDiffs;
+        });
+        return moves;
+    }
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[49/*vs/editor/common/diff/defaultLinesDiffComputer/defaultLinesDiffComputer*/], __M([0/*require*/,1/*exports*/,7/*vs/base/common/arrays*/,12/*vs/base/common/assert*/,10/*vs/editor/common/core/lineRange*/,3/*vs/editor/common/core/offsetRange*/,2/*vs/editor/common/core/range*/,8/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/diffAlgorithm*/,47/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/dynamicProgrammingDiffing*/,31/*vs/editor/common/diff/defaultLinesDiffComputer/algorithms/myersDiffAlgorithm*/,48/*vs/editor/common/diff/defaultLinesDiffComputer/computeMovedLines*/,45/*vs/editor/common/diff/defaultLinesDiffComputer/heuristicSequenceOptimizations*/,46/*vs/editor/common/diff/defaultLinesDiffComputer/lineSequence*/,32/*vs/editor/common/diff/defaultLinesDiffComputer/linesSliceCharSequence*/,33/*vs/editor/common/diff/linesDiffComputer*/,16/*vs/editor/common/diff/rangeMapping*/]), function (require, exports, arrays_1, assert_1, lineRange_1, offsetRange_1, range_1, diffAlgorithm_1, dynamicProgrammingDiffing_1, myersDiffAlgorithm_1, computeMovedLines_1, heuristicSequenceOptimizations_1, lineSequence_1, linesSliceCharSequence_1, linesDiffComputer_1, rangeMapping_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.DefaultLinesDiffComputer = void 0;
+    exports.lineRangeMappingFromRangeMappings = lineRangeMappingFromRangeMappings;
+    exports.getLineRangeMapping = getLineRangeMapping;
+    class DefaultLinesDiffComputer {
+        constructor() {
+            this.dynamicProgrammingDiffing = new dynamicProgrammingDiffing_1.DynamicProgrammingDiffing();
+            this.myersDiffingAlgorithm = new myersDiffAlgorithm_1.MyersDiffAlgorithm();
+        }
+        computeDiff(originalLines, modifiedLines, options) {
+            if (originalLines.length <= 1 && (0, arrays_1.equals)(originalLines, modifiedLines, (a, b) => a === b)) {
+                return new linesDiffComputer_1.LinesDiff([], [], false);
+            }
+            if (originalLines.length === 1 && originalLines[0].length === 0 || modifiedLines.length === 1 && modifiedLines[0].length === 0) {
+                return new linesDiffComputer_1.LinesDiff([
+                    new rangeMapping_1.DetailedLineRangeMapping(new lineRange_1.LineRange(1, originalLines.length + 1), new lineRange_1.LineRange(1, modifiedLines.length + 1), [
+                        new rangeMapping_1.RangeMapping(new range_1.Range(1, 1, originalLines.length, originalLines[0].length + 1), new range_1.Range(1, 1, modifiedLines.length, modifiedLines[0].length + 1))
+                    ])
+                ], [], false);
+            }
+            const timeout = options.maxComputationTimeMs === 0 ? diffAlgorithm_1.InfiniteTimeout.instance : new diffAlgorithm_1.DateTimeout(options.maxComputationTimeMs);
+            const considerWhitespaceChanges = !options.ignoreTrimWhitespace;
+            const perfectHashes = new Map();
+            function getOrCreateHash(text) {
+                let hash = perfectHashes.get(text);
+                if (hash === undefined) {
+                    hash = perfectHashes.size;
+                    perfectHashes.set(text, hash);
+                }
+                return hash;
+            }
+            const originalLinesHashes = originalLines.map((l) => getOrCreateHash(l.trim()));
+            const modifiedLinesHashes = modifiedLines.map((l) => getOrCreateHash(l.trim()));
+            const sequence1 = new lineSequence_1.LineSequence(originalLinesHashes, originalLines);
+            const sequence2 = new lineSequence_1.LineSequence(modifiedLinesHashes, modifiedLines);
+            const lineAlignmentResult = (() => {
+                if (sequence1.length + sequence2.length < 1700) {
+                    // Use the improved algorithm for small files
+                    return this.dynamicProgrammingDiffing.compute(sequence1, sequence2, timeout, (offset1, offset2) => originalLines[offset1] === modifiedLines[offset2]
+                        ? modifiedLines[offset2].length === 0
+                            ? 0.1
+                            : 1 + Math.log(1 + modifiedLines[offset2].length)
+                        : 0.99);
+                }
+                return this.myersDiffingAlgorithm.compute(sequence1, sequence2);
+            })();
+            let lineAlignments = lineAlignmentResult.diffs;
+            let hitTimeout = lineAlignmentResult.hitTimeout;
+            lineAlignments = (0, heuristicSequenceOptimizations_1.optimizeSequenceDiffs)(sequence1, sequence2, lineAlignments);
+            lineAlignments = (0, heuristicSequenceOptimizations_1.removeVeryShortMatchingLinesBetweenDiffs)(sequence1, sequence2, lineAlignments);
+            const alignments = [];
+            const scanForWhitespaceChanges = (equalLinesCount) => {
+                if (!considerWhitespaceChanges) {
+                    return;
+                }
+                for (let i = 0; i < equalLinesCount; i++) {
+                    const seq1Offset = seq1LastStart + i;
+                    const seq2Offset = seq2LastStart + i;
+                    if (originalLines[seq1Offset] !== modifiedLines[seq2Offset]) {
+                        // This is because of whitespace changes, diff these lines
+                        const characterDiffs = this.refineDiff(originalLines, modifiedLines, new diffAlgorithm_1.SequenceDiff(new offsetRange_1.OffsetRange(seq1Offset, seq1Offset + 1), new offsetRange_1.OffsetRange(seq2Offset, seq2Offset + 1)), timeout, considerWhitespaceChanges);
+                        for (const a of characterDiffs.mappings) {
+                            alignments.push(a);
+                        }
+                        if (characterDiffs.hitTimeout) {
+                            hitTimeout = true;
+                        }
+                    }
+                }
+            };
+            let seq1LastStart = 0;
+            let seq2LastStart = 0;
+            for (const diff of lineAlignments) {
+                (0, assert_1.assertFn)(() => diff.seq1Range.start - seq1LastStart === diff.seq2Range.start - seq2LastStart);
+                const equalLinesCount = diff.seq1Range.start - seq1LastStart;
+                scanForWhitespaceChanges(equalLinesCount);
+                seq1LastStart = diff.seq1Range.endExclusive;
+                seq2LastStart = diff.seq2Range.endExclusive;
+                const characterDiffs = this.refineDiff(originalLines, modifiedLines, diff, timeout, considerWhitespaceChanges);
+                if (characterDiffs.hitTimeout) {
+                    hitTimeout = true;
+                }
+                for (const a of characterDiffs.mappings) {
+                    alignments.push(a);
+                }
+            }
+            scanForWhitespaceChanges(originalLines.length - seq1LastStart);
+            const changes = lineRangeMappingFromRangeMappings(alignments, originalLines, modifiedLines);
+            let moves = [];
+            if (options.computeMoves) {
+                moves = this.computeMoves(changes, originalLines, modifiedLines, originalLinesHashes, modifiedLinesHashes, timeout, considerWhitespaceChanges);
+            }
+            // Make sure all ranges are valid
+            (0, assert_1.assertFn)(() => {
+                function validatePosition(pos, lines) {
+                    if (pos.lineNumber < 1 || pos.lineNumber > lines.length) {
+                        return false;
+                    }
+                    const line = lines[pos.lineNumber - 1];
+                    if (pos.column < 1 || pos.column > line.length + 1) {
+                        return false;
+                    }
+                    return true;
+                }
+                function validateRange(range, lines) {
+                    if (range.startLineNumber < 1 || range.startLineNumber > lines.length + 1) {
+                        return false;
+                    }
+                    if (range.endLineNumberExclusive < 1 || range.endLineNumberExclusive > lines.length + 1) {
+                        return false;
+                    }
+                    return true;
+                }
+                for (const c of changes) {
+                    if (!c.innerChanges) {
+                        return false;
+                    }
+                    for (const ic of c.innerChanges) {
+                        const valid = validatePosition(ic.modifiedRange.getStartPosition(), modifiedLines) && validatePosition(ic.modifiedRange.getEndPosition(), modifiedLines) &&
+                            validatePosition(ic.originalRange.getStartPosition(), originalLines) && validatePosition(ic.originalRange.getEndPosition(), originalLines);
+                        if (!valid) {
+                            return false;
+                        }
+                    }
+                    if (!validateRange(c.modified, modifiedLines) || !validateRange(c.original, originalLines)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+            return new linesDiffComputer_1.LinesDiff(changes, moves, hitTimeout);
+        }
+        computeMoves(changes, originalLines, modifiedLines, hashedOriginalLines, hashedModifiedLines, timeout, considerWhitespaceChanges) {
+            const moves = (0, computeMovedLines_1.computeMovedLines)(changes, originalLines, modifiedLines, hashedOriginalLines, hashedModifiedLines, timeout);
+            const movesWithDiffs = moves.map(m => {
+                const moveChanges = this.refineDiff(originalLines, modifiedLines, new diffAlgorithm_1.SequenceDiff(m.original.toOffsetRange(), m.modified.toOffsetRange()), timeout, considerWhitespaceChanges);
+                const mappings = lineRangeMappingFromRangeMappings(moveChanges.mappings, originalLines, modifiedLines, true);
+                return new linesDiffComputer_1.MovedText(m, mappings);
+            });
+            return movesWithDiffs;
+        }
+        refineDiff(originalLines, modifiedLines, diff, timeout, considerWhitespaceChanges) {
+            const slice1 = new linesSliceCharSequence_1.LinesSliceCharSequence(originalLines, diff.seq1Range, considerWhitespaceChanges);
+            const slice2 = new linesSliceCharSequence_1.LinesSliceCharSequence(modifiedLines, diff.seq2Range, considerWhitespaceChanges);
+            const diffResult = slice1.length + slice2.length < 500
+                ? this.dynamicProgrammingDiffing.compute(slice1, slice2, timeout)
+                : this.myersDiffingAlgorithm.compute(slice1, slice2, timeout);
+            let diffs = diffResult.diffs;
+            diffs = (0, heuristicSequenceOptimizations_1.optimizeSequenceDiffs)(slice1, slice2, diffs);
+            diffs = (0, heuristicSequenceOptimizations_1.extendDiffsToEntireWordIfAppropriate)(slice1, slice2, diffs);
+            diffs = (0, heuristicSequenceOptimizations_1.removeShortMatches)(slice1, slice2, diffs);
+            diffs = (0, heuristicSequenceOptimizations_1.removeVeryShortMatchingTextBetweenLongDiffs)(slice1, slice2, diffs);
+            const result = diffs.map((d) => new rangeMapping_1.RangeMapping(slice1.translateRange(d.seq1Range), slice2.translateRange(d.seq2Range)));
+            // Assert: result applied on original should be the same as diff applied to original
+            return {
+                mappings: result,
+                hitTimeout: diffResult.hitTimeout,
+            };
+        }
+    }
+    exports.DefaultLinesDiffComputer = DefaultLinesDiffComputer;
+    function lineRangeMappingFromRangeMappings(alignments, originalLines, modifiedLines, dontAssertStartLine = false) {
+        const changes = [];
+        for (const g of (0, arrays_1.groupAdjacentBy)(alignments.map(a => getLineRangeMapping(a, originalLines, modifiedLines)), (a1, a2) => a1.original.overlapOrTouch(a2.original)
+            || a1.modified.overlapOrTouch(a2.modified))) {
+            const first = g[0];
+            const last = g[g.length - 1];
+            changes.push(new rangeMapping_1.DetailedLineRangeMapping(first.original.join(last.original), first.modified.join(last.modified), g.map(a => a.innerChanges[0])));
+        }
+        (0, assert_1.assertFn)(() => {
+            if (!dontAssertStartLine && changes.length > 0) {
+                if (changes[0].modified.startLineNumber !== changes[0].original.startLineNumber) {
+                    return false;
+                }
+                if (modifiedLines.length - changes[changes.length - 1].modified.endLineNumberExclusive !== originalLines.length - changes[changes.length - 1].original.endLineNumberExclusive) {
+                    return false;
+                }
+            }
+            return (0, assert_1.checkAdjacentItems)(changes, (m1, m2) => m2.original.startLineNumber - m1.original.endLineNumberExclusive === m2.modified.startLineNumber - m1.modified.endLineNumberExclusive &&
+                // There has to be an unchanged line in between (otherwise both diffs should have been joined)
+                m1.original.endLineNumberExclusive < m2.original.startLineNumber &&
+                m1.modified.endLineNumberExclusive < m2.modified.startLineNumber);
+        });
+        return changes;
+    }
+    function getLineRangeMapping(rangeMapping, originalLines, modifiedLines) {
+        let lineStartDelta = 0;
+        let lineEndDelta = 0;
+        // rangeMapping describes the edit that replaces `rangeMapping.originalRange` with `newText := getText(modifiedLines, rangeMapping.modifiedRange)`.
+        // original: ]xxx \n <- this line is not modified
+        // modified: ]xx  \n
+        if (rangeMapping.modifiedRange.endColumn === 1 && rangeMapping.originalRange.endColumn === 1
+            && rangeMapping.originalRange.startLineNumber + lineStartDelta <= rangeMapping.originalRange.endLineNumber
+            && rangeMapping.modifiedRange.startLineNumber + lineStartDelta <= rangeMapping.modifiedRange.endLineNumber) {
+            // We can only do this if the range is not empty yet
+            lineEndDelta = -1;
+        }
+        // original: xxx[ \n <- this line is not modified
+        // modified: xxx[ \n
+        if (rangeMapping.modifiedRange.startColumn - 1 >= modifiedLines[rangeMapping.modifiedRange.startLineNumber - 1].length
+            && rangeMapping.originalRange.startColumn - 1 >= originalLines[rangeMapping.originalRange.startLineNumber - 1].length
+            && rangeMapping.originalRange.startLineNumber <= rangeMapping.originalRange.endLineNumber + lineEndDelta
+            && rangeMapping.modifiedRange.startLineNumber <= rangeMapping.modifiedRange.endLineNumber + lineEndDelta) {
+            // We can only do this if the range is not empty yet
+            lineStartDelta = 1;
+        }
+        const originalLineRange = new lineRange_1.LineRange(rangeMapping.originalRange.startLineNumber + lineStartDelta, rangeMapping.originalRange.endLineNumber + 1 + lineEndDelta);
+        const modifiedLineRange = new lineRange_1.LineRange(rangeMapping.modifiedRange.startLineNumber + lineStartDelta, rangeMapping.modifiedRange.endLineNumber + 1 + lineEndDelta);
+        return new rangeMapping_1.DetailedLineRangeMapping(originalLineRange, modifiedLineRange, [rangeMapping]);
+    }
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[50/*vs/editor/common/diff/legacyLinesDiffComputer*/], __M([0/*require*/,1/*exports*/,25/*vs/base/common/diff/diff*/,33/*vs/editor/common/diff/linesDiffComputer*/,16/*vs/editor/common/diff/rangeMapping*/,6/*vs/base/common/strings*/,2/*vs/editor/common/core/range*/,12/*vs/base/common/assert*/,10/*vs/editor/common/core/lineRange*/]), function (require, exports, diff_1, linesDiffComputer_1, rangeMapping_1, strings, range_1, assert_1, lineRange_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.DiffComputer = exports.LegacyLinesDiffComputer = void 0;
     const MINIMUM_MATCHING_CHARACTER_LENGTH = 3;
-    class SmartLinesDiffComputer {
+    class LegacyLinesDiffComputer {
         computeDiff(originalLines, modifiedLines, options) {
             var _a;
             const diffComputer = new DiffComputer(originalLines, modifiedLines, {
@@ -8878,12 +13066,12 @@ define(__m[39/*vs/editor/common/diff/smartLinesDiffComputer*/], __M([0/*require*
                 else {
                     modifiedRange = new lineRange_1.LineRange(c.modifiedStartLineNumber, c.modifiedEndLineNumber + 1);
                 }
-                let change = new linesDiffComputer_1.LineRangeMapping(originalRange, modifiedRange, (_a = c.charChanges) === null || _a === void 0 ? void 0 : _a.map(c => new linesDiffComputer_1.RangeMapping(new range_1.Range(c.originalStartLineNumber, c.originalStartColumn, c.originalEndLineNumber, c.originalEndColumn), new range_1.Range(c.modifiedStartLineNumber, c.modifiedStartColumn, c.modifiedEndLineNumber, c.modifiedEndColumn))));
+                let change = new rangeMapping_1.DetailedLineRangeMapping(originalRange, modifiedRange, (_a = c.charChanges) === null || _a === void 0 ? void 0 : _a.map(c => new rangeMapping_1.RangeMapping(new range_1.Range(c.originalStartLineNumber, c.originalStartColumn, c.originalEndLineNumber, c.originalEndColumn), new range_1.Range(c.modifiedStartLineNumber, c.modifiedStartColumn, c.modifiedEndLineNumber, c.modifiedEndColumn))));
                 if (lastChange) {
-                    if (lastChange.modifiedRange.endLineNumberExclusive === change.modifiedRange.startLineNumber
-                        || lastChange.originalRange.endLineNumberExclusive === change.originalRange.startLineNumber) {
+                    if (lastChange.modified.endLineNumberExclusive === change.modified.startLineNumber
+                        || lastChange.original.endLineNumberExclusive === change.original.startLineNumber) {
                         // join touching diffs. Probably moving diffs up/down in the algorithm causes touching diffs.
-                        change = new linesDiffComputer_1.LineRangeMapping(lastChange.originalRange.join(change.originalRange), lastChange.modifiedRange.join(change.modifiedRange), lastChange.innerChanges && change.innerChanges ?
+                        change = new rangeMapping_1.DetailedLineRangeMapping(lastChange.original.join(change.original), lastChange.modified.join(change.modified), lastChange.innerChanges && change.innerChanges ?
                             lastChange.innerChanges.concat(change.innerChanges) : undefined);
                         changes.pop();
                     }
@@ -8892,15 +13080,15 @@ define(__m[39/*vs/editor/common/diff/smartLinesDiffComputer*/], __M([0/*require*
                 lastChange = change;
             }
             (0, assert_1.assertFn)(() => {
-                return (0, assert_1.checkAdjacentItems)(changes, (m1, m2) => m2.originalRange.startLineNumber - m1.originalRange.endLineNumberExclusive === m2.modifiedRange.startLineNumber - m1.modifiedRange.endLineNumberExclusive &&
+                return (0, assert_1.checkAdjacentItems)(changes, (m1, m2) => m2.original.startLineNumber - m1.original.endLineNumberExclusive === m2.modified.startLineNumber - m1.modified.endLineNumberExclusive &&
                     // There has to be an unchanged line in between (otherwise both diffs should have been joined)
-                    m1.originalRange.endLineNumberExclusive < m2.originalRange.startLineNumber &&
-                    m1.modifiedRange.endLineNumberExclusive < m2.modifiedRange.startLineNumber);
+                    m1.original.endLineNumberExclusive < m2.original.startLineNumber &&
+                    m1.modified.endLineNumberExclusive < m2.modified.startLineNumber);
             });
-            return new linesDiffComputer_1.LinesDiff(changes, result.quitEarly);
+            return new linesDiffComputer_1.LinesDiff(changes, [], result.quitEarly);
         }
     }
-    exports.SmartLinesDiffComputer = SmartLinesDiffComputer;
+    exports.LegacyLinesDiffComputer = LegacyLinesDiffComputer;
     function computeDiff(originalSequence, modifiedSequence, continueProcessingPredicate, pretty) {
         const diffAlgo = new diff_1.LcsDiff(originalSequence, modifiedSequence, continueProcessingPredicate);
         return diffAlgo.ComputeDiff(pretty);
@@ -9310,459 +13498,161 @@ define(__m[39/*vs/editor/common/diff/smartLinesDiffComputer*/], __M([0/*require*
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[40/*vs/editor/common/diff/standardLinesDiffComputer*/], __M([0/*require*/,1/*exports*/,10/*vs/base/common/assert*/,21/*vs/editor/common/core/lineRange*/,6/*vs/editor/common/core/offsetRange*/,3/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/,7/*vs/editor/common/diff/algorithms/diffAlgorithm*/,38/*vs/editor/common/diff/algorithms/dynamicProgrammingDiffing*/,35/*vs/editor/common/diff/algorithms/joinSequenceDiffs*/,36/*vs/editor/common/diff/algorithms/myersDiffAlgorithm*/,23/*vs/editor/common/diff/linesDiffComputer*/]), function (require, exports, assert_1, lineRange_1, offsetRange_1, position_1, range_1, diffAlgorithm_1, dynamicProgrammingDiffing_1, joinSequenceDiffs_1, myersDiffAlgorithm_1, linesDiffComputer_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.LineSequence = exports.getLineRangeMapping = exports.lineRangeMappingFromRangeMappings = exports.StandardLinesDiffComputer = void 0;
-    class StandardLinesDiffComputer {
-        constructor() {
-            this.dynamicProgrammingDiffing = new dynamicProgrammingDiffing_1.DynamicProgrammingDiffing();
-            this.myersDiffingAlgorithm = new myersDiffAlgorithm_1.MyersDiffAlgorithm();
-        }
-        computeDiff(originalLines, modifiedLines, options) {
-            const timeout = options.maxComputationTimeMs === 0 ? diffAlgorithm_1.InfiniteTimeout.instance : new diffAlgorithm_1.DateTimeout(options.maxComputationTimeMs);
-            const considerWhitespaceChanges = !options.ignoreTrimWhitespace;
-            const perfectHashes = new Map();
-            function getOrCreateHash(text) {
-                let hash = perfectHashes.get(text);
-                if (hash === undefined) {
-                    hash = perfectHashes.size;
-                    perfectHashes.set(text, hash);
-                }
-                return hash;
-            }
-            const srcDocLines = originalLines.map((l) => getOrCreateHash(l.trim()));
-            const tgtDocLines = modifiedLines.map((l) => getOrCreateHash(l.trim()));
-            const sequence1 = new LineSequence(srcDocLines, originalLines);
-            const sequence2 = new LineSequence(tgtDocLines, modifiedLines);
-            const lineAlignmentResult = (() => {
-                if (sequence1.length + sequence2.length < 1500) {
-                    // Use the improved algorithm for small files
-                    return this.dynamicProgrammingDiffing.compute(sequence1, sequence2, timeout, (offset1, offset2) => originalLines[offset1] === modifiedLines[offset2]
-                        ? modifiedLines[offset2].length === 0
-                            ? 0.1
-                            : 1 + Math.log(1 + modifiedLines[offset2].length)
-                        : 0.99);
-                }
-                return this.myersDiffingAlgorithm.compute(sequence1, sequence2);
-            })();
-            let lineAlignments = lineAlignmentResult.diffs;
-            let hitTimeout = lineAlignmentResult.hitTimeout;
-            lineAlignments = (0, joinSequenceDiffs_1.optimizeSequenceDiffs)(sequence1, sequence2, lineAlignments);
-            const alignments = [];
-            const scanForWhitespaceChanges = (equalLinesCount) => {
-                if (!considerWhitespaceChanges) {
-                    return;
-                }
-                for (let i = 0; i < equalLinesCount; i++) {
-                    const seq1Offset = seq1LastStart + i;
-                    const seq2Offset = seq2LastStart + i;
-                    if (originalLines[seq1Offset] !== modifiedLines[seq2Offset]) {
-                        // This is because of whitespace changes, diff these lines
-                        const characterDiffs = this.refineDiff(originalLines, modifiedLines, new diffAlgorithm_1.SequenceDiff(new offsetRange_1.OffsetRange(seq1Offset, seq1Offset + 1), new offsetRange_1.OffsetRange(seq2Offset, seq2Offset + 1)), timeout, considerWhitespaceChanges);
-                        for (const a of characterDiffs.mappings) {
-                            alignments.push(a);
-                        }
-                        if (characterDiffs.hitTimeout) {
-                            hitTimeout = true;
-                        }
-                    }
-                }
-            };
-            let seq1LastStart = 0;
-            let seq2LastStart = 0;
-            for (const diff of lineAlignments) {
-                (0, assert_1.assertFn)(() => diff.seq1Range.start - seq1LastStart === diff.seq2Range.start - seq2LastStart);
-                const equalLinesCount = diff.seq1Range.start - seq1LastStart;
-                scanForWhitespaceChanges(equalLinesCount);
-                seq1LastStart = diff.seq1Range.endExclusive;
-                seq2LastStart = diff.seq2Range.endExclusive;
-                const characterDiffs = this.refineDiff(originalLines, modifiedLines, diff, timeout, considerWhitespaceChanges);
-                if (characterDiffs.hitTimeout) {
-                    hitTimeout = true;
-                }
-                for (const a of characterDiffs.mappings) {
-                    alignments.push(a);
-                }
-            }
-            scanForWhitespaceChanges(originalLines.length - seq1LastStart);
-            const changes = lineRangeMappingFromRangeMappings(alignments, originalLines, modifiedLines);
-            return new linesDiffComputer_1.LinesDiff(changes, hitTimeout);
-        }
-        refineDiff(originalLines, modifiedLines, diff, timeout, considerWhitespaceChanges) {
-            const sourceSlice = new Slice(originalLines, diff.seq1Range, considerWhitespaceChanges);
-            const targetSlice = new Slice(modifiedLines, diff.seq2Range, considerWhitespaceChanges);
-            const diffResult = sourceSlice.length + targetSlice.length < 500
-                ? this.dynamicProgrammingDiffing.compute(sourceSlice, targetSlice, timeout)
-                : this.myersDiffingAlgorithm.compute(sourceSlice, targetSlice, timeout);
-            let diffs = diffResult.diffs;
-            diffs = (0, joinSequenceDiffs_1.optimizeSequenceDiffs)(sourceSlice, targetSlice, diffs);
-            diffs = coverFullWords(sourceSlice, targetSlice, diffs);
-            diffs = (0, joinSequenceDiffs_1.smoothenSequenceDiffs)(sourceSlice, targetSlice, diffs);
-            const result = diffs.map((d) => new linesDiffComputer_1.RangeMapping(sourceSlice.translateRange(d.seq1Range), targetSlice.translateRange(d.seq2Range)));
-            // Assert: result applied on original should be the same as diff applied to original
-            return {
-                mappings: result,
-                hitTimeout: diffResult.hitTimeout,
-            };
-        }
-    }
-    exports.StandardLinesDiffComputer = StandardLinesDiffComputer;
-    function coverFullWords(sequence1, sequence2, sequenceDiffs) {
-        const additional = [];
-        let lastModifiedWord = undefined;
-        function maybePushWordToAdditional() {
-            if (!lastModifiedWord) {
-                return;
-            }
-            const originalLength1 = lastModifiedWord.s1Range.length - lastModifiedWord.deleted;
-            const originalLength2 = lastModifiedWord.s2Range.length - lastModifiedWord.added;
-            if (originalLength1 !== originalLength2) {
-                // TODO figure out why this happens
-            }
-            if (Math.max(lastModifiedWord.deleted, lastModifiedWord.added) + (lastModifiedWord.count - 1) > originalLength1) {
-                additional.push(new diffAlgorithm_1.SequenceDiff(lastModifiedWord.s1Range, lastModifiedWord.s2Range));
-            }
-            lastModifiedWord = undefined;
-        }
-        for (const s of sequenceDiffs) {
-            function processWord(s1Range, s2Range) {
-                var _a, _b, _c, _d;
-                if (!lastModifiedWord || !lastModifiedWord.s1Range.containsRange(s1Range) || !lastModifiedWord.s2Range.containsRange(s2Range)) {
-                    if (lastModifiedWord && !(lastModifiedWord.s1Range.endExclusive < s1Range.start && lastModifiedWord.s2Range.endExclusive < s2Range.start)) {
-                        const s1Added = offsetRange_1.OffsetRange.tryCreate(lastModifiedWord.s1Range.endExclusive, s1Range.start);
-                        const s2Added = offsetRange_1.OffsetRange.tryCreate(lastModifiedWord.s2Range.endExclusive, s2Range.start);
-                        lastModifiedWord.deleted += (_a = s1Added === null || s1Added === void 0 ? void 0 : s1Added.length) !== null && _a !== void 0 ? _a : 0;
-                        lastModifiedWord.added += (_b = s2Added === null || s2Added === void 0 ? void 0 : s2Added.length) !== null && _b !== void 0 ? _b : 0;
-                        lastModifiedWord.s1Range = lastModifiedWord.s1Range.join(s1Range);
-                        lastModifiedWord.s2Range = lastModifiedWord.s2Range.join(s2Range);
-                    }
-                    else {
-                        maybePushWordToAdditional();
-                        lastModifiedWord = { added: 0, deleted: 0, count: 0, s1Range: s1Range, s2Range: s2Range };
-                    }
-                }
-                const changedS1 = s1Range.intersect(s.seq1Range);
-                const changedS2 = s2Range.intersect(s.seq2Range);
-                lastModifiedWord.count++;
-                lastModifiedWord.deleted += (_c = changedS1 === null || changedS1 === void 0 ? void 0 : changedS1.length) !== null && _c !== void 0 ? _c : 0;
-                lastModifiedWord.added += (_d = changedS2 === null || changedS2 === void 0 ? void 0 : changedS2.length) !== null && _d !== void 0 ? _d : 0;
-            }
-            const w1Before = sequence1.findWordContaining(s.seq1Range.start - 1);
-            const w2Before = sequence2.findWordContaining(s.seq2Range.start - 1);
-            const w1After = sequence1.findWordContaining(s.seq1Range.endExclusive);
-            const w2After = sequence2.findWordContaining(s.seq2Range.endExclusive);
-            if (w1Before && w1After && w2Before && w2After && w1Before.equals(w1After) && w2Before.equals(w2After)) {
-                processWord(w1Before, w2Before);
-            }
-            else {
-                if (w1Before && w2Before) {
-                    processWord(w1Before, w2Before);
-                }
-                if (w1After && w2After) {
-                    processWord(w1After, w2After);
-                }
-            }
-        }
-        maybePushWordToAdditional();
-        const merged = mergeSequenceDiffs(sequenceDiffs, additional);
-        return merged;
-    }
-    function mergeSequenceDiffs(sequenceDiffs1, sequenceDiffs2) {
-        const result = [];
-        while (sequenceDiffs1.length > 0 || sequenceDiffs2.length > 0) {
-            const sd1 = sequenceDiffs1[0];
-            const sd2 = sequenceDiffs2[0];
-            let next;
-            if (sd1 && (!sd2 || sd1.seq1Range.start < sd2.seq1Range.start)) {
-                next = sequenceDiffs1.shift();
-            }
-            else {
-                next = sequenceDiffs2.shift();
-            }
-            if (result.length > 0 && result[result.length - 1].seq1Range.endExclusive >= next.seq1Range.start) {
-                result[result.length - 1] = result[result.length - 1].join(next);
-            }
-            else {
-                result.push(next);
-            }
-        }
-        return result;
-    }
-    function lineRangeMappingFromRangeMappings(alignments, originalLines, modifiedLines) {
-        const changes = [];
-        for (const g of group(alignments.map(a => getLineRangeMapping(a, originalLines, modifiedLines)), (a1, a2) => a1.originalRange.overlapOrTouch(a2.originalRange)
-            || a1.modifiedRange.overlapOrTouch(a2.modifiedRange))) {
-            const first = g[0];
-            const last = g[g.length - 1];
-            changes.push(new linesDiffComputer_1.LineRangeMapping(first.originalRange.join(last.originalRange), first.modifiedRange.join(last.modifiedRange), g.map(a => a.innerChanges[0])));
-        }
-        (0, assert_1.assertFn)(() => {
-            return (0, assert_1.checkAdjacentItems)(changes, (m1, m2) => m2.originalRange.startLineNumber - m1.originalRange.endLineNumberExclusive === m2.modifiedRange.startLineNumber - m1.modifiedRange.endLineNumberExclusive &&
-                // There has to be an unchanged line in between (otherwise both diffs should have been joined)
-                m1.originalRange.endLineNumberExclusive < m2.originalRange.startLineNumber &&
-                m1.modifiedRange.endLineNumberExclusive < m2.modifiedRange.startLineNumber);
-        });
-        return changes;
-    }
-    exports.lineRangeMappingFromRangeMappings = lineRangeMappingFromRangeMappings;
-    function getLineRangeMapping(rangeMapping, originalLines, modifiedLines) {
-        let lineStartDelta = 0;
-        let lineEndDelta = 0;
-        // rangeMapping describes the edit that replaces `rangeMapping.originalRange` with `newText := getText(modifiedLines, rangeMapping.modifiedRange)`.
-        // original: xxx[ \n <- this line is not modified
-        // modified: xxx[ \n
-        if (rangeMapping.modifiedRange.startColumn - 1 >= modifiedLines[rangeMapping.modifiedRange.startLineNumber - 1].length
-            && rangeMapping.originalRange.startColumn - 1 >= originalLines[rangeMapping.originalRange.startLineNumber - 1].length) {
-            lineStartDelta = 1; // +1 is always possible, as startLineNumber < endLineNumber + 1
-        }
-        // original: ]xxx \n <- this line is not modified
-        // modified: ]xx  \n
-        if (rangeMapping.modifiedRange.endColumn === 1 && rangeMapping.originalRange.endColumn === 1
-            && rangeMapping.originalRange.startLineNumber + lineStartDelta <= rangeMapping.originalRange.endLineNumber
-            && rangeMapping.modifiedRange.startLineNumber + lineStartDelta <= rangeMapping.modifiedRange.endLineNumber) {
-            lineEndDelta = -1; // We can only do this if the range is not empty yet
-        }
-        const originalLineRange = new lineRange_1.LineRange(rangeMapping.originalRange.startLineNumber + lineStartDelta, rangeMapping.originalRange.endLineNumber + 1 + lineEndDelta);
-        const modifiedLineRange = new lineRange_1.LineRange(rangeMapping.modifiedRange.startLineNumber + lineStartDelta, rangeMapping.modifiedRange.endLineNumber + 1 + lineEndDelta);
-        return new linesDiffComputer_1.LineRangeMapping(originalLineRange, modifiedLineRange, [rangeMapping]);
-    }
-    exports.getLineRangeMapping = getLineRangeMapping;
-    function* group(items, shouldBeGrouped) {
-        let currentGroup;
-        let last;
-        for (const item of items) {
-            if (last !== undefined && shouldBeGrouped(last, item)) {
-                currentGroup.push(item);
-            }
-            else {
-                if (currentGroup) {
-                    yield currentGroup;
-                }
-                currentGroup = [item];
-            }
-            last = item;
-        }
-        if (currentGroup) {
-            yield currentGroup;
-        }
-    }
-    class LineSequence {
-        constructor(trimmedHash, lines) {
-            this.trimmedHash = trimmedHash;
-            this.lines = lines;
-        }
-        getElement(offset) {
-            return this.trimmedHash[offset];
-        }
-        get length() {
-            return this.trimmedHash.length;
-        }
-        getBoundaryScore(length) {
-            const indentationBefore = length === 0 ? 0 : getIndentation(this.lines[length - 1]);
-            const indentationAfter = length === this.lines.length ? 0 : getIndentation(this.lines[length]);
-            return 1000 - (indentationBefore + indentationAfter);
-        }
-    }
-    exports.LineSequence = LineSequence;
-    function getIndentation(str) {
-        let i = 0;
-        while (i < str.length && (str.charCodeAt(i) === 32 /* CharCode.Space */ || str.charCodeAt(i) === 9 /* CharCode.Tab */)) {
-            i++;
-        }
-        return i;
-    }
-    class Slice {
-        constructor(lines, lineRange, considerWhitespaceChanges) {
-            // This slice has to have lineRange.length many \n! (otherwise diffing against an empty slice will be problematic)
-            // (Unless it covers the entire document, in that case the other slice also has to cover the entire document ands it's okay)
-            this.lines = lines;
-            this.considerWhitespaceChanges = considerWhitespaceChanges;
-            this.elements = [];
-            this.firstCharOffsetByLineMinusOne = [];
-            // To account for trimming
-            this.offsetByLine = [];
-            // If the slice covers the end, but does not start at the beginning, we include just the \n of the previous line.
-            let trimFirstLineFully = false;
-            if (lineRange.start > 0 && lineRange.endExclusive >= lines.length) {
-                lineRange = new offsetRange_1.OffsetRange(lineRange.start - 1, lineRange.endExclusive);
-                trimFirstLineFully = true;
-            }
-            this.lineRange = lineRange;
-            for (let i = this.lineRange.start; i < this.lineRange.endExclusive; i++) {
-                let line = lines[i];
-                let offset = 0;
-                if (trimFirstLineFully) {
-                    offset = line.length;
-                    line = '';
-                    trimFirstLineFully = false;
-                }
-                else if (!considerWhitespaceChanges) {
-                    const trimmedStartLine = line.trimStart();
-                    offset = line.length - trimmedStartLine.length;
-                    line = trimmedStartLine.trimEnd();
-                }
-                this.offsetByLine.push(offset);
-                for (let i = 0; i < line.length; i++) {
-                    this.elements.push(line.charCodeAt(i));
-                }
-                // Don't add an \n that does not exist in the document.
-                if (i < lines.length - 1) {
-                    this.elements.push('\n'.charCodeAt(0));
-                    this.firstCharOffsetByLineMinusOne[i - this.lineRange.start] = this.elements.length;
-                }
-            }
-            // To account for the last line
-            this.offsetByLine.push(0);
-        }
-        toString() {
-            return `Slice: "${this.text}"`;
-        }
-        get text() {
-            return [...this.elements].map(e => String.fromCharCode(e)).join('');
-        }
-        getElement(offset) {
-            return this.elements[offset];
-        }
-        get length() {
-            return this.elements.length;
-        }
-        getBoundaryScore(length) {
-            //   a   b   c   ,           d   e   f
-            // 11  0   0   12  15  6   13  0   0   11
-            const prevCategory = getCategory(length > 0 ? this.elements[length - 1] : -1);
-            const nextCategory = getCategory(length < this.elements.length ? this.elements[length] : -1);
-            if (prevCategory === 6 /* CharBoundaryCategory.LineBreakCR */ && nextCategory === 7 /* CharBoundaryCategory.LineBreakLF */) {
-                // don't break between \r and \n
-                return 0;
-            }
-            let score = 0;
-            if (prevCategory !== nextCategory) {
-                score += 10;
-                if (nextCategory === 1 /* CharBoundaryCategory.WordUpper */) {
-                    score += 1;
-                }
-            }
-            score += getCategoryBoundaryScore(prevCategory);
-            score += getCategoryBoundaryScore(nextCategory);
-            return score;
-        }
-        translateOffset(offset) {
-            // find smallest i, so that lineBreakOffsets[i] <= offset using binary search
-            if (this.lineRange.isEmpty) {
-                return new position_1.Position(this.lineRange.start + 1, 1);
-            }
-            let i = 0;
-            let j = this.firstCharOffsetByLineMinusOne.length;
-            while (i < j) {
-                const k = Math.floor((i + j) / 2);
-                if (this.firstCharOffsetByLineMinusOne[k] > offset) {
-                    j = k;
-                }
-                else {
-                    i = k + 1;
-                }
-            }
-            const offsetOfPrevLineBreak = i === 0 ? 0 : this.firstCharOffsetByLineMinusOne[i - 1];
-            return new position_1.Position(this.lineRange.start + i + 1, offset - offsetOfPrevLineBreak + 1 + this.offsetByLine[i]);
-        }
-        translateRange(range) {
-            return range_1.Range.fromPositions(this.translateOffset(range.start), this.translateOffset(range.endExclusive));
-        }
-        /**
-         * Finds the word that contains the character at the given offset
-         */
-        findWordContaining(offset) {
-            if (offset < 0 || offset >= this.elements.length) {
-                return undefined;
-            }
-            if (!isWordChar(this.elements[offset])) {
-                return undefined;
-            }
-            // find start
-            let start = offset;
-            while (start > 0 && isWordChar(this.elements[start - 1])) {
-                start--;
-            }
-            // find end
-            let end = offset;
-            while (end < this.elements.length && isWordChar(this.elements[end])) {
-                end++;
-            }
-            return new offsetRange_1.OffsetRange(start, end);
-        }
-    }
-    function isWordChar(charCode) {
-        return charCode >= 97 /* CharCode.a */ && charCode <= 122 /* CharCode.z */
-            || charCode >= 65 /* CharCode.A */ && charCode <= 90 /* CharCode.Z */
-            || charCode >= 48 /* CharCode.Digit0 */ && charCode <= 57 /* CharCode.Digit9 */;
-    }
-    const score = {
-        [0 /* CharBoundaryCategory.WordLower */]: 0,
-        [1 /* CharBoundaryCategory.WordUpper */]: 0,
-        [2 /* CharBoundaryCategory.WordNumber */]: 0,
-        [3 /* CharBoundaryCategory.End */]: 10,
-        [4 /* CharBoundaryCategory.Other */]: 2,
-        [5 /* CharBoundaryCategory.Space */]: 3,
-        [6 /* CharBoundaryCategory.LineBreakCR */]: 10,
-        [7 /* CharBoundaryCategory.LineBreakLF */]: 10,
-    };
-    function getCategoryBoundaryScore(category) {
-        return score[category];
-    }
-    function getCategory(charCode) {
-        if (charCode === 10 /* CharCode.LineFeed */) {
-            return 7 /* CharBoundaryCategory.LineBreakLF */;
-        }
-        else if (charCode === 13 /* CharCode.CarriageReturn */) {
-            return 6 /* CharBoundaryCategory.LineBreakCR */;
-        }
-        else if (isSpace(charCode)) {
-            return 5 /* CharBoundaryCategory.Space */;
-        }
-        else if (charCode >= 97 /* CharCode.a */ && charCode <= 122 /* CharCode.z */) {
-            return 0 /* CharBoundaryCategory.WordLower */;
-        }
-        else if (charCode >= 65 /* CharCode.A */ && charCode <= 90 /* CharCode.Z */) {
-            return 1 /* CharBoundaryCategory.WordUpper */;
-        }
-        else if (charCode >= 48 /* CharCode.Digit0 */ && charCode <= 57 /* CharCode.Digit9 */) {
-            return 2 /* CharBoundaryCategory.WordNumber */;
-        }
-        else if (charCode === -1) {
-            return 3 /* CharBoundaryCategory.End */;
-        }
-        else {
-            return 4 /* CharBoundaryCategory.Other */;
-        }
-    }
-    function isSpace(charCode) {
-        return charCode === 32 /* CharCode.Space */ || charCode === 9 /* CharCode.Tab */;
-    }
-});
-
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-define(__m[41/*vs/editor/common/diff/linesDiffComputers*/], __M([0/*require*/,1/*exports*/,39/*vs/editor/common/diff/smartLinesDiffComputer*/,40/*vs/editor/common/diff/standardLinesDiffComputer*/]), function (require, exports, smartLinesDiffComputer_1, standardLinesDiffComputer_1) {
+define(__m[51/*vs/editor/common/diff/linesDiffComputers*/], __M([0/*require*/,1/*exports*/,50/*vs/editor/common/diff/legacyLinesDiffComputer*/,49/*vs/editor/common/diff/defaultLinesDiffComputer/defaultLinesDiffComputer*/]), function (require, exports, legacyLinesDiffComputer_1, defaultLinesDiffComputer_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.linesDiffComputers = void 0;
     exports.linesDiffComputers = {
-        smart: new smartLinesDiffComputer_1.SmartLinesDiffComputer(),
-        experimental: new standardLinesDiffComputer_1.StandardLinesDiffComputer(),
+        getLegacy: () => new legacyLinesDiffComputer_1.LegacyLinesDiffComputer(),
+        getDefault: () => new defaultLinesDiffComputer_1.DefaultLinesDiffComputer(),
     };
+});
+
+define(__m[52/*vs/editor/common/languages/defaultDocumentColorsComputer*/], __M([0/*require*/,1/*exports*/,35/*vs/base/common/color*/]), function (require, exports, color_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.computeDefaultDocumentColors = computeDefaultDocumentColors;
+    function _parseCaptureGroups(captureGroups) {
+        const values = [];
+        for (const captureGroup of captureGroups) {
+            const parsedNumber = Number(captureGroup);
+            if (parsedNumber || parsedNumber === 0 && captureGroup.replace(/\s/g, '') !== '') {
+                values.push(parsedNumber);
+            }
+        }
+        return values;
+    }
+    function _toIColor(r, g, b, a) {
+        return {
+            red: r / 255,
+            blue: b / 255,
+            green: g / 255,
+            alpha: a
+        };
+    }
+    function _findRange(model, match) {
+        const index = match.index;
+        const length = match[0].length;
+        if (!index) {
+            return;
+        }
+        const startPosition = model.positionAt(index);
+        const range = {
+            startLineNumber: startPosition.lineNumber,
+            startColumn: startPosition.column,
+            endLineNumber: startPosition.lineNumber,
+            endColumn: startPosition.column + length
+        };
+        return range;
+    }
+    function _findHexColorInformation(range, hexValue) {
+        if (!range) {
+            return;
+        }
+        const parsedHexColor = color_1.Color.Format.CSS.parseHex(hexValue);
+        if (!parsedHexColor) {
+            return;
+        }
+        return {
+            range: range,
+            color: _toIColor(parsedHexColor.rgba.r, parsedHexColor.rgba.g, parsedHexColor.rgba.b, parsedHexColor.rgba.a)
+        };
+    }
+    function _findRGBColorInformation(range, matches, isAlpha) {
+        if (!range || matches.length !== 1) {
+            return;
+        }
+        const match = matches[0];
+        const captureGroups = match.values();
+        const parsedRegex = _parseCaptureGroups(captureGroups);
+        return {
+            range: range,
+            color: _toIColor(parsedRegex[0], parsedRegex[1], parsedRegex[2], isAlpha ? parsedRegex[3] : 1)
+        };
+    }
+    function _findHSLColorInformation(range, matches, isAlpha) {
+        if (!range || matches.length !== 1) {
+            return;
+        }
+        const match = matches[0];
+        const captureGroups = match.values();
+        const parsedRegex = _parseCaptureGroups(captureGroups);
+        const colorEquivalent = new color_1.Color(new color_1.HSLA(parsedRegex[0], parsedRegex[1] / 100, parsedRegex[2] / 100, isAlpha ? parsedRegex[3] : 1));
+        return {
+            range: range,
+            color: _toIColor(colorEquivalent.rgba.r, colorEquivalent.rgba.g, colorEquivalent.rgba.b, colorEquivalent.rgba.a)
+        };
+    }
+    function _findMatches(model, regex) {
+        if (typeof model === 'string') {
+            return [...model.matchAll(regex)];
+        }
+        else {
+            return model.findMatches(regex);
+        }
+    }
+    function computeColors(model) {
+        const result = [];
+        // Early validation for RGB and HSL
+        const initialValidationRegex = /\b(rgb|rgba|hsl|hsla)(\([0-9\s,.\%]*\))|(#)([A-Fa-f0-9]{3})\b|(#)([A-Fa-f0-9]{4})\b|(#)([A-Fa-f0-9]{6})\b|(#)([A-Fa-f0-9]{8})\b/gm;
+        const initialValidationMatches = _findMatches(model, initialValidationRegex);
+        // Potential colors have been found, validate the parameters
+        if (initialValidationMatches.length > 0) {
+            for (const initialMatch of initialValidationMatches) {
+                const initialCaptureGroups = initialMatch.filter(captureGroup => captureGroup !== undefined);
+                const colorScheme = initialCaptureGroups[1];
+                const colorParameters = initialCaptureGroups[2];
+                if (!colorParameters) {
+                    continue;
+                }
+                let colorInformation;
+                if (colorScheme === 'rgb') {
+                    const regexParameters = /^\(\s*(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\s*,\s*(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\s*,\s*(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\s*\)$/gm;
+                    colorInformation = _findRGBColorInformation(_findRange(model, initialMatch), _findMatches(colorParameters, regexParameters), false);
+                }
+                else if (colorScheme === 'rgba') {
+                    const regexParameters = /^\(\s*(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\s*,\s*(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\s*,\s*(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\s*,\s*(0[.][0-9]+|[.][0-9]+|[01][.]|[01])\s*\)$/gm;
+                    colorInformation = _findRGBColorInformation(_findRange(model, initialMatch), _findMatches(colorParameters, regexParameters), true);
+                }
+                else if (colorScheme === 'hsl') {
+                    const regexParameters = /^\(\s*(36[0]|3[0-5][0-9]|[12][0-9][0-9]|[1-9]?[0-9])\s*,\s*(100|\d{1,2}[.]\d*|\d{1,2})%\s*,\s*(100|\d{1,2}[.]\d*|\d{1,2})%\s*\)$/gm;
+                    colorInformation = _findHSLColorInformation(_findRange(model, initialMatch), _findMatches(colorParameters, regexParameters), false);
+                }
+                else if (colorScheme === 'hsla') {
+                    const regexParameters = /^\(\s*(36[0]|3[0-5][0-9]|[12][0-9][0-9]|[1-9]?[0-9])\s*,\s*(100|\d{1,2}[.]\d*|\d{1,2})%\s*,\s*(100|\d{1,2}[.]\d*|\d{1,2})%\s*,\s*(0[.][0-9]+|[.][0-9]+|[01][.]|[01])\s*\)$/gm;
+                    colorInformation = _findHSLColorInformation(_findRange(model, initialMatch), _findMatches(colorParameters, regexParameters), true);
+                }
+                else if (colorScheme === '#') {
+                    colorInformation = _findHexColorInformation(_findRange(model, initialMatch), colorScheme + colorParameters);
+                }
+                if (colorInformation) {
+                    result.push(colorInformation);
+                }
+            }
+        }
+        return result;
+    }
+    /**
+     * Returns an array of all default document colors in the provided document
+     */
+    function computeDefaultDocumentColors(model) {
+        if (!model || typeof model.getValue !== 'function' || typeof model.positionAt !== 'function') {
+            // Unknown caller!
+            return [];
+        }
+        return computeColors(model);
+    }
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[42/*vs/editor/common/languages/linkComputer*/], __M([0/*require*/,1/*exports*/,20/*vs/editor/common/core/characterClassifier*/]), function (require, exports, characterClassifier_1) {
+define(__m[53/*vs/editor/common/languages/linkComputer*/], __M([0/*require*/,1/*exports*/,29/*vs/editor/common/core/characterClassifier*/]), function (require, exports, characterClassifier_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.computeLinks = exports.LinkComputer = exports.StateMachine = void 0;
+    exports.LinkComputer = exports.StateMachine = void 0;
+    exports.computeLinks = computeLinks;
     class Uint8Matrix {
         constructor(rows, cols, defaultValue) {
             const data = new Uint8Array(rows * cols);
@@ -10030,14 +13920,13 @@ define(__m[42/*vs/editor/common/languages/linkComputer*/], __M([0/*require*/,1/*
         }
         return LinkComputer.computeLinks(model);
     }
-    exports.computeLinks = computeLinks;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[43/*vs/editor/common/languages/supports/inplaceReplaceSupport*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[54/*vs/editor/common/languages/supports/inplaceReplaceSupport*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BasicInplaceReplace = void 0;
@@ -10121,18 +14010,20 @@ define(__m[43/*vs/editor/common/languages/supports/inplaceReplaceSupport*/], __M
             return null;
         }
     }
-    BasicInplaceReplace.INSTANCE = new BasicInplaceReplace();
     exports.BasicInplaceReplace = BasicInplaceReplace;
+    BasicInplaceReplace.INSTANCE = new BasicInplaceReplace();
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[44/*vs/editor/common/model*/], __M([0/*require*/,1/*exports*/,12/*vs/base/common/objects*/]), function (require, exports, objects_1) {
+define(__m[55/*vs/editor/common/model*/], __M([0/*require*/,1/*exports*/,14/*vs/base/common/objects*/]), function (require, exports, objects_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.shouldSynchronizeModel = exports.ApplyEditsResult = exports.SearchData = exports.ValidAnnotatedEditOperation = exports.isITextSnapshot = exports.FindMatch = exports.TextModelResolvedOptions = exports.InjectedTextCursorStops = exports.MinimapPosition = exports.OverviewRulerLane = void 0;
+    exports.ApplyEditsResult = exports.SearchData = exports.ValidAnnotatedEditOperation = exports.FindMatch = exports.TextModelResolvedOptions = exports.InjectedTextCursorStops = exports.GlyphMarginLane = exports.OverviewRulerLane = void 0;
+    exports.isITextSnapshot = isITextSnapshot;
+    exports.shouldSynchronizeModel = shouldSynchronizeModel;
     /**
      * Vertical Lane in the overview ruler of the editor.
      */
@@ -10142,22 +14033,23 @@ define(__m[44/*vs/editor/common/model*/], __M([0/*require*/,1/*exports*/,12/*vs/
         OverviewRulerLane[OverviewRulerLane["Center"] = 2] = "Center";
         OverviewRulerLane[OverviewRulerLane["Right"] = 4] = "Right";
         OverviewRulerLane[OverviewRulerLane["Full"] = 7] = "Full";
-    })(OverviewRulerLane = exports.OverviewRulerLane || (exports.OverviewRulerLane = {}));
+    })(OverviewRulerLane || (exports.OverviewRulerLane = OverviewRulerLane = {}));
     /**
-     * Position in the minimap to render the decoration.
+     * Vertical Lane in the glyph margin of the editor.
      */
-    var MinimapPosition;
-    (function (MinimapPosition) {
-        MinimapPosition[MinimapPosition["Inline"] = 1] = "Inline";
-        MinimapPosition[MinimapPosition["Gutter"] = 2] = "Gutter";
-    })(MinimapPosition = exports.MinimapPosition || (exports.MinimapPosition = {}));
+    var GlyphMarginLane;
+    (function (GlyphMarginLane) {
+        GlyphMarginLane[GlyphMarginLane["Left"] = 1] = "Left";
+        GlyphMarginLane[GlyphMarginLane["Center"] = 2] = "Center";
+        GlyphMarginLane[GlyphMarginLane["Right"] = 3] = "Right";
+    })(GlyphMarginLane || (exports.GlyphMarginLane = GlyphMarginLane = {}));
     var InjectedTextCursorStops;
     (function (InjectedTextCursorStops) {
         InjectedTextCursorStops[InjectedTextCursorStops["Both"] = 0] = "Both";
         InjectedTextCursorStops[InjectedTextCursorStops["Right"] = 1] = "Right";
         InjectedTextCursorStops[InjectedTextCursorStops["Left"] = 2] = "Left";
         InjectedTextCursorStops[InjectedTextCursorStops["None"] = 3] = "None";
-    })(InjectedTextCursorStops = exports.InjectedTextCursorStops || (exports.InjectedTextCursorStops = {}));
+    })(InjectedTextCursorStops || (exports.InjectedTextCursorStops = InjectedTextCursorStops = {}));
     class TextModelResolvedOptions {
         get originalIndentSize() {
             return this._indentSizeIsTabSize ? 'tabSize' : this.indentSize;
@@ -10223,7 +14115,6 @@ define(__m[44/*vs/editor/common/model*/], __M([0/*require*/,1/*exports*/,12/*vs/
     function isITextSnapshot(obj) {
         return (obj && typeof obj.read === 'function');
     }
-    exports.isITextSnapshot = isITextSnapshot;
     /**
      * @internal
      */
@@ -10266,14 +14157,13 @@ define(__m[44/*vs/editor/common/model*/], __M([0/*require*/,1/*exports*/,12/*vs/
     function shouldSynchronizeModel(model) {
         return (!model.isTooLargeForSyncing() && !model.isForSimpleWidget);
     }
-    exports.shouldSynchronizeModel = shouldSynchronizeModel;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[45/*vs/editor/common/model/prefixSumComputer*/], __M([0/*require*/,1/*exports*/,26/*vs/base/common/arrays*/,19/*vs/base/common/uint*/]), function (require, exports, arrays_1, uint_1) {
+define(__m[56/*vs/editor/common/model/prefixSumComputer*/], __M([0/*require*/,1/*exports*/,7/*vs/base/common/arrays*/,28/*vs/base/common/uint*/]), function (require, exports, arrays_1, uint_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.PrefixSumIndexOfResult = exports.ConstantTimePrefixSumComputer = exports.PrefixSumComputer = void 0;
@@ -10503,7 +14393,7 @@ define(__m[45/*vs/editor/common/model/prefixSumComputer*/], __M([0/*require*/,1/
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[46/*vs/editor/common/model/mirrorTextModel*/], __M([0/*require*/,1/*exports*/,5/*vs/base/common/strings*/,3/*vs/editor/common/core/position*/,45/*vs/editor/common/model/prefixSumComputer*/]), function (require, exports, strings_1, position_1, prefixSumComputer_1) {
+define(__m[57/*vs/editor/common/model/mirrorTextModel*/], __M([0/*require*/,1/*exports*/,6/*vs/base/common/strings*/,4/*vs/editor/common/core/position*/,56/*vs/editor/common/model/prefixSumComputer*/]), function (require, exports, strings_1, position_1, prefixSumComputer_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.MirrorTextModel = void 0;
@@ -10621,10 +14511,13 @@ define(__m[46/*vs/editor/common/model/mirrorTextModel*/], __M([0/*require*/,1/*e
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[47/*vs/editor/common/model/textModelSearch*/], __M([0/*require*/,1/*exports*/,5/*vs/base/common/strings*/,34/*vs/editor/common/core/wordCharacterClassifier*/,3/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/,44/*vs/editor/common/model*/]), function (require, exports, strings, wordCharacterClassifier_1, position_1, range_1, model_1) {
+define(__m[58/*vs/editor/common/model/textModelSearch*/], __M([0/*require*/,1/*exports*/,6/*vs/base/common/strings*/,44/*vs/editor/common/core/wordCharacterClassifier*/,4/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/,55/*vs/editor/common/model*/]), function (require, exports, strings, wordCharacterClassifier_1, position_1, range_1, model_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Searcher = exports.isValidMatch = exports.TextModelSearch = exports.createFindMatch = exports.isMultilineRegexSource = exports.SearchParams = void 0;
+    exports.Searcher = exports.TextModelSearch = exports.SearchParams = void 0;
+    exports.isMultilineRegexSource = isMultilineRegexSource;
+    exports.createFindMatch = createFindMatch;
+    exports.isValidMatch = isValidMatch;
     const LIMIT_FIND_COUNT = 999;
     class SearchParams {
         constructor(searchString, isRegex, matchCase, wordSeparators) {
@@ -10666,7 +14559,7 @@ define(__m[47/*vs/editor/common/model/textModelSearch*/], __M([0/*require*/,1/*e
                 // casing might make a difference
                 canUseSimpleSearch = this.matchCase;
             }
-            return new model_1.SearchData(regex, this.wordSeparators ? (0, wordCharacterClassifier_1.getMapForWordSeparators)(this.wordSeparators) : null, canUseSimpleSearch ? this.searchString : null);
+            return new model_1.SearchData(regex, this.wordSeparators ? (0, wordCharacterClassifier_1.getMapForWordSeparators)(this.wordSeparators, []) : null, canUseSimpleSearch ? this.searchString : null);
         }
     }
     exports.SearchParams = SearchParams;
@@ -10694,7 +14587,6 @@ define(__m[47/*vs/editor/common/model/textModelSearch*/], __M([0/*require*/,1/*e
         }
         return false;
     }
-    exports.isMultilineRegexSource = isMultilineRegexSource;
     function createFindMatch(range, rawMatches, captureMatches) {
         if (!captureMatches) {
             return new model_1.FindMatch(range, null);
@@ -10705,7 +14597,6 @@ define(__m[47/*vs/editor/common/model/textModelSearch*/], __M([0/*require*/,1/*e
         }
         return new model_1.FindMatch(range, matches);
     }
-    exports.createFindMatch = createFindMatch;
     class LineFeedCounter {
         constructor(text) {
             const lineFeedsOffsets = [];
@@ -11022,7 +14913,6 @@ define(__m[47/*vs/editor/common/model/textModelSearch*/], __M([0/*require*/,1/*e
         return (leftIsWordBounday(wordSeparators, text, textLength, matchStartIndex, matchLength)
             && rightIsWordBounday(wordSeparators, text, textLength, matchStartIndex, matchLength));
     }
-    exports.isValidMatch = isValidMatch;
     class Searcher {
         constructor(wordSeparators, searchRegex) {
             this._wordSeparators = wordSeparators;
@@ -11080,7 +14970,95 @@ define(__m[47/*vs/editor/common/model/textModelSearch*/], __M([0/*require*/,1/*e
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[48/*vs/editor/common/services/unicodeTextModelHighlighter*/], __M([0/*require*/,1/*exports*/,2/*vs/editor/common/core/range*/,47/*vs/editor/common/model/textModelSearch*/,5/*vs/base/common/strings*/,10/*vs/base/common/assert*/,22/*vs/editor/common/core/wordHelper*/]), function (require, exports, range_1, textModelSearch_1, strings, assert_1, wordHelper_1) {
+define(__m[59/*vs/editor/common/services/findSectionHeaders*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.findSectionHeaders = findSectionHeaders;
+    const markRegex = /\bMARK:\s*(.*)$/d;
+    const trimDashesRegex = /^-+|-+$/g;
+    /**
+     * Find section headers in the model.
+     *
+     * @param model the text model to search in
+     * @param options options to search with
+     * @returns an array of section headers
+     */
+    function findSectionHeaders(model, options) {
+        var _a;
+        let headers = [];
+        if (options.findRegionSectionHeaders && ((_a = options.foldingRules) === null || _a === void 0 ? void 0 : _a.markers)) {
+            const regionHeaders = collectRegionHeaders(model, options);
+            headers = headers.concat(regionHeaders);
+        }
+        if (options.findMarkSectionHeaders) {
+            const markHeaders = collectMarkHeaders(model);
+            headers = headers.concat(markHeaders);
+        }
+        return headers;
+    }
+    function collectRegionHeaders(model, options) {
+        const regionHeaders = [];
+        const endLineNumber = model.getLineCount();
+        for (let lineNumber = 1; lineNumber <= endLineNumber; lineNumber++) {
+            const lineContent = model.getLineContent(lineNumber);
+            const match = lineContent.match(options.foldingRules.markers.start);
+            if (match) {
+                const range = { startLineNumber: lineNumber, startColumn: match[0].length + 1, endLineNumber: lineNumber, endColumn: lineContent.length + 1 };
+                if (range.endColumn > range.startColumn) {
+                    const sectionHeader = {
+                        range,
+                        ...getHeaderText(lineContent.substring(match[0].length)),
+                        shouldBeInComments: false
+                    };
+                    if (sectionHeader.text || sectionHeader.hasSeparatorLine) {
+                        regionHeaders.push(sectionHeader);
+                    }
+                }
+            }
+        }
+        return regionHeaders;
+    }
+    function collectMarkHeaders(model) {
+        const markHeaders = [];
+        const endLineNumber = model.getLineCount();
+        for (let lineNumber = 1; lineNumber <= endLineNumber; lineNumber++) {
+            const lineContent = model.getLineContent(lineNumber);
+            addMarkHeaderIfFound(lineContent, lineNumber, markHeaders);
+        }
+        return markHeaders;
+    }
+    function addMarkHeaderIfFound(lineContent, lineNumber, sectionHeaders) {
+        markRegex.lastIndex = 0;
+        const match = markRegex.exec(lineContent);
+        if (match) {
+            const column = match.indices[1][0] + 1;
+            const endColumn = match.indices[1][1] + 1;
+            const range = { startLineNumber: lineNumber, startColumn: column, endLineNumber: lineNumber, endColumn: endColumn };
+            if (range.endColumn > range.startColumn) {
+                const sectionHeader = {
+                    range,
+                    ...getHeaderText(match[1]),
+                    shouldBeInComments: true
+                };
+                if (sectionHeader.text || sectionHeader.hasSeparatorLine) {
+                    sectionHeaders.push(sectionHeader);
+                }
+            }
+        }
+    }
+    function getHeaderText(text) {
+        text = text.trim();
+        const hasSeparatorLine = text.startsWith('-');
+        text = text.replace(trimDashesRegex, '');
+        return { text, hasSeparatorLine };
+    }
+});
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[60/*vs/editor/common/services/unicodeTextModelHighlighter*/], __M([0/*require*/,1/*exports*/,2/*vs/editor/common/core/range*/,58/*vs/editor/common/model/textModelSearch*/,6/*vs/base/common/strings*/,12/*vs/base/common/assert*/,30/*vs/editor/common/core/wordHelper*/]), function (require, exports, range_1, textModelSearch_1, strings, assert_1, wordHelper_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UnicodeTextModelHighlighter = void 0;
@@ -11267,10 +15245,10 @@ define(__m[48/*vs/editor/common/services/unicodeTextModelHighlighter*/], __M([0/
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
+define(__m[61/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/,1/*exports*/]), function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.WrappingIndent = exports.TrackedRangeStickiness = exports.TextEditorCursorStyle = exports.TextEditorCursorBlinkingStyle = exports.SymbolTag = exports.SymbolKind = exports.SignatureHelpTriggerKind = exports.SelectionDirection = exports.ScrollbarVisibility = exports.ScrollType = exports.RenderMinimap = exports.RenderLineNumbersType = exports.PositionAffinity = exports.OverviewRulerLane = exports.OverlayWidgetPositionPreference = exports.MouseTargetType = exports.MinimapPosition = exports.MarkerTag = exports.MarkerSeverity = exports.KeyCode = exports.InlineCompletionTriggerKind = exports.InlayHintKind = exports.InjectedTextCursorStops = exports.IndentAction = exports.EndOfLineSequence = exports.EndOfLinePreference = exports.EditorOption = exports.EditorAutoIndentStrategy = exports.DocumentHighlightKind = exports.DefaultEndOfLine = exports.CursorChangeReason = exports.ContentWidgetPositionPreference = exports.CompletionTriggerKind = exports.CompletionItemTag = exports.CompletionItemKind = exports.CompletionItemInsertTextRule = exports.CodeActionTriggerType = exports.AccessibilitySupport = void 0;
+    exports.WrappingIndent = exports.TrackedRangeStickiness = exports.TextEditorCursorStyle = exports.TextEditorCursorBlinkingStyle = exports.SymbolTag = exports.SymbolKind = exports.SignatureHelpTriggerKind = exports.ShowLightbulbIconMode = exports.SelectionDirection = exports.ScrollbarVisibility = exports.ScrollType = exports.RenderMinimap = exports.RenderLineNumbersType = exports.PositionAffinity = exports.PartialAcceptTriggerKind = exports.OverviewRulerLane = exports.OverlayWidgetPositionPreference = exports.NewSymbolNameTag = exports.MouseTargetType = exports.MinimapSectionHeaderStyle = exports.MinimapPosition = exports.MarkerTag = exports.MarkerSeverity = exports.KeyCode = exports.InlineEditTriggerKind = exports.InlineCompletionTriggerKind = exports.InlayHintKind = exports.InjectedTextCursorStops = exports.IndentAction = exports.GlyphMarginLane = exports.EndOfLineSequence = exports.EndOfLinePreference = exports.EditorOption = exports.EditorAutoIndentStrategy = exports.DocumentHighlightKind = exports.DefaultEndOfLine = exports.CursorChangeReason = exports.ContentWidgetPositionPreference = exports.CompletionTriggerKind = exports.CompletionItemTag = exports.CompletionItemKind = exports.CompletionItemInsertTextRule = exports.CodeActionTriggerType = exports.AccessibilitySupport = void 0;
     // THIS IS A GENERATED FILE. DO NOT EDIT DIRECTLY.
     var AccessibilitySupport;
     (function (AccessibilitySupport) {
@@ -11280,12 +15258,12 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         AccessibilitySupport[AccessibilitySupport["Unknown"] = 0] = "Unknown";
         AccessibilitySupport[AccessibilitySupport["Disabled"] = 1] = "Disabled";
         AccessibilitySupport[AccessibilitySupport["Enabled"] = 2] = "Enabled";
-    })(AccessibilitySupport = exports.AccessibilitySupport || (exports.AccessibilitySupport = {}));
+    })(AccessibilitySupport || (exports.AccessibilitySupport = AccessibilitySupport = {}));
     var CodeActionTriggerType;
     (function (CodeActionTriggerType) {
         CodeActionTriggerType[CodeActionTriggerType["Invoke"] = 1] = "Invoke";
         CodeActionTriggerType[CodeActionTriggerType["Auto"] = 2] = "Auto";
-    })(CodeActionTriggerType = exports.CodeActionTriggerType || (exports.CodeActionTriggerType = {}));
+    })(CodeActionTriggerType || (exports.CodeActionTriggerType = CodeActionTriggerType = {}));
     var CompletionItemInsertTextRule;
     (function (CompletionItemInsertTextRule) {
         CompletionItemInsertTextRule[CompletionItemInsertTextRule["None"] = 0] = "None";
@@ -11298,7 +15276,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * `insertText` is a snippet.
          */
         CompletionItemInsertTextRule[CompletionItemInsertTextRule["InsertAsSnippet"] = 4] = "InsertAsSnippet";
-    })(CompletionItemInsertTextRule = exports.CompletionItemInsertTextRule || (exports.CompletionItemInsertTextRule = {}));
+    })(CompletionItemInsertTextRule || (exports.CompletionItemInsertTextRule = CompletionItemInsertTextRule = {}));
     var CompletionItemKind;
     (function (CompletionItemKind) {
         CompletionItemKind[CompletionItemKind["Method"] = 0] = "Method";
@@ -11329,11 +15307,11 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         CompletionItemKind[CompletionItemKind["User"] = 25] = "User";
         CompletionItemKind[CompletionItemKind["Issue"] = 26] = "Issue";
         CompletionItemKind[CompletionItemKind["Snippet"] = 27] = "Snippet";
-    })(CompletionItemKind = exports.CompletionItemKind || (exports.CompletionItemKind = {}));
+    })(CompletionItemKind || (exports.CompletionItemKind = CompletionItemKind = {}));
     var CompletionItemTag;
     (function (CompletionItemTag) {
         CompletionItemTag[CompletionItemTag["Deprecated"] = 1] = "Deprecated";
-    })(CompletionItemTag = exports.CompletionItemTag || (exports.CompletionItemTag = {}));
+    })(CompletionItemTag || (exports.CompletionItemTag = CompletionItemTag = {}));
     /**
      * How a suggest provider was triggered.
      */
@@ -11342,7 +15320,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         CompletionTriggerKind[CompletionTriggerKind["Invoke"] = 0] = "Invoke";
         CompletionTriggerKind[CompletionTriggerKind["TriggerCharacter"] = 1] = "TriggerCharacter";
         CompletionTriggerKind[CompletionTriggerKind["TriggerForIncompleteCompletions"] = 2] = "TriggerForIncompleteCompletions";
-    })(CompletionTriggerKind = exports.CompletionTriggerKind || (exports.CompletionTriggerKind = {}));
+    })(CompletionTriggerKind || (exports.CompletionTriggerKind = CompletionTriggerKind = {}));
     /**
      * A positioning preference for rendering content widgets.
      */
@@ -11360,7 +15338,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Place the content widget below a position
          */
         ContentWidgetPositionPreference[ContentWidgetPositionPreference["BELOW"] = 2] = "BELOW";
-    })(ContentWidgetPositionPreference = exports.ContentWidgetPositionPreference || (exports.ContentWidgetPositionPreference = {}));
+    })(ContentWidgetPositionPreference || (exports.ContentWidgetPositionPreference = ContentWidgetPositionPreference = {}));
     /**
      * Describes the reason the cursor has changed its position.
      */
@@ -11394,7 +15372,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * There was a Redo.
          */
         CursorChangeReason[CursorChangeReason["Redo"] = 6] = "Redo";
-    })(CursorChangeReason = exports.CursorChangeReason || (exports.CursorChangeReason = {}));
+    })(CursorChangeReason || (exports.CursorChangeReason = CursorChangeReason = {}));
     /**
      * The default end of line to use when instantiating models.
      */
@@ -11408,7 +15386,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Use carriage return and line feed (\r\n) as the end of line character.
          */
         DefaultEndOfLine[DefaultEndOfLine["CRLF"] = 2] = "CRLF";
-    })(DefaultEndOfLine = exports.DefaultEndOfLine || (exports.DefaultEndOfLine = {}));
+    })(DefaultEndOfLine || (exports.DefaultEndOfLine = DefaultEndOfLine = {}));
     /**
      * A document highlight kind.
      */
@@ -11426,7 +15404,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Write-access of a symbol, like writing to a variable.
          */
         DocumentHighlightKind[DocumentHighlightKind["Write"] = 2] = "Write";
-    })(DocumentHighlightKind = exports.DocumentHighlightKind || (exports.DocumentHighlightKind = {}));
+    })(DocumentHighlightKind || (exports.DocumentHighlightKind = DocumentHighlightKind = {}));
     /**
      * Configuration options for auto indentation in the editor
      */
@@ -11437,7 +15415,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         EditorAutoIndentStrategy[EditorAutoIndentStrategy["Brackets"] = 2] = "Brackets";
         EditorAutoIndentStrategy[EditorAutoIndentStrategy["Advanced"] = 3] = "Advanced";
         EditorAutoIndentStrategy[EditorAutoIndentStrategy["Full"] = 4] = "Full";
-    })(EditorAutoIndentStrategy = exports.EditorAutoIndentStrategy || (exports.EditorAutoIndentStrategy = {}));
+    })(EditorAutoIndentStrategy || (exports.EditorAutoIndentStrategy = EditorAutoIndentStrategy = {}));
     var EditorOption;
     (function (EditorOption) {
         EditorOption[EditorOption["acceptSuggestionOnCommitCharacter"] = 0] = "acceptSuggestionOnCommitCharacter";
@@ -11445,143 +15423,152 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         EditorOption[EditorOption["accessibilitySupport"] = 2] = "accessibilitySupport";
         EditorOption[EditorOption["accessibilityPageSize"] = 3] = "accessibilityPageSize";
         EditorOption[EditorOption["ariaLabel"] = 4] = "ariaLabel";
-        EditorOption[EditorOption["autoClosingBrackets"] = 5] = "autoClosingBrackets";
-        EditorOption[EditorOption["screenReaderAnnounceInlineSuggestion"] = 6] = "screenReaderAnnounceInlineSuggestion";
-        EditorOption[EditorOption["autoClosingDelete"] = 7] = "autoClosingDelete";
-        EditorOption[EditorOption["autoClosingOvertype"] = 8] = "autoClosingOvertype";
-        EditorOption[EditorOption["autoClosingQuotes"] = 9] = "autoClosingQuotes";
-        EditorOption[EditorOption["autoIndent"] = 10] = "autoIndent";
-        EditorOption[EditorOption["automaticLayout"] = 11] = "automaticLayout";
-        EditorOption[EditorOption["autoSurround"] = 12] = "autoSurround";
-        EditorOption[EditorOption["bracketPairColorization"] = 13] = "bracketPairColorization";
-        EditorOption[EditorOption["guides"] = 14] = "guides";
-        EditorOption[EditorOption["codeLens"] = 15] = "codeLens";
-        EditorOption[EditorOption["codeLensFontFamily"] = 16] = "codeLensFontFamily";
-        EditorOption[EditorOption["codeLensFontSize"] = 17] = "codeLensFontSize";
-        EditorOption[EditorOption["colorDecorators"] = 18] = "colorDecorators";
-        EditorOption[EditorOption["colorDecoratorsLimit"] = 19] = "colorDecoratorsLimit";
-        EditorOption[EditorOption["columnSelection"] = 20] = "columnSelection";
-        EditorOption[EditorOption["comments"] = 21] = "comments";
-        EditorOption[EditorOption["contextmenu"] = 22] = "contextmenu";
-        EditorOption[EditorOption["copyWithSyntaxHighlighting"] = 23] = "copyWithSyntaxHighlighting";
-        EditorOption[EditorOption["cursorBlinking"] = 24] = "cursorBlinking";
-        EditorOption[EditorOption["cursorSmoothCaretAnimation"] = 25] = "cursorSmoothCaretAnimation";
-        EditorOption[EditorOption["cursorStyle"] = 26] = "cursorStyle";
-        EditorOption[EditorOption["cursorSurroundingLines"] = 27] = "cursorSurroundingLines";
-        EditorOption[EditorOption["cursorSurroundingLinesStyle"] = 28] = "cursorSurroundingLinesStyle";
-        EditorOption[EditorOption["cursorWidth"] = 29] = "cursorWidth";
-        EditorOption[EditorOption["disableLayerHinting"] = 30] = "disableLayerHinting";
-        EditorOption[EditorOption["disableMonospaceOptimizations"] = 31] = "disableMonospaceOptimizations";
-        EditorOption[EditorOption["domReadOnly"] = 32] = "domReadOnly";
-        EditorOption[EditorOption["dragAndDrop"] = 33] = "dragAndDrop";
-        EditorOption[EditorOption["dropIntoEditor"] = 34] = "dropIntoEditor";
-        EditorOption[EditorOption["emptySelectionClipboard"] = 35] = "emptySelectionClipboard";
-        EditorOption[EditorOption["experimentalWhitespaceRendering"] = 36] = "experimentalWhitespaceRendering";
-        EditorOption[EditorOption["extraEditorClassName"] = 37] = "extraEditorClassName";
-        EditorOption[EditorOption["fastScrollSensitivity"] = 38] = "fastScrollSensitivity";
-        EditorOption[EditorOption["find"] = 39] = "find";
-        EditorOption[EditorOption["fixedOverflowWidgets"] = 40] = "fixedOverflowWidgets";
-        EditorOption[EditorOption["folding"] = 41] = "folding";
-        EditorOption[EditorOption["foldingStrategy"] = 42] = "foldingStrategy";
-        EditorOption[EditorOption["foldingHighlight"] = 43] = "foldingHighlight";
-        EditorOption[EditorOption["foldingImportsByDefault"] = 44] = "foldingImportsByDefault";
-        EditorOption[EditorOption["foldingMaximumRegions"] = 45] = "foldingMaximumRegions";
-        EditorOption[EditorOption["unfoldOnClickAfterEndOfLine"] = 46] = "unfoldOnClickAfterEndOfLine";
-        EditorOption[EditorOption["fontFamily"] = 47] = "fontFamily";
-        EditorOption[EditorOption["fontInfo"] = 48] = "fontInfo";
-        EditorOption[EditorOption["fontLigatures"] = 49] = "fontLigatures";
-        EditorOption[EditorOption["fontSize"] = 50] = "fontSize";
-        EditorOption[EditorOption["fontWeight"] = 51] = "fontWeight";
-        EditorOption[EditorOption["fontVariations"] = 52] = "fontVariations";
-        EditorOption[EditorOption["formatOnPaste"] = 53] = "formatOnPaste";
-        EditorOption[EditorOption["formatOnType"] = 54] = "formatOnType";
-        EditorOption[EditorOption["glyphMargin"] = 55] = "glyphMargin";
-        EditorOption[EditorOption["gotoLocation"] = 56] = "gotoLocation";
-        EditorOption[EditorOption["hideCursorInOverviewRuler"] = 57] = "hideCursorInOverviewRuler";
-        EditorOption[EditorOption["hover"] = 58] = "hover";
-        EditorOption[EditorOption["inDiffEditor"] = 59] = "inDiffEditor";
-        EditorOption[EditorOption["inlineSuggest"] = 60] = "inlineSuggest";
-        EditorOption[EditorOption["letterSpacing"] = 61] = "letterSpacing";
-        EditorOption[EditorOption["lightbulb"] = 62] = "lightbulb";
-        EditorOption[EditorOption["lineDecorationsWidth"] = 63] = "lineDecorationsWidth";
-        EditorOption[EditorOption["lineHeight"] = 64] = "lineHeight";
-        EditorOption[EditorOption["lineNumbers"] = 65] = "lineNumbers";
-        EditorOption[EditorOption["lineNumbersMinChars"] = 66] = "lineNumbersMinChars";
-        EditorOption[EditorOption["linkedEditing"] = 67] = "linkedEditing";
-        EditorOption[EditorOption["links"] = 68] = "links";
-        EditorOption[EditorOption["matchBrackets"] = 69] = "matchBrackets";
-        EditorOption[EditorOption["minimap"] = 70] = "minimap";
-        EditorOption[EditorOption["mouseStyle"] = 71] = "mouseStyle";
-        EditorOption[EditorOption["mouseWheelScrollSensitivity"] = 72] = "mouseWheelScrollSensitivity";
-        EditorOption[EditorOption["mouseWheelZoom"] = 73] = "mouseWheelZoom";
-        EditorOption[EditorOption["multiCursorMergeOverlapping"] = 74] = "multiCursorMergeOverlapping";
-        EditorOption[EditorOption["multiCursorModifier"] = 75] = "multiCursorModifier";
-        EditorOption[EditorOption["multiCursorPaste"] = 76] = "multiCursorPaste";
-        EditorOption[EditorOption["multiCursorLimit"] = 77] = "multiCursorLimit";
-        EditorOption[EditorOption["occurrencesHighlight"] = 78] = "occurrencesHighlight";
-        EditorOption[EditorOption["overviewRulerBorder"] = 79] = "overviewRulerBorder";
-        EditorOption[EditorOption["overviewRulerLanes"] = 80] = "overviewRulerLanes";
-        EditorOption[EditorOption["padding"] = 81] = "padding";
-        EditorOption[EditorOption["parameterHints"] = 82] = "parameterHints";
-        EditorOption[EditorOption["peekWidgetDefaultFocus"] = 83] = "peekWidgetDefaultFocus";
-        EditorOption[EditorOption["definitionLinkOpensInPeek"] = 84] = "definitionLinkOpensInPeek";
-        EditorOption[EditorOption["quickSuggestions"] = 85] = "quickSuggestions";
-        EditorOption[EditorOption["quickSuggestionsDelay"] = 86] = "quickSuggestionsDelay";
-        EditorOption[EditorOption["readOnly"] = 87] = "readOnly";
-        EditorOption[EditorOption["renameOnType"] = 88] = "renameOnType";
-        EditorOption[EditorOption["renderControlCharacters"] = 89] = "renderControlCharacters";
-        EditorOption[EditorOption["renderFinalNewline"] = 90] = "renderFinalNewline";
-        EditorOption[EditorOption["renderLineHighlight"] = 91] = "renderLineHighlight";
-        EditorOption[EditorOption["renderLineHighlightOnlyWhenFocus"] = 92] = "renderLineHighlightOnlyWhenFocus";
-        EditorOption[EditorOption["renderValidationDecorations"] = 93] = "renderValidationDecorations";
-        EditorOption[EditorOption["renderWhitespace"] = 94] = "renderWhitespace";
-        EditorOption[EditorOption["revealHorizontalRightPadding"] = 95] = "revealHorizontalRightPadding";
-        EditorOption[EditorOption["roundedSelection"] = 96] = "roundedSelection";
-        EditorOption[EditorOption["rulers"] = 97] = "rulers";
-        EditorOption[EditorOption["scrollbar"] = 98] = "scrollbar";
-        EditorOption[EditorOption["scrollBeyondLastColumn"] = 99] = "scrollBeyondLastColumn";
-        EditorOption[EditorOption["scrollBeyondLastLine"] = 100] = "scrollBeyondLastLine";
-        EditorOption[EditorOption["scrollPredominantAxis"] = 101] = "scrollPredominantAxis";
-        EditorOption[EditorOption["selectionClipboard"] = 102] = "selectionClipboard";
-        EditorOption[EditorOption["selectionHighlight"] = 103] = "selectionHighlight";
-        EditorOption[EditorOption["selectOnLineNumbers"] = 104] = "selectOnLineNumbers";
-        EditorOption[EditorOption["showFoldingControls"] = 105] = "showFoldingControls";
-        EditorOption[EditorOption["showUnused"] = 106] = "showUnused";
-        EditorOption[EditorOption["snippetSuggestions"] = 107] = "snippetSuggestions";
-        EditorOption[EditorOption["smartSelect"] = 108] = "smartSelect";
-        EditorOption[EditorOption["smoothScrolling"] = 109] = "smoothScrolling";
-        EditorOption[EditorOption["stickyScroll"] = 110] = "stickyScroll";
-        EditorOption[EditorOption["stickyTabStops"] = 111] = "stickyTabStops";
-        EditorOption[EditorOption["stopRenderingLineAfter"] = 112] = "stopRenderingLineAfter";
-        EditorOption[EditorOption["suggest"] = 113] = "suggest";
-        EditorOption[EditorOption["suggestFontSize"] = 114] = "suggestFontSize";
-        EditorOption[EditorOption["suggestLineHeight"] = 115] = "suggestLineHeight";
-        EditorOption[EditorOption["suggestOnTriggerCharacters"] = 116] = "suggestOnTriggerCharacters";
-        EditorOption[EditorOption["suggestSelection"] = 117] = "suggestSelection";
-        EditorOption[EditorOption["tabCompletion"] = 118] = "tabCompletion";
-        EditorOption[EditorOption["tabIndex"] = 119] = "tabIndex";
-        EditorOption[EditorOption["unicodeHighlighting"] = 120] = "unicodeHighlighting";
-        EditorOption[EditorOption["unusualLineTerminators"] = 121] = "unusualLineTerminators";
-        EditorOption[EditorOption["useShadowDOM"] = 122] = "useShadowDOM";
-        EditorOption[EditorOption["useTabStops"] = 123] = "useTabStops";
-        EditorOption[EditorOption["wordBreak"] = 124] = "wordBreak";
-        EditorOption[EditorOption["wordSeparators"] = 125] = "wordSeparators";
-        EditorOption[EditorOption["wordWrap"] = 126] = "wordWrap";
-        EditorOption[EditorOption["wordWrapBreakAfterCharacters"] = 127] = "wordWrapBreakAfterCharacters";
-        EditorOption[EditorOption["wordWrapBreakBeforeCharacters"] = 128] = "wordWrapBreakBeforeCharacters";
-        EditorOption[EditorOption["wordWrapColumn"] = 129] = "wordWrapColumn";
-        EditorOption[EditorOption["wordWrapOverride1"] = 130] = "wordWrapOverride1";
-        EditorOption[EditorOption["wordWrapOverride2"] = 131] = "wordWrapOverride2";
-        EditorOption[EditorOption["wrappingIndent"] = 132] = "wrappingIndent";
-        EditorOption[EditorOption["wrappingStrategy"] = 133] = "wrappingStrategy";
-        EditorOption[EditorOption["showDeprecated"] = 134] = "showDeprecated";
-        EditorOption[EditorOption["inlayHints"] = 135] = "inlayHints";
-        EditorOption[EditorOption["editorClassName"] = 136] = "editorClassName";
-        EditorOption[EditorOption["pixelRatio"] = 137] = "pixelRatio";
-        EditorOption[EditorOption["tabFocusMode"] = 138] = "tabFocusMode";
-        EditorOption[EditorOption["layoutInfo"] = 139] = "layoutInfo";
-        EditorOption[EditorOption["wrappingInfo"] = 140] = "wrappingInfo";
-    })(EditorOption = exports.EditorOption || (exports.EditorOption = {}));
+        EditorOption[EditorOption["ariaRequired"] = 5] = "ariaRequired";
+        EditorOption[EditorOption["autoClosingBrackets"] = 6] = "autoClosingBrackets";
+        EditorOption[EditorOption["autoClosingComments"] = 7] = "autoClosingComments";
+        EditorOption[EditorOption["screenReaderAnnounceInlineSuggestion"] = 8] = "screenReaderAnnounceInlineSuggestion";
+        EditorOption[EditorOption["autoClosingDelete"] = 9] = "autoClosingDelete";
+        EditorOption[EditorOption["autoClosingOvertype"] = 10] = "autoClosingOvertype";
+        EditorOption[EditorOption["autoClosingQuotes"] = 11] = "autoClosingQuotes";
+        EditorOption[EditorOption["autoIndent"] = 12] = "autoIndent";
+        EditorOption[EditorOption["automaticLayout"] = 13] = "automaticLayout";
+        EditorOption[EditorOption["autoSurround"] = 14] = "autoSurround";
+        EditorOption[EditorOption["bracketPairColorization"] = 15] = "bracketPairColorization";
+        EditorOption[EditorOption["guides"] = 16] = "guides";
+        EditorOption[EditorOption["codeLens"] = 17] = "codeLens";
+        EditorOption[EditorOption["codeLensFontFamily"] = 18] = "codeLensFontFamily";
+        EditorOption[EditorOption["codeLensFontSize"] = 19] = "codeLensFontSize";
+        EditorOption[EditorOption["colorDecorators"] = 20] = "colorDecorators";
+        EditorOption[EditorOption["colorDecoratorsLimit"] = 21] = "colorDecoratorsLimit";
+        EditorOption[EditorOption["columnSelection"] = 22] = "columnSelection";
+        EditorOption[EditorOption["comments"] = 23] = "comments";
+        EditorOption[EditorOption["contextmenu"] = 24] = "contextmenu";
+        EditorOption[EditorOption["copyWithSyntaxHighlighting"] = 25] = "copyWithSyntaxHighlighting";
+        EditorOption[EditorOption["cursorBlinking"] = 26] = "cursorBlinking";
+        EditorOption[EditorOption["cursorSmoothCaretAnimation"] = 27] = "cursorSmoothCaretAnimation";
+        EditorOption[EditorOption["cursorStyle"] = 28] = "cursorStyle";
+        EditorOption[EditorOption["cursorSurroundingLines"] = 29] = "cursorSurroundingLines";
+        EditorOption[EditorOption["cursorSurroundingLinesStyle"] = 30] = "cursorSurroundingLinesStyle";
+        EditorOption[EditorOption["cursorWidth"] = 31] = "cursorWidth";
+        EditorOption[EditorOption["disableLayerHinting"] = 32] = "disableLayerHinting";
+        EditorOption[EditorOption["disableMonospaceOptimizations"] = 33] = "disableMonospaceOptimizations";
+        EditorOption[EditorOption["domReadOnly"] = 34] = "domReadOnly";
+        EditorOption[EditorOption["dragAndDrop"] = 35] = "dragAndDrop";
+        EditorOption[EditorOption["dropIntoEditor"] = 36] = "dropIntoEditor";
+        EditorOption[EditorOption["emptySelectionClipboard"] = 37] = "emptySelectionClipboard";
+        EditorOption[EditorOption["experimentalWhitespaceRendering"] = 38] = "experimentalWhitespaceRendering";
+        EditorOption[EditorOption["extraEditorClassName"] = 39] = "extraEditorClassName";
+        EditorOption[EditorOption["fastScrollSensitivity"] = 40] = "fastScrollSensitivity";
+        EditorOption[EditorOption["find"] = 41] = "find";
+        EditorOption[EditorOption["fixedOverflowWidgets"] = 42] = "fixedOverflowWidgets";
+        EditorOption[EditorOption["folding"] = 43] = "folding";
+        EditorOption[EditorOption["foldingStrategy"] = 44] = "foldingStrategy";
+        EditorOption[EditorOption["foldingHighlight"] = 45] = "foldingHighlight";
+        EditorOption[EditorOption["foldingImportsByDefault"] = 46] = "foldingImportsByDefault";
+        EditorOption[EditorOption["foldingMaximumRegions"] = 47] = "foldingMaximumRegions";
+        EditorOption[EditorOption["unfoldOnClickAfterEndOfLine"] = 48] = "unfoldOnClickAfterEndOfLine";
+        EditorOption[EditorOption["fontFamily"] = 49] = "fontFamily";
+        EditorOption[EditorOption["fontInfo"] = 50] = "fontInfo";
+        EditorOption[EditorOption["fontLigatures"] = 51] = "fontLigatures";
+        EditorOption[EditorOption["fontSize"] = 52] = "fontSize";
+        EditorOption[EditorOption["fontWeight"] = 53] = "fontWeight";
+        EditorOption[EditorOption["fontVariations"] = 54] = "fontVariations";
+        EditorOption[EditorOption["formatOnPaste"] = 55] = "formatOnPaste";
+        EditorOption[EditorOption["formatOnType"] = 56] = "formatOnType";
+        EditorOption[EditorOption["glyphMargin"] = 57] = "glyphMargin";
+        EditorOption[EditorOption["gotoLocation"] = 58] = "gotoLocation";
+        EditorOption[EditorOption["hideCursorInOverviewRuler"] = 59] = "hideCursorInOverviewRuler";
+        EditorOption[EditorOption["hover"] = 60] = "hover";
+        EditorOption[EditorOption["inDiffEditor"] = 61] = "inDiffEditor";
+        EditorOption[EditorOption["inlineSuggest"] = 62] = "inlineSuggest";
+        EditorOption[EditorOption["inlineEdit"] = 63] = "inlineEdit";
+        EditorOption[EditorOption["letterSpacing"] = 64] = "letterSpacing";
+        EditorOption[EditorOption["lightbulb"] = 65] = "lightbulb";
+        EditorOption[EditorOption["lineDecorationsWidth"] = 66] = "lineDecorationsWidth";
+        EditorOption[EditorOption["lineHeight"] = 67] = "lineHeight";
+        EditorOption[EditorOption["lineNumbers"] = 68] = "lineNumbers";
+        EditorOption[EditorOption["lineNumbersMinChars"] = 69] = "lineNumbersMinChars";
+        EditorOption[EditorOption["linkedEditing"] = 70] = "linkedEditing";
+        EditorOption[EditorOption["links"] = 71] = "links";
+        EditorOption[EditorOption["matchBrackets"] = 72] = "matchBrackets";
+        EditorOption[EditorOption["minimap"] = 73] = "minimap";
+        EditorOption[EditorOption["mouseStyle"] = 74] = "mouseStyle";
+        EditorOption[EditorOption["mouseWheelScrollSensitivity"] = 75] = "mouseWheelScrollSensitivity";
+        EditorOption[EditorOption["mouseWheelZoom"] = 76] = "mouseWheelZoom";
+        EditorOption[EditorOption["multiCursorMergeOverlapping"] = 77] = "multiCursorMergeOverlapping";
+        EditorOption[EditorOption["multiCursorModifier"] = 78] = "multiCursorModifier";
+        EditorOption[EditorOption["multiCursorPaste"] = 79] = "multiCursorPaste";
+        EditorOption[EditorOption["multiCursorLimit"] = 80] = "multiCursorLimit";
+        EditorOption[EditorOption["occurrencesHighlight"] = 81] = "occurrencesHighlight";
+        EditorOption[EditorOption["overviewRulerBorder"] = 82] = "overviewRulerBorder";
+        EditorOption[EditorOption["overviewRulerLanes"] = 83] = "overviewRulerLanes";
+        EditorOption[EditorOption["padding"] = 84] = "padding";
+        EditorOption[EditorOption["pasteAs"] = 85] = "pasteAs";
+        EditorOption[EditorOption["parameterHints"] = 86] = "parameterHints";
+        EditorOption[EditorOption["peekWidgetDefaultFocus"] = 87] = "peekWidgetDefaultFocus";
+        EditorOption[EditorOption["definitionLinkOpensInPeek"] = 88] = "definitionLinkOpensInPeek";
+        EditorOption[EditorOption["quickSuggestions"] = 89] = "quickSuggestions";
+        EditorOption[EditorOption["quickSuggestionsDelay"] = 90] = "quickSuggestionsDelay";
+        EditorOption[EditorOption["readOnly"] = 91] = "readOnly";
+        EditorOption[EditorOption["readOnlyMessage"] = 92] = "readOnlyMessage";
+        EditorOption[EditorOption["renameOnType"] = 93] = "renameOnType";
+        EditorOption[EditorOption["renderControlCharacters"] = 94] = "renderControlCharacters";
+        EditorOption[EditorOption["renderFinalNewline"] = 95] = "renderFinalNewline";
+        EditorOption[EditorOption["renderLineHighlight"] = 96] = "renderLineHighlight";
+        EditorOption[EditorOption["renderLineHighlightOnlyWhenFocus"] = 97] = "renderLineHighlightOnlyWhenFocus";
+        EditorOption[EditorOption["renderValidationDecorations"] = 98] = "renderValidationDecorations";
+        EditorOption[EditorOption["renderWhitespace"] = 99] = "renderWhitespace";
+        EditorOption[EditorOption["revealHorizontalRightPadding"] = 100] = "revealHorizontalRightPadding";
+        EditorOption[EditorOption["roundedSelection"] = 101] = "roundedSelection";
+        EditorOption[EditorOption["rulers"] = 102] = "rulers";
+        EditorOption[EditorOption["scrollbar"] = 103] = "scrollbar";
+        EditorOption[EditorOption["scrollBeyondLastColumn"] = 104] = "scrollBeyondLastColumn";
+        EditorOption[EditorOption["scrollBeyondLastLine"] = 105] = "scrollBeyondLastLine";
+        EditorOption[EditorOption["scrollPredominantAxis"] = 106] = "scrollPredominantAxis";
+        EditorOption[EditorOption["selectionClipboard"] = 107] = "selectionClipboard";
+        EditorOption[EditorOption["selectionHighlight"] = 108] = "selectionHighlight";
+        EditorOption[EditorOption["selectOnLineNumbers"] = 109] = "selectOnLineNumbers";
+        EditorOption[EditorOption["showFoldingControls"] = 110] = "showFoldingControls";
+        EditorOption[EditorOption["showUnused"] = 111] = "showUnused";
+        EditorOption[EditorOption["snippetSuggestions"] = 112] = "snippetSuggestions";
+        EditorOption[EditorOption["smartSelect"] = 113] = "smartSelect";
+        EditorOption[EditorOption["smoothScrolling"] = 114] = "smoothScrolling";
+        EditorOption[EditorOption["stickyScroll"] = 115] = "stickyScroll";
+        EditorOption[EditorOption["stickyTabStops"] = 116] = "stickyTabStops";
+        EditorOption[EditorOption["stopRenderingLineAfter"] = 117] = "stopRenderingLineAfter";
+        EditorOption[EditorOption["suggest"] = 118] = "suggest";
+        EditorOption[EditorOption["suggestFontSize"] = 119] = "suggestFontSize";
+        EditorOption[EditorOption["suggestLineHeight"] = 120] = "suggestLineHeight";
+        EditorOption[EditorOption["suggestOnTriggerCharacters"] = 121] = "suggestOnTriggerCharacters";
+        EditorOption[EditorOption["suggestSelection"] = 122] = "suggestSelection";
+        EditorOption[EditorOption["tabCompletion"] = 123] = "tabCompletion";
+        EditorOption[EditorOption["tabIndex"] = 124] = "tabIndex";
+        EditorOption[EditorOption["unicodeHighlighting"] = 125] = "unicodeHighlighting";
+        EditorOption[EditorOption["unusualLineTerminators"] = 126] = "unusualLineTerminators";
+        EditorOption[EditorOption["useShadowDOM"] = 127] = "useShadowDOM";
+        EditorOption[EditorOption["useTabStops"] = 128] = "useTabStops";
+        EditorOption[EditorOption["wordBreak"] = 129] = "wordBreak";
+        EditorOption[EditorOption["wordSegmenterLocales"] = 130] = "wordSegmenterLocales";
+        EditorOption[EditorOption["wordSeparators"] = 131] = "wordSeparators";
+        EditorOption[EditorOption["wordWrap"] = 132] = "wordWrap";
+        EditorOption[EditorOption["wordWrapBreakAfterCharacters"] = 133] = "wordWrapBreakAfterCharacters";
+        EditorOption[EditorOption["wordWrapBreakBeforeCharacters"] = 134] = "wordWrapBreakBeforeCharacters";
+        EditorOption[EditorOption["wordWrapColumn"] = 135] = "wordWrapColumn";
+        EditorOption[EditorOption["wordWrapOverride1"] = 136] = "wordWrapOverride1";
+        EditorOption[EditorOption["wordWrapOverride2"] = 137] = "wordWrapOverride2";
+        EditorOption[EditorOption["wrappingIndent"] = 138] = "wrappingIndent";
+        EditorOption[EditorOption["wrappingStrategy"] = 139] = "wrappingStrategy";
+        EditorOption[EditorOption["showDeprecated"] = 140] = "showDeprecated";
+        EditorOption[EditorOption["inlayHints"] = 141] = "inlayHints";
+        EditorOption[EditorOption["editorClassName"] = 142] = "editorClassName";
+        EditorOption[EditorOption["pixelRatio"] = 143] = "pixelRatio";
+        EditorOption[EditorOption["tabFocusMode"] = 144] = "tabFocusMode";
+        EditorOption[EditorOption["layoutInfo"] = 145] = "layoutInfo";
+        EditorOption[EditorOption["wrappingInfo"] = 146] = "wrappingInfo";
+        EditorOption[EditorOption["defaultColorDecorators"] = 147] = "defaultColorDecorators";
+        EditorOption[EditorOption["colorDecoratorsActivatedOn"] = 148] = "colorDecoratorsActivatedOn";
+        EditorOption[EditorOption["inlineCompletionsAccessibilityVerbose"] = 149] = "inlineCompletionsAccessibilityVerbose";
+    })(EditorOption || (exports.EditorOption = EditorOption = {}));
     /**
      * End of line character preference.
      */
@@ -11599,7 +15586,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Use carriage return and line feed (\r\n) as the end of line character.
          */
         EndOfLinePreference[EndOfLinePreference["CRLF"] = 2] = "CRLF";
-    })(EndOfLinePreference = exports.EndOfLinePreference || (exports.EndOfLinePreference = {}));
+    })(EndOfLinePreference || (exports.EndOfLinePreference = EndOfLinePreference = {}));
     /**
      * End of line character preference.
      */
@@ -11613,7 +15600,16 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Use carriage return and line feed (\r\n) as the end of line character.
          */
         EndOfLineSequence[EndOfLineSequence["CRLF"] = 1] = "CRLF";
-    })(EndOfLineSequence = exports.EndOfLineSequence || (exports.EndOfLineSequence = {}));
+    })(EndOfLineSequence || (exports.EndOfLineSequence = EndOfLineSequence = {}));
+    /**
+     * Vertical Lane in the glyph margin of the editor.
+     */
+    var GlyphMarginLane;
+    (function (GlyphMarginLane) {
+        GlyphMarginLane[GlyphMarginLane["Left"] = 1] = "Left";
+        GlyphMarginLane[GlyphMarginLane["Center"] = 2] = "Center";
+        GlyphMarginLane[GlyphMarginLane["Right"] = 3] = "Right";
+    })(GlyphMarginLane || (exports.GlyphMarginLane = GlyphMarginLane = {}));
     /**
      * Describes what to do with the indentation when pressing Enter.
      */
@@ -11637,19 +15633,19 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Insert new line and outdent once (relative to the previous line's indentation).
          */
         IndentAction[IndentAction["Outdent"] = 3] = "Outdent";
-    })(IndentAction = exports.IndentAction || (exports.IndentAction = {}));
+    })(IndentAction || (exports.IndentAction = IndentAction = {}));
     var InjectedTextCursorStops;
     (function (InjectedTextCursorStops) {
         InjectedTextCursorStops[InjectedTextCursorStops["Both"] = 0] = "Both";
         InjectedTextCursorStops[InjectedTextCursorStops["Right"] = 1] = "Right";
         InjectedTextCursorStops[InjectedTextCursorStops["Left"] = 2] = "Left";
         InjectedTextCursorStops[InjectedTextCursorStops["None"] = 3] = "None";
-    })(InjectedTextCursorStops = exports.InjectedTextCursorStops || (exports.InjectedTextCursorStops = {}));
+    })(InjectedTextCursorStops || (exports.InjectedTextCursorStops = InjectedTextCursorStops = {}));
     var InlayHintKind;
     (function (InlayHintKind) {
         InlayHintKind[InlayHintKind["Type"] = 1] = "Type";
         InlayHintKind[InlayHintKind["Parameter"] = 2] = "Parameter";
-    })(InlayHintKind = exports.InlayHintKind || (exports.InlayHintKind = {}));
+    })(InlayHintKind || (exports.InlayHintKind = InlayHintKind = {}));
     /**
      * How an {@link InlineCompletionsProvider inline completion provider} was triggered.
      */
@@ -11665,7 +15661,12 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Return multiple completion items to enable cycling through them.
          */
         InlineCompletionTriggerKind[InlineCompletionTriggerKind["Explicit"] = 1] = "Explicit";
-    })(InlineCompletionTriggerKind = exports.InlineCompletionTriggerKind || (exports.InlineCompletionTriggerKind = {}));
+    })(InlineCompletionTriggerKind || (exports.InlineCompletionTriggerKind = InlineCompletionTriggerKind = {}));
+    var InlineEditTriggerKind;
+    (function (InlineEditTriggerKind) {
+        InlineEditTriggerKind[InlineEditTriggerKind["Invoke"] = 0] = "Invoke";
+        InlineEditTriggerKind[InlineEditTriggerKind["Automatic"] = 1] = "Automatic";
+    })(InlineEditTriggerKind || (exports.InlineEditTriggerKind = InlineEditTriggerKind = {}));
     /**
      * Virtual Key Codes, the value does not hold any inherent meaning.
      * Inspired somewhat from https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
@@ -11755,129 +15756,134 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         KeyCode[KeyCode["F17"] = 75] = "F17";
         KeyCode[KeyCode["F18"] = 76] = "F18";
         KeyCode[KeyCode["F19"] = 77] = "F19";
-        KeyCode[KeyCode["NumLock"] = 78] = "NumLock";
-        KeyCode[KeyCode["ScrollLock"] = 79] = "ScrollLock";
+        KeyCode[KeyCode["F20"] = 78] = "F20";
+        KeyCode[KeyCode["F21"] = 79] = "F21";
+        KeyCode[KeyCode["F22"] = 80] = "F22";
+        KeyCode[KeyCode["F23"] = 81] = "F23";
+        KeyCode[KeyCode["F24"] = 82] = "F24";
+        KeyCode[KeyCode["NumLock"] = 83] = "NumLock";
+        KeyCode[KeyCode["ScrollLock"] = 84] = "ScrollLock";
         /**
          * Used for miscellaneous characters; it can vary by keyboard.
          * For the US standard keyboard, the ';:' key
          */
-        KeyCode[KeyCode["Semicolon"] = 80] = "Semicolon";
+        KeyCode[KeyCode["Semicolon"] = 85] = "Semicolon";
         /**
          * For any country/region, the '+' key
          * For the US standard keyboard, the '=+' key
          */
-        KeyCode[KeyCode["Equal"] = 81] = "Equal";
+        KeyCode[KeyCode["Equal"] = 86] = "Equal";
         /**
          * For any country/region, the ',' key
          * For the US standard keyboard, the ',<' key
          */
-        KeyCode[KeyCode["Comma"] = 82] = "Comma";
+        KeyCode[KeyCode["Comma"] = 87] = "Comma";
         /**
          * For any country/region, the '-' key
          * For the US standard keyboard, the '-_' key
          */
-        KeyCode[KeyCode["Minus"] = 83] = "Minus";
+        KeyCode[KeyCode["Minus"] = 88] = "Minus";
         /**
          * For any country/region, the '.' key
          * For the US standard keyboard, the '.>' key
          */
-        KeyCode[KeyCode["Period"] = 84] = "Period";
+        KeyCode[KeyCode["Period"] = 89] = "Period";
         /**
          * Used for miscellaneous characters; it can vary by keyboard.
          * For the US standard keyboard, the '/?' key
          */
-        KeyCode[KeyCode["Slash"] = 85] = "Slash";
+        KeyCode[KeyCode["Slash"] = 90] = "Slash";
         /**
          * Used for miscellaneous characters; it can vary by keyboard.
          * For the US standard keyboard, the '`~' key
          */
-        KeyCode[KeyCode["Backquote"] = 86] = "Backquote";
+        KeyCode[KeyCode["Backquote"] = 91] = "Backquote";
         /**
          * Used for miscellaneous characters; it can vary by keyboard.
          * For the US standard keyboard, the '[{' key
          */
-        KeyCode[KeyCode["BracketLeft"] = 87] = "BracketLeft";
+        KeyCode[KeyCode["BracketLeft"] = 92] = "BracketLeft";
         /**
          * Used for miscellaneous characters; it can vary by keyboard.
          * For the US standard keyboard, the '\|' key
          */
-        KeyCode[KeyCode["Backslash"] = 88] = "Backslash";
+        KeyCode[KeyCode["Backslash"] = 93] = "Backslash";
         /**
          * Used for miscellaneous characters; it can vary by keyboard.
          * For the US standard keyboard, the ']}' key
          */
-        KeyCode[KeyCode["BracketRight"] = 89] = "BracketRight";
+        KeyCode[KeyCode["BracketRight"] = 94] = "BracketRight";
         /**
          * Used for miscellaneous characters; it can vary by keyboard.
          * For the US standard keyboard, the ''"' key
          */
-        KeyCode[KeyCode["Quote"] = 90] = "Quote";
+        KeyCode[KeyCode["Quote"] = 95] = "Quote";
         /**
          * Used for miscellaneous characters; it can vary by keyboard.
          */
-        KeyCode[KeyCode["OEM_8"] = 91] = "OEM_8";
+        KeyCode[KeyCode["OEM_8"] = 96] = "OEM_8";
         /**
          * Either the angle bracket key or the backslash key on the RT 102-key keyboard.
          */
-        KeyCode[KeyCode["IntlBackslash"] = 92] = "IntlBackslash";
-        KeyCode[KeyCode["Numpad0"] = 93] = "Numpad0";
-        KeyCode[KeyCode["Numpad1"] = 94] = "Numpad1";
-        KeyCode[KeyCode["Numpad2"] = 95] = "Numpad2";
-        KeyCode[KeyCode["Numpad3"] = 96] = "Numpad3";
-        KeyCode[KeyCode["Numpad4"] = 97] = "Numpad4";
-        KeyCode[KeyCode["Numpad5"] = 98] = "Numpad5";
-        KeyCode[KeyCode["Numpad6"] = 99] = "Numpad6";
-        KeyCode[KeyCode["Numpad7"] = 100] = "Numpad7";
-        KeyCode[KeyCode["Numpad8"] = 101] = "Numpad8";
-        KeyCode[KeyCode["Numpad9"] = 102] = "Numpad9";
-        KeyCode[KeyCode["NumpadMultiply"] = 103] = "NumpadMultiply";
-        KeyCode[KeyCode["NumpadAdd"] = 104] = "NumpadAdd";
-        KeyCode[KeyCode["NUMPAD_SEPARATOR"] = 105] = "NUMPAD_SEPARATOR";
-        KeyCode[KeyCode["NumpadSubtract"] = 106] = "NumpadSubtract";
-        KeyCode[KeyCode["NumpadDecimal"] = 107] = "NumpadDecimal";
-        KeyCode[KeyCode["NumpadDivide"] = 108] = "NumpadDivide";
+        KeyCode[KeyCode["IntlBackslash"] = 97] = "IntlBackslash";
+        KeyCode[KeyCode["Numpad0"] = 98] = "Numpad0";
+        KeyCode[KeyCode["Numpad1"] = 99] = "Numpad1";
+        KeyCode[KeyCode["Numpad2"] = 100] = "Numpad2";
+        KeyCode[KeyCode["Numpad3"] = 101] = "Numpad3";
+        KeyCode[KeyCode["Numpad4"] = 102] = "Numpad4";
+        KeyCode[KeyCode["Numpad5"] = 103] = "Numpad5";
+        KeyCode[KeyCode["Numpad6"] = 104] = "Numpad6";
+        KeyCode[KeyCode["Numpad7"] = 105] = "Numpad7";
+        KeyCode[KeyCode["Numpad8"] = 106] = "Numpad8";
+        KeyCode[KeyCode["Numpad9"] = 107] = "Numpad9";
+        KeyCode[KeyCode["NumpadMultiply"] = 108] = "NumpadMultiply";
+        KeyCode[KeyCode["NumpadAdd"] = 109] = "NumpadAdd";
+        KeyCode[KeyCode["NUMPAD_SEPARATOR"] = 110] = "NUMPAD_SEPARATOR";
+        KeyCode[KeyCode["NumpadSubtract"] = 111] = "NumpadSubtract";
+        KeyCode[KeyCode["NumpadDecimal"] = 112] = "NumpadDecimal";
+        KeyCode[KeyCode["NumpadDivide"] = 113] = "NumpadDivide";
         /**
          * Cover all key codes when IME is processing input.
          */
-        KeyCode[KeyCode["KEY_IN_COMPOSITION"] = 109] = "KEY_IN_COMPOSITION";
-        KeyCode[KeyCode["ABNT_C1"] = 110] = "ABNT_C1";
-        KeyCode[KeyCode["ABNT_C2"] = 111] = "ABNT_C2";
-        KeyCode[KeyCode["AudioVolumeMute"] = 112] = "AudioVolumeMute";
-        KeyCode[KeyCode["AudioVolumeUp"] = 113] = "AudioVolumeUp";
-        KeyCode[KeyCode["AudioVolumeDown"] = 114] = "AudioVolumeDown";
-        KeyCode[KeyCode["BrowserSearch"] = 115] = "BrowserSearch";
-        KeyCode[KeyCode["BrowserHome"] = 116] = "BrowserHome";
-        KeyCode[KeyCode["BrowserBack"] = 117] = "BrowserBack";
-        KeyCode[KeyCode["BrowserForward"] = 118] = "BrowserForward";
-        KeyCode[KeyCode["MediaTrackNext"] = 119] = "MediaTrackNext";
-        KeyCode[KeyCode["MediaTrackPrevious"] = 120] = "MediaTrackPrevious";
-        KeyCode[KeyCode["MediaStop"] = 121] = "MediaStop";
-        KeyCode[KeyCode["MediaPlayPause"] = 122] = "MediaPlayPause";
-        KeyCode[KeyCode["LaunchMediaPlayer"] = 123] = "LaunchMediaPlayer";
-        KeyCode[KeyCode["LaunchMail"] = 124] = "LaunchMail";
-        KeyCode[KeyCode["LaunchApp2"] = 125] = "LaunchApp2";
+        KeyCode[KeyCode["KEY_IN_COMPOSITION"] = 114] = "KEY_IN_COMPOSITION";
+        KeyCode[KeyCode["ABNT_C1"] = 115] = "ABNT_C1";
+        KeyCode[KeyCode["ABNT_C2"] = 116] = "ABNT_C2";
+        KeyCode[KeyCode["AudioVolumeMute"] = 117] = "AudioVolumeMute";
+        KeyCode[KeyCode["AudioVolumeUp"] = 118] = "AudioVolumeUp";
+        KeyCode[KeyCode["AudioVolumeDown"] = 119] = "AudioVolumeDown";
+        KeyCode[KeyCode["BrowserSearch"] = 120] = "BrowserSearch";
+        KeyCode[KeyCode["BrowserHome"] = 121] = "BrowserHome";
+        KeyCode[KeyCode["BrowserBack"] = 122] = "BrowserBack";
+        KeyCode[KeyCode["BrowserForward"] = 123] = "BrowserForward";
+        KeyCode[KeyCode["MediaTrackNext"] = 124] = "MediaTrackNext";
+        KeyCode[KeyCode["MediaTrackPrevious"] = 125] = "MediaTrackPrevious";
+        KeyCode[KeyCode["MediaStop"] = 126] = "MediaStop";
+        KeyCode[KeyCode["MediaPlayPause"] = 127] = "MediaPlayPause";
+        KeyCode[KeyCode["LaunchMediaPlayer"] = 128] = "LaunchMediaPlayer";
+        KeyCode[KeyCode["LaunchMail"] = 129] = "LaunchMail";
+        KeyCode[KeyCode["LaunchApp2"] = 130] = "LaunchApp2";
         /**
          * VK_CLEAR, 0x0C, CLEAR key
          */
-        KeyCode[KeyCode["Clear"] = 126] = "Clear";
+        KeyCode[KeyCode["Clear"] = 131] = "Clear";
         /**
          * Placed last to cover the length of the enum.
          * Please do not depend on this value!
          */
-        KeyCode[KeyCode["MAX_VALUE"] = 127] = "MAX_VALUE";
-    })(KeyCode = exports.KeyCode || (exports.KeyCode = {}));
+        KeyCode[KeyCode["MAX_VALUE"] = 132] = "MAX_VALUE";
+    })(KeyCode || (exports.KeyCode = KeyCode = {}));
     var MarkerSeverity;
     (function (MarkerSeverity) {
         MarkerSeverity[MarkerSeverity["Hint"] = 1] = "Hint";
         MarkerSeverity[MarkerSeverity["Info"] = 2] = "Info";
         MarkerSeverity[MarkerSeverity["Warning"] = 4] = "Warning";
         MarkerSeverity[MarkerSeverity["Error"] = 8] = "Error";
-    })(MarkerSeverity = exports.MarkerSeverity || (exports.MarkerSeverity = {}));
+    })(MarkerSeverity || (exports.MarkerSeverity = MarkerSeverity = {}));
     var MarkerTag;
     (function (MarkerTag) {
         MarkerTag[MarkerTag["Unnecessary"] = 1] = "Unnecessary";
         MarkerTag[MarkerTag["Deprecated"] = 2] = "Deprecated";
-    })(MarkerTag = exports.MarkerTag || (exports.MarkerTag = {}));
+    })(MarkerTag || (exports.MarkerTag = MarkerTag = {}));
     /**
      * Position in the minimap to render the decoration.
      */
@@ -11885,7 +15891,15 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
     (function (MinimapPosition) {
         MinimapPosition[MinimapPosition["Inline"] = 1] = "Inline";
         MinimapPosition[MinimapPosition["Gutter"] = 2] = "Gutter";
-    })(MinimapPosition = exports.MinimapPosition || (exports.MinimapPosition = {}));
+    })(MinimapPosition || (exports.MinimapPosition = MinimapPosition = {}));
+    /**
+     * Section header style.
+     */
+    var MinimapSectionHeaderStyle;
+    (function (MinimapSectionHeaderStyle) {
+        MinimapSectionHeaderStyle[MinimapSectionHeaderStyle["Normal"] = 1] = "Normal";
+        MinimapSectionHeaderStyle[MinimapSectionHeaderStyle["Underlined"] = 2] = "Underlined";
+    })(MinimapSectionHeaderStyle || (exports.MinimapSectionHeaderStyle = MinimapSectionHeaderStyle = {}));
     /**
      * Type of hit element with the mouse in the editor.
      */
@@ -11947,7 +15961,11 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Mouse is outside of the editor.
          */
         MouseTargetType[MouseTargetType["OUTSIDE_EDITOR"] = 13] = "OUTSIDE_EDITOR";
-    })(MouseTargetType = exports.MouseTargetType || (exports.MouseTargetType = {}));
+    })(MouseTargetType || (exports.MouseTargetType = MouseTargetType = {}));
+    var NewSymbolNameTag;
+    (function (NewSymbolNameTag) {
+        NewSymbolNameTag[NewSymbolNameTag["AIGenerated"] = 1] = "AIGenerated";
+    })(NewSymbolNameTag || (exports.NewSymbolNameTag = NewSymbolNameTag = {}));
     /**
      * A positioning preference for rendering overlay widgets.
      */
@@ -11965,7 +15983,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * Position the overlay widget in the top center
          */
         OverlayWidgetPositionPreference[OverlayWidgetPositionPreference["TOP_CENTER"] = 2] = "TOP_CENTER";
-    })(OverlayWidgetPositionPreference = exports.OverlayWidgetPositionPreference || (exports.OverlayWidgetPositionPreference = {}));
+    })(OverlayWidgetPositionPreference || (exports.OverlayWidgetPositionPreference = OverlayWidgetPositionPreference = {}));
     /**
      * Vertical Lane in the overview ruler of the editor.
      */
@@ -11975,7 +15993,16 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         OverviewRulerLane[OverviewRulerLane["Center"] = 2] = "Center";
         OverviewRulerLane[OverviewRulerLane["Right"] = 4] = "Right";
         OverviewRulerLane[OverviewRulerLane["Full"] = 7] = "Full";
-    })(OverviewRulerLane = exports.OverviewRulerLane || (exports.OverviewRulerLane = {}));
+    })(OverviewRulerLane || (exports.OverviewRulerLane = OverviewRulerLane = {}));
+    /**
+     * How a partial acceptance was triggered.
+     */
+    var PartialAcceptTriggerKind;
+    (function (PartialAcceptTriggerKind) {
+        PartialAcceptTriggerKind[PartialAcceptTriggerKind["Word"] = 0] = "Word";
+        PartialAcceptTriggerKind[PartialAcceptTriggerKind["Line"] = 1] = "Line";
+        PartialAcceptTriggerKind[PartialAcceptTriggerKind["Suggest"] = 2] = "Suggest";
+    })(PartialAcceptTriggerKind || (exports.PartialAcceptTriggerKind = PartialAcceptTriggerKind = {}));
     var PositionAffinity;
     (function (PositionAffinity) {
         /**
@@ -11998,7 +16025,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * If the given position is on injected text, prefers the position right of it.
         */
         PositionAffinity[PositionAffinity["RightOfInjectedText"] = 4] = "RightOfInjectedText";
-    })(PositionAffinity = exports.PositionAffinity || (exports.PositionAffinity = {}));
+    })(PositionAffinity || (exports.PositionAffinity = PositionAffinity = {}));
     var RenderLineNumbersType;
     (function (RenderLineNumbersType) {
         RenderLineNumbersType[RenderLineNumbersType["Off"] = 0] = "Off";
@@ -12006,24 +16033,24 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         RenderLineNumbersType[RenderLineNumbersType["Relative"] = 2] = "Relative";
         RenderLineNumbersType[RenderLineNumbersType["Interval"] = 3] = "Interval";
         RenderLineNumbersType[RenderLineNumbersType["Custom"] = 4] = "Custom";
-    })(RenderLineNumbersType = exports.RenderLineNumbersType || (exports.RenderLineNumbersType = {}));
+    })(RenderLineNumbersType || (exports.RenderLineNumbersType = RenderLineNumbersType = {}));
     var RenderMinimap;
     (function (RenderMinimap) {
         RenderMinimap[RenderMinimap["None"] = 0] = "None";
         RenderMinimap[RenderMinimap["Text"] = 1] = "Text";
         RenderMinimap[RenderMinimap["Blocks"] = 2] = "Blocks";
-    })(RenderMinimap = exports.RenderMinimap || (exports.RenderMinimap = {}));
+    })(RenderMinimap || (exports.RenderMinimap = RenderMinimap = {}));
     var ScrollType;
     (function (ScrollType) {
         ScrollType[ScrollType["Smooth"] = 0] = "Smooth";
         ScrollType[ScrollType["Immediate"] = 1] = "Immediate";
-    })(ScrollType = exports.ScrollType || (exports.ScrollType = {}));
+    })(ScrollType || (exports.ScrollType = ScrollType = {}));
     var ScrollbarVisibility;
     (function (ScrollbarVisibility) {
         ScrollbarVisibility[ScrollbarVisibility["Auto"] = 1] = "Auto";
         ScrollbarVisibility[ScrollbarVisibility["Hidden"] = 2] = "Hidden";
         ScrollbarVisibility[ScrollbarVisibility["Visible"] = 3] = "Visible";
-    })(ScrollbarVisibility = exports.ScrollbarVisibility || (exports.ScrollbarVisibility = {}));
+    })(ScrollbarVisibility || (exports.ScrollbarVisibility = ScrollbarVisibility = {}));
     /**
      * The direction of a selection.
      */
@@ -12037,13 +16064,19 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * The selection starts below where it ends.
          */
         SelectionDirection[SelectionDirection["RTL"] = 1] = "RTL";
-    })(SelectionDirection = exports.SelectionDirection || (exports.SelectionDirection = {}));
+    })(SelectionDirection || (exports.SelectionDirection = SelectionDirection = {}));
+    var ShowLightbulbIconMode;
+    (function (ShowLightbulbIconMode) {
+        ShowLightbulbIconMode["Off"] = "off";
+        ShowLightbulbIconMode["OnCode"] = "onCode";
+        ShowLightbulbIconMode["On"] = "on";
+    })(ShowLightbulbIconMode || (exports.ShowLightbulbIconMode = ShowLightbulbIconMode = {}));
     var SignatureHelpTriggerKind;
     (function (SignatureHelpTriggerKind) {
         SignatureHelpTriggerKind[SignatureHelpTriggerKind["Invoke"] = 1] = "Invoke";
         SignatureHelpTriggerKind[SignatureHelpTriggerKind["TriggerCharacter"] = 2] = "TriggerCharacter";
         SignatureHelpTriggerKind[SignatureHelpTriggerKind["ContentChange"] = 3] = "ContentChange";
-    })(SignatureHelpTriggerKind = exports.SignatureHelpTriggerKind || (exports.SignatureHelpTriggerKind = {}));
+    })(SignatureHelpTriggerKind || (exports.SignatureHelpTriggerKind = SignatureHelpTriggerKind = {}));
     /**
      * A symbol kind.
      */
@@ -12075,11 +16108,11 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         SymbolKind[SymbolKind["Event"] = 23] = "Event";
         SymbolKind[SymbolKind["Operator"] = 24] = "Operator";
         SymbolKind[SymbolKind["TypeParameter"] = 25] = "TypeParameter";
-    })(SymbolKind = exports.SymbolKind || (exports.SymbolKind = {}));
+    })(SymbolKind || (exports.SymbolKind = SymbolKind = {}));
     var SymbolTag;
     (function (SymbolTag) {
         SymbolTag[SymbolTag["Deprecated"] = 1] = "Deprecated";
-    })(SymbolTag = exports.SymbolTag || (exports.SymbolTag = {}));
+    })(SymbolTag || (exports.SymbolTag = SymbolTag = {}));
     /**
      * The kind of animation in which the editor's cursor should be rendered.
      */
@@ -12109,7 +16142,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * No-Blinking
          */
         TextEditorCursorBlinkingStyle[TextEditorCursorBlinkingStyle["Solid"] = 5] = "Solid";
-    })(TextEditorCursorBlinkingStyle = exports.TextEditorCursorBlinkingStyle || (exports.TextEditorCursorBlinkingStyle = {}));
+    })(TextEditorCursorBlinkingStyle || (exports.TextEditorCursorBlinkingStyle = TextEditorCursorBlinkingStyle = {}));
     /**
      * The style in which the editor's cursor should be rendered.
      */
@@ -12139,7 +16172,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * As a thin horizontal line (sitting under a character).
          */
         TextEditorCursorStyle[TextEditorCursorStyle["UnderlineThin"] = 6] = "UnderlineThin";
-    })(TextEditorCursorStyle = exports.TextEditorCursorStyle || (exports.TextEditorCursorStyle = {}));
+    })(TextEditorCursorStyle || (exports.TextEditorCursorStyle = TextEditorCursorStyle = {}));
     /**
      * Describes the behavior of decorations when typing/editing near their edges.
      * Note: Please do not edit the values, as they very carefully match `DecorationRangeBehavior`
@@ -12150,7 +16183,7 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
         TrackedRangeStickiness[TrackedRangeStickiness["NeverGrowsWhenTypingAtEdges"] = 1] = "NeverGrowsWhenTypingAtEdges";
         TrackedRangeStickiness[TrackedRangeStickiness["GrowsOnlyWhenTypingBefore"] = 2] = "GrowsOnlyWhenTypingBefore";
         TrackedRangeStickiness[TrackedRangeStickiness["GrowsOnlyWhenTypingAfter"] = 3] = "GrowsOnlyWhenTypingAfter";
-    })(TrackedRangeStickiness = exports.TrackedRangeStickiness || (exports.TrackedRangeStickiness = {}));
+    })(TrackedRangeStickiness || (exports.TrackedRangeStickiness = TrackedRangeStickiness = {}));
     /**
      * Describes how to indent wrapped lines.
      */
@@ -12172,15 +16205,142 @@ define(__m[49/*vs/editor/common/standalone/standaloneEnums*/], __M([0/*require*/
          * DeepIndent => wrapped lines get +2 indentation toward the parent.
          */
         WrappingIndent[WrappingIndent["DeepIndent"] = 3] = "DeepIndent";
-    })(WrappingIndent = exports.WrappingIndent || (exports.WrappingIndent = {}));
+    })(WrappingIndent || (exports.WrappingIndent = WrappingIndent = {}));
 });
 
-define(__m[50/*vs/nls!vs/base/common/platform*/], __M([25/*vs/nls*/,57/*vs/nls!vs/base/common/worker/simpleWorker*/]), function(nls, data) { return nls.create("vs/base/common/platform", data); });
-define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/nls!vs/base/common/platform*/]), function (require, exports, nls) {
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+define(__m[62/*vs/editor/common/tokenizationRegistry*/], __M([0/*require*/,1/*exports*/,9/*vs/base/common/event*/,13/*vs/base/common/lifecycle*/]), function (require, exports, event_1, lifecycle_1) {
     "use strict";
-    var _a;
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.isAndroid = exports.isEdge = exports.isSafari = exports.isFirefox = exports.isChrome = exports.isLittleEndian = exports.OS = exports.setTimeout0 = exports.setTimeout0IsFaster = exports.language = exports.userAgent = exports.isMobile = exports.isIOS = exports.isWebWorker = exports.isWeb = exports.isNative = exports.isLinux = exports.isMacintosh = exports.isWindows = exports.globals = exports.LANGUAGE_DEFAULT = void 0;
+    exports.TokenizationRegistry = void 0;
+    class TokenizationRegistry {
+        constructor() {
+            this._tokenizationSupports = new Map();
+            this._factories = new Map();
+            this._onDidChange = new event_1.Emitter();
+            this.onDidChange = this._onDidChange.event;
+            this._colorMap = null;
+        }
+        handleChange(languageIds) {
+            this._onDidChange.fire({
+                changedLanguages: languageIds,
+                changedColorMap: false
+            });
+        }
+        register(languageId, support) {
+            this._tokenizationSupports.set(languageId, support);
+            this.handleChange([languageId]);
+            return (0, lifecycle_1.toDisposable)(() => {
+                if (this._tokenizationSupports.get(languageId) !== support) {
+                    return;
+                }
+                this._tokenizationSupports.delete(languageId);
+                this.handleChange([languageId]);
+            });
+        }
+        get(languageId) {
+            return this._tokenizationSupports.get(languageId) || null;
+        }
+        registerFactory(languageId, factory) {
+            var _a;
+            (_a = this._factories.get(languageId)) === null || _a === void 0 ? void 0 : _a.dispose();
+            const myData = new TokenizationSupportFactoryData(this, languageId, factory);
+            this._factories.set(languageId, myData);
+            return (0, lifecycle_1.toDisposable)(() => {
+                const v = this._factories.get(languageId);
+                if (!v || v !== myData) {
+                    return;
+                }
+                this._factories.delete(languageId);
+                v.dispose();
+            });
+        }
+        async getOrCreate(languageId) {
+            // check first if the support is already set
+            const tokenizationSupport = this.get(languageId);
+            if (tokenizationSupport) {
+                return tokenizationSupport;
+            }
+            const factory = this._factories.get(languageId);
+            if (!factory || factory.isResolved) {
+                // no factory or factory.resolve already finished
+                return null;
+            }
+            await factory.resolve();
+            return this.get(languageId);
+        }
+        isResolved(languageId) {
+            const tokenizationSupport = this.get(languageId);
+            if (tokenizationSupport) {
+                return true;
+            }
+            const factory = this._factories.get(languageId);
+            if (!factory || factory.isResolved) {
+                return true;
+            }
+            return false;
+        }
+        setColorMap(colorMap) {
+            this._colorMap = colorMap;
+            this._onDidChange.fire({
+                changedLanguages: Array.from(this._tokenizationSupports.keys()),
+                changedColorMap: true
+            });
+        }
+        getColorMap() {
+            return this._colorMap;
+        }
+        getDefaultBackground() {
+            if (this._colorMap && this._colorMap.length > 2 /* ColorId.DefaultBackground */) {
+                return this._colorMap[2 /* ColorId.DefaultBackground */];
+            }
+            return null;
+        }
+    }
+    exports.TokenizationRegistry = TokenizationRegistry;
+    class TokenizationSupportFactoryData extends lifecycle_1.Disposable {
+        get isResolved() {
+            return this._isResolved;
+        }
+        constructor(_registry, _languageId, _factory) {
+            super();
+            this._registry = _registry;
+            this._languageId = _languageId;
+            this._factory = _factory;
+            this._isDisposed = false;
+            this._resolvePromise = null;
+            this._isResolved = false;
+        }
+        dispose() {
+            this._isDisposed = true;
+            super.dispose();
+        }
+        async resolve() {
+            if (!this._resolvePromise) {
+                this._resolvePromise = this._create();
+            }
+            return this._resolvePromise;
+        }
+        async _create() {
+            const value = await this._factory.tokenizationSupport;
+            this._isResolved = true;
+            if (value && !this._isDisposed) {
+                this._register(this._registry.register(this._languageId, value));
+            }
+        }
+    }
+});
+
+define(__m[63/*vs/nls!vs/base/common/platform*/], __M([19/*vs/nls*/,64/*vs/nls!vs/base/common/worker/simpleWorker*/]), function(nls, data) { return nls.create("vs/base/common/platform", data); });
+define(__m[17/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,63/*vs/nls!vs/base/common/platform*/]), function (require, exports, nls) {
+    "use strict";
+    var _a, _b;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.isAndroid = exports.isEdge = exports.isSafari = exports.isFirefox = exports.isChrome = exports.OS = exports.setTimeout0 = exports.setTimeout0IsFaster = exports.language = exports.userAgent = exports.isMobile = exports.isIOS = exports.webWorkerOrigin = exports.isWebWorker = exports.isWeb = exports.isNative = exports.isLinux = exports.isMacintosh = exports.isWindows = exports.LANGUAGE_DEFAULT = void 0;
+    exports.isLittleEndian = isLittleEndian;
     exports.LANGUAGE_DEFAULT = 'en';
     let _isWindows = false;
     let _isMacintosh = false;
@@ -12197,42 +16357,20 @@ define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/
     let _platformLocale = exports.LANGUAGE_DEFAULT;
     let _translationsConfigFile = undefined;
     let _userAgent = undefined;
-    /**
-     * @deprecated use `globalThis` instead
-     */
-    exports.globals = (typeof self === 'object' ? self : typeof global === 'object' ? global : {});
+    const $globalThis = globalThis;
     let nodeProcess = undefined;
-    if (typeof exports.globals.vscode !== 'undefined' && typeof exports.globals.vscode.process !== 'undefined') {
+    if (typeof $globalThis.vscode !== 'undefined' && typeof $globalThis.vscode.process !== 'undefined') {
         // Native environment (sandboxed)
-        nodeProcess = exports.globals.vscode.process;
+        nodeProcess = $globalThis.vscode.process;
     }
-    else if (typeof process !== 'undefined') {
+    else if (typeof process !== 'undefined' && typeof ((_a = process === null || process === void 0 ? void 0 : process.versions) === null || _a === void 0 ? void 0 : _a.node) === 'string') {
         // Native environment (non-sandboxed)
         nodeProcess = process;
     }
-    const isElectronProcess = typeof ((_a = nodeProcess === null || nodeProcess === void 0 ? void 0 : nodeProcess.versions) === null || _a === void 0 ? void 0 : _a.electron) === 'string';
+    const isElectronProcess = typeof ((_b = nodeProcess === null || nodeProcess === void 0 ? void 0 : nodeProcess.versions) === null || _b === void 0 ? void 0 : _b.electron) === 'string';
     const isElectronRenderer = isElectronProcess && (nodeProcess === null || nodeProcess === void 0 ? void 0 : nodeProcess.type) === 'renderer';
-    // Web environment
-    if (typeof navigator === 'object' && !isElectronRenderer) {
-        _userAgent = navigator.userAgent;
-        _isWindows = _userAgent.indexOf('Windows') >= 0;
-        _isMacintosh = _userAgent.indexOf('Macintosh') >= 0;
-        _isIOS = (_userAgent.indexOf('Macintosh') >= 0 || _userAgent.indexOf('iPad') >= 0 || _userAgent.indexOf('iPhone') >= 0) && !!navigator.maxTouchPoints && navigator.maxTouchPoints > 0;
-        _isLinux = _userAgent.indexOf('Linux') >= 0;
-        _isMobile = (_userAgent === null || _userAgent === void 0 ? void 0 : _userAgent.indexOf('Mobi')) >= 0;
-        _isWeb = true;
-        const configuredLocale = nls.getConfiguredDefaultLocale(
-        // This call _must_ be done in the file that calls `nls.getConfiguredDefaultLocale`
-        // to ensure that the NLS AMD Loader plugin has been loaded and configured.
-        // This is because the loader plugin decides what the default locale is based on
-        // how it's able to resolve the strings.
-        nls.localize(0, null));
-        _locale = configuredLocale || exports.LANGUAGE_DEFAULT;
-        _language = _locale;
-        _platformLocale = navigator.language;
-    }
     // Native environment
-    else if (typeof nodeProcess === 'object') {
+    if (typeof nodeProcess === 'object') {
         _isWindows = (nodeProcess.platform === 'win32');
         _isMacintosh = (nodeProcess.platform === 'darwin');
         _isLinux = (nodeProcess.platform === 'linux');
@@ -12257,6 +16395,25 @@ define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/
         }
         _isNative = true;
     }
+    // Web environment
+    else if (typeof navigator === 'object' && !isElectronRenderer) {
+        _userAgent = navigator.userAgent;
+        _isWindows = _userAgent.indexOf('Windows') >= 0;
+        _isMacintosh = _userAgent.indexOf('Macintosh') >= 0;
+        _isIOS = (_userAgent.indexOf('Macintosh') >= 0 || _userAgent.indexOf('iPad') >= 0 || _userAgent.indexOf('iPhone') >= 0) && !!navigator.maxTouchPoints && navigator.maxTouchPoints > 0;
+        _isLinux = _userAgent.indexOf('Linux') >= 0;
+        _isMobile = (_userAgent === null || _userAgent === void 0 ? void 0 : _userAgent.indexOf('Mobi')) >= 0;
+        _isWeb = true;
+        const configuredLocale = nls.getConfiguredDefaultLocale(
+        // This call _must_ be done in the file that calls `nls.getConfiguredDefaultLocale`
+        // to ensure that the NLS AMD Loader plugin has been loaded and configured.
+        // This is because the loader plugin decides what the default locale is based on
+        // how it's able to resolve the strings.
+        nls.localize(0, null));
+        _locale = configuredLocale || exports.LANGUAGE_DEFAULT;
+        _language = _locale;
+        _platformLocale = navigator.language;
+    }
     // Unknown environment
     else {
         console.error('Unable to resolve platform.');
@@ -12276,7 +16433,8 @@ define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/
     exports.isLinux = _isLinux;
     exports.isNative = _isNative;
     exports.isWeb = _isWeb;
-    exports.isWebWorker = (_isWeb && typeof exports.globals.importScripts === 'function');
+    exports.isWebWorker = (_isWeb && typeof $globalThis.importScripts === 'function');
+    exports.webWorkerOrigin = exports.isWebWorker ? $globalThis.origin : undefined;
     exports.isIOS = _isIOS;
     exports.isMobile = _isMobile;
     exports.userAgent = _userAgent;
@@ -12286,7 +16444,7 @@ define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/
      * Chinese)
      */
     exports.language = _language;
-    exports.setTimeout0IsFaster = (typeof exports.globals.postMessage === 'function' && !exports.globals.importScripts);
+    exports.setTimeout0IsFaster = (typeof $globalThis.postMessage === 'function' && !$globalThis.importScripts);
     /**
      * See https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#:~:text=than%204%2C%20then-,set%20timeout%20to%204,-.
      *
@@ -12296,7 +16454,7 @@ define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/
     exports.setTimeout0 = (() => {
         if (exports.setTimeout0IsFaster) {
             const pending = [];
-            exports.globals.addEventListener('message', (e) => {
+            $globalThis.addEventListener('message', (e) => {
                 if (e.data && e.data.vscodeScheduleAsyncWork) {
                     for (let i = 0, len = pending.length; i < len; i++) {
                         const candidate = pending[i];
@@ -12315,7 +16473,7 @@ define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/
                     id: myId,
                     callback: callback
                 });
-                exports.globals.postMessage({ vscodeScheduleAsyncWork: myId }, '*');
+                $globalThis.postMessage({ vscodeScheduleAsyncWork: myId }, '*');
             };
         }
         return (callback) => setTimeout(callback);
@@ -12334,7 +16492,6 @@ define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/
         }
         return _isLittleEndian;
     }
-    exports.isLittleEndian = isLittleEndian;
     exports.isChrome = !!(exports.userAgent && exports.userAgent.indexOf('Chrome') >= 0);
     exports.isFirefox = !!(exports.userAgent && exports.userAgent.indexOf('Firefox') >= 0);
     exports.isSafari = !!(!exports.isChrome && (exports.userAgent && exports.userAgent.indexOf('Safari') >= 0));
@@ -12346,14 +16503,15 @@ define(__m[8/*vs/base/common/platform*/], __M([0/*require*/,1/*exports*/,50/*vs/
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[51/*vs/base/common/process*/], __M([0/*require*/,1/*exports*/,8/*vs/base/common/platform*/]), function (require, exports, platform_1) {
+define(__m[65/*vs/base/common/process*/], __M([0/*require*/,1/*exports*/,17/*vs/base/common/platform*/]), function (require, exports, platform_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.platform = exports.env = exports.cwd = void 0;
     let safeProcess;
     // Native sandbox environment
-    if (typeof platform_1.globals.vscode !== 'undefined' && typeof platform_1.globals.vscode.process !== 'undefined') {
-        const sandboxProcess = platform_1.globals.vscode.process;
+    const vscodeGlobal = globalThis.vscode;
+    if (typeof vscodeGlobal !== 'undefined' && typeof vscodeGlobal.process !== 'undefined') {
+        const sandboxProcess = vscodeGlobal.process;
         safeProcess = {
             get platform() { return sandboxProcess.platform; },
             get arch() { return sandboxProcess.arch; },
@@ -12386,6 +16544,8 @@ define(__m[51/*vs/base/common/process*/], __M([0/*require*/,1/*exports*/,8/*vs/b
      * environments.
      *
      * Note: in web, this property is hardcoded to be `/`.
+     *
+     * @skipMangle
      */
     exports.cwd = safeProcess.cwd;
     /**
@@ -12406,7 +16566,7 @@ define(__m[51/*vs/base/common/process*/], __M([0/*require*/,1/*exports*/,8/*vs/b
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[52/*vs/base/common/path*/], __M([0/*require*/,1/*exports*/,51/*vs/base/common/process*/]), function (require, exports, process) {
+define(__m[66/*vs/base/common/path*/], __M([0/*require*/,1/*exports*/,65/*vs/base/common/process*/]), function (require, exports, process) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.sep = exports.extname = exports.basename = exports.dirname = exports.relative = exports.resolve = exports.normalize = exports.posix = exports.win32 = void 0;
@@ -13780,1189 +17940,11 @@ define(__m[52/*vs/base/common/path*/], __M([0/*require*/,1/*exports*/,51/*vs/bas
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[24/*vs/base/common/stopwatch*/], __M([0/*require*/,1/*exports*/,8/*vs/base/common/platform*/]), function (require, exports, platform_1) {
+define(__m[18/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,66/*vs/base/common/path*/,17/*vs/base/common/platform*/]), function (require, exports, paths, platform_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.StopWatch = void 0;
-    const hasPerformanceNow = (platform_1.globals.performance && typeof platform_1.globals.performance.now === 'function');
-    class StopWatch {
-        static create(highResolution = true) {
-            return new StopWatch(highResolution);
-        }
-        constructor(highResolution) {
-            this._highResolution = hasPerformanceNow && highResolution;
-            this._startTime = this._now();
-            this._stopTime = -1;
-        }
-        stop() {
-            this._stopTime = this._now();
-        }
-        elapsed() {
-            if (this._stopTime !== -1) {
-                return this._stopTime - this._startTime;
-            }
-            return this._now() - this._startTime;
-        }
-        _now() {
-            return this._highResolution ? platform_1.globals.performance.now() : Date.now();
-        }
-    }
-    exports.StopWatch = StopWatch;
-});
-
-define(__m[9/*vs/base/common/event*/], __M([0/*require*/,1/*exports*/,4/*vs/base/common/errors*/,14/*vs/base/common/functional*/,11/*vs/base/common/lifecycle*/,16/*vs/base/common/linkedList*/,24/*vs/base/common/stopwatch*/]), function (require, exports, errors_1, functional_1, lifecycle_1, linkedList_1, stopwatch_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.Relay = exports.EventBufferer = exports.EventMultiplexer = exports.MicrotaskEmitter = exports.DebounceEmitter = exports.PauseableEmitter = exports.EventDeliveryQueue = exports.Emitter = exports.EventProfiling = exports.Event = void 0;
-    // -----------------------------------------------------------------------------------------------------------------------
-    // Uncomment the next line to print warnings whenever an emitter with listeners is disposed. That is a sign of code smell.
-    // -----------------------------------------------------------------------------------------------------------------------
-    const _enableDisposeWithListenerWarning = false;
-    // _enableDisposeWithListenerWarning = Boolean("TRUE"); // causes a linter warning so that it cannot be pushed
-    // -----------------------------------------------------------------------------------------------------------------------
-    // Uncomment the next line to print warnings whenever a snapshotted event is used repeatedly without cleanup.
-    // See https://github.com/microsoft/vscode/issues/142851
-    // -----------------------------------------------------------------------------------------------------------------------
-    const _enableSnapshotPotentialLeakWarning = false;
-    var Event;
-    (function (Event) {
-        Event.None = () => lifecycle_1.Disposable.None;
-        function _addLeakageTraceLogic(options) {
-            if (_enableSnapshotPotentialLeakWarning) {
-                const { onDidAddListener: origListenerDidAdd } = options;
-                const stack = Stacktrace.create();
-                let count = 0;
-                options.onDidAddListener = () => {
-                    if (++count === 2) {
-                        console.warn('snapshotted emitter LIKELY used public and SHOULD HAVE BEEN created with DisposableStore. snapshotted here');
-                        stack.print();
-                    }
-                    origListenerDidAdd === null || origListenerDidAdd === void 0 ? void 0 : origListenerDidAdd();
-                };
-            }
-        }
-        /**
-         * Given an event, returns another event which debounces calls and defers the listeners to a later task via a shared
-         * `setTimeout`. The event is converted into a signal (`Event<void>`) to avoid additional object creation as a
-         * result of merging events and to try prevent race conditions that could arise when using related deferred and
-         * non-deferred events.
-         *
-         * This is useful for deferring non-critical work (eg. general UI updates) to ensure it does not block critical work
-         * (eg. latency of keypress to text rendered).
-         *
-         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
-         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
-         * returned event causes this utility to leak a listener on the original event.
-         *
-         * @param event The event source for the new event.
-         * @param disposable A disposable store to add the new EventEmitter to.
-         */
-        function defer(event, disposable) {
-            return debounce(event, () => void 0, 0, undefined, true, undefined, disposable);
-        }
-        Event.defer = defer;
-        /**
-         * Given an event, returns another event which only fires once.
-         *
-         * @param event The event source for the new event.
-         */
-        function once(event) {
-            return (listener, thisArgs = null, disposables) => {
-                // we need this, in case the event fires during the listener call
-                let didFire = false;
-                let result = undefined;
-                result = event(e => {
-                    if (didFire) {
-                        return;
-                    }
-                    else if (result) {
-                        result.dispose();
-                    }
-                    else {
-                        didFire = true;
-                    }
-                    return listener.call(thisArgs, e);
-                }, null, disposables);
-                if (didFire) {
-                    result.dispose();
-                }
-                return result;
-            };
-        }
-        Event.once = once;
-        /**
-         * Maps an event of one type into an event of another type using a mapping function, similar to how
-         * `Array.prototype.map` works.
-         *
-         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
-         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
-         * returned event causes this utility to leak a listener on the original event.
-         *
-         * @param event The event source for the new event.
-         * @param map The mapping function.
-         * @param disposable A disposable store to add the new EventEmitter to.
-         */
-        function map(event, map, disposable) {
-            return snapshot((listener, thisArgs = null, disposables) => event(i => listener.call(thisArgs, map(i)), null, disposables), disposable);
-        }
-        Event.map = map;
-        /**
-         * Wraps an event in another event that performs some function on the event object before firing.
-         *
-         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
-         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
-         * returned event causes this utility to leak a listener on the original event.
-         *
-         * @param event The event source for the new event.
-         * @param each The function to perform on the event object.
-         * @param disposable A disposable store to add the new EventEmitter to.
-         */
-        function forEach(event, each, disposable) {
-            return snapshot((listener, thisArgs = null, disposables) => event(i => { each(i); listener.call(thisArgs, i); }, null, disposables), disposable);
-        }
-        Event.forEach = forEach;
-        function filter(event, filter, disposable) {
-            return snapshot((listener, thisArgs = null, disposables) => event(e => filter(e) && listener.call(thisArgs, e), null, disposables), disposable);
-        }
-        Event.filter = filter;
-        /**
-         * Given an event, returns the same event but typed as `Event<void>`.
-         */
-        function signal(event) {
-            return event;
-        }
-        Event.signal = signal;
-        function any(...events) {
-            return (listener, thisArgs = null, disposables) => (0, lifecycle_1.combinedDisposable)(...events.map(event => event(e => listener.call(thisArgs, e), null, disposables)));
-        }
-        Event.any = any;
-        /**
-         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
-         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
-         * returned event causes this utility to leak a listener on the original event.
-         */
-        function reduce(event, merge, initial, disposable) {
-            let output = initial;
-            return map(event, e => {
-                output = merge(output, e);
-                return output;
-            }, disposable);
-        }
-        Event.reduce = reduce;
-        function snapshot(event, disposable) {
-            let listener;
-            const options = {
-                onWillAddFirstListener() {
-                    listener = event(emitter.fire, emitter);
-                },
-                onDidRemoveLastListener() {
-                    listener === null || listener === void 0 ? void 0 : listener.dispose();
-                }
-            };
-            if (!disposable) {
-                _addLeakageTraceLogic(options);
-            }
-            const emitter = new Emitter(options);
-            disposable === null || disposable === void 0 ? void 0 : disposable.add(emitter);
-            return emitter.event;
-        }
-        function debounce(event, merge, delay = 100, leading = false, flushOnListenerRemove = false, leakWarningThreshold, disposable) {
-            let subscription;
-            let output = undefined;
-            let handle = undefined;
-            let numDebouncedCalls = 0;
-            let doFire;
-            const options = {
-                leakWarningThreshold,
-                onWillAddFirstListener() {
-                    subscription = event(cur => {
-                        numDebouncedCalls++;
-                        output = merge(output, cur);
-                        if (leading && !handle) {
-                            emitter.fire(output);
-                            output = undefined;
-                        }
-                        doFire = () => {
-                            const _output = output;
-                            output = undefined;
-                            handle = undefined;
-                            if (!leading || numDebouncedCalls > 1) {
-                                emitter.fire(_output);
-                            }
-                            numDebouncedCalls = 0;
-                        };
-                        if (typeof delay === 'number') {
-                            clearTimeout(handle);
-                            handle = setTimeout(doFire, delay);
-                        }
-                        else {
-                            if (handle === undefined) {
-                                handle = 0;
-                                queueMicrotask(doFire);
-                            }
-                        }
-                    });
-                },
-                onWillRemoveListener() {
-                    if (flushOnListenerRemove && numDebouncedCalls > 0) {
-                        doFire === null || doFire === void 0 ? void 0 : doFire();
-                    }
-                },
-                onDidRemoveLastListener() {
-                    doFire = undefined;
-                    subscription.dispose();
-                }
-            };
-            if (!disposable) {
-                _addLeakageTraceLogic(options);
-            }
-            const emitter = new Emitter(options);
-            disposable === null || disposable === void 0 ? void 0 : disposable.add(emitter);
-            return emitter.event;
-        }
-        Event.debounce = debounce;
-        /**
-         * Debounces an event, firing after some delay (default=0) with an array of all event original objects.
-         *
-         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
-         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
-         * returned event causes this utility to leak a listener on the original event.
-         */
-        function accumulate(event, delay = 0, disposable) {
-            return Event.debounce(event, (last, e) => {
-                if (!last) {
-                    return [e];
-                }
-                last.push(e);
-                return last;
-            }, delay, undefined, true, undefined, disposable);
-        }
-        Event.accumulate = accumulate;
-        /**
-         * Filters an event such that some condition is _not_ met more than once in a row, effectively ensuring duplicate
-         * event objects from different sources do not fire the same event object.
-         *
-         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
-         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
-         * returned event causes this utility to leak a listener on the original event.
-         *
-         * @param event The event source for the new event.
-         * @param equals The equality condition.
-         * @param disposable A disposable store to add the new EventEmitter to.
-         *
-         * @example
-         * ```
-         * // Fire only one time when a single window is opened or focused
-         * Event.latch(Event.any(onDidOpenWindow, onDidFocusWindow))
-         * ```
-         */
-        function latch(event, equals = (a, b) => a === b, disposable) {
-            let firstCall = true;
-            let cache;
-            return filter(event, value => {
-                const shouldEmit = firstCall || !equals(value, cache);
-                firstCall = false;
-                cache = value;
-                return shouldEmit;
-            }, disposable);
-        }
-        Event.latch = latch;
-        /**
-         * Splits an event whose parameter is a union type into 2 separate events for each type in the union.
-         *
-         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
-         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
-         * returned event causes this utility to leak a listener on the original event.
-         *
-         * @example
-         * ```
-         * const event = new EventEmitter<number | undefined>().event;
-         * const [numberEvent, undefinedEvent] = Event.split(event, isUndefined);
-         * ```
-         *
-         * @param event The event source for the new event.
-         * @param isT A function that determines what event is of the first type.
-         * @param disposable A disposable store to add the new EventEmitter to.
-         */
-        function split(event, isT, disposable) {
-            return [
-                Event.filter(event, isT, disposable),
-                Event.filter(event, e => !isT(e), disposable),
-            ];
-        }
-        Event.split = split;
-        /**
-         * Buffers an event until it has a listener attached.
-         *
-         * *NOTE* that this function returns an `Event` and it MUST be called with a `DisposableStore` whenever the returned
-         * event is accessible to "third parties", e.g the event is a public property. Otherwise a leaked listener on the
-         * returned event causes this utility to leak a listener on the original event.
-         *
-         * @param event The event source for the new event.
-         * @param flushAfterTimeout Determines whether to flush the buffer after a timeout immediately or after a
-         * `setTimeout` when the first event listener is added.
-         * @param _buffer Internal: A source event array used for tests.
-         *
-         * @example
-         * ```
-         * // Start accumulating events, when the first listener is attached, flush
-         * // the event after a timeout such that multiple listeners attached before
-         * // the timeout would receive the event
-         * this.onInstallExtension = Event.buffer(service.onInstallExtension, true);
-         * ```
-         */
-        function buffer(event, flushAfterTimeout = false, _buffer = []) {
-            let buffer = _buffer.slice();
-            let listener = event(e => {
-                if (buffer) {
-                    buffer.push(e);
-                }
-                else {
-                    emitter.fire(e);
-                }
-            });
-            const flush = () => {
-                buffer === null || buffer === void 0 ? void 0 : buffer.forEach(e => emitter.fire(e));
-                buffer = null;
-            };
-            const emitter = new Emitter({
-                onWillAddFirstListener() {
-                    if (!listener) {
-                        listener = event(e => emitter.fire(e));
-                    }
-                },
-                onDidAddFirstListener() {
-                    if (buffer) {
-                        if (flushAfterTimeout) {
-                            setTimeout(flush);
-                        }
-                        else {
-                            flush();
-                        }
-                    }
-                },
-                onDidRemoveLastListener() {
-                    if (listener) {
-                        listener.dispose();
-                    }
-                    listener = null;
-                }
-            });
-            return emitter.event;
-        }
-        Event.buffer = buffer;
-        class ChainableEvent {
-            constructor(event) {
-                this.event = event;
-                this.disposables = new lifecycle_1.DisposableStore();
-            }
-            /** @see {@link Event.map} */
-            map(fn) {
-                return new ChainableEvent(map(this.event, fn, this.disposables));
-            }
-            /** @see {@link Event.forEach} */
-            forEach(fn) {
-                return new ChainableEvent(forEach(this.event, fn, this.disposables));
-            }
-            filter(fn) {
-                return new ChainableEvent(filter(this.event, fn, this.disposables));
-            }
-            /** @see {@link Event.reduce} */
-            reduce(merge, initial) {
-                return new ChainableEvent(reduce(this.event, merge, initial, this.disposables));
-            }
-            /** @see {@link Event.reduce} */
-            latch() {
-                return new ChainableEvent(latch(this.event, undefined, this.disposables));
-            }
-            debounce(merge, delay = 100, leading = false, flushOnListenerRemove = false, leakWarningThreshold) {
-                return new ChainableEvent(debounce(this.event, merge, delay, leading, flushOnListenerRemove, leakWarningThreshold, this.disposables));
-            }
-            /**
-             * Attach a listener to the event.
-             */
-            on(listener, thisArgs, disposables) {
-                return this.event(listener, thisArgs, disposables);
-            }
-            /** @see {@link Event.once} */
-            once(listener, thisArgs, disposables) {
-                return once(this.event)(listener, thisArgs, disposables);
-            }
-            dispose() {
-                this.disposables.dispose();
-            }
-        }
-        /**
-         * Wraps the event in an {@link IChainableEvent}, allowing a more functional programming style.
-         *
-         * @example
-         * ```
-         * // Normal
-         * const onEnterPressNormal = Event.filter(
-         *   Event.map(onKeyPress.event, e => new StandardKeyboardEvent(e)),
-         *   e.keyCode === KeyCode.Enter
-         * ).event;
-         *
-         * // Using chain
-         * const onEnterPressChain = Event.chain(onKeyPress.event)
-         *   .map(e => new StandardKeyboardEvent(e))
-         *   .filter(e => e.keyCode === KeyCode.Enter)
-         *   .event;
-         * ```
-         */
-        function chain(event) {
-            return new ChainableEvent(event);
-        }
-        Event.chain = chain;
-        /**
-         * Creates an {@link Event} from a node event emitter.
-         */
-        function fromNodeEventEmitter(emitter, eventName, map = id => id) {
-            const fn = (...args) => result.fire(map(...args));
-            const onFirstListenerAdd = () => emitter.on(eventName, fn);
-            const onLastListenerRemove = () => emitter.removeListener(eventName, fn);
-            const result = new Emitter({ onWillAddFirstListener: onFirstListenerAdd, onDidRemoveLastListener: onLastListenerRemove });
-            return result.event;
-        }
-        Event.fromNodeEventEmitter = fromNodeEventEmitter;
-        /**
-         * Creates an {@link Event} from a DOM event emitter.
-         */
-        function fromDOMEventEmitter(emitter, eventName, map = id => id) {
-            const fn = (...args) => result.fire(map(...args));
-            const onFirstListenerAdd = () => emitter.addEventListener(eventName, fn);
-            const onLastListenerRemove = () => emitter.removeEventListener(eventName, fn);
-            const result = new Emitter({ onWillAddFirstListener: onFirstListenerAdd, onDidRemoveLastListener: onLastListenerRemove });
-            return result.event;
-        }
-        Event.fromDOMEventEmitter = fromDOMEventEmitter;
-        /**
-         * Creates a promise out of an event, using the {@link Event.once} helper.
-         */
-        function toPromise(event) {
-            return new Promise(resolve => once(event)(resolve));
-        }
-        Event.toPromise = toPromise;
-        /**
-         * Adds a listener to an event and calls the listener immediately with undefined as the event object.
-         *
-         * @example
-         * ```
-         * // Initialize the UI and update it when dataChangeEvent fires
-         * runAndSubscribe(dataChangeEvent, () => this._updateUI());
-         * ```
-         */
-        function runAndSubscribe(event, handler) {
-            handler(undefined);
-            return event(e => handler(e));
-        }
-        Event.runAndSubscribe = runAndSubscribe;
-        /**
-         * Adds a listener to an event and calls the listener immediately with undefined as the event object. A new
-         * {@link DisposableStore} is passed to the listener which is disposed when the returned disposable is disposed.
-         */
-        function runAndSubscribeWithStore(event, handler) {
-            let store = null;
-            function run(e) {
-                store === null || store === void 0 ? void 0 : store.dispose();
-                store = new lifecycle_1.DisposableStore();
-                handler(e, store);
-            }
-            run(undefined);
-            const disposable = event(e => run(e));
-            return (0, lifecycle_1.toDisposable)(() => {
-                disposable.dispose();
-                store === null || store === void 0 ? void 0 : store.dispose();
-            });
-        }
-        Event.runAndSubscribeWithStore = runAndSubscribeWithStore;
-        class EmitterObserver {
-            constructor(obs, store) {
-                this.obs = obs;
-                this._counter = 0;
-                this._hasChanged = false;
-                const options = {
-                    onWillAddFirstListener: () => {
-                        obs.addObserver(this);
-                    },
-                    onDidRemoveLastListener: () => {
-                        obs.removeObserver(this);
-                    }
-                };
-                if (!store) {
-                    _addLeakageTraceLogic(options);
-                }
-                this.emitter = new Emitter(options);
-                if (store) {
-                    store.add(this.emitter);
-                }
-            }
-            beginUpdate(_observable) {
-                // console.assert(_observable === this.obs);
-                this._counter++;
-            }
-            handleChange(_observable, _change) {
-                this._hasChanged = true;
-            }
-            endUpdate(_observable) {
-                if (--this._counter === 0) {
-                    if (this._hasChanged) {
-                        this._hasChanged = false;
-                        this.emitter.fire(this.obs.get());
-                    }
-                }
-            }
-        }
-        function fromObservable(obs, store) {
-            const observer = new EmitterObserver(obs, store);
-            return observer.emitter.event;
-        }
-        Event.fromObservable = fromObservable;
-    })(Event = exports.Event || (exports.Event = {}));
-    class EventProfiling {
-        constructor(name) {
-            this.listenerCount = 0;
-            this.invocationCount = 0;
-            this.elapsedOverall = 0;
-            this.durations = [];
-            this.name = `${name}_${EventProfiling._idPool++}`;
-            EventProfiling.all.add(this);
-        }
-        start(listenerCount) {
-            this._stopWatch = new stopwatch_1.StopWatch(true);
-            this.listenerCount = listenerCount;
-        }
-        stop() {
-            if (this._stopWatch) {
-                const elapsed = this._stopWatch.elapsed();
-                this.durations.push(elapsed);
-                this.elapsedOverall += elapsed;
-                this.invocationCount += 1;
-                this._stopWatch = undefined;
-            }
-        }
-    }
-    EventProfiling.all = new Set();
-    EventProfiling._idPool = 0;
-    exports.EventProfiling = EventProfiling;
-    let _globalLeakWarningThreshold = -1;
-    class LeakageMonitor {
-        constructor(threshold, name = Math.random().toString(18).slice(2, 5)) {
-            this.threshold = threshold;
-            this.name = name;
-            this._warnCountdown = 0;
-        }
-        dispose() {
-            var _a;
-            (_a = this._stacks) === null || _a === void 0 ? void 0 : _a.clear();
-        }
-        check(stack, listenerCount) {
-            const threshold = this.threshold;
-            if (threshold <= 0 || listenerCount < threshold) {
-                return undefined;
-            }
-            if (!this._stacks) {
-                this._stacks = new Map();
-            }
-            const count = (this._stacks.get(stack.value) || 0);
-            this._stacks.set(stack.value, count + 1);
-            this._warnCountdown -= 1;
-            if (this._warnCountdown <= 0) {
-                // only warn on first exceed and then every time the limit
-                // is exceeded by 50% again
-                this._warnCountdown = threshold * 0.5;
-                // find most frequent listener and print warning
-                let topStack;
-                let topCount = 0;
-                for (const [stack, count] of this._stacks) {
-                    if (!topStack || topCount < count) {
-                        topStack = stack;
-                        topCount = count;
-                    }
-                }
-                console.warn(`[${this.name}] potential listener LEAK detected, having ${listenerCount} listeners already. MOST frequent listener (${topCount}):`);
-                console.warn(topStack);
-            }
-            return () => {
-                const count = (this._stacks.get(stack.value) || 0);
-                this._stacks.set(stack.value, count - 1);
-            };
-        }
-    }
-    class Stacktrace {
-        static create() {
-            var _a;
-            return new Stacktrace((_a = new Error().stack) !== null && _a !== void 0 ? _a : '');
-        }
-        constructor(value) {
-            this.value = value;
-        }
-        print() {
-            console.warn(this.value.split('\n').slice(2).join('\n'));
-        }
-    }
-    class Listener {
-        constructor(callback, callbackThis, stack) {
-            this.callback = callback;
-            this.callbackThis = callbackThis;
-            this.stack = stack;
-            this.subscription = new lifecycle_1.SafeDisposable();
-        }
-        invoke(e) {
-            this.callback.call(this.callbackThis, e);
-        }
-    }
-    /**
-     * The Emitter can be used to expose an Event to the public
-     * to fire it from the insides.
-     * Sample:
-        class Document {
-    
-            private readonly _onDidChange = new Emitter<(value:string)=>any>();
-    
-            public onDidChange = this._onDidChange.event;
-    
-            // getter-style
-            // get onDidChange(): Event<(value:string)=>any> {
-            // 	return this._onDidChange.event;
-            // }
-    
-            private _doIt() {
-                //...
-                this._onDidChange.fire(value);
-            }
-        }
-     */
-    class Emitter {
-        constructor(options) {
-            var _a, _b, _c, _d, _e;
-            this._disposed = false;
-            this._options = options;
-            this._leakageMon = _globalLeakWarningThreshold > 0 || ((_a = this._options) === null || _a === void 0 ? void 0 : _a.leakWarningThreshold) ? new LeakageMonitor((_c = (_b = this._options) === null || _b === void 0 ? void 0 : _b.leakWarningThreshold) !== null && _c !== void 0 ? _c : _globalLeakWarningThreshold) : undefined;
-            this._perfMon = ((_d = this._options) === null || _d === void 0 ? void 0 : _d._profName) ? new EventProfiling(this._options._profName) : undefined;
-            this._deliveryQueue = (_e = this._options) === null || _e === void 0 ? void 0 : _e.deliveryQueue;
-        }
-        dispose() {
-            var _a, _b, _c, _d;
-            if (!this._disposed) {
-                this._disposed = true;
-                // It is bad to have listeners at the time of disposing an emitter, it is worst to have listeners keep the emitter
-                // alive via the reference that's embedded in their disposables. Therefore we loop over all remaining listeners and
-                // unset their subscriptions/disposables. Looping and blaming remaining listeners is done on next tick because the
-                // the following programming pattern is very popular:
-                //
-                // const someModel = this._disposables.add(new ModelObject()); // (1) create and register model
-                // this._disposables.add(someModel.onDidChange(() => { ... }); // (2) subscribe and register model-event listener
-                // ...later...
-                // this._disposables.dispose(); disposes (1) then (2): don't warn after (1) but after the "overall dispose" is done
-                if (this._listeners) {
-                    if (_enableDisposeWithListenerWarning) {
-                        const listeners = Array.from(this._listeners);
-                        queueMicrotask(() => {
-                            var _a;
-                            for (const listener of listeners) {
-                                if (listener.subscription.isset()) {
-                                    listener.subscription.unset();
-                                    (_a = listener.stack) === null || _a === void 0 ? void 0 : _a.print();
-                                }
-                            }
-                        });
-                    }
-                    this._listeners.clear();
-                }
-                (_a = this._deliveryQueue) === null || _a === void 0 ? void 0 : _a.clear(this);
-                (_c = (_b = this._options) === null || _b === void 0 ? void 0 : _b.onDidRemoveLastListener) === null || _c === void 0 ? void 0 : _c.call(_b);
-                (_d = this._leakageMon) === null || _d === void 0 ? void 0 : _d.dispose();
-            }
-        }
-        /**
-         * For the public to allow to subscribe
-         * to events from this Emitter
-         */
-        get event() {
-            if (!this._event) {
-                this._event = (callback, thisArgs, disposables) => {
-                    var _a, _b, _c;
-                    if (!this._listeners) {
-                        this._listeners = new linkedList_1.LinkedList();
-                    }
-                    if (this._leakageMon && this._listeners.size > this._leakageMon.threshold * 3) {
-                        console.warn(`[${this._leakageMon.name}] REFUSES to accept new listeners because it exceeded its threshold by far`);
-                        return lifecycle_1.Disposable.None;
-                    }
-                    const firstListener = this._listeners.isEmpty();
-                    if (firstListener && ((_a = this._options) === null || _a === void 0 ? void 0 : _a.onWillAddFirstListener)) {
-                        this._options.onWillAddFirstListener(this);
-                    }
-                    let removeMonitor;
-                    let stack;
-                    if (this._leakageMon && this._listeners.size >= Math.ceil(this._leakageMon.threshold * 0.2)) {
-                        // check and record this emitter for potential leakage
-                        stack = Stacktrace.create();
-                        removeMonitor = this._leakageMon.check(stack, this._listeners.size + 1);
-                    }
-                    if (_enableDisposeWithListenerWarning) {
-                        stack = stack !== null && stack !== void 0 ? stack : Stacktrace.create();
-                    }
-                    const listener = new Listener(callback, thisArgs, stack);
-                    const removeListener = this._listeners.push(listener);
-                    if (firstListener && ((_b = this._options) === null || _b === void 0 ? void 0 : _b.onDidAddFirstListener)) {
-                        this._options.onDidAddFirstListener(this);
-                    }
-                    if ((_c = this._options) === null || _c === void 0 ? void 0 : _c.onDidAddListener) {
-                        this._options.onDidAddListener(this, callback, thisArgs);
-                    }
-                    const result = listener.subscription.set(() => {
-                        var _a, _b;
-                        removeMonitor === null || removeMonitor === void 0 ? void 0 : removeMonitor();
-                        if (!this._disposed) {
-                            (_b = (_a = this._options) === null || _a === void 0 ? void 0 : _a.onWillRemoveListener) === null || _b === void 0 ? void 0 : _b.call(_a, this);
-                            removeListener();
-                            if (this._options && this._options.onDidRemoveLastListener) {
-                                const hasListeners = (this._listeners && !this._listeners.isEmpty());
-                                if (!hasListeners) {
-                                    this._options.onDidRemoveLastListener(this);
-                                }
-                            }
-                        }
-                    });
-                    if (disposables instanceof lifecycle_1.DisposableStore) {
-                        disposables.add(result);
-                    }
-                    else if (Array.isArray(disposables)) {
-                        disposables.push(result);
-                    }
-                    return result;
-                };
-            }
-            return this._event;
-        }
-        /**
-         * To be kept private to fire an event to
-         * subscribers
-         */
-        fire(event) {
-            var _a, _b, _c;
-            if (this._listeners) {
-                // put all [listener,event]-pairs into delivery queue
-                // then emit all event. an inner/nested event might be
-                // the driver of this
-                if (!this._deliveryQueue) {
-                    this._deliveryQueue = new PrivateEventDeliveryQueue((_a = this._options) === null || _a === void 0 ? void 0 : _a.onListenerError);
-                }
-                for (const listener of this._listeners) {
-                    this._deliveryQueue.push(this, listener, event);
-                }
-                // start/stop performance insight collection
-                (_b = this._perfMon) === null || _b === void 0 ? void 0 : _b.start(this._deliveryQueue.size);
-                this._deliveryQueue.deliver();
-                (_c = this._perfMon) === null || _c === void 0 ? void 0 : _c.stop();
-            }
-        }
-        hasListeners() {
-            if (!this._listeners) {
-                return false;
-            }
-            return !this._listeners.isEmpty();
-        }
-    }
-    exports.Emitter = Emitter;
-    class EventDeliveryQueue {
-        constructor(_onListenerError = errors_1.onUnexpectedError) {
-            this._onListenerError = _onListenerError;
-            this._queue = new linkedList_1.LinkedList();
-        }
-        get size() {
-            return this._queue.size;
-        }
-        push(emitter, listener, event) {
-            this._queue.push(new EventDeliveryQueueElement(emitter, listener, event));
-        }
-        clear(emitter) {
-            const newQueue = new linkedList_1.LinkedList();
-            for (const element of this._queue) {
-                if (element.emitter !== emitter) {
-                    newQueue.push(element);
-                }
-            }
-            this._queue = newQueue;
-        }
-        deliver() {
-            while (this._queue.size > 0) {
-                const element = this._queue.shift();
-                try {
-                    element.listener.invoke(element.event);
-                }
-                catch (e) {
-                    this._onListenerError(e);
-                }
-            }
-        }
-    }
-    exports.EventDeliveryQueue = EventDeliveryQueue;
-    /**
-     * An `EventDeliveryQueue` that is guaranteed to be used by a single `Emitter`.
-     */
-    class PrivateEventDeliveryQueue extends EventDeliveryQueue {
-        clear(emitter) {
-            // Here we can just clear the entire linked list because
-            // all elements are guaranteed to belong to this emitter
-            this._queue.clear();
-        }
-    }
-    class EventDeliveryQueueElement {
-        constructor(emitter, listener, event) {
-            this.emitter = emitter;
-            this.listener = listener;
-            this.event = event;
-        }
-    }
-    class PauseableEmitter extends Emitter {
-        constructor(options) {
-            super(options);
-            this._isPaused = 0;
-            this._eventQueue = new linkedList_1.LinkedList();
-            this._mergeFn = options === null || options === void 0 ? void 0 : options.merge;
-        }
-        pause() {
-            this._isPaused++;
-        }
-        resume() {
-            if (this._isPaused !== 0 && --this._isPaused === 0) {
-                if (this._mergeFn) {
-                    // use the merge function to create a single composite
-                    // event. make a copy in case firing pauses this emitter
-                    if (this._eventQueue.size > 0) {
-                        const events = Array.from(this._eventQueue);
-                        this._eventQueue.clear();
-                        super.fire(this._mergeFn(events));
-                    }
-                }
-                else {
-                    // no merging, fire each event individually and test
-                    // that this emitter isn't paused halfway through
-                    while (!this._isPaused && this._eventQueue.size !== 0) {
-                        super.fire(this._eventQueue.shift());
-                    }
-                }
-            }
-        }
-        fire(event) {
-            if (this._listeners) {
-                if (this._isPaused !== 0) {
-                    this._eventQueue.push(event);
-                }
-                else {
-                    super.fire(event);
-                }
-            }
-        }
-    }
-    exports.PauseableEmitter = PauseableEmitter;
-    class DebounceEmitter extends PauseableEmitter {
-        constructor(options) {
-            var _a;
-            super(options);
-            this._delay = (_a = options.delay) !== null && _a !== void 0 ? _a : 100;
-        }
-        fire(event) {
-            if (!this._handle) {
-                this.pause();
-                this._handle = setTimeout(() => {
-                    this._handle = undefined;
-                    this.resume();
-                }, this._delay);
-            }
-            super.fire(event);
-        }
-    }
-    exports.DebounceEmitter = DebounceEmitter;
-    /**
-     * An emitter which queue all events and then process them at the
-     * end of the event loop.
-     */
-    class MicrotaskEmitter extends Emitter {
-        constructor(options) {
-            super(options);
-            this._queuedEvents = [];
-            this._mergeFn = options === null || options === void 0 ? void 0 : options.merge;
-        }
-        fire(event) {
-            if (!this.hasListeners()) {
-                return;
-            }
-            this._queuedEvents.push(event);
-            if (this._queuedEvents.length === 1) {
-                queueMicrotask(() => {
-                    if (this._mergeFn) {
-                        super.fire(this._mergeFn(this._queuedEvents));
-                    }
-                    else {
-                        this._queuedEvents.forEach(e => super.fire(e));
-                    }
-                    this._queuedEvents = [];
-                });
-            }
-        }
-    }
-    exports.MicrotaskEmitter = MicrotaskEmitter;
-    class EventMultiplexer {
-        constructor() {
-            this.hasListeners = false;
-            this.events = [];
-            this.emitter = new Emitter({
-                onWillAddFirstListener: () => this.onFirstListenerAdd(),
-                onDidRemoveLastListener: () => this.onLastListenerRemove()
-            });
-        }
-        get event() {
-            return this.emitter.event;
-        }
-        add(event) {
-            const e = { event: event, listener: null };
-            this.events.push(e);
-            if (this.hasListeners) {
-                this.hook(e);
-            }
-            const dispose = () => {
-                if (this.hasListeners) {
-                    this.unhook(e);
-                }
-                const idx = this.events.indexOf(e);
-                this.events.splice(idx, 1);
-            };
-            return (0, lifecycle_1.toDisposable)((0, functional_1.once)(dispose));
-        }
-        onFirstListenerAdd() {
-            this.hasListeners = true;
-            this.events.forEach(e => this.hook(e));
-        }
-        onLastListenerRemove() {
-            this.hasListeners = false;
-            this.events.forEach(e => this.unhook(e));
-        }
-        hook(e) {
-            e.listener = e.event(r => this.emitter.fire(r));
-        }
-        unhook(e) {
-            if (e.listener) {
-                e.listener.dispose();
-            }
-            e.listener = null;
-        }
-        dispose() {
-            this.emitter.dispose();
-        }
-    }
-    exports.EventMultiplexer = EventMultiplexer;
-    /**
-     * The EventBufferer is useful in situations in which you want
-     * to delay firing your events during some code.
-     * You can wrap that code and be sure that the event will not
-     * be fired during that wrap.
-     *
-     * ```
-     * const emitter: Emitter;
-     * const delayer = new EventDelayer();
-     * const delayedEvent = delayer.wrapEvent(emitter.event);
-     *
-     * delayedEvent(console.log);
-     *
-     * delayer.bufferEvents(() => {
-     *   emitter.fire(); // event will not be fired yet
-     * });
-     *
-     * // event will only be fired at this point
-     * ```
-     */
-    class EventBufferer {
-        constructor() {
-            this.buffers = [];
-        }
-        wrapEvent(event) {
-            return (listener, thisArgs, disposables) => {
-                return event(i => {
-                    const buffer = this.buffers[this.buffers.length - 1];
-                    if (buffer) {
-                        buffer.push(() => listener.call(thisArgs, i));
-                    }
-                    else {
-                        listener.call(thisArgs, i);
-                    }
-                }, undefined, disposables);
-            };
-        }
-        bufferEvents(fn) {
-            const buffer = [];
-            this.buffers.push(buffer);
-            const r = fn();
-            this.buffers.pop();
-            buffer.forEach(flush => flush());
-            return r;
-        }
-    }
-    exports.EventBufferer = EventBufferer;
-    /**
-     * A Relay is an event forwarder which functions as a replugabble event pipe.
-     * Once created, you can connect an input event to it and it will simply forward
-     * events from that input event through its own `event` property. The `input`
-     * can be changed at any point in time.
-     */
-    class Relay {
-        constructor() {
-            this.listening = false;
-            this.inputEvent = Event.None;
-            this.inputEventListener = lifecycle_1.Disposable.None;
-            this.emitter = new Emitter({
-                onDidAddFirstListener: () => {
-                    this.listening = true;
-                    this.inputEventListener = this.inputEvent(this.emitter.fire, this.emitter);
-                },
-                onDidRemoveLastListener: () => {
-                    this.listening = false;
-                    this.inputEventListener.dispose();
-                }
-            });
-            this.event = this.emitter.event;
-        }
-        set input(event) {
-            this.inputEvent = event;
-            if (this.listening) {
-                this.inputEventListener.dispose();
-                this.inputEventListener = event(this.emitter.fire, this.emitter);
-            }
-        }
-        dispose() {
-            this.inputEventListener.dispose();
-            this.emitter.dispose();
-        }
-    }
-    exports.Relay = Relay;
-});
-
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-define(__m[53/*vs/base/common/cancellation*/], __M([0/*require*/,1/*exports*/,9/*vs/base/common/event*/]), function (require, exports, event_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.CancellationTokenSource = exports.CancellationToken = void 0;
-    const shortcutEvent = Object.freeze(function (callback, context) {
-        const handle = setTimeout(callback.bind(context), 0);
-        return { dispose() { clearTimeout(handle); } };
-    });
-    var CancellationToken;
-    (function (CancellationToken) {
-        function isCancellationToken(thing) {
-            if (thing === CancellationToken.None || thing === CancellationToken.Cancelled) {
-                return true;
-            }
-            if (thing instanceof MutableToken) {
-                return true;
-            }
-            if (!thing || typeof thing !== 'object') {
-                return false;
-            }
-            return typeof thing.isCancellationRequested === 'boolean'
-                && typeof thing.onCancellationRequested === 'function';
-        }
-        CancellationToken.isCancellationToken = isCancellationToken;
-        CancellationToken.None = Object.freeze({
-            isCancellationRequested: false,
-            onCancellationRequested: event_1.Event.None
-        });
-        CancellationToken.Cancelled = Object.freeze({
-            isCancellationRequested: true,
-            onCancellationRequested: shortcutEvent
-        });
-    })(CancellationToken = exports.CancellationToken || (exports.CancellationToken = {}));
-    class MutableToken {
-        constructor() {
-            this._isCancelled = false;
-            this._emitter = null;
-        }
-        cancel() {
-            if (!this._isCancelled) {
-                this._isCancelled = true;
-                if (this._emitter) {
-                    this._emitter.fire(undefined);
-                    this.dispose();
-                }
-            }
-        }
-        get isCancellationRequested() {
-            return this._isCancelled;
-        }
-        get onCancellationRequested() {
-            if (this._isCancelled) {
-                return shortcutEvent;
-            }
-            if (!this._emitter) {
-                this._emitter = new event_1.Emitter();
-            }
-            return this._emitter.event;
-        }
-        dispose() {
-            if (this._emitter) {
-                this._emitter.dispose();
-                this._emitter = null;
-            }
-        }
-    }
-    class CancellationTokenSource {
-        constructor(parent) {
-            this._token = undefined;
-            this._parentListener = undefined;
-            this._parentListener = parent && parent.onCancellationRequested(this.cancel, this);
-        }
-        get token() {
-            if (!this._token) {
-                // be lazy and create the token only when
-                // actually needed
-                this._token = new MutableToken();
-            }
-            return this._token;
-        }
-        cancel() {
-            if (!this._token) {
-                // save an object by returning the default
-                // cancelled token when cancellation happens
-                // before someone asks for the token
-                this._token = CancellationToken.Cancelled;
-            }
-            else if (this._token instanceof MutableToken) {
-                // actually cancel
-                this._token.cancel();
-            }
-        }
-        dispose(cancel = false) {
-            var _a;
-            if (cancel) {
-                this.cancel();
-            }
-            (_a = this._parentListener) === null || _a === void 0 ? void 0 : _a.dispose();
-            if (!this._token) {
-                // ensure to initialize with an empty token if we had none
-                this._token = CancellationToken.None;
-            }
-            else if (this._token instanceof MutableToken) {
-                // actually dispose
-                this._token.dispose();
-            }
-        }
-    }
-    exports.CancellationTokenSource = CancellationTokenSource;
-});
-
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-define(__m[13/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,52/*vs/base/common/path*/,8/*vs/base/common/platform*/]), function (require, exports, paths, platform_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.uriToFsPath = exports.URI = void 0;
+    exports.URI = void 0;
+    exports.uriToFsPath = uriToFsPath;
     const _schemePattern = /^\w[\w\d+.-]*$/;
     const _singleSlashStart = /^\//;
     const _doubleSlashStart = /^\/\//;
@@ -15217,9 +18199,15 @@ define(__m[13/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,52/*vs/base
             }
             return new Uri('file', authority, path, _empty, _empty);
         }
-        static from(components) {
-            const result = new Uri(components.scheme, components.authority, components.path, components.query, components.fragment);
-            _validateUri(result, true);
+        /**
+         * Creates new URI from uri components.
+         *
+         * Unless `strict` is `true` the scheme is defaults to be `file`. This function performs
+         * validation and should be used for untrusted uri components retrieved from storage,
+         * user input, command arguments etc
+         */
+        static from(components, strict) {
+            const result = new Uri(components.scheme, components.authority, components.path, components.query, components.fragment, strict);
             return result;
         }
         /**
@@ -15261,6 +18249,7 @@ define(__m[13/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,52/*vs/base
             return this;
         }
         static revive(data) {
+            var _a, _b;
             if (!data) {
                 return data;
             }
@@ -15269,8 +18258,8 @@ define(__m[13/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,52/*vs/base
             }
             else {
                 const result = new Uri(data);
-                result._formatted = data.external;
-                result._fsPath = data._sep === _pathSepMarker ? data.fsPath : null;
+                result._formatted = (_a = data.external) !== null && _a !== void 0 ? _a : null;
+                result._fsPath = data._sep === _pathSepMarker ? (_b = data.fsPath) !== null && _b !== void 0 ? _b : null : null;
                 return result;
             }
         }
@@ -15314,10 +18303,14 @@ define(__m[13/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,52/*vs/base
             if (this._formatted) {
                 res.external = this._formatted;
             }
-            // uri components
+            //--- uri components
             if (this.path) {
                 res.path = this.path;
             }
+            // TODO
+            // this isn't correct and can violate the UriComponents contract but
+            // this is part of the vscode.Uri API and we shouldn't change how that
+            // works anymore
             if (this.scheme) {
                 res.scheme = this.scheme;
             }
@@ -15335,14 +18328,14 @@ define(__m[13/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,52/*vs/base
     }
     // reserved characters: https://tools.ietf.org/html/rfc3986#section-2.2
     const encodeTable = {
-        [58 /* CharCode.Colon */]: '%3A',
+        [58 /* CharCode.Colon */]: '%3A', // gen-delims
         [47 /* CharCode.Slash */]: '%2F',
         [63 /* CharCode.QuestionMark */]: '%3F',
         [35 /* CharCode.Hash */]: '%23',
         [91 /* CharCode.OpenSquareBracket */]: '%5B',
         [93 /* CharCode.CloseSquareBracket */]: '%5D',
         [64 /* CharCode.AtSign */]: '%40',
-        [33 /* CharCode.ExclamationMark */]: '%21',
+        [33 /* CharCode.ExclamationMark */]: '%21', // sub-delims
         [36 /* CharCode.DollarSign */]: '%24',
         [38 /* CharCode.Ampersand */]: '%26',
         [39 /* CharCode.SingleQuote */]: '%27',
@@ -15456,7 +18449,6 @@ define(__m[13/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,52/*vs/base
         }
         return value;
     }
-    exports.uriToFsPath = uriToFsPath;
     /**
      * Create the external version of a uri
      */
@@ -15557,10 +18549,12 @@ define(__m[13/*vs/base/common/uri*/], __M([0/*require*/,1/*exports*/,52/*vs/base
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[58/*vs/base/common/worker/simpleWorker*/], __M([0/*require*/,1/*exports*/,4/*vs/base/common/errors*/,9/*vs/base/common/event*/,11/*vs/base/common/lifecycle*/,12/*vs/base/common/objects*/,8/*vs/base/common/platform*/,5/*vs/base/common/strings*/]), function (require, exports, errors_1, event_1, lifecycle_1, objects_1, platform_1, strings) {
+define(__m[70/*vs/base/common/worker/simpleWorker*/], __M([0/*require*/,1/*exports*/,5/*vs/base/common/errors*/,9/*vs/base/common/event*/,13/*vs/base/common/lifecycle*/,14/*vs/base/common/objects*/,17/*vs/base/common/platform*/,6/*vs/base/common/strings*/]), function (require, exports, errors_1, event_1, lifecycle_1, objects_1, platform_1, strings) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.create = exports.SimpleWorkerServer = exports.SimpleWorkerClient = exports.logOnceWebWorkerWarning = void 0;
+    exports.SimpleWorkerServer = exports.SimpleWorkerClient = void 0;
+    exports.logOnceWebWorkerWarning = logOnceWebWorkerWarning;
+    exports.create = create;
     const INITIALIZE = '$initialize';
     let webWorkerWarningLogged = false;
     function logOnceWebWorkerWarning(err) {
@@ -15574,7 +18568,6 @@ define(__m[58/*vs/base/common/worker/simpleWorker*/], __M([0/*require*/,1/*expor
         }
         console.warn(err.message);
     }
-    exports.logOnceWebWorkerWarning = logOnceWebWorkerWarning;
     class RequestMessage {
         constructor(vsWorker, req, method, args) {
             this.vsWorker = vsWorker;
@@ -15960,7 +18953,7 @@ define(__m[58/*vs/base/common/worker/simpleWorker*/], __M([0/*require*/,1/*expor
                         delete loaderConfig.paths['vs'];
                     }
                 }
-                if (typeof loaderConfig.trustedTypesPolicy !== undefined) {
+                if (typeof loaderConfig.trustedTypesPolicy !== 'undefined') {
                     // don't use, it has been destroyed during serialize
                     delete loaderConfig['trustedTypesPolicy'];
                 }
@@ -15990,162 +18983,20 @@ define(__m[58/*vs/base/common/worker/simpleWorker*/], __M([0/*require*/,1/*expor
     exports.SimpleWorkerServer = SimpleWorkerServer;
     /**
      * Called on the worker side
+     * @skipMangle
      */
     function create(postMessage) {
         return new SimpleWorkerServer(postMessage, null);
     }
-    exports.create = create;
 });
 
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
-
-
-
-
-
-
-
-
-define(__m[54/*vs/editor/common/tokenizationRegistry*/], __M([0/*require*/,1/*exports*/,9/*vs/base/common/event*/,11/*vs/base/common/lifecycle*/]), function (require, exports, event_1, lifecycle_1) {
+define(__m[67/*vs/nls!vs/editor/common/languages*/], __M([19/*vs/nls*/,64/*vs/nls!vs/base/common/worker/simpleWorker*/]), function(nls, data) { return nls.create("vs/editor/common/languages", data); });
+define(__m[68/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,42/*vs/base/common/codicons*/,18/*vs/base/common/uri*/,2/*vs/editor/common/core/range*/,62/*vs/editor/common/tokenizationRegistry*/,67/*vs/nls!vs/editor/common/languages*/]), function (require, exports, codicons_1, uri_1, range_1, tokenizationRegistry_1, nls_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.TokenizationRegistry = void 0;
-    class TokenizationRegistry {
-        constructor() {
-            this._tokenizationSupports = new Map();
-            this._factories = new Map();
-            this._onDidChange = new event_1.Emitter();
-            this.onDidChange = this._onDidChange.event;
-            this._colorMap = null;
-        }
-        handleChange(languageIds) {
-            this._onDidChange.fire({
-                changedLanguages: languageIds,
-                changedColorMap: false
-            });
-        }
-        register(languageId, support) {
-            this._tokenizationSupports.set(languageId, support);
-            this.handleChange([languageId]);
-            return (0, lifecycle_1.toDisposable)(() => {
-                if (this._tokenizationSupports.get(languageId) !== support) {
-                    return;
-                }
-                this._tokenizationSupports.delete(languageId);
-                this.handleChange([languageId]);
-            });
-        }
-        get(languageId) {
-            return this._tokenizationSupports.get(languageId) || null;
-        }
-        registerFactory(languageId, factory) {
-            var _a;
-            (_a = this._factories.get(languageId)) === null || _a === void 0 ? void 0 : _a.dispose();
-            const myData = new TokenizationSupportFactoryData(this, languageId, factory);
-            this._factories.set(languageId, myData);
-            return (0, lifecycle_1.toDisposable)(() => {
-                const v = this._factories.get(languageId);
-                if (!v || v !== myData) {
-                    return;
-                }
-                this._factories.delete(languageId);
-                v.dispose();
-            });
-        }
-        getOrCreate(languageId) {
-            return __awaiter(this, void 0, void 0, function* () {
-                // check first if the support is already set
-                const tokenizationSupport = this.get(languageId);
-                if (tokenizationSupport) {
-                    return tokenizationSupport;
-                }
-                const factory = this._factories.get(languageId);
-                if (!factory || factory.isResolved) {
-                    // no factory or factory.resolve already finished
-                    return null;
-                }
-                yield factory.resolve();
-                return this.get(languageId);
-            });
-        }
-        isResolved(languageId) {
-            const tokenizationSupport = this.get(languageId);
-            if (tokenizationSupport) {
-                return true;
-            }
-            const factory = this._factories.get(languageId);
-            if (!factory || factory.isResolved) {
-                return true;
-            }
-            return false;
-        }
-        setColorMap(colorMap) {
-            this._colorMap = colorMap;
-            this._onDidChange.fire({
-                changedLanguages: Array.from(this._tokenizationSupports.keys()),
-                changedColorMap: true
-            });
-        }
-        getColorMap() {
-            return this._colorMap;
-        }
-        getDefaultBackground() {
-            if (this._colorMap && this._colorMap.length > 2 /* ColorId.DefaultBackground */) {
-                return this._colorMap[2 /* ColorId.DefaultBackground */];
-            }
-            return null;
-        }
-    }
-    exports.TokenizationRegistry = TokenizationRegistry;
-    class TokenizationSupportFactoryData extends lifecycle_1.Disposable {
-        get isResolved() {
-            return this._isResolved;
-        }
-        constructor(_registry, _languageId, _factory) {
-            super();
-            this._registry = _registry;
-            this._languageId = _languageId;
-            this._factory = _factory;
-            this._isDisposed = false;
-            this._resolvePromise = null;
-            this._isResolved = false;
-        }
-        dispose() {
-            this._isDisposed = true;
-            super.dispose();
-        }
-        resolve() {
-            return __awaiter(this, void 0, void 0, function* () {
-                if (!this._resolvePromise) {
-                    this._resolvePromise = this._create();
-                }
-                return this._resolvePromise;
-            });
-        }
-        _create() {
-            return __awaiter(this, void 0, void 0, function* () {
-                const value = yield this._factory.tokenizationSupport;
-                this._isResolved = true;
-                if (value && !this._isDisposed) {
-                    this._register(this._registry.register(this._languageId, value));
-                }
-            });
-        }
-    }
-});
-
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/*vs/base/common/codicons*/,13/*vs/base/common/uri*/,2/*vs/editor/common/core/range*/,54/*vs/editor/common/tokenizationRegistry*/]), function (require, exports, codicons_1, uri_1, range_1, tokenizationRegistry_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.TokenizationRegistry = exports.LazyTokenizationSupport = exports.InlayHintKind = exports.Command = exports.FoldingRangeKind = exports.SymbolKinds = exports.isLocationLink = exports.DocumentHighlightKind = exports.SignatureHelpTriggerKind = exports.InlineCompletionTriggerKind = exports.CompletionItemKinds = exports.EncodedTokenizationResult = exports.TokenizationResult = exports.Token = void 0;
+    exports.InlineEditTriggerKind = exports.TokenizationRegistry = exports.LazyTokenizationSupport = exports.InlayHintKind = exports.Command = exports.NewSymbolNameTag = exports.FoldingRangeKind = exports.TextEdit = exports.SymbolKinds = exports.symbolKindNames = exports.DocumentHighlightKind = exports.SignatureHelpTriggerKind = exports.DocumentPasteTriggerKind = exports.SelectedSuggestionInfo = exports.InlineCompletionTriggerKind = exports.CompletionItemKinds = exports.EncodedTokenizationResult = exports.TokenizationResult = exports.Token = void 0;
+    exports.isLocationLink = isLocationLink;
+    exports.getAriaLabelForSymbol = getAriaLabelForSymbol;
     class Token {
         constructor(offset, type, language) {
             this.offset = offset;
@@ -16276,7 +19127,7 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
             return res;
         }
         CompletionItemKinds.fromString = fromString;
-    })(CompletionItemKinds = exports.CompletionItemKinds || (exports.CompletionItemKinds = {}));
+    })(CompletionItemKinds || (exports.CompletionItemKinds = CompletionItemKinds = {}));
     /**
      * How an {@link InlineCompletionsProvider inline completion provider} was triggered.
      */
@@ -16292,13 +19143,36 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
          * Return multiple completion items to enable cycling through them.
          */
         InlineCompletionTriggerKind[InlineCompletionTriggerKind["Explicit"] = 1] = "Explicit";
-    })(InlineCompletionTriggerKind = exports.InlineCompletionTriggerKind || (exports.InlineCompletionTriggerKind = {}));
+    })(InlineCompletionTriggerKind || (exports.InlineCompletionTriggerKind = InlineCompletionTriggerKind = {}));
+    class SelectedSuggestionInfo {
+        constructor(range, text, completionKind, isSnippetText) {
+            this.range = range;
+            this.text = text;
+            this.completionKind = completionKind;
+            this.isSnippetText = isSnippetText;
+        }
+        equals(other) {
+            return range_1.Range.lift(this.range).equalsRange(other.range)
+                && this.text === other.text
+                && this.completionKind === other.completionKind
+                && this.isSnippetText === other.isSnippetText;
+        }
+    }
+    exports.SelectedSuggestionInfo = SelectedSuggestionInfo;
+    /**
+     * @internal
+     */
+    var DocumentPasteTriggerKind;
+    (function (DocumentPasteTriggerKind) {
+        DocumentPasteTriggerKind[DocumentPasteTriggerKind["Automatic"] = 0] = "Automatic";
+        DocumentPasteTriggerKind[DocumentPasteTriggerKind["PasteAs"] = 1] = "PasteAs";
+    })(DocumentPasteTriggerKind || (exports.DocumentPasteTriggerKind = DocumentPasteTriggerKind = {}));
     var SignatureHelpTriggerKind;
     (function (SignatureHelpTriggerKind) {
         SignatureHelpTriggerKind[SignatureHelpTriggerKind["Invoke"] = 1] = "Invoke";
         SignatureHelpTriggerKind[SignatureHelpTriggerKind["TriggerCharacter"] = 2] = "TriggerCharacter";
         SignatureHelpTriggerKind[SignatureHelpTriggerKind["ContentChange"] = 3] = "ContentChange";
-    })(SignatureHelpTriggerKind = exports.SignatureHelpTriggerKind || (exports.SignatureHelpTriggerKind = {}));
+    })(SignatureHelpTriggerKind || (exports.SignatureHelpTriggerKind = SignatureHelpTriggerKind = {}));
     /**
      * A document highlight kind.
      */
@@ -16316,7 +19190,7 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
          * Write-access of a symbol, like writing to a variable.
          */
         DocumentHighlightKind[DocumentHighlightKind["Write"] = 2] = "Write";
-    })(DocumentHighlightKind = exports.DocumentHighlightKind || (exports.DocumentHighlightKind = {}));
+    })(DocumentHighlightKind || (exports.DocumentHighlightKind = DocumentHighlightKind = {}));
     /**
      * @internal
      */
@@ -16326,7 +19200,43 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
             && range_1.Range.isIRange(thing.range)
             && (range_1.Range.isIRange(thing.originSelectionRange) || range_1.Range.isIRange(thing.targetSelectionRange));
     }
-    exports.isLocationLink = isLocationLink;
+    /**
+     * @internal
+     */
+    exports.symbolKindNames = {
+        [17 /* SymbolKind.Array */]: (0, nls_1.localize)(0, null),
+        [16 /* SymbolKind.Boolean */]: (0, nls_1.localize)(1, null),
+        [4 /* SymbolKind.Class */]: (0, nls_1.localize)(2, null),
+        [13 /* SymbolKind.Constant */]: (0, nls_1.localize)(3, null),
+        [8 /* SymbolKind.Constructor */]: (0, nls_1.localize)(4, null),
+        [9 /* SymbolKind.Enum */]: (0, nls_1.localize)(5, null),
+        [21 /* SymbolKind.EnumMember */]: (0, nls_1.localize)(6, null),
+        [23 /* SymbolKind.Event */]: (0, nls_1.localize)(7, null),
+        [7 /* SymbolKind.Field */]: (0, nls_1.localize)(8, null),
+        [0 /* SymbolKind.File */]: (0, nls_1.localize)(9, null),
+        [11 /* SymbolKind.Function */]: (0, nls_1.localize)(10, null),
+        [10 /* SymbolKind.Interface */]: (0, nls_1.localize)(11, null),
+        [19 /* SymbolKind.Key */]: (0, nls_1.localize)(12, null),
+        [5 /* SymbolKind.Method */]: (0, nls_1.localize)(13, null),
+        [1 /* SymbolKind.Module */]: (0, nls_1.localize)(14, null),
+        [2 /* SymbolKind.Namespace */]: (0, nls_1.localize)(15, null),
+        [20 /* SymbolKind.Null */]: (0, nls_1.localize)(16, null),
+        [15 /* SymbolKind.Number */]: (0, nls_1.localize)(17, null),
+        [18 /* SymbolKind.Object */]: (0, nls_1.localize)(18, null),
+        [24 /* SymbolKind.Operator */]: (0, nls_1.localize)(19, null),
+        [3 /* SymbolKind.Package */]: (0, nls_1.localize)(20, null),
+        [6 /* SymbolKind.Property */]: (0, nls_1.localize)(21, null),
+        [14 /* SymbolKind.String */]: (0, nls_1.localize)(22, null),
+        [22 /* SymbolKind.Struct */]: (0, nls_1.localize)(23, null),
+        [25 /* SymbolKind.TypeParameter */]: (0, nls_1.localize)(24, null),
+        [12 /* SymbolKind.Variable */]: (0, nls_1.localize)(25, null),
+    };
+    /**
+     * @internal
+     */
+    function getAriaLabelForSymbol(symbolName, kind) {
+        return (0, nls_1.localize)(26, null, symbolName, exports.symbolKindNames[kind]);
+    }
     /**
      * @internal
      */
@@ -16371,7 +19281,11 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
             return icon;
         }
         SymbolKinds.toIcon = toIcon;
-    })(SymbolKinds = exports.SymbolKinds || (exports.SymbolKinds = {}));
+    })(SymbolKinds || (exports.SymbolKinds = SymbolKinds = {}));
+    /** @internal */
+    class TextEdit {
+    }
+    exports.TextEdit = TextEdit;
     class FoldingRangeKind {
         /**
          * Returns a {@link FoldingRangeKind} for the given value.
@@ -16395,6 +19309,7 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
             this.value = value;
         }
     }
+    exports.FoldingRangeKind = FoldingRangeKind;
     /**
      * Kind for folding range representing a comment. The value of the kind is 'comment'.
      */
@@ -16408,7 +19323,10 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
      * The value of the kind is 'region'.
      */
     FoldingRangeKind.Region = new FoldingRangeKind('region');
-    exports.FoldingRangeKind = FoldingRangeKind;
+    var NewSymbolNameTag;
+    (function (NewSymbolNameTag) {
+        NewSymbolNameTag[NewSymbolNameTag["AIGenerated"] = 1] = "AIGenerated";
+    })(NewSymbolNameTag || (exports.NewSymbolNameTag = NewSymbolNameTag = {}));
     /**
      * @internal
      */
@@ -16425,12 +19343,12 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
                 typeof obj.title === 'string';
         }
         Command.is = is;
-    })(Command = exports.Command || (exports.Command = {}));
+    })(Command || (exports.Command = Command = {}));
     var InlayHintKind;
     (function (InlayHintKind) {
         InlayHintKind[InlayHintKind["Type"] = 1] = "Type";
         InlayHintKind[InlayHintKind["Parameter"] = 2] = "Parameter";
-    })(InlayHintKind = exports.InlayHintKind || (exports.InlayHintKind = {}));
+    })(InlayHintKind || (exports.InlayHintKind = InlayHintKind = {}));
     /**
      * @internal
      */
@@ -16460,30 +19378,36 @@ define(__m[55/*vs/editor/common/languages*/], __M([0/*require*/,1/*exports*/,32/
      * @internal
      */
     exports.TokenizationRegistry = new tokenizationRegistry_1.TokenizationRegistry();
+    var InlineEditTriggerKind;
+    (function (InlineEditTriggerKind) {
+        InlineEditTriggerKind[InlineEditTriggerKind["Invoke"] = 0] = "Invoke";
+        InlineEditTriggerKind[InlineEditTriggerKind["Automatic"] = 1] = "Automatic";
+    })(InlineEditTriggerKind || (exports.InlineEditTriggerKind = InlineEditTriggerKind = {}));
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-define(__m[56/*vs/editor/common/services/editorBaseApi*/], __M([0/*require*/,1/*exports*/,53/*vs/base/common/cancellation*/,9/*vs/base/common/event*/,29/*vs/base/common/keyCodes*/,13/*vs/base/common/uri*/,3/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/,33/*vs/editor/common/core/selection*/,55/*vs/editor/common/languages*/,49/*vs/editor/common/standalone/standaloneEnums*/]), function (require, exports, cancellation_1, event_1, keyCodes_1, uri_1, position_1, range_1, selection_1, languages_1, standaloneEnums) {
+define(__m[69/*vs/editor/common/services/editorBaseApi*/], __M([0/*require*/,1/*exports*/,39/*vs/base/common/cancellation*/,9/*vs/base/common/event*/,37/*vs/base/common/keyCodes*/,18/*vs/base/common/uri*/,4/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/,43/*vs/editor/common/core/selection*/,68/*vs/editor/common/languages*/,61/*vs/editor/common/standalone/standaloneEnums*/]), function (require, exports, cancellation_1, event_1, keyCodes_1, uri_1, position_1, range_1, selection_1, languages_1, standaloneEnums) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.createMonacoBaseAPI = exports.KeyMod = void 0;
+    exports.KeyMod = void 0;
+    exports.createMonacoBaseAPI = createMonacoBaseAPI;
     class KeyMod {
         static chord(firstPart, secondPart) {
             return (0, keyCodes_1.KeyChord)(firstPart, secondPart);
         }
     }
+    exports.KeyMod = KeyMod;
     KeyMod.CtrlCmd = 2048 /* ConstKeyMod.CtrlCmd */;
     KeyMod.Shift = 1024 /* ConstKeyMod.Shift */;
     KeyMod.Alt = 512 /* ConstKeyMod.Alt */;
     KeyMod.WinCtrl = 256 /* ConstKeyMod.WinCtrl */;
-    exports.KeyMod = KeyMod;
     function createMonacoBaseAPI() {
         return {
-            editor: undefined,
-            languages: undefined,
+            editor: undefined, // undefined override expected here
+            languages: undefined, // undefined override expected here
             CancellationTokenSource: cancellation_1.CancellationTokenSource,
             Emitter: event_1.Emitter,
             KeyCode: standaloneEnums.KeyCode,
@@ -16498,26 +19422,17 @@ define(__m[56/*vs/editor/common/services/editorBaseApi*/], __M([0/*require*/,1/*
             Token: languages_1.Token
         };
     }
-    exports.createMonacoBaseAPI = createMonacoBaseAPI;
 });
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
-
-
-
-
-
-
-
-
-define(__m[59/*vs/editor/common/services/editorSimpleWorker*/], __M([0/*require*/,1/*exports*/,17/*vs/base/common/diff/diff*/,13/*vs/base/common/uri*/,3/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/,46/*vs/editor/common/model/mirrorTextModel*/,22/*vs/editor/common/core/wordHelper*/,42/*vs/editor/common/languages/linkComputer*/,43/*vs/editor/common/languages/supports/inplaceReplaceSupport*/,56/*vs/editor/common/services/editorBaseApi*/,24/*vs/base/common/stopwatch*/,48/*vs/editor/common/services/unicodeTextModelHighlighter*/,41/*vs/editor/common/diff/linesDiffComputers*/,12/*vs/base/common/objects*/]), function (require, exports, diff_1, uri_1, position_1, range_1, mirrorTextModel_1, wordHelper_1, linkComputer_1, inplaceReplaceSupport_1, editorBaseApi_1, stopwatch_1, unicodeTextModelHighlighter_1, linesDiffComputers_1, objects_1) {
+define(__m[71/*vs/editor/common/services/editorSimpleWorker*/], __M([0/*require*/,1/*exports*/,25/*vs/base/common/diff/diff*/,18/*vs/base/common/uri*/,4/*vs/editor/common/core/position*/,2/*vs/editor/common/core/range*/,57/*vs/editor/common/model/mirrorTextModel*/,30/*vs/editor/common/core/wordHelper*/,53/*vs/editor/common/languages/linkComputer*/,54/*vs/editor/common/languages/supports/inplaceReplaceSupport*/,69/*vs/editor/common/services/editorBaseApi*/,24/*vs/base/common/stopwatch*/,60/*vs/editor/common/services/unicodeTextModelHighlighter*/,51/*vs/editor/common/diff/linesDiffComputers*/,14/*vs/base/common/objects*/,52/*vs/editor/common/languages/defaultDocumentColorsComputer*/,59/*vs/editor/common/services/findSectionHeaders*/]), function (require, exports, diff_1, uri_1, position_1, range_1, mirrorTextModel_1, wordHelper_1, linkComputer_1, inplaceReplaceSupport_1, editorBaseApi_1, stopwatch_1, unicodeTextModelHighlighter_1, linesDiffComputers_1, objects_1, defaultDocumentColorsComputer_1, findSectionHeaders_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.create = exports.EditorSimpleWorker = void 0;
+    exports.EditorSimpleWorker = void 0;
+    exports.create = create;
     /**
      * @internal
      */
@@ -16530,6 +19445,21 @@ define(__m[59/*vs/editor/common/services/editorSimpleWorker*/], __M([0/*require*
         }
         getValue() {
             return this.getText();
+        }
+        findMatches(regex) {
+            const matches = [];
+            for (let i = 0; i < this._lines.length; i++) {
+                const line = this._lines[i];
+                const offsetToAdd = this.offsetAt(new position_1.Position(i + 1, 1));
+                const iteratorOverMatches = line.matchAll(regex);
+                for (const match of iteratorOverMatches) {
+                    if (match.index || match.index === 0) {
+                        match.index = match.index + offsetToAdd;
+                    }
+                    matches.push(match);
+                }
+            }
+            return matches;
         }
         getLinesContent() {
             return this._lines.slice(0);
@@ -16724,38 +19654,40 @@ define(__m[59/*vs/editor/common/services/editorSimpleWorker*/], __M([0/*require*
             }
             delete this._models[strURL];
         }
-        computeUnicodeHighlights(url, options, range) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const model = this._getModel(url);
-                if (!model) {
-                    return { ranges: [], hasMore: false, ambiguousCharacterCount: 0, invisibleCharacterCount: 0, nonBasicAsciiCharacterCount: 0 };
-                }
-                return unicodeTextModelHighlighter_1.UnicodeTextModelHighlighter.computeUnicodeHighlights(model, options, range);
-            });
+        async computeUnicodeHighlights(url, options, range) {
+            const model = this._getModel(url);
+            if (!model) {
+                return { ranges: [], hasMore: false, ambiguousCharacterCount: 0, invisibleCharacterCount: 0, nonBasicAsciiCharacterCount: 0 };
+            }
+            return unicodeTextModelHighlighter_1.UnicodeTextModelHighlighter.computeUnicodeHighlights(model, options, range);
+        }
+        async findSectionHeaders(url, options) {
+            const model = this._getModel(url);
+            if (!model) {
+                return [];
+            }
+            return (0, findSectionHeaders_1.findSectionHeaders)(model, options);
         }
         // ---- BEGIN diff --------------------------------------------------------------------------
-        computeDiff(originalUrl, modifiedUrl, options, algorithm) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const original = this._getModel(originalUrl);
-                const modified = this._getModel(modifiedUrl);
-                if (!original || !modified) {
-                    return null;
-                }
-                return EditorSimpleWorker.computeDiff(original, modified, options, algorithm);
-            });
+        async computeDiff(originalUrl, modifiedUrl, options, algorithm) {
+            const original = this._getModel(originalUrl);
+            const modified = this._getModel(modifiedUrl);
+            if (!original || !modified) {
+                return null;
+            }
+            const result = EditorSimpleWorker.computeDiff(original, modified, options, algorithm);
+            return result;
         }
         static computeDiff(originalTextModel, modifiedTextModel, options, algorithm) {
-            const diffAlgorithm = algorithm === 'experimental' ? linesDiffComputers_1.linesDiffComputers.experimental : linesDiffComputers_1.linesDiffComputers.smart;
+            const diffAlgorithm = algorithm === 'advanced' ? linesDiffComputers_1.linesDiffComputers.getDefault() : linesDiffComputers_1.linesDiffComputers.getLegacy();
             const originalLines = originalTextModel.getLinesContent();
             const modifiedLines = modifiedTextModel.getLinesContent();
             const result = diffAlgorithm.computeDiff(originalLines, modifiedLines, options);
             const identical = (result.changes.length > 0 ? false : this._modelsAreIdentical(originalTextModel, modifiedTextModel));
-            return {
-                identical,
-                quitEarly: result.hitTimeout,
-                changes: result.changes.map(m => {
+            function getLineChanges(changes) {
+                return changes.map(m => {
                     var _a;
-                    return ([m.originalRange.startLineNumber, m.originalRange.endLineNumberExclusive, m.modifiedRange.startLineNumber, m.modifiedRange.endLineNumberExclusive, (_a = m.innerChanges) === null || _a === void 0 ? void 0 : _a.map(m => [
+                    return ([m.original.startLineNumber, m.original.endLineNumberExclusive, m.modified.startLineNumber, m.modified.endLineNumberExclusive, (_a = m.innerChanges) === null || _a === void 0 ? void 0 : _a.map(m => [
                             m.originalRange.startLineNumber,
                             m.originalRange.startColumn,
                             m.originalRange.endLineNumber,
@@ -16765,7 +19697,19 @@ define(__m[59/*vs/editor/common/services/editorSimpleWorker*/], __M([0/*require*
                             m.modifiedRange.endLineNumber,
                             m.modifiedRange.endColumn,
                         ])]);
-                })
+                });
+            }
+            return {
+                identical,
+                quitEarly: result.hitTimeout,
+                changes: getLineChanges(result.changes),
+                moves: result.moves.map(m => ([
+                    m.lineRangeMapping.original.startLineNumber,
+                    m.lineRangeMapping.original.endLineNumberExclusive,
+                    m.lineRangeMapping.modified.startLineNumber,
+                    m.lineRangeMapping.modified.endLineNumberExclusive,
+                    getLineChanges(m.changes)
+                ])),
             };
         }
         static _modelsAreIdentical(original, modified) {
@@ -16783,153 +19727,164 @@ define(__m[59/*vs/editor/common/services/editorSimpleWorker*/], __M([0/*require*
             }
             return true;
         }
-        computeMoreMinimalEdits(modelUrl, edits, pretty) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const model = this._getModel(modelUrl);
-                if (!model) {
-                    return edits;
+        async computeMoreMinimalEdits(modelUrl, edits, pretty) {
+            const model = this._getModel(modelUrl);
+            if (!model) {
+                return edits;
+            }
+            const result = [];
+            let lastEol = undefined;
+            edits = edits.slice(0).sort((a, b) => {
+                if (a.range && b.range) {
+                    return range_1.Range.compareRangesUsingStarts(a.range, b.range);
                 }
-                const result = [];
-                let lastEol = undefined;
-                edits = edits.slice(0).sort((a, b) => {
-                    if (a.range && b.range) {
-                        return range_1.Range.compareRangesUsingStarts(a.range, b.range);
-                    }
-                    // eol only changes should go to the end
-                    const aRng = a.range ? 0 : 1;
-                    const bRng = b.range ? 0 : 1;
-                    return aRng - bRng;
-                });
-                for (let { range, text, eol } of edits) {
-                    if (typeof eol === 'number') {
-                        lastEol = eol;
-                    }
-                    if (range_1.Range.isEmpty(range) && !text) {
-                        // empty change
-                        continue;
-                    }
-                    const original = model.getValueInRange(range);
-                    text = text.replace(/\r\n|\n|\r/g, model.eol);
-                    if (original === text) {
-                        // noop
-                        continue;
-                    }
-                    // make sure diff won't take too long
-                    if (Math.max(text.length, original.length) > EditorSimpleWorker._diffLimit) {
-                        result.push({ range, text });
-                        continue;
-                    }
-                    // compute diff between original and edit.text
-                    const changes = (0, diff_1.stringDiff)(original, text, pretty);
-                    const editOffset = model.offsetAt(range_1.Range.lift(range).getStartPosition());
-                    for (const change of changes) {
-                        const start = model.positionAt(editOffset + change.originalStart);
-                        const end = model.positionAt(editOffset + change.originalStart + change.originalLength);
-                        const newEdit = {
-                            text: text.substr(change.modifiedStart, change.modifiedLength),
-                            range: { startLineNumber: start.lineNumber, startColumn: start.column, endLineNumber: end.lineNumber, endColumn: end.column }
-                        };
-                        if (model.getValueInRange(newEdit.range) !== newEdit.text) {
-                            result.push(newEdit);
-                        }
-                    }
-                }
-                if (typeof lastEol === 'number') {
-                    result.push({ eol: lastEol, text: '', range: { startLineNumber: 0, startColumn: 0, endLineNumber: 0, endColumn: 0 } });
-                }
-                return result;
+                // eol only changes should go to the end
+                const aRng = a.range ? 0 : 1;
+                const bRng = b.range ? 0 : 1;
+                return aRng - bRng;
             });
+            // merge adjacent edits
+            let writeIndex = 0;
+            for (let readIndex = 1; readIndex < edits.length; readIndex++) {
+                if (range_1.Range.getEndPosition(edits[writeIndex].range).equals(range_1.Range.getStartPosition(edits[readIndex].range))) {
+                    edits[writeIndex].range = range_1.Range.fromPositions(range_1.Range.getStartPosition(edits[writeIndex].range), range_1.Range.getEndPosition(edits[readIndex].range));
+                    edits[writeIndex].text += edits[readIndex].text;
+                }
+                else {
+                    writeIndex++;
+                    edits[writeIndex] = edits[readIndex];
+                }
+            }
+            edits.length = writeIndex + 1;
+            for (let { range, text, eol } of edits) {
+                if (typeof eol === 'number') {
+                    lastEol = eol;
+                }
+                if (range_1.Range.isEmpty(range) && !text) {
+                    // empty change
+                    continue;
+                }
+                const original = model.getValueInRange(range);
+                text = text.replace(/\r\n|\n|\r/g, model.eol);
+                if (original === text) {
+                    // noop
+                    continue;
+                }
+                // make sure diff won't take too long
+                if (Math.max(text.length, original.length) > EditorSimpleWorker._diffLimit) {
+                    result.push({ range, text });
+                    continue;
+                }
+                // compute diff between original and edit.text
+                const changes = (0, diff_1.stringDiff)(original, text, pretty);
+                const editOffset = model.offsetAt(range_1.Range.lift(range).getStartPosition());
+                for (const change of changes) {
+                    const start = model.positionAt(editOffset + change.originalStart);
+                    const end = model.positionAt(editOffset + change.originalStart + change.originalLength);
+                    const newEdit = {
+                        text: text.substr(change.modifiedStart, change.modifiedLength),
+                        range: { startLineNumber: start.lineNumber, startColumn: start.column, endLineNumber: end.lineNumber, endColumn: end.column }
+                    };
+                    if (model.getValueInRange(newEdit.range) !== newEdit.text) {
+                        result.push(newEdit);
+                    }
+                }
+            }
+            if (typeof lastEol === 'number') {
+                result.push({ eol: lastEol, text: '', range: { startLineNumber: 0, startColumn: 0, endLineNumber: 0, endColumn: 0 } });
+            }
+            return result;
         }
         // ---- END minimal edits ---------------------------------------------------------------
-        computeLinks(modelUrl) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const model = this._getModel(modelUrl);
-                if (!model) {
-                    return null;
-                }
-                return (0, linkComputer_1.computeLinks)(model);
-            });
+        async computeLinks(modelUrl) {
+            const model = this._getModel(modelUrl);
+            if (!model) {
+                return null;
+            }
+            return (0, linkComputer_1.computeLinks)(model);
         }
-        textualSuggest(modelUrls, leadingWord, wordDef, wordDefFlags) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const sw = new stopwatch_1.StopWatch(true);
-                const wordDefRegExp = new RegExp(wordDef, wordDefFlags);
-                const seen = new Set();
-                outer: for (const url of modelUrls) {
-                    const model = this._getModel(url);
-                    if (!model) {
+        // --- BEGIN default document colors -----------------------------------------------------------
+        async computeDefaultDocumentColors(modelUrl) {
+            const model = this._getModel(modelUrl);
+            if (!model) {
+                return null;
+            }
+            return (0, defaultDocumentColorsComputer_1.computeDefaultDocumentColors)(model);
+        }
+        async textualSuggest(modelUrls, leadingWord, wordDef, wordDefFlags) {
+            const sw = new stopwatch_1.StopWatch();
+            const wordDefRegExp = new RegExp(wordDef, wordDefFlags);
+            const seen = new Set();
+            outer: for (const url of modelUrls) {
+                const model = this._getModel(url);
+                if (!model) {
+                    continue;
+                }
+                for (const word of model.words(wordDefRegExp)) {
+                    if (word === leadingWord || !isNaN(Number(word))) {
                         continue;
                     }
-                    for (const word of model.words(wordDefRegExp)) {
-                        if (word === leadingWord || !isNaN(Number(word))) {
-                            continue;
-                        }
-                        seen.add(word);
-                        if (seen.size > EditorSimpleWorker._suggestionsLimit) {
-                            break outer;
-                        }
+                    seen.add(word);
+                    if (seen.size > EditorSimpleWorker._suggestionsLimit) {
+                        break outer;
                     }
                 }
-                return { words: Array.from(seen), duration: sw.elapsed() };
-            });
+            }
+            return { words: Array.from(seen), duration: sw.elapsed() };
         }
         // ---- END suggest --------------------------------------------------------------------------
         //#region -- word ranges --
-        computeWordRanges(modelUrl, range, wordDef, wordDefFlags) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const model = this._getModel(modelUrl);
-                if (!model) {
-                    return Object.create(null);
-                }
-                const wordDefRegExp = new RegExp(wordDef, wordDefFlags);
-                const result = Object.create(null);
-                for (let line = range.startLineNumber; line < range.endLineNumber; line++) {
-                    const words = model.getLineWords(line, wordDefRegExp);
-                    for (const word of words) {
-                        if (!isNaN(Number(word.word))) {
-                            continue;
-                        }
-                        let array = result[word.word];
-                        if (!array) {
-                            array = [];
-                            result[word.word] = array;
-                        }
-                        array.push({
-                            startLineNumber: line,
-                            startColumn: word.startColumn,
-                            endLineNumber: line,
-                            endColumn: word.endColumn
-                        });
+        async computeWordRanges(modelUrl, range, wordDef, wordDefFlags) {
+            const model = this._getModel(modelUrl);
+            if (!model) {
+                return Object.create(null);
+            }
+            const wordDefRegExp = new RegExp(wordDef, wordDefFlags);
+            const result = Object.create(null);
+            for (let line = range.startLineNumber; line < range.endLineNumber; line++) {
+                const words = model.getLineWords(line, wordDefRegExp);
+                for (const word of words) {
+                    if (!isNaN(Number(word.word))) {
+                        continue;
                     }
+                    let array = result[word.word];
+                    if (!array) {
+                        array = [];
+                        result[word.word] = array;
+                    }
+                    array.push({
+                        startLineNumber: line,
+                        startColumn: word.startColumn,
+                        endLineNumber: line,
+                        endColumn: word.endColumn
+                    });
                 }
-                return result;
-            });
+            }
+            return result;
         }
         //#endregion
-        navigateValueSet(modelUrl, range, up, wordDef, wordDefFlags) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const model = this._getModel(modelUrl);
-                if (!model) {
-                    return null;
-                }
-                const wordDefRegExp = new RegExp(wordDef, wordDefFlags);
-                if (range.startColumn === range.endColumn) {
-                    range = {
-                        startLineNumber: range.startLineNumber,
-                        startColumn: range.startColumn,
-                        endLineNumber: range.endLineNumber,
-                        endColumn: range.endColumn + 1
-                    };
-                }
-                const selectionText = model.getValueInRange(range);
-                const wordRange = model.getWordAtPosition({ lineNumber: range.startLineNumber, column: range.startColumn }, wordDefRegExp);
-                if (!wordRange) {
-                    return null;
-                }
-                const word = model.getValueInRange(wordRange);
-                const result = inplaceReplaceSupport_1.BasicInplaceReplace.INSTANCE.navigateValueSet(range, selectionText, wordRange, word, up);
-                return result;
-            });
+        async navigateValueSet(modelUrl, range, up, wordDef, wordDefFlags) {
+            const model = this._getModel(modelUrl);
+            if (!model) {
+                return null;
+            }
+            const wordDefRegExp = new RegExp(wordDef, wordDefFlags);
+            if (range.startColumn === range.endColumn) {
+                range = {
+                    startLineNumber: range.startLineNumber,
+                    startColumn: range.startColumn,
+                    endLineNumber: range.endLineNumber,
+                    endColumn: range.endColumn + 1
+                };
+            }
+            const selectionText = model.getValueInRange(range);
+            const wordRange = model.getWordAtPosition({ lineNumber: range.startLineNumber, column: range.startColumn }, wordDefRegExp);
+            if (!wordRange) {
+                return null;
+            }
+            const word = model.getValueInRange(wordRange);
+            const result = inplaceReplaceSupport_1.BasicInplaceReplace.INSTANCE.navigateValueSet(range, selectionText, wordRange, word, up);
+            return result;
         }
         // ---- BEGIN foreign module support --------------------------------------------------------------------------
         loadForeignModule(moduleId, createData, foreignHostMethods) {
@@ -16973,12 +19928,12 @@ define(__m[59/*vs/editor/common/services/editorSimpleWorker*/], __M([0/*require*
             }
         }
     }
+    exports.EditorSimpleWorker = EditorSimpleWorker;
     // ---- END diff --------------------------------------------------------------------------
     // ---- BEGIN minimal edits ---------------------------------------------------------------
     EditorSimpleWorker._diffLimit = 100000;
     // ---- BEGIN suggest --------------------------------------------------------------------------
     EditorSimpleWorker._suggestionsLimit = 10000;
-    exports.EditorSimpleWorker = EditorSimpleWorker;
     /**
      * Called on the worker side
      * @internal
@@ -16986,7 +19941,6 @@ define(__m[59/*vs/editor/common/services/editorSimpleWorker*/], __M([0/*require*
     function create(host) {
         return new EditorSimpleWorker(host, null);
     }
-    exports.create = create;
     if (typeof importScripts === 'function') {
         // Running in a web worker
         globalThis.monaco = (0, editorBaseApi_1.createMonacoBaseAPI)();

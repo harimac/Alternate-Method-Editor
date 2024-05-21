@@ -1,10 +1,6 @@
 
 exports.features = [
   {
-    "label": "accessibilityHelp",
-    "entry": "vs/editor/standalone/browser/accessibilityHelp/accessibilityHelp"
-  },
-  {
     "label": "anchorSelect",
     "entry": "vs/editor/contrib/anchorSelect/browser/anchorSelect"
   },
@@ -32,12 +28,19 @@ exports.features = [
     "entry": "vs/editor/contrib/codeAction/browser/codeActionContributions"
   },
   {
+    "label": "codeEditor",
+    "entry": "vs/editor/browser/widget/codeEditor/codeEditorWidget"
+  },
+  {
     "label": "codelens",
     "entry": "vs/editor/contrib/codelens/browser/codelensController"
   },
   {
     "label": "colorPicker",
-    "entry": "vs/editor/contrib/colorPicker/browser/colorContributions"
+    "entry": [
+      "vs/editor/contrib/colorPicker/browser/colorContributions",
+      "vs/editor/contrib/colorPicker/browser/standaloneColorPickerActions"
+    ]
   },
   {
     "label": "comment",
@@ -48,12 +51,16 @@ exports.features = [
     "entry": "vs/editor/contrib/contextmenu/browser/contextmenu"
   },
   {
-    "label": "copyPaste",
-    "entry": "vs/editor/contrib/copyPaste/browser/copyPasteContribution"
-  },
-  {
     "label": "cursorUndo",
     "entry": "vs/editor/contrib/cursorUndo/browser/cursorUndo"
+  },
+  {
+    "label": "diffEditor",
+    "entry": "vs/editor/browser/widget/diffEditor/diffEditor.contribution"
+  },
+  {
+    "label": "diffEditorBreadcrumbs",
+    "entry": "vs/editor/contrib/diffEditorBreadcrumbs/browser/contribution"
   },
   {
     "label": "dnd",
@@ -64,8 +71,11 @@ exports.features = [
     "entry": "vs/editor/contrib/documentSymbols/browser/documentSymbols"
   },
   {
-    "label": "dropIntoEditor",
-    "entry": "vs/editor/contrib/dropIntoEditor/browser/dropIntoEditorContribution"
+    "label": "dropOrPasteInto",
+    "entry": [
+      "vs/editor/contrib/dropOrPasteInto/browser/copyPasteContribution",
+      "vs/editor/contrib/dropOrPasteInto/browser/dropIntoEditorContribution"
+    ]
   },
   {
     "label": "find",
@@ -120,7 +130,15 @@ exports.features = [
   },
   {
     "label": "inlineCompletions",
-    "entry": "vs/editor/contrib/inlineCompletions/browser/ghostText.contribution"
+    "entry": "vs/editor/contrib/inlineCompletions/browser/inlineCompletions.contribution"
+  },
+  {
+    "label": "inlineEdit",
+    "entry": "vs/editor/contrib/inlineEdit/browser/inlineEdit.contribution"
+  },
+  {
+    "label": "inlineProgress",
+    "entry": "vs/editor/contrib/inlineProgress/browser/inlineProgress"
   },
   {
     "label": "inspectTokens",
@@ -177,6 +195,10 @@ exports.features = [
   {
     "label": "rename",
     "entry": "vs/editor/contrib/rename/browser/rename"
+  },
+  {
+    "label": "sectionHeaders",
+    "entry": "vs/editor/contrib/sectionHeaders/browser/sectionHeaders"
   },
   {
     "label": "semanticTokens",
@@ -403,6 +425,10 @@ exports.languages = [
   {
     "label": "markdown",
     "entry": "vs/basic-languages/markdown/markdown.contribution"
+  },
+  {
+    "label": "mdx",
+    "entry": "vs/basic-languages/mdx/mdx.contribution"
   },
   {
     "label": "mips",

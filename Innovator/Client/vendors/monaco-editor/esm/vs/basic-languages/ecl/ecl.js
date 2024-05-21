@@ -1,9 +1,10 @@
 /*!-----------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Version: 0.37.1(20a8d5a651d057aaed7875ad1c1f2ecf13c4e773)
+ * Version: 0.48.0(0037b13fb5d186fdf1e7df51a9416a2de2b8c670)
  * Released under the MIT license
  * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
  *-----------------------------------------------------------------------------*/
+
 
 // src/basic-languages/ecl/ecl.ts
 var conf = {
@@ -394,7 +395,9 @@ var language = {
   ].join("|"),
   operators: ["+", "-", "/", ":=", "<", "<>", "=", ">", "\\", "and", "in", "not", "or"],
   symbols: /[=><!~?:&|+\-*\/\^%]+/,
+  // escape sequences
   escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+  // The main tokenizer for our languages
   tokenizer: {
     root: [
       [/@typesint[4|8]/, "type"],
@@ -410,6 +413,7 @@ var language = {
           }
         }
       ],
+      // whitespace
       { include: "@whitespace" },
       [/[{}()\[\]]/, "@brackets"],
       [/[<>](?!@symbols)/, "@brackets"],
@@ -422,13 +426,18 @@ var language = {
           }
         }
       ],
+      // numbers
       [/[0-9_]*\.[0-9_]+([eE][\-+]?\d+)?/, "number.float"],
       [/0[xX][0-9a-fA-F_]+/, "number.hex"],
       [/0[bB][01]+/, "number.hex"],
+      // binary: use same theme style as hex
       [/[0-9_]+/, "number"],
+      // delimiter: after number because of .\d floats
       [/[;,.]/, "delimiter"],
+      // strings
       [/"([^"\\]|\\.)*$/, "string.invalid"],
       [/"/, "string", "@string"],
+      // characters
       [/'[^\\']'/, "string"],
       [/(')(@escapes)(')/, ["string", "string.escape", "string"]],
       [/'/, "string.invalid"]

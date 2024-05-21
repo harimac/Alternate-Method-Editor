@@ -11,6 +11,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var FileReferencesRenderer_1;
 import * as dom from '../../../../../base/browser/dom.js';
 import { CountBadge } from '../../../../../base/browser/ui/countBadge/countBadge.js';
 import { HighlightedLabel } from '../../../../../base/browser/ui/highlightedlabel/highlightedLabel.js';
@@ -125,10 +126,10 @@ let FileReferencesTemplate = class FileReferencesTemplate extends Disposable {
 FileReferencesTemplate = __decorate([
     __param(1, ILabelService)
 ], FileReferencesTemplate);
-let FileReferencesRenderer = class FileReferencesRenderer {
+let FileReferencesRenderer = FileReferencesRenderer_1 = class FileReferencesRenderer {
     constructor(_instantiationService) {
         this._instantiationService = _instantiationService;
-        this.templateId = FileReferencesRenderer.id;
+        this.templateId = FileReferencesRenderer_1.id;
     }
     renderTemplate(container) {
         return this._instantiationService.createInstance(FileReferencesTemplate, container);
@@ -141,15 +142,16 @@ let FileReferencesRenderer = class FileReferencesRenderer {
     }
 };
 FileReferencesRenderer.id = 'FileReferencesRenderer';
-FileReferencesRenderer = __decorate([
+FileReferencesRenderer = FileReferencesRenderer_1 = __decorate([
     __param(0, IInstantiationService)
 ], FileReferencesRenderer);
 export { FileReferencesRenderer };
 //#endregion
 //#region render: Reference
-class OneReferenceTemplate {
+class OneReferenceTemplate extends Disposable {
     constructor(container) {
-        this.label = new HighlightedLabel(container);
+        super();
+        this.label = this._register(new HighlightedLabel(container));
     }
     set(element, score) {
         var _a;
@@ -173,7 +175,7 @@ class OneReferenceTemplate {
         }
     }
 }
-class OneReferenceRenderer {
+export class OneReferenceRenderer {
     constructor() {
         this.templateId = OneReferenceRenderer.id;
     }
@@ -183,11 +185,11 @@ class OneReferenceRenderer {
     renderElement(node, index, templateData) {
         templateData.set(node.element, node.filterData);
     }
-    disposeTemplate() {
+    disposeTemplate(templateData) {
+        templateData.dispose();
     }
 }
 OneReferenceRenderer.id = 'OneReferenceRenderer';
-export { OneReferenceRenderer };
 //#endregion
 export class AccessibilityProvider {
     getWidgetAriaLabel() {

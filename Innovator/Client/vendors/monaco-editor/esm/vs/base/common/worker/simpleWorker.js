@@ -405,7 +405,7 @@ export class SimpleWorkerServer {
                     delete loaderConfig.paths['vs'];
                 }
             }
-            if (typeof loaderConfig.trustedTypesPolicy !== undefined) {
+            if (typeof loaderConfig.trustedTypesPolicy !== 'undefined') {
                 // don't use, it has been destroyed during serialize
                 delete loaderConfig['trustedTypesPolicy'];
             }
@@ -434,6 +434,7 @@ export class SimpleWorkerServer {
 }
 /**
  * Called on the worker side
+ * @skipMangle
  */
 export function create(postMessage) {
     return new SimpleWorkerServer(postMessage, null);

@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Range } from '../../../common/core/range.js';
-import { MinimapPosition, OverviewRulerLane } from '../../../common/model.js';
+import { OverviewRulerLane } from '../../../common/model.js';
 import { ModelDecorationOptions } from '../../../common/model/textModel.js';
 import { minimapFindMatch, overviewRulerFindMatchForeground } from '../../../../platform/theme/common/colorRegistry.js';
 import { themeColorFromId } from '../../../../platform/theme/common/themeService.js';
-class FindDecorations {
+export class FindDecorations {
     constructor(editor) {
         this._editor = editor;
         this._decorations = [];
@@ -251,7 +251,7 @@ FindDecorations._CURRENT_FIND_MATCH_DECORATION = ModelDecorationOptions.register
     },
     minimap: {
         color: themeColorFromId(minimapFindMatch),
-        position: MinimapPosition.Inline
+        position: 1 /* MinimapPosition.Inline */
     }
 });
 FindDecorations._FIND_MATCH_DECORATION = ModelDecorationOptions.register({
@@ -266,7 +266,7 @@ FindDecorations._FIND_MATCH_DECORATION = ModelDecorationOptions.register({
     },
     minimap: {
         color: themeColorFromId(minimapFindMatch),
-        position: MinimapPosition.Inline
+        position: 1 /* MinimapPosition.Inline */
     }
 });
 FindDecorations._FIND_MATCH_NO_OVERVIEW_DECORATION = ModelDecorationOptions.register({
@@ -294,4 +294,3 @@ FindDecorations._FIND_SCOPE_DECORATION = ModelDecorationOptions.register({
     className: 'findScope',
     isWholeLine: true
 });
-export { FindDecorations };

@@ -59,9 +59,23 @@
 
                 var oldMethodCode = parent.methodEditorHelper.getComparisonMethodCode();
                 var currentMethodCode = aras.getItemProperty(parent.parent.document.item, "method_code") || "";
-                
-                var originalModel = monaco.editor.createModel(oldMethodCode, "javascript");
-                var currentModel = monaco.editor.createModel(currentMethodCode, "javascript");
+
+                var codeLang = aras.getItemProperty(parent.parent.document.item, "method_type");
+                var editorLang = "javascript";
+                switch(codeLang) {
+                    case "VB":
+                        editorLang = "vbscript";
+                        break;
+                    case "C#":
+                        editorLang = "csharp";
+                        break;
+                    case "JavaScript":
+                        editorLang = "javascript";
+                        break;
+                }
+
+                var originalModel = monaco.editor.createModel(oldMethodCode, editorLang);
+                var currentModel = monaco.editor.createModel(currentMethodCode, editorLang);
 
                 var diffEditor = monaco.editor.createDiffEditor(document.getElementById("diffeditormain"));
                 diffEditor.setModel({
@@ -72,7 +86,6 @@
                 diffEditor._originalEditor.getModel().updateOptions({ tabSize: 2, insertSpaces:false });
                 parent.editor = diffEditor._modifiedEditor; // [XAM] Update to latest monaco
                 parent.monacoEditor = monaco.editor;
-                var codeLang = aras.getItemProperty(parent.parent.document.item, "method_type");
                 parent.methodEditorHelper.setLanguage(codeLang);
                 parent.methodEditorHelper.setTheme(editorTheme); // [XAM] Restore theme
                 parent.methodEditorHelper.setEditorChangeEvent();

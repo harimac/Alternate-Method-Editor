@@ -1,11 +1,11 @@
-"use strict";
 /*!-----------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Version: 0.37.1(20a8d5a651d057aaed7875ad1c1f2ecf13c4e773)
+ * Version: 0.48.0(0037b13fb5d186fdf1e7df51a9416a2de2b8c670)
  * Released under the MIT license
  * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
  *-----------------------------------------------------------------------------*/
 define("vs/basic-languages/sparql/sparql", ["require"],(require)=>{
+"use strict";
 var moduleExports = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -169,16 +169,23 @@ var moduleExports = (() => {
       "uuid",
       "year"
     ],
+    // describe tokens
     ignoreCase: true,
     tokenizer: {
       root: [
+        // resource indicators
         [/<[^\s\u00a0>]*>?/, "tag"],
+        // strings
         { include: "@strings" },
+        // line comment
         [/#.*/, "comment"],
+        // special chars with special meaning
         [/[{}()\[\]]/, "@brackets"],
         [/[;,.]/, "delimiter"],
+        // (prefixed) name
         [/[_\w\d]+:(\.(?=[\w_\-\\%])|[:\w_-]|\\[-\\_~.!$&'()*+,;=/?#@%]|%[a-f\d][a-f\d])*/, "tag"],
         [/:(\.(?=[\w_\-\\%])|[:\w_-]|\\[-\\_~.!$&'()*+,;=/?#@%]|%[a-f\d][a-f\d])+/, "tag"],
+        // identifiers, builtinFunctions and keywords
         [
           /[$?]?[_\w\d]+/,
           {
@@ -189,25 +196,32 @@ var moduleExports = (() => {
             }
           }
         ],
+        // operators
         [/\^\^/, "operator.sql"],
         [/\^[*+\-<>=&|^\/!?]*/, "operator.sql"],
         [/[*+\-<>=&|\/!?]/, "operator.sql"],
+        // symbol
         [/@[a-z\d\-]*/, "metatag.html"],
+        // whitespaces
         [/\s+/, "white"]
       ],
       strings: [
         [/'([^'\\]|\\.)*$/, "string.invalid"],
+        // non-terminated single-quoted string
         [/'$/, "string.sql", "@pop"],
         [/'/, "string.sql", "@stringBody"],
         [/"([^"\\]|\\.)*$/, "string.invalid"],
+        // non-terminated single-quoted string
         [/"$/, "string.sql", "@pop"],
         [/"/, "string.sql", "@dblStringBody"]
       ],
+      // single-quoted strings
       stringBody: [
         [/[^\\']+/, "string.sql"],
         [/\\./, "string.escape"],
         [/'/, "string.sql", "@pop"]
       ],
+      // double-quoted strings
       dblStringBody: [
         [/[^\\"]+/, "string.sql"],
         [/\\./, "string.escape"],

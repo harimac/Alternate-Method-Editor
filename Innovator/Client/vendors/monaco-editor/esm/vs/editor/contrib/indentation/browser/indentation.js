@@ -15,114 +15,16 @@ import { DisposableStore } from '../../../../base/common/lifecycle.js';
 import * as strings from '../../../../base/common/strings.js';
 import { EditorAction, registerEditorAction, registerEditorContribution } from '../../../browser/editorExtensions.js';
 import { ShiftCommand } from '../../../common/commands/shiftCommand.js';
-import { EditOperation } from '../../../common/core/editOperation.js';
 import { Range } from '../../../common/core/range.js';
-import { Selection } from '../../../common/core/selection.js';
 import { EditorContextKeys } from '../../../common/editorContextKeys.js';
 import { ILanguageConfigurationService } from '../../../common/languages/languageConfigurationRegistry.js';
 import { IModelService } from '../../../common/services/model.js';
-import * as indentUtils from './indentUtils.js';
+import * as indentUtils from '../common/indentUtils.js';
 import * as nls from '../../../../nls.js';
 import { IQuickInputService } from '../../../../platform/quickinput/common/quickInput.js';
-import { normalizeIndentation } from '../../../common/core/indentation.js';
 import { getGoodIndentForLine, getIndentMetadata } from '../../../common/languages/autoIndent.js';
-export function getReindentEditOperations(model, languageConfigurationService, startLineNumber, endLineNumber, inheritedIndent) {
-    if (model.getLineCount() === 1 && model.getLineMaxColumn(1) === 1) {
-        // Model is empty
-        return [];
-    }
-    const indentationRules = languageConfigurationService.getLanguageConfiguration(model.getLanguageId()).indentationRules;
-    if (!indentationRules) {
-        return [];
-    }
-    endLineNumber = Math.min(endLineNumber, model.getLineCount());
-    // Skip `unIndentedLinePattern` lines
-    while (startLineNumber <= endLineNumber) {
-        if (!indentationRules.unIndentedLinePattern) {
-            break;
-        }
-        const text = model.getLineContent(startLineNumber);
-        if (!indentationRules.unIndentedLinePattern.test(text)) {
-            break;
-        }
-        startLineNumber++;
-    }
-    if (startLineNumber > endLineNumber - 1) {
-        return [];
-    }
-    const { tabSize, indentSize, insertSpaces } = model.getOptions();
-    const shiftIndent = (indentation, count) => {
-        count = count || 1;
-        return ShiftCommand.shiftIndent(indentation, indentation.length + count, tabSize, indentSize, insertSpaces);
-    };
-    const unshiftIndent = (indentation, count) => {
-        count = count || 1;
-        return ShiftCommand.unshiftIndent(indentation, indentation.length + count, tabSize, indentSize, insertSpaces);
-    };
-    const indentEdits = [];
-    // indentation being passed to lines below
-    let globalIndent;
-    // Calculate indentation for the first line
-    // If there is no passed-in indentation, we use the indentation of the first line as base.
-    const currentLineText = model.getLineContent(startLineNumber);
-    let adjustedLineContent = currentLineText;
-    if (inheritedIndent !== undefined && inheritedIndent !== null) {
-        globalIndent = inheritedIndent;
-        const oldIndentation = strings.getLeadingWhitespace(currentLineText);
-        adjustedLineContent = globalIndent + currentLineText.substring(oldIndentation.length);
-        if (indentationRules.decreaseIndentPattern && indentationRules.decreaseIndentPattern.test(adjustedLineContent)) {
-            globalIndent = unshiftIndent(globalIndent);
-            adjustedLineContent = globalIndent + currentLineText.substring(oldIndentation.length);
-        }
-        if (currentLineText !== adjustedLineContent) {
-            indentEdits.push(EditOperation.replaceMove(new Selection(startLineNumber, 1, startLineNumber, oldIndentation.length + 1), normalizeIndentation(globalIndent, indentSize, insertSpaces)));
-        }
-    }
-    else {
-        globalIndent = strings.getLeadingWhitespace(currentLineText);
-    }
-    // idealIndentForNextLine doesn't equal globalIndent when there is a line matching `indentNextLinePattern`.
-    let idealIndentForNextLine = globalIndent;
-    if (indentationRules.increaseIndentPattern && indentationRules.increaseIndentPattern.test(adjustedLineContent)) {
-        idealIndentForNextLine = shiftIndent(idealIndentForNextLine);
-        globalIndent = shiftIndent(globalIndent);
-    }
-    else if (indentationRules.indentNextLinePattern && indentationRules.indentNextLinePattern.test(adjustedLineContent)) {
-        idealIndentForNextLine = shiftIndent(idealIndentForNextLine);
-    }
-    startLineNumber++;
-    // Calculate indentation adjustment for all following lines
-    for (let lineNumber = startLineNumber; lineNumber <= endLineNumber; lineNumber++) {
-        const text = model.getLineContent(lineNumber);
-        const oldIndentation = strings.getLeadingWhitespace(text);
-        const adjustedLineContent = idealIndentForNextLine + text.substring(oldIndentation.length);
-        if (indentationRules.decreaseIndentPattern && indentationRules.decreaseIndentPattern.test(adjustedLineContent)) {
-            idealIndentForNextLine = unshiftIndent(idealIndentForNextLine);
-            globalIndent = unshiftIndent(globalIndent);
-        }
-        if (oldIndentation !== idealIndentForNextLine) {
-            indentEdits.push(EditOperation.replaceMove(new Selection(lineNumber, 1, lineNumber, oldIndentation.length + 1), normalizeIndentation(idealIndentForNextLine, indentSize, insertSpaces)));
-        }
-        // calculate idealIndentForNextLine
-        if (indentationRules.unIndentedLinePattern && indentationRules.unIndentedLinePattern.test(text)) {
-            // In reindent phase, if the line matches `unIndentedLinePattern` we inherit indentation from above lines
-            // but don't change globalIndent and idealIndentForNextLine.
-            continue;
-        }
-        else if (indentationRules.increaseIndentPattern && indentationRules.increaseIndentPattern.test(adjustedLineContent)) {
-            globalIndent = shiftIndent(globalIndent);
-            idealIndentForNextLine = globalIndent;
-        }
-        else if (indentationRules.indentNextLinePattern && indentationRules.indentNextLinePattern.test(adjustedLineContent)) {
-            idealIndentForNextLine = shiftIndent(idealIndentForNextLine);
-        }
-        else {
-            idealIndentForNextLine = globalIndent;
-        }
-    }
-    return indentEdits;
-}
-class IndentationToSpacesAction extends EditorAction {
+import { getReindentEditOperations } from '../common/indentation.js';
+export class IndentationToSpacesAction extends EditorAction {
     constructor() {
         super({
             id: IndentationToSpacesAction.ID,
@@ -151,8 +53,7 @@ class IndentationToSpacesAction extends EditorAction {
     }
 }
 IndentationToSpacesAction.ID = 'editor.action.indentationToSpaces';
-export { IndentationToSpacesAction };
-class IndentationToTabsAction extends EditorAction {
+export class IndentationToTabsAction extends EditorAction {
     constructor() {
         super({
             id: IndentationToTabsAction.ID,
@@ -181,7 +82,6 @@ class IndentationToTabsAction extends EditorAction {
     }
 }
 IndentationToTabsAction.ID = 'editor.action.indentationToTabs';
-export { IndentationToTabsAction };
 export class ChangeIndentationSizeAction extends EditorAction {
     constructor(insertSpaces, displaySizeOnly, opts) {
         super(opts);
@@ -234,7 +134,7 @@ export class ChangeIndentationSizeAction extends EditorAction {
         }, 50 /* quick input is sensitive to being opened so soon after another */);
     }
 }
-class IndentUsingTabs extends ChangeIndentationSizeAction {
+export class IndentUsingTabs extends ChangeIndentationSizeAction {
     constructor() {
         super(false, false, {
             id: IndentUsingTabs.ID,
@@ -245,8 +145,7 @@ class IndentUsingTabs extends ChangeIndentationSizeAction {
     }
 }
 IndentUsingTabs.ID = 'editor.action.indentUsingTabs';
-export { IndentUsingTabs };
-class IndentUsingSpaces extends ChangeIndentationSizeAction {
+export class IndentUsingSpaces extends ChangeIndentationSizeAction {
     constructor() {
         super(true, false, {
             id: IndentUsingSpaces.ID,
@@ -257,8 +156,7 @@ class IndentUsingSpaces extends ChangeIndentationSizeAction {
     }
 }
 IndentUsingSpaces.ID = 'editor.action.indentUsingSpaces';
-export { IndentUsingSpaces };
-class ChangeTabDisplaySize extends ChangeIndentationSizeAction {
+export class ChangeTabDisplaySize extends ChangeIndentationSizeAction {
     constructor() {
         super(true, true, {
             id: ChangeTabDisplaySize.ID,
@@ -269,8 +167,7 @@ class ChangeTabDisplaySize extends ChangeIndentationSizeAction {
     }
 }
 ChangeTabDisplaySize.ID = 'editor.action.changeTabDisplaySize';
-export { ChangeTabDisplaySize };
-class DetectIndentation extends EditorAction {
+export class DetectIndentation extends EditorAction {
     constructor() {
         super({
             id: DetectIndentation.ID,
@@ -290,7 +187,6 @@ class DetectIndentation extends EditorAction {
     }
 }
 DetectIndentation.ID = 'editor.action.detectIndentation';
-export { DetectIndentation };
 export class ReindentLinesAction extends EditorAction {
     constructor() {
         super({
@@ -408,7 +304,7 @@ let AutoIndentOnPaste = class AutoIndentOnPaste {
         // clean up
         this.callOnModel.clear();
         // we are disabled
-        if (this.editor.getOption(10 /* EditorOption.autoIndent */) < 4 /* EditorAutoIndentStrategy.Full */ || this.editor.getOption(53 /* EditorOption.formatOnPaste */)) {
+        if (this.editor.getOption(12 /* EditorOption.autoIndent */) < 4 /* EditorAutoIndentStrategy.Full */ || this.editor.getOption(55 /* EditorOption.formatOnPaste */)) {
             return;
         }
         // no model
@@ -431,7 +327,7 @@ let AutoIndentOnPaste = class AutoIndentOnPaste {
         if (!model.tokenization.isCheapToTokenize(range.getStartPosition().lineNumber)) {
             return;
         }
-        const autoIndent = this.editor.getOption(10 /* EditorOption.autoIndent */);
+        const autoIndent = this.editor.getOption(12 /* EditorOption.autoIndent */);
         const { tabSize, indentSize, insertSpaces } = model.getOptions();
         const textEdits = [];
         const indentConverter = {
